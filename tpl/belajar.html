@@ -1,0 +1,29 @@
+<div ng-controller="BelajarController">
+    <div class="bg-light lter b-b wrapper-md">
+        <h1 class="m-n font-thin h3">Tutorial Landa Angular 1</h1>
+    </div>
+
+    <input type="text" ng-model="nama"/>
+    Nama ku adalah : {{nama}}
+    <hr/>
+    <input type="text" ng-model="jml" value="{{jml}}"/> x <input type="text" ng-model="harga" value="{{harga}}"/> = {{(jml * harga)+100}}
+    <hr/>
+    Nilai anda : {{nilai}}
+    <hr/>
+    Filter: <input ng-model="pencarian">
+    Sort by:
+<select ng-model="ordering">
+  <option value="name">A-Z</option>
+  <option value="age">Muda - Tua</option>
+</select>
+    <table class="table table-bordered">
+        <tr>
+            <th>Nama</th>
+            <th>Umur</th>
+        </tr>
+        <tr ng-repeat="user in users | filter:pencarian | orderBy:ordering">
+            <td>{{user.name}}</td>
+            <td>{{user.age}} Tahun</td>
+        </tr>
+    </table>
+</div>
