@@ -35,8 +35,9 @@ app.controller('rolesCtrl', function ($scope, Data) {
     };
     $scope.update = function (form) {
         $scope.is_edit = true;
-        $scope.is_view = false;
+        $scope.is_view = false; 
         $scope.formtitle = "Edit Data : " + form.nama;
+        $scope.form = form;
     };
     $scope.view = function (form) {
         $scope.is_edit = true;
