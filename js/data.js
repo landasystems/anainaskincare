@@ -1,6 +1,5 @@
 app.factory("Data", ['$http', '$location',
     function ($http, $q, $location) {
-
         var serviceBase = 'api/web/';
 
         var obj = {};
@@ -13,6 +12,7 @@ app.factory("Data", ['$http', '$location',
             });
         };
         obj.post = function (q, object) {
+            $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
             return $http.post(serviceBase + q, object).then(function (results) {
                 return results.data;
             });

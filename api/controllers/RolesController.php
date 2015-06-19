@@ -22,7 +22,6 @@ class RolesController extends Controller {
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
-                    'deleteall' => ['post'],
                 ],
             ]
         ];
@@ -38,8 +37,8 @@ class RolesController extends Controller {
             return $event->isValid;
         }
         $verb = Yii::$app->getRequest()->getMethod();
-
         $allowed = array_map('strtoupper', $verbs);
+//        Yii::error($allowed);
 
         if (!in_array($verb, $allowed)) {
 
@@ -59,7 +58,6 @@ class RolesController extends Controller {
         $offset = 0;
         $limit = 10;
         //        Yii::error($params);
-
         //limit & offset pagination
         if (isset($params['limit']))
             $limit = $params['limit'];
@@ -83,12 +81,12 @@ class RolesController extends Controller {
                 ->limit($limit)
                 ->from('m_roles')
                 ->orderBy($sort)
-                ->select("nama");
-        
+                ->select("*");
+
         //filter
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
-            foreach($filter as $key => $val){
+            foreach ($filter as $key => $val) {
                 $query->andFilterWhere(['like', $key, $val]);
             }
         }
@@ -109,18 +107,13 @@ class RolesController extends Controller {
         $this->setHeader(200);
         echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
     }
-    
+
     public function actionCreate() {
-
-        $params = $_REQUEST;
-
+        $params = json_decode(file_get_contents("php://input"), true);
         $model = new Roles();
         $model->attributes = $params;
 
-
-
         if ($model->save()) {
-
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -130,14 +123,11 @@ class RolesController extends Controller {
     }
 
     public function actionUpdate($id) {
-        $params = $_REQUEST;
-
+        $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
-
         $model->attributes = $params;
 
         if ($model->save()) {
-
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -157,27 +147,6 @@ class RolesController extends Controller {
             $this->setHeader(400);
             echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $model->errors), JSON_PRETTY_PRINT);
         }
-    }
-
-    public function actionDeleteall() {
-        $ids = json_decode($_REQUEST['ids']);
-
-        $data = array();
-
-        foreach ($ids as $id) {
-            $model = $this->findModel($id);
-
-            if ($model->delete())
-                $data[] = array_filter($model->attributes);
-            else {
-                $this->setHeader(400);
-                echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $model->errors), JSON_PRETTY_PRINT);
-                return;
-            }
-        }
-
-        $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'data' => $data), JSON_PRETTY_PRINT);
     }
 
     protected function findModel($id) {
@@ -216,4 +185,5 @@ class RolesController extends Controller {
     }
 
 }
+
 ?>

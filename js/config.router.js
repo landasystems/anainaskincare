@@ -64,11 +64,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load('ngGrid').then(
-                                                        function () {
-                                                            return $ocLazyLoad.load('js/controllers/roles.js');
-                                                        }
-                                                );
+                                                return $ocLazyLoad.load('js/controllers/roles.js');
                                             }]
                                     }
                                 })

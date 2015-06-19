@@ -5,17 +5,12 @@
 th.st-sort-descent:before{
     content: '\25BC' !important;
 }
-.st-selected{
-    background: #216eff !important;
-    color: white !important;
-}
 .pagination li a input {
     padding: 0 2px;
     margin: -5px 5px -5px 0;
     width: 40px;
     text-align: center;
 }
-
 .table-hover > tbody > tr:hover{
     background-color: beige;
 }
