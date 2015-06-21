@@ -1,9 +1,9 @@
-<div ng-controller="rolesCtrl as mc">
+<div ng-controller="rolesCtrl">
     <div class="bg-light lter b-b wrapper-md">
         <h1 class="m-n font-thin h3">Data Master - Hak Akses</h1>
     </div>
     <div class="wrapper-md" ng-show="!is_edit">
-        <div class="panel panel-default" st-pipe="mc.callServer" st-table="mc.displayed">
+        <div class="panel panel-default" st-pipe="callServer" st-table="displayed">
             <div class="panel-heading">
                 <button class="btn btn-default btn-xs" ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed">Pencarian & Export Data</button>
                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
@@ -35,8 +35,8 @@
                             <th st-sort="nama">Nama Grup</th>
                         </tr>
                     </thead>
-                    <tbody ng-show="!mc.isLoading">
-                        <tr ng-repeat="row in mc.displayed" ng-dblclick="view(row)">
+                    <tbody ng-show="!isLoading">
+                        <tr ng-repeat="row in displayed" ng-dblclick="view(row)">
                             <td>{{row.nama}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
@@ -48,14 +48,14 @@
                             </td>
                         </tr>
                     </tbody>
-                    <tbody ng-show="mc.isLoading">
+                    <tbody ng-show="isLoading">
                         <tr>
                             <td colspan="4" class="text-center">Loading ... </td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html">
+                            <td colspan="2" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html">
                             </td>
                         </tr>
                 </table>		
@@ -79,8 +79,17 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-2 control-label">Status</label>
+                        <div class="col-sm-4">
+                            <div class="btn-group m-r">
+                                <label class="btn btn-default" ng-model="form.is_deleted" btn-radio="'0'" required>Aktif</label>
+                                <label class="btn btn-default" ng-model="form.is_deleted" btn-radio="'1'" required>Terhapus</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <div class="col-sm-4 col-sm-offset-2">
-                            <button type="submit" class="btn btn-default fa fa-arrow-circle-o-left" ng-click="cancel()">&nbsp;Back</button>
+                            <button type="submit" class="btn btn-default fa fa-arrow-circle-o-left" ng-click="cancel(form)">&nbsp;Back</button>
                             <button type="submit" class="btn btn-primary fa fa-save" ng-hide="is_view" ng-disabled="landaform.$invalid" ng-click="save(form)">&nbsp;Simpan Perubahan</button>
                         </div>
                     </div>	
