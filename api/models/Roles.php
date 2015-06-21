@@ -27,6 +27,7 @@ class Roles extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['nama'], 'unique'],
             [['is_deleted'], 'integer'],
             [['nama'], 'string', 'max' => 45]
         ];
