@@ -1,12 +1,13 @@
-app.controller('rolesCtrl', function ($scope, Data) {
+app.controller('rolesCtrl', function ($scope, Data, toaster) {
     //init data
-    var ctrl = this;
-    ctrl.displayed = [];
+    var tableStateRef;
+    $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
 
-    this.callServer = function callServer(tableState) {
-        ctrl.isLoading = true;
+    $scope.callServer = function callServer(tableState) {
+        tableStateRef = tableState;
+        $scope.isLoading = true;
         var offset = tableState.pagination.start || 0;
         var limit = tableState.pagination.number || 10;
         var param = {offset: offset, limit: limit};
@@ -20,11 +21,11 @@ app.controller('rolesCtrl', function ($scope, Data) {
         }
 
         Data.get('roles', param).then(function (data) {
-            ctrl.displayed = data.data;
+            $scope.displayed = data.data;
             tableState.pagination.numberOfPages = Math.round(data.totalItems / limit);
         });
 
-        ctrl.isLoading = false;
+        $scope.isLoading = false;
     };
 
     $scope.create = function (form) {
@@ -35,7 +36,7 @@ app.controller('rolesCtrl', function ($scope, Data) {
     };
     $scope.update = function (form) {
         $scope.is_edit = true;
-        $scope.is_view = false; 
+        $scope.is_view = false;
         $scope.formtitle = "Edit Data : " + form.nama;
         $scope.form = form;
     };
@@ -46,16 +47,16 @@ app.controller('rolesCtrl', function ($scope, Data) {
         $scope.form = form;
     };
     $scope.save = function (form) {
-        $scope.is_edit = false;
-        if (form.id > 0) {
-            Data.post('roles/update/'+ form.id, form).then(function (result) {
-
-            });
-        } else {
-            Data.post('roles/create', form).then(function (result) {
-
-            });
-        }
+        var url = (form.id > 0) ? 'roles/update/' + form.id : 'roles/create';
+        Data.post(url, form).then(function (result) {
+            if (result.status == 0) {
+                toaster.pop('error', "Terjadi Kesalahan", result.errors);
+            } else {
+                $scope.is_edit = false;
+                $scope.callServer(tableStateRef); //reload grid ulang
+                toaster.pop('success', "Berhasil", "Data berhasil tersimpan");
+            }
+        });
     };
     $scope.cancel = function () {
         $scope.is_edit = false;
@@ -66,7 +67,7 @@ app.controller('rolesCtrl', function ($scope, Data) {
         if (confirm("Apa anda yakin akan MENGHAPUS item ini ?")) {
             row.is_deleted = 1;
             Data.post('roles/update/' + row.id, row).then(function (result) {
-                ctrl.displayed.splice(ctrl.displayed.indexOf(row), 1);
+                $scope.displayed.splice($scope.displayed.indexOf(row), 1);
             });
         }
     };
@@ -74,14 +75,14 @@ app.controller('rolesCtrl', function ($scope, Data) {
         if (confirm("Apa anda yakin akan MERESTORE item ini ?")) {
             row.is_deleted = 0;
             Data.post('roles/update/' + row.id, row).then(function (result) {
-                ctrl.displayed.splice(ctrl.displayed.indexOf(row), 1);
+                $scope.displayed.splice($scope.displayed.indexOf(row), 1);
             });
         }
     };
     $scope.delete = function (row) {
         if (confirm("Apa anda yakin akan MENGHAPUS PERMANENT item ini ?")) {
             Data.delete('roles/delete/' + row.id).then(function (result) {
-                ctrl.displayed.splice(ctrl.displayed.indexOf(row), 1);
+                $scope.displayed.splice($scope.displayed.indexOf(row), 1);
             });
         }
     };
