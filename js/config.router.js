@@ -34,6 +34,16 @@ angular.module('app')
                                             }]
                                     }
                                 })
+                                .state('app.pegawai', {
+                                    url: '/pegawai',
+                                    templateUrl: 'tpl/m_pegawai/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load('js/controllers/pegawai.js');
+                                            }]
+                                    }
+                                })
                                 // others
                                 .state('access', {
                                     url: '/access',
@@ -53,32 +63,31 @@ angular.module('app')
                                     url: '/404',
                                     templateUrl: 'tpl/page_404.html'
                                 })
-                                //master roles
+                                //master
                                 .state('master', {
                                     url: '/master',
                                     templateUrl: 'tpl/app.html'
                                 })
-                                .state('master.pengguna', {
-                                    url: '/master/pengguna',
-                                    templateUrl: 'tpl/m_user/index.html',
-                                    resolve: {
-                                        deps: ['$ocLazyLoad',
-                                            function($ocLazyLoad) {
-                                                return $ocLazyLoad.load('js/controllers/pengguna.js');
-                                            }]
-                                    }
-                                })
                                 .state('master.roles', {
-                                    url: '/master/roles',
+                                    url: '/roles',
                                     templateUrl: 'tpl/m_roles/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function($ocLazyLoad) {
+                                            function ($ocLazyLoad) {
                                                 return $ocLazyLoad.load('js/controllers/roles.js');
                                             }]
                                     }
                                 })
-                                
+                                .state('master.satuan', {
+                                    url: '/satuan',
+                                    templateUrl: 'tpl/m_satuan/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load('js/controllers/satuan.js');
+                                            }]
+                                    }
+                                })
                     }
                 ]
                 );
