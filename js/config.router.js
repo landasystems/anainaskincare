@@ -53,18 +53,28 @@ angular.module('app')
                                     url: '/404',
                                     templateUrl: 'tpl/page_404.html'
                                 })
-                                //master roles
-                                .state('roles', {
-                                    url: '/roles',
+                                //master
+                                .state('master', {
+                                    url: '/master',
                                     templateUrl: 'tpl/app.html'
                                 })
-                                .state('roles.index', {
-                                    url: '/index',
+                                .state('master.roles', {
+                                    url: '/roles',
                                     templateUrl: 'tpl/m_roles/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
                                                 return $ocLazyLoad.load('js/controllers/roles.js');
+                                            }]
+                                    }
+                                })
+                                .state('master.satuan', {
+                                    url: '/satuan',
+                                    templateUrl: 'tpl/m_satuan/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load('js/controllers/satuan.js');
                                             }]
                                     }
                                 })
