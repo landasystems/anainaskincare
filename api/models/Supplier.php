@@ -10,7 +10,6 @@ use Yii;
  * @property integer $id
  * @property string $kode
  * @property string $nama
- * @property string $contact_person
  * @property string $alamat
  * @property string $no_tlp
  * @property string $email
@@ -35,8 +34,7 @@ class Supplier extends \yii\db\ActiveRecord
             [['alamat'], 'string'],
             [['is_deleted'], 'integer'],
             [['kode', 'no_tlp'], 'string', 'max' => 25],
-            [['nama', 'email'], 'string', 'max' => 45],
-            [['contact_person'], 'string', 'max' => 255]
+            [['nama', 'email'], 'string', 'max' => 45]
         ];
     }
 
@@ -49,7 +47,6 @@ class Supplier extends \yii\db\ActiveRecord
             'id' => 'ID',
             'kode' => 'Kode',
             'nama' => 'Nama',
-            'contact_person' => 'Contact Person',
             'alamat' => 'Alamat',
             'no_tlp' => 'No Tlp',
             'email' => 'Email',
