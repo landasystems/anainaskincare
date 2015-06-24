@@ -5,24 +5,21 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "m_supplier".
+ * This is the model class for table "m_kategori".
  *
  * @property integer $id
  * @property string $kode
  * @property string $nama
- * @property string $alamat
- * @property string $no_tlp
- * @property string $email
  * @property integer $is_deleted
  */
-class Supplier extends \yii\db\ActiveRecord
+class Kategori extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'm_supplier';
+        return 'm_kategori';
     }
 
     /**
@@ -31,10 +28,9 @@ class Supplier extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['alamat'], 'string'],
             [['is_deleted'], 'integer'],
-            [['kode', 'no_tlp'], 'string', 'max' => 25],
-            [['nama', 'email'], 'string', 'max' => 45]
+            [['kode'], 'string', 'max' => 25],
+            [['nama'], 'string', 'max' => 45]
         ];
     }
 
@@ -47,9 +43,6 @@ class Supplier extends \yii\db\ActiveRecord
             'id' => 'ID',
             'kode' => 'Kode',
             'nama' => 'Nama',
-            'alamat' => 'Alamat',
-            'no_tlp' => 'No Tlp',
-            'email' => 'Email',
             'is_deleted' => 'Is Deleted',
         ];
     }
