@@ -35,7 +35,7 @@ class Pengguna extends \yii\db\ActiveRecord
     {
         return [
             [['roles_id', 'is_deleted', ], 'integer'],
-//            [['created_at', 'modified_at'], 'safe'],
+            [[ 'username'], 'safe'],
             [['nama', 'username', 'password'], 'string', 'max' => 255]
         ];
     }
