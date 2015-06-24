@@ -28,6 +28,7 @@ class Roles extends \yii\db\ActiveRecord
     {
         return [
             [['nama'], 'unique'],
+            [['akses'], 'safe'],
             [['is_deleted'], 'integer'],
             [['nama'], 'string', 'max' => 45]
         ];
