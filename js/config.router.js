@@ -34,6 +34,16 @@ angular.module('app')
                                             }]
                                     }
                                 })
+                                .state('app.pegawai', {
+                                    url: '/pegawai',
+                                    templateUrl: 'tpl/m_pegawai/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load('js/controllers/pegawai.js');
+                                            }]
+                                    }
+                                })
                                 // others
                                 .state('access', {
                                     url: '/access',
