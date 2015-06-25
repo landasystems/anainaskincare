@@ -3,7 +3,6 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Pegawai;
 use app\models\Cabang;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -11,7 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\db\Query;
 
-class PegawaiController extends Controller {
+class CabangController extends Controller {
 
     public function behaviors() {
         return [
@@ -20,7 +19,6 @@ class PegawaiController extends Controller {
                 'actions' => [
                     'index' => ['get'],
                     'view' => ['get'],
-                    'klinik' => ['get'],
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
@@ -33,13 +31,14 @@ class PegawaiController extends Controller {
         $action = $event->id;
         if (isset($this->actions[$action])) {
             $verbs = $this->actions[$action];
-        } elseif (excel(isset($this->actions['*']))) {
+        } elseif (isset($this->actions['*'])) {
             $verbs = $this->actions['*'];
         } else {
             return $event->isValid;
         }
         $verb = Yii::$app->getRequest()->getMethod();
         $allowed = array_map('strtoupper', $verbs);
+//        Yii::error($allowed);
 
         if (!in_array($verb, $allowed)) {
 
@@ -55,7 +54,7 @@ class PegawaiController extends Controller {
         //init variable
         $params = $_REQUEST;
         $filter = array();
-        $sort = "t1.kode ASC";
+        $sort = "m_cabang.kode ASC";
         $offset = 0;
         $limit = 10;
         //        Yii::error($params);
@@ -80,16 +79,17 @@ class PegawaiController extends Controller {
         $query = new Query;
         $query->offset($offset)
                 ->limit($limit)
-                ->from('m_pegawai as t1, m_cabang as t2')
-                ->where("t1.cabang_id = t2.id")
+//                ->select('m_user.id as id', 'm_roles.nama as roles')
+                ->from('m_cabang')
+//                ->where('')
                 ->orderBy($sort)
-                ->select("t1.id as id,t1.kode as kode, t1.nama as nama, t1.jenis_kelamin as jenis_kelamin, t1.no_tlp as no_tlp, t1.email as email, t1.alamat as alamat, t1.jabatan as jabatan, t2.nama as office_place, t1.cabang_id as cabang_id, t1.is_deleted as is_deleted");
+                ->select("*");
 
         //filter
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
-                $query->andFilterWhere(['like', 't1.'.$key, $val]);
+                $query->andFilterWhere(['like', $key, $val]);
             }
         }
 
@@ -100,19 +100,6 @@ class PegawaiController extends Controller {
         $this->setHeader(200);
 
         echo json_encode(array('status' => 1, 'data' => $models, 'totalItems' => $totalItems), JSON_PRETTY_PRINT);
-    }
-    public function actionKlinik(){
-        $query = new Query;
-        $query->from('m_cabang')
-                ->where("is_deleted = 0")
-                ->select("*");
-
-        $command = $query->createCommand();
-        $models = $command->queryAll();
-
-        $this->setHeader(200);
-
-        echo json_encode(array('status' => 1, 'office_place' => $models));
     }
 
     public function actionView($id) {
@@ -125,7 +112,7 @@ class PegawaiController extends Controller {
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
-        $model = new Pegawai();
+        $model = new Cabang();
         $model->attributes = $params;
 
         if ($model->save()) {
@@ -165,7 +152,7 @@ class PegawaiController extends Controller {
     }
 
     protected function findModel($id) {
-        if (($model = Pegawai::findOne($id)) !== null) {
+        if (($model = Cabang::findOne($id)) !== null) {
             return $model;
         } else {
 
