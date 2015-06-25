@@ -15,22 +15,21 @@ use Yii;
  * @property string $email
  * @property integer $is_deleted
  */
-class Supplier extends \yii\db\ActiveRecord
-{
+class Supplier extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'm_supplier';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
+            [['kode'], 'unique'],
             [['alamat'], 'string'],
             [['is_deleted'], 'integer'],
             [['kode', 'no_tlp'], 'string', 'max' => 25],
@@ -41,8 +40,7 @@ class Supplier extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'kode' => 'Kode',
@@ -53,4 +51,5 @@ class Supplier extends \yii\db\ActiveRecord
             'is_deleted' => 'Is Deleted',
         ];
     }
+
 }
