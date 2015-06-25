@@ -4,7 +4,8 @@ app.controller('rolesCtrl', function ($scope, Data, toaster) {
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
-
+    $scope.akses = {master:{},transaksi:{}};
+    console.log($scope.aa);
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
         $scope.isLoading = true;
@@ -85,6 +86,21 @@ app.controller('rolesCtrl', function ($scope, Data, toaster) {
                 $scope.displayed.splice($scope.displayed.indexOf(row), 1);
             });
         }
+    };
+    
+    $scope.checkMaster = function () {
+//        console.log($scope.akses);
+//        if ($scope.selectMaster) {
+//            $scope.selectMaster = true;
+//        } else {
+//            $scope.selectMaster = false;
+//        }
+console.log($scope.akses);
+        angular.forEach($scope.akses, function (item) {
+            
+////            item.Selected = $scope.selectedAll;
+        });
+
     };
 
 
