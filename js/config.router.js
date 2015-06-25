@@ -99,13 +99,13 @@ angular.module('app')
                                             }]
                                     }
                                 })
-                                .state('master.klinik', {
-                                    url: '/klinik',
-                                    templateUrl: 'tpl/m_klinik/index.html',
+                                .state('master.cabang', {
+                                    url: '/cabang',
+                                    templateUrl: 'tpl/m_cabang/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function($ocLazyLoad) {
-                                                return $ocLazyLoad.load('js/controllers/klinik.js');
+                                                return $ocLazyLoad.load('js/controllers/cabang.js');
                                             }]
                                     }
                                 })
