@@ -154,7 +154,11 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function($ocLazyLoad) {
-                                                return $ocLazyLoad.load('js/controllers/barang.js');
+                                                return $ocLazyLoad.load('angularFileUpload').then(
+                                                        function() {
+                                                            return $ocLazyLoad.load('js/controllers/barang.js');
+                                                        }
+                                                );
                                             }]
                                     }
                                 })
