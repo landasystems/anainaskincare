@@ -23,11 +23,11 @@
                         </div>
                         <label class="col-sm-1 control-label">NIP</label>
                         <div class="col-sm-3">
-                            <input st-search="code" class="form-control"/>
+                            <input st-search="kode" class="form-control"/>
                         </div>
                         <label class="col-sm-1 control-label">Nama Pegawai</label>
                         <div class="col-sm-3">
-                            <input st-search="name" class="form-control"/>
+                            <input st-search="nama" class="form-control"/>
                         </div>
                     </div>
                 </div>
@@ -46,12 +46,12 @@
                     </thead>
                     <tbody ng-show="!isLoading">
                         <tr ng-repeat="row in displayed" ng-dblclick="view(row)">
-                            <td>{{row.code}}</td>
-                            <td>{{row.name}}</td>
-                            <td>{{row.telp}}</td>
-                            <td>{{row.address}}</td>
+                            <td>{{row.kode}}</td>
+                            <td>{{row.nama}}</td>
+                            <td>{{row.no_tlp}}</td>
+                            <td>{{row.alamat}}</td>
                             <td>{{row.office_place}}</td>
-                            <td>{{row.roles}}</td>
+                            <td>{{row.jabatan}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ng-show="row.is_deleted == 0"></button>
@@ -79,7 +79,7 @@
 
     <!--FORM-->
 
-    <div class="wrapper-md" ng-show="is_edit == true">
+    <div class="wrapper-md" ng-show="is_edit">
         <div class="panel panel-default">
             <div class="panel-heading">
                 {{formtitle}} 
@@ -95,21 +95,21 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">NIP</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control" ng-model="form.code" ng-disabled="is_view" ng-readonly="is_create == false" required>
+                                        <input type="text" class="form-control" ng-model="form.kode" ng-disabled="is_view" ng-readonly="is_create == false" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Nama Pegawai</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control" ng-model="form.name" ng-disabled="is_view" required>
+                                        <input type="text" class="form-control" ng-model="form.nama" ng-disabled="is_view" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Jenis Kelamin</label>
                                     <div class="col-sm-4">
                                         <div class="btn-group m-r">
-                                            <label class="btn btn-default" ng-model="form.gender" btn-radio="'laki-laki'" required>Laki-laki</label>
-                                            <label class="btn btn-default" ng-model="form.gender" btn-radio="'perempuan'" required>Perempuan</label>
+                                            <label class="btn btn-default" ng-model="form.jenis_kelamin" btn-radio="'laki-laki'" required>Laki-laki</label>
+                                            <label class="btn btn-default" ng-model="form.jenis_kelamin" btn-radio="'perempuan'" required>Perempuan</label>
                                         </div>
                                     </div>
                                 </div>
@@ -117,7 +117,7 @@
                                     <label class="col-sm-2 control-label">Alamat</label>
                                     <div class="col-sm-4">
                                         <div class="btn-group m-r">
-                                            <textarea ng-model="form.address" ng-disabled="is_view"></textarea>
+                                            <textarea ng-model="form.alamat" ng-disabled="is_view"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -125,7 +125,7 @@
                                     <label class="col-sm-2 control-label">No. Telepon</label>
                                     <div class="col-sm-4">
                                         <div class="btn-group m-r">
-                                            <input type="text" class="form-control" ng-model="form.telp" ng-disabled="is_view" required>
+                                            <input type="text" class="form-control" ng-model="form.no_tlp" ng-disabled="is_view" required>
                                         </div>
                                     </div>
                                 </div>
@@ -133,11 +133,11 @@
                                     <label class="col-sm-2 control-label">Email</label>
                                     <div class="col-sm-4">
                                         <div class="btn-group m-r">
-                                            <input type="text" class="form-control" ng-model="form.email" ng-disabled="is_view" required>
+                                            <input type="email" class="form-control" ng-model="form.email" ng-disabled="is_view" required>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group" ng-hide="is_create">
+                                <div class="form-group">
                                     <label class="col-sm-2 control-label">Status</label>
                                     <div class="col-sm-4">
                                         <div class="btn-group m-r">
@@ -155,13 +155,26 @@
                                     <label class="col-sm-2 control-label">Klinik</label>
                                     <div class="col-sm-4">
                                         <div class="btn-group m-r">
-                                            <select stInputEvent="change" ng-model="form.office_place"  ui-select2 st-search="office_place" class="form-control">
+                                            <select stInputEvent="change" ng-model="form.cabang_id" ui-select2 class="form-control">
                                                 <option value="">-Pilih Jenis-</option>
                                                 <option ng-repeat="office in office_place" value="{{office.id}}">{{office.nama}}</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Jabatan</label>
+                                    <div class="col-sm-4">
+                                        <div class="btn-group m-r">
+                                            <select stInputEvent="change" ng-model="form.jabatan" ui-select2 class="form-control">
+                                                <option value="">-Pilih Jenis-</option>
+                                                <option value="dokter">Dokter</option>
+                                                <option value="terapis">Terapis</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                             </td>
                         </tr>
                     </table>

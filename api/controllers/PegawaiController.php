@@ -40,7 +40,6 @@ class PegawaiController extends Controller {
         }
         $verb = Yii::$app->getRequest()->getMethod();
         $allowed = array_map('strtoupper', $verbs);
-//        Yii::error($allowed);
 
         if (!in_array($verb, $allowed)) {
 
@@ -84,7 +83,7 @@ class PegawaiController extends Controller {
                 ->from('m_pegawai as t1, m_cabang as t2')
                 ->where("t1.cabang_id = t2.id")
                 ->orderBy($sort)
-                ->select("t1.id as id,t1.kode as code, t1.nama as name, t1.jenis_kelamin as gender, t1.no_tlp as telp, t1.email as email, t1.alamat as address, t1.jabatan as roles, t2.nama as office_place, t1.is_deleted as is_deleted");
+                ->select("t1.id as id,t1.kode as kode, t1.nama as nama, t1.jenis_kelamin as jenis_kelamin, t1.no_tlp as no_tlp, t1.email as email, t1.alamat as alamat, t1.jabatan as jabatan, t2.nama as office_place, t1.cabang_id as cabang_id, t1.is_deleted as is_deleted");
 
         //filter
         if (isset($params['filter'])) {
@@ -126,7 +125,7 @@ class PegawaiController extends Controller {
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
-        $model = new Roles();
+        $model = new Pegawai();
         $model->attributes = $params;
 
         if ($model->save()) {
@@ -166,7 +165,7 @@ class PegawaiController extends Controller {
     }
 
     protected function findModel($id) {
-        if (($model = Roles::findOne($id)) !== null) {
+        if (($model = Pegawai::findOne($id)) !== null) {
             return $model;
         } else {
 

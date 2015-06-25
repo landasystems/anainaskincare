@@ -35,7 +35,7 @@ class Pegawai extends \yii\db\ActiveRecord
     {
         return [
             [['alamat'], 'string'],
-            [['klinik_id', 'is_deleted'], 'integer'],
+            [['cabang_id', 'is_deleted'], 'integer'],
             [['kode', 'no_tlp'], 'string', 'max' => 25],
             [['nama', 'email'], 'string', 'max' => 45],
             [['jenis_kelamin'], 'string', 'max' => 15],
@@ -57,7 +57,7 @@ class Pegawai extends \yii\db\ActiveRecord
             'email' => 'Email',
             'alamat' => 'Alamat',
             'jabatan' => 'terapis | dokter',
-            'klinik_id' => 'Klinik ID',
+            'cabang_id' => 'Klinik',
             'is_deleted' => 'Is Deleted',
         ];
     }
