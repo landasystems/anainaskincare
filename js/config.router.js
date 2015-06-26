@@ -3,6 +3,8 @@
 /**
  * Config for the router
  */
+
+
 angular.module('app')
         .run(
                 ['$rootScope', '$state', '$stateParams',
@@ -34,6 +36,7 @@ angular.module('app')
                                             }]
                                     }
                                 })
+                                
                                 // others
                                 .state('access', {
                                     url: '/access',
@@ -45,7 +48,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['uiLoad',
                                             function (uiLoad) {
-                                                return uiLoad.load(['js/controllers/signin.js']);
+                                                return uiLoad.load(['js/controllers/site.js']);
                                             }]
                                     }
                                 })
@@ -53,18 +56,112 @@ angular.module('app')
                                     url: '/404',
                                     templateUrl: 'tpl/page_404.html'
                                 })
-                                //master roles
-                                .state('roles', {
-                                    url: '/roles',
+                                //master
+                                .state('master', {
+                                    url: '/master',
                                     templateUrl: 'tpl/app.html'
                                 })
-                                .state('roles.index', {
-                                    url: '/index',
+                                .state('master.pegawai', {
+                                    url: '/pegawai',
+                                    templateUrl: 'tpl/m_pegawai/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load('js/controllers/pegawai.js');
+                                            }]
+                                    }
+                                })
+                                .state('master.roles', {
+                                    url: '/roles',
                                     templateUrl: 'tpl/m_roles/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
                                                 return $ocLazyLoad.load('js/controllers/roles.js');
+                                            }]
+                                    }
+                                })
+                                .state('master.satuan', {
+                                    url: '/satuan',
+                                    templateUrl: 'tpl/m_satuan/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load('js/controllers/satuan.js');
+                                            }]
+                                    }
+                                })
+                                .state('master.pengguna', {
+                                    url: '/pengguna',
+                                    templateUrl: 'tpl/m_user/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function($ocLazyLoad) {
+                                                return $ocLazyLoad.load('js/controllers/pengguna.js');
+                                            }]
+                                    }
+                                })
+                                .state('master.cabang', {
+                                    url: '/cabang',
+                                    templateUrl: 'tpl/m_cabang/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function($ocLazyLoad) {
+                                                return $ocLazyLoad.load('js/controllers/cabang.js');
+                                            }]
+                                    }
+                                })
+                                .state('master.customer', {
+                                    url: '/customer',
+                                    templateUrl: 'tpl/m_customer/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function($ocLazyLoad) {
+                                                return $ocLazyLoad.load('js/controllers/customer.js');
+                                            }]
+                                    }
+                                })
+                                .state('master.supplier', {
+                                    url: '/supplier',
+                                    templateUrl: 'tpl/m_supplier/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function($ocLazyLoad) {
+                                                return $ocLazyLoad.load('js/controllers/supplier.js');
+                                            }]
+                                    }
+                                })
+                                .state('master.karyawan', {
+                                    url: '/karyawan',
+                                    templateUrl: 'tpl/m_karyawan/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function($ocLazyLoad) {
+                                                return $ocLazyLoad.load('js/controllers/karyawan.js');
+                                            }]
+                                    }
+                                })
+                                .state('master.kategori', {
+                                    url: '/kategori',
+                                    templateUrl: 'tpl/m_kategori/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function($ocLazyLoad) {
+                                                return $ocLazyLoad.load('js/controllers/kategori.js');
+                                            }]
+                                    }
+                                })
+                                .state('master.barang', {
+                                    url: '/barang',
+                                    templateUrl: 'tpl/m_barang/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function($ocLazyLoad) {
+                                                return $ocLazyLoad.load('angularFileUpload').then(
+                                                        function() {
+                                                            return $ocLazyLoad.load('js/controllers/barang.js');
+                                                        }
+                                                );
                                             }]
                                     }
                                 })

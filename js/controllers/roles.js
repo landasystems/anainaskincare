@@ -4,7 +4,7 @@ app.controller('rolesCtrl', function ($scope, Data, toaster) {
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
-
+    
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
         $scope.isLoading = true;
@@ -32,22 +32,42 @@ app.controller('rolesCtrl', function ($scope, Data, toaster) {
         $scope.is_edit = true;
         $scope.is_view = false;
         $scope.formtitle = "Form Tambah Data";
-        $scope.form = {};
+        $scope.form = {"akses": {"master": {
+                cabang: false,
+                customer: false,
+                supplier: false,
+                karyawan: false,
+                satuan: false,
+                kategori: false,
+                barang: false,
+                user: false,
+                roles: false,
+            }, "transaksi": {
+                stok_masuk: false,
+                stok_keluar: false,
+            }, "laporan": {
+                kartu_stok: false,
+                bonus_karyawan: false,
+                laba_rugi: false,
+            }}};
     };
     $scope.update = function (form) {
         $scope.is_edit = true;
         $scope.is_view = false;
         $scope.formtitle = "Edit Data : " + form.nama;
         $scope.form = form;
+        $scope.form.akses = JSON.parse($scope.form.akses);
     };
     $scope.view = function (form) {
         $scope.is_edit = true;
         $scope.is_view = true;
         $scope.formtitle = "Lihat Data : " + form.nama;
         $scope.form = form;
+        $scope.form.akses = JSON.parse($scope.form.akses);
     };
     $scope.save = function (form) {
         var url = (form.id > 0) ? 'roles/update/' + form.id : 'roles/create';
+        form.akses = JSON.stringify(form.akses);
         Data.post(url, form).then(function (result) {
             if (result.status == 0) {
                 toaster.pop('error', "Terjadi Kesalahan", result.errors);
@@ -59,6 +79,10 @@ app.controller('rolesCtrl', function ($scope, Data, toaster) {
         });
     };
     $scope.cancel = function () {
+        if (!$scope.is_view){ //hanya waktu edit cancel, di load table lagi
+            $scope.callServer(tableStateRef);
+        }
+            
         $scope.is_edit = false;
         $scope.is_view = false;
     };
@@ -87,5 +111,38 @@ app.controller('rolesCtrl', function ($scope, Data, toaster) {
         }
     };
 
+    $scope.checkMaster = function () {
+        if ($scope.selectMaster) {
+            $scope.selectMaster = true;
+        } else {
+            $scope.selectMaster = false;
+        }
+        
+        angular.forEach($scope.form.akses.master, function ($value, $key) {
+            $scope.form.akses.master[$key] = $scope.selectMaster;
+        });
+    };
+    $scope.checkTransaksi = function () {
+        if ($scope.selectTransaksi) {
+            $scope.selectTransaksi = true;
+        } else {
+            $scope.selectTransaksi = false;
+        }
+        
+        angular.forEach($scope.form.akses.transaksi, function ($value, $key) {
+            $scope.form.akses.transaksi[$key] = $scope.selectTransaksi;
+        });
+    };
+    $scope.checkLaporan = function () {
+        if ($scope.selectLaporan) {
+            $scope.selectLaporan = true;
+        } else {
+            $scope.selectLaporan = false;
+        }
+        
+        angular.forEach($scope.form.akses.laporan, function ($value, $key) {
+            $scope.form.akses.laporan[$key] = $scope.selectLaporan;
+        });
+    };
 
 })
