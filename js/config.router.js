@@ -3,6 +3,8 @@
 /**
  * Config for the router
  */
+
+
 angular.module('app')
         .run(
                 ['$rootScope', '$state', '$stateParams',
@@ -55,7 +57,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['uiLoad',
                                             function (uiLoad) {
-                                                return uiLoad.load(['js/controllers/signin.js']);
+                                                return uiLoad.load(['js/controllers/site.js']);
                                             }]
                                     }
                                 })
