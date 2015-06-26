@@ -3,8 +3,8 @@
 /* Controllers */
 
 angular.module('app')
-        .controller('AppCtrl', ['$scope', '$window',
-            function ($scope, $window) {
+        .controller('AppCtrl', ['$scope', '$window','Data','$state',
+            function ($scope, $window, Data, $state) {
                 // add 'ie' classes to html
                 var isIE = !!navigator.userAgent.match(/MSIE/i);
                 isIE && angular.element($window.document.body).addClass('ie');
@@ -41,4 +41,12 @@ angular.module('app')
                     return (/iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/).test(ua);
                 }
 
+                $scope.logout = function () {
+                    Data.get('site/logout').then(function (results) {
+                        $state.go('access.signin');
+                    });
+                }
+
             }]);
+
+        

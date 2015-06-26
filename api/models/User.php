@@ -7,7 +7,7 @@ use Yii;
 /**
  * This is the model class for table "m_user".
  *
- * @property integer $id
+ * @property integer $idroles_id
  * @property integer $roles_id
  * @property string $nama
  * @property string $username
@@ -57,5 +57,9 @@ class User extends \yii\db\ActiveRecord
             'modified_at' => 'Modified At',
             'modified_by' => 'Modified By',
         ];
+    }
+    
+    public function getRoles() {
+        return $this->hasOne(Roles::className(), ['id' => 'roles_id']);
     }
 }

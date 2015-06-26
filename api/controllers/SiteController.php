@@ -18,6 +18,7 @@ class SiteController extends Controller {
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'login' => ['post'],
+                    'logout' => ['get'],
                     'session' => ['get'],
                 ],
             ]
@@ -51,11 +52,23 @@ class SiteController extends Controller {
         echo json_encode(array('status' => 1, 'data' => array_filter($_SESSION)), JSON_PRETTY_PRINT);
     }
 
+    public function actionLogout() {
+        session_start();
+        session_destroy();
+    }
+    
     public function actionLogin() {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = User::find()->where(['username' => $params['username'], 'password' => sha1($params['password'])])->one();
 
         if (!empty($model)) {
+            session_start();
+            $_SESSION['user']['id'] = $model->id;
+            $_SESSION['user']['username'] = $model->username;
+            $_SESSION['user']['nama'] = $model->nama;
+            $akses = (isset($model->roles->akses)) ? $model->roles->akses : [];
+            $_SESSION['user']['akses'] = json_decode($akses);
+            
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
