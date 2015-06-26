@@ -36,16 +36,7 @@ angular.module('app')
                                             }]
                                     }
                                 })
-                                .state('app.pegawai', {
-                                    url: '/pegawai',
-                                    templateUrl: 'tpl/m_pegawai/index.html',
-                                    resolve: {
-                                        deps: ['$ocLazyLoad',
-                                            function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load('js/controllers/pegawai.js');
-                                            }]
-                                    }
-                                })
+                                
                                 // others
                                 .state('access', {
                                     url: '/access',
@@ -69,6 +60,16 @@ angular.module('app')
                                 .state('master', {
                                     url: '/master',
                                     templateUrl: 'tpl/app.html'
+                                })
+                                .state('master.pegawai', {
+                                    url: '/pegawai',
+                                    templateUrl: 'tpl/m_pegawai/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load('js/controllers/pegawai.js');
+                                            }]
+                                    }
                                 })
                                 .state('master.roles', {
                                     url: '/roles',
@@ -100,13 +101,13 @@ angular.module('app')
                                             }]
                                     }
                                 })
-                                .state('master.klinik', {
-                                    url: '/klinik',
-                                    templateUrl: 'tpl/m_klinik/index.html',
+                                .state('master.cabang', {
+                                    url: '/cabang',
+                                    templateUrl: 'tpl/m_cabang/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function($ocLazyLoad) {
-                                                return $ocLazyLoad.load('js/controllers/klinik.js');
+                                                return $ocLazyLoad.load('js/controllers/cabang.js');
                                             }]
                                     }
                                 })
@@ -156,7 +157,11 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function($ocLazyLoad) {
-                                                return $ocLazyLoad.load('js/controllers/barang.js');
+                                                return $ocLazyLoad.load('angularFileUpload').then(
+                                                        function() {
+                                                            return $ocLazyLoad.load('js/controllers/barang.js');
+                                                        }
+                                                );
                                             }]
                                     }
                                 })

@@ -1,9 +1,13 @@
-app.controller('supplierCtrl', function ($scope, Data, toaster) {
+app.controller('cabangCtrl', function ($scope, Data, toaster) {
     //init data
     var tableStateRef;
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
+
+//    Data.get('barang/satuan').then(function(data) {
+//        $scope.sSatuan = data.satuan;
+//    });
 
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
@@ -20,7 +24,7 @@ app.controller('supplierCtrl', function ($scope, Data, toaster) {
             param['filter'] = tableState.search.predicateObject;
         }
 
-        Data.get('supplier', param).then(function (data) {
+        Data.get('cabang', param).then(function (data) {
             $scope.displayed = data.data;
             tableState.pagination.numberOfPages = Math.round(data.totalItems / limit);
         });
@@ -31,23 +35,23 @@ app.controller('supplierCtrl', function ($scope, Data, toaster) {
     $scope.create = function (form) {
         $scope.is_edit = true;
         $scope.is_view = false;
-        $scope.formtitle = "Form Tambah Data";
+        $scope.formtitle = "Form Tambah Klinik";
         $scope.form = {};
     };
     $scope.update = function (form) {
         $scope.is_edit = true;
         $scope.is_view = false;
-        $scope.formtitle = "Edit Data : " + form.id;
+        $scope.formtitle = "Edit Klinik : " + form.kode + " - " + form.nama;
         $scope.form = form;
     };
     $scope.view = function (form) {
         $scope.is_edit = true;
         $scope.is_view = true;
-        $scope.formtitle = "Lihat Data : " + form.id;
+        $scope.formtitle = "Lihat Klinik : " + form.kode + " - " + form.nama;
         $scope.form = form;
     };
     $scope.save = function (form) {
-        var url = (form.id > 0) ? 'supplier/update/' + form.id : 'supplier/create';
+        var url = (form.id > 0) ? 'cabang/update/' + form.id : 'cabang/create';
         Data.post(url, form).then(function (result) {
             if (result.status == 0) {
                 toaster.pop('error', "Terjadi Kesalahan", result.errors);
@@ -66,7 +70,7 @@ app.controller('supplierCtrl', function ($scope, Data, toaster) {
     $scope.trash = function (row) {
         if (confirm("Apa anda yakin akan MENGHAPUS item ini ?")) {
             row.is_deleted = 1;
-            Data.post('supplier/update/' + row.id, row).then(function (result) {
+            Data.post('cabang/update/' + row.id, row).then(function (result) {
                 $scope.displayed.splice($scope.displayed.indexOf(row), 1);
             });
         }
@@ -74,18 +78,17 @@ app.controller('supplierCtrl', function ($scope, Data, toaster) {
     $scope.restore = function (row) {
         if (confirm("Apa anda yakin akan MERESTORE item ini ?")) {
             row.is_deleted = 0;
-            Data.post('supplier/update/' + row.id, row).then(function (result) {
+            Data.post('cabang/update/' + row.id, row).then(function (result) {
                 $scope.displayed.splice($scope.displayed.indexOf(row), 1);
             });
         }
     };
     $scope.delete = function (row) {
         if (confirm("Apa anda yakin akan MENGHAPUS PERMANENT item ini ?")) {
-            Data.delete('supplier/delete/' + row.id).then(function (result) {
+            Data.delete('cabang/delete/' + row.id).then(function (result) {
                 $scope.displayed.splice($scope.displayed.indexOf(row), 1);
             });
         }
     };
-
 
 })

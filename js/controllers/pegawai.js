@@ -5,6 +5,9 @@ app.controller('pegawaiCtrl', function ($scope, Data, toaster) {
     $scope.is_edit = false;
     $scope.is_view = false;
     $scope.is_create = false;
+    Data.get('pegawai/klinik').then(function(data) {
+        $scope.office_place = data.office_place;
+    });
 
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
@@ -23,6 +26,7 @@ app.controller('pegawaiCtrl', function ($scope, Data, toaster) {
 
         Data.get('pegawai', param).then(function (data) {
             $scope.displayed = data.data;
+//            console.log(data);
             tableState.pagination.numberOfPages = Math.round(data.totalItems / limit);
         });
 
@@ -40,14 +44,14 @@ app.controller('pegawaiCtrl', function ($scope, Data, toaster) {
         $scope.is_edit = true;
         $scope.is_view = false;
         $scope.is_create = false;
-        $scope.formtitle = "Edit Karyawan : " + form.nama;
+        $scope.formtitle = "Edit Karyawan : " + form.name;
         $scope.form = form;
     };
     $scope.view = function (form) {
         $scope.is_edit = true;
         $scope.is_view = true;
         $scope.is_create= false;
-        $scope.formtitle = "Lihat Karyawan : " + form.nama;
+        $scope.formtitle = "Lihat Karyawan : " + form.name;
         $scope.form = form;
     };
     $scope.save = function (form) {
@@ -85,7 +89,7 @@ app.controller('pegawaiCtrl', function ($scope, Data, toaster) {
     };
     $scope.delete = function (row) {
         if (confirm("Apa anda yakin akan MENGHAPUS PERMANENT item ini ?")) {
-            Data.delete('roles/delete/' + row.id).then(function (result) {
+            Data.delete('pegawai/delete/' + row.id).then(function (result) {
                 $scope.displayed.splice($scope.displayed.indexOf(row), 1);
             });
         }
