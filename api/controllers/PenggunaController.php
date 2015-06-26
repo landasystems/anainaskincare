@@ -143,6 +143,7 @@ class PenggunaController extends Controller {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
         $model->attributes = $params;
+        $model->password = sha1($model->password);
 
         if ($model->save()) {
             $this->setHeader(200);
