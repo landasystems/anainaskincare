@@ -100,7 +100,7 @@
                                     <div class="panel panel-info">
                                         <div class="panel-heading">
                                             <label class="i-checks">
-                                                <input type="checkbox" ng-disabled="is_view" ng-model='selectMaster' ng-click="checkMaster()">
+                                                <input type="checkbox" ng-disabled="is_view" ng-model='selectMaster' ng-click="checkAll('master',selectMaster)">
                                                 <i></i>
                                                 Data Master
                                             </label>
@@ -108,28 +108,28 @@
                                         <div class="list-group bg-white">
                                             <div class="list-group-item">
                                                 <label class="i-checks">
-                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.master.cabang">
+                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.master_cabang">
                                                     <i></i>
                                                     Klinik
                                                 </label>
                                             </div>
                                             <div class="list-group-item">
                                                 <label class="i-checks">
-                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.master.customer">
+                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.master_customer">
                                                     <i></i>
                                                     Customer
                                                 </label>
                                             </div>
                                             <div class="list-group-item">
                                                 <label class="i-checks">
-                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.master.supplier">
+                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.master_supplier">
                                                     <i></i>
                                                     Supplier
                                                 </label>
                                             </div>
                                             <div class="list-group-item">
                                                 <label class="i-checks">
-                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.master.karyawan">
+                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.master_karyawan">
                                                     <i></i>
                                                     Karyawan
                                                 </label>
@@ -139,21 +139,21 @@
                                             </div>
                                             <div href="" class="list-group-item m-l">
                                                 <label class="i-checks">
-                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.master.satuan">
+                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.master_satuan">
                                                     <i></i>
                                                     Satuan
                                                 </label>
                                             </div>
                                             <div href="" class="list-group-item m-l">
                                                 <label class="i-checks">
-                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.master.kategori">
+                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.master_kategori">
                                                     <i></i>
                                                     Kategori
                                                 </label>
                                             </div>
                                             <div href="" class="list-group-item m-l">
                                                 <label class="i-checks">
-                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.master.barang">
+                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.master_barang">
                                                     <i></i>
                                                     Barang
                                                 </label>
@@ -163,14 +163,14 @@
                                             </div>
                                             <div href="" class="list-group-item m-l">
                                                 <label class="i-checks">
-                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.master.user">
+                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.master_user">
                                                     <i></i>
                                                     User
                                                 </label>
                                             </div>
                                             <div href="" class="list-group-item m-l">
                                                 <label class="i-checks">
-                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.master.roles">
+                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.master_roles">
                                                     <i></i>
                                                     Hak Akses
                                                 </label>
@@ -182,7 +182,7 @@
                                     <div class="panel panel-info">
                                         <div class="panel-heading">
                                             <label class="i-checks">
-                                                <input type="checkbox" ng-disabled="is_view" ng-model='selectTransaksi' ng-click="checkTransaksi()">
+                                                <input type="checkbox" ng-disabled="is_view" ng-model='selectTransaksi' ng-click="checkAll('transaksi',selectTransaksi)">
                                                 <i></i>
                                                 Transaksi
                                             </label>
@@ -193,14 +193,14 @@
                                             </div>
                                             <div href="" class="list-group-item m-l">
                                                 <label class="i-checks">
-                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.transaksi.stok_masuk">
+                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.transaksi_stok_masuk">
                                                     <i></i>
                                                     Barang Masuk
                                                 </label>
                                             </div>
                                             <div href="" class="list-group-item m-l">
                                                 <label class="i-checks">
-                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.transaksi.stok_keluar">
+                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.transaksi_stok_keluar">
                                                     <i></i>
                                                     Barang Keluar
                                                 </label>
@@ -212,7 +212,7 @@
                                     <div class="panel panel-info">
                                         <div class="panel-heading">
                                             <label class="i-checks">
-                                                <input type="checkbox" ng-disabled="is_view" ng-model='selectLaporan' ng-click="checkLaporan()">
+                                                <input type="checkbox" ng-disabled="is_view" ng-model='selectLaporan' ng-click="checkAll('laporan',selectLaporan)">
                                                 <i></i>
                                                 Laporan
                                             </label>
@@ -220,21 +220,21 @@
                                         <div class="list-group bg-white">
                                             <div href="" class="list-group-item m-l">
                                                 <label class="i-checks">
-                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.laporan.kartu_stok">
+                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.laporan_kartu_stok">
                                                     <i></i>
                                                     Kartu Stok
                                                 </label>
                                             </div>
                                             <div href="" class="list-group-item m-l">
                                                 <label class="i-checks">
-                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.laporan.bonus_karyawan">
+                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.laporan_bonus_karyawan">
                                                     <i></i>
                                                     Bonus Karyawan
                                                 </label>
                                             </div>
                                             <div href="" class="list-group-item m-l">
                                                 <label class="i-checks">
-                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.laporan.laba_rugi">
+                                                    <input type="checkbox" ng-disabled="is_view" ng-model="form.akses.laporan_laba_rugi">
                                                     <i></i>
                                                     Laba/ Rugi
                                                 </label>

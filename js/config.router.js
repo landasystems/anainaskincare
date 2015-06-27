@@ -4,12 +4,21 @@ angular.module('app')
                     function ($rootScope, $state, $stateParams, Data) {
                         $rootScope.$state = $state;
                         $rootScope.$stateParams = $stateParams;
-
                         //pengecekan login
-                        $rootScope.$on("$stateChangeStart", function () {
+                        $rootScope.$on("$stateChangeStart", function (event, toState) {
+                            var globalmenu = ['app.dashboard'];
                             Data.get('site/session').then(function (results) {
                                 if (typeof results.data.user != "undefined") {
                                     $rootScope.user = results.data.user;
+                                    if (results.data.user.akses[(toState.name).replace(".", "_")]) { // jika punya hak akses, return true
+
+                                    } else {
+                                        if (globalmenu.indexOf(toState.name) >= 0) { //menu global menu tidak di redirect
+
+                                        } else {
+                                            $state.go("access.forbidden");
+                                        }
+                                    }
                                 } else {
                                     $state.go("access.signin");
                                 }
@@ -59,6 +68,10 @@ angular.module('app')
                                 .state('access.404', {
                                     url: '/404',
                                     templateUrl: 'tpl/page_404.html'
+                                })
+                                .state('access.forbidden', {
+                                    url: '/forbidden',
+                                    templateUrl: 'tpl/page_forbidden.html'
                                 })
                                 //master
                                 .state('master', {
