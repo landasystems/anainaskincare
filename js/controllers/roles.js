@@ -4,7 +4,7 @@ app.controller('rolesCtrl', function ($scope, Data, toaster) {
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
-    
+
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
         $scope.isLoading = true;
@@ -32,24 +32,24 @@ app.controller('rolesCtrl', function ($scope, Data, toaster) {
         $scope.is_edit = true;
         $scope.is_view = false;
         $scope.formtitle = "Form Tambah Data";
-        $scope.form = {"akses": {"master": {
-                cabang: false,
-                customer: false,
-                supplier: false,
-                karyawan: false,
-                satuan: false,
-                kategori: false,
-                barang: false,
-                user: false,
-                roles: false,
-            }, "transaksi": {
-                stok_masuk: false,
-                stok_keluar: false,
-            }, "laporan": {
-                kartu_stok: false,
-                bonus_karyawan: false,
-                laba_rugi: false,
-            }}};
+        $scope.form = {"akses": {
+                "master_cabang": false,
+                "master_customer": false,
+                "master_supplier": false,
+                "master_karyawan": false,
+                "master_satuan": false,
+                "master_kategori": false,
+                "master_barang": false,
+                "master_user": false,
+                "master_roles": false,
+                "transaksi_stok_masuk": false,
+                "transaksi_stok_keluar": false,
+                "laporan_kartu_stok": false,
+                "laporan_bonus_karyawan": false,
+                "laporan_laba_rugi": false,
+            }};
+
+        console.log($scope.form);
     };
     $scope.update = function (form) {
         $scope.is_edit = true;
@@ -79,10 +79,10 @@ app.controller('rolesCtrl', function ($scope, Data, toaster) {
         });
     };
     $scope.cancel = function () {
-        if (!$scope.is_view){ //hanya waktu edit cancel, di load table lagi
+        if (!$scope.is_view) { //hanya waktu edit cancel, di load table lagi
             $scope.callServer(tableStateRef);
         }
-            
+
         $scope.is_edit = false;
         $scope.is_view = false;
     };
@@ -111,37 +111,10 @@ app.controller('rolesCtrl', function ($scope, Data, toaster) {
         }
     };
 
-    $scope.checkMaster = function () {
-        if ($scope.selectMaster) {
-            $scope.selectMaster = true;
-        } else {
-            $scope.selectMaster = false;
-        }
-        
-        angular.forEach($scope.form.akses.master, function ($value, $key) {
-            $scope.form.akses.master[$key] = $scope.selectMaster;
-        });
-    };
-    $scope.checkTransaksi = function () {
-        if ($scope.selectTransaksi) {
-            $scope.selectTransaksi = true;
-        } else {
-            $scope.selectTransaksi = false;
-        }
-        
-        angular.forEach($scope.form.akses.transaksi, function ($value, $key) {
-            $scope.form.akses.transaksi[$key] = $scope.selectTransaksi;
-        });
-    };
-    $scope.checkLaporan = function () {
-        if ($scope.selectLaporan) {
-            $scope.selectLaporan = true;
-        } else {
-            $scope.selectLaporan = false;
-        }
-        
-        angular.forEach($scope.form.akses.laporan, function ($value, $key) {
-            $scope.form.akses.laporan[$key] = $scope.selectLaporan;
+    $scope.checkAll = function (module, valueCheck) {
+        angular.forEach($scope.form.akses, function ($value, $key) {
+            if ($key.indexOf(module) >= 0)
+                $scope.form.akses[$key] = valueCheck;
         });
     };
 
