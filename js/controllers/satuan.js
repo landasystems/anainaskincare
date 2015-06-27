@@ -59,6 +59,9 @@ app.controller('satuanCtrl', function ($scope, Data, toaster) {
         });
     };
     $scope.cancel = function () {
+        if (!$scope.is_view){ //hanya waktu edit cancel, di load table lagi
+            $scope.callServer(tableStateRef);
+        }
         $scope.is_edit = false;
         $scope.is_view = false;
     };
