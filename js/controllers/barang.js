@@ -1,9 +1,29 @@
-app.controller('barangCtrl', function($scope, Data, toaster) {
-    //init data
+app.controller('barangCtrl', function($scope, Data, toaster, FileUploader) {
+    var kode_unik = new Date().getUTCMilliseconds() + "" + (Math.floor(Math.random() * (20 - 10 + 1)) + 10);
+    var uploader = $scope.uploader = new FileUploader({
+        url: 'js/controllers/upload.php?folder=barang&kode=' + kode_unik,
+        queueLimit: 1,
+        removeAfterUpload: true
+    });
+    // FILTERS
+    uploader.filters.push({
+        name: 'imageFilter',
+        fn: function(item) {
+            var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+            return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+        }
+    });
+
+
+
+    console.info('uploader', uploader);
+
+    //init data;
     var tableStateRef;
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
+    $scope.is_create = false;
 
     Data.get('barang/kategori').then(function(data) {
         $scope.sKategori = data.kategori;
@@ -36,12 +56,15 @@ app.controller('barangCtrl', function($scope, Data, toaster) {
     };
 
     $scope.create = function(form) {
+        $scope.is_create = true;
         $scope.is_edit = true;
         $scope.is_view = false;
         $scope.formtitle = "Form Tambah Data";
         $scope.form = {};
+      
     };
     $scope.update = function(form) {
+        $scope.is_create = false;
         $scope.is_edit = true;
         $scope.is_view = false;
         $scope.formtitle = "Edit Data : " + form.nama;
@@ -54,7 +77,9 @@ app.controller('barangCtrl', function($scope, Data, toaster) {
         $scope.form = form;
     };
     $scope.save = function(form) {
-        var url = (form.id > 0) ? 'barang/update/' + form.id : 'barang/create';
+        $scope.uploader.uploadAll();
+        form.foto = kode_unik + "-" + $scope.uploader.queue[0].file.name;
+        var url = ($scope.is_create == true) ? 'barang/create/' : 'barang/update/' + form.id;
         Data.post(url, form).then(function(result) {
             if (result.status == 0) {
                 toaster.pop('error', "Terjadi Kesalahan", result.errors);
@@ -66,25 +91,12 @@ app.controller('barangCtrl', function($scope, Data, toaster) {
         });
     };
     $scope.cancel = function() {
+      if (!$scope.is_view){ //hanya waktu edit cancel, di load table lagi
+            $scope.callServer(tableStateRef);
+        }
+            
         $scope.is_edit = false;
         $scope.is_view = false;
-    };
-
-    $scope.trash = function(row) {
-        if (confirm("Apa anda yakin akan MENGHAPUS item ini ?")) {
-            row.is_deleted = 1;
-            Data.post('barang/update/' + row.id, row).then(function(result) {
-                $scope.displayed.splice($scope.displayed.indexOf(row), 1);
-            });
-        }
-    };
-    $scope.restore = function(row) {
-        if (confirm("Apa anda yakin akan MERESTORE item ini ?")) {
-            row.is_deleted = 0;
-            Data.post('barang/update/' + row.id, row).then(function(result) {
-                $scope.displayed.splice($scope.displayed.indexOf(row), 1);
-            });
-        }
     };
     $scope.delete = function(row) {
         if (confirm("Apa anda yakin akan MENGHAPUS PERMANENT item ini ?")) {

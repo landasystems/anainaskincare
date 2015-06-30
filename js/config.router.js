@@ -1,14 +1,29 @@
-'use strict';
-
-/**
- * Config for the router
- */
 angular.module('app')
         .run(
-                ['$rootScope', '$state', '$stateParams',
-                    function ($rootScope, $state, $stateParams) {
+                ['$rootScope', '$state', '$stateParams', 'Data',
+                    function ($rootScope, $state, $stateParams, Data) {
                         $rootScope.$state = $state;
                         $rootScope.$stateParams = $stateParams;
+                        //pengecekan login
+                        $rootScope.$on("$stateChangeStart", function (event, toState) {
+                            var globalmenu = ['app.dashboard'];
+                            Data.get('site/session').then(function (results) {
+                                if (typeof results.data.user != "undefined") {
+                                    $rootScope.user = results.data.user;
+                                    if (results.data.user.akses[(toState.name).replace(".", "_")]) { // jika punya hak akses, return true
+
+                                    } else {
+                                        if (globalmenu.indexOf(toState.name) >= 0) { //menu global menu tidak di redirect
+
+                                        } else {
+                                            $state.go("access.forbidden");
+                                        }
+                                    }
+                                } else {
+                                    $state.go("access.signin");
+                                }
+                            });
+                        });
                     }
                 ]
                 )
@@ -34,7 +49,7 @@ angular.module('app')
                                             }]
                                     }
                                 })
-                                
+
                                 // others
                                 .state('access', {
                                     url: '/access',
@@ -46,13 +61,17 @@ angular.module('app')
                                     resolve: {
                                         deps: ['uiLoad',
                                             function (uiLoad) {
-                                                return uiLoad.load(['js/controllers/signin.js']);
+                                                return uiLoad.load(['js/controllers/site.js']);
                                             }]
                                     }
                                 })
                                 .state('access.404', {
                                     url: '/404',
                                     templateUrl: 'tpl/page_404.html'
+                                })
+                                .state('access.forbidden', {
+                                    url: '/forbidden',
+                                    templateUrl: 'tpl/page_forbidden.html'
                                 })
                                 //master
                                 .state('master', {
@@ -89,12 +108,12 @@ angular.module('app')
                                             }]
                                     }
                                 })
-                                .state('master.pengguna', {
+                                .state('master.user', {
                                     url: '/pengguna',
                                     templateUrl: 'tpl/m_user/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function($ocLazyLoad) {
+                                            function ($ocLazyLoad) {
                                                 return $ocLazyLoad.load('js/controllers/pengguna.js');
                                             }]
                                     }
@@ -104,7 +123,7 @@ angular.module('app')
                                     templateUrl: 'tpl/m_cabang/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function($ocLazyLoad) {
+                                            function ($ocLazyLoad) {
                                                 return $ocLazyLoad.load('js/controllers/cabang.js');
                                             }]
                                     }
@@ -114,7 +133,7 @@ angular.module('app')
                                     templateUrl: 'tpl/m_customer/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function($ocLazyLoad) {
+                                            function ($ocLazyLoad) {
                                                 return $ocLazyLoad.load('js/controllers/customer.js');
                                             }]
                                     }
@@ -124,7 +143,7 @@ angular.module('app')
                                     templateUrl: 'tpl/m_supplier/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function($ocLazyLoad) {
+                                            function ($ocLazyLoad) {
                                                 return $ocLazyLoad.load('js/controllers/supplier.js');
                                             }]
                                     }
@@ -134,7 +153,7 @@ angular.module('app')
                                     templateUrl: 'tpl/m_karyawan/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function($ocLazyLoad) {
+                                            function ($ocLazyLoad) {
                                                 return $ocLazyLoad.load('js/controllers/karyawan.js');
                                             }]
                                     }
@@ -144,7 +163,7 @@ angular.module('app')
                                     templateUrl: 'tpl/m_kategori/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function($ocLazyLoad) {
+                                            function ($ocLazyLoad) {
                                                 return $ocLazyLoad.load('js/controllers/kategori.js');
                                             }]
                                     }
@@ -154,11 +173,140 @@ angular.module('app')
                                     templateUrl: 'tpl/m_barang/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function($ocLazyLoad) {
-                                                return $ocLazyLoad.load('js/controllers/barang.js');
+                                            function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load('angularFileUpload').then(
+                                                        function () {
+                                                            return $ocLazyLoad.load('js/controllers/barang.js');
+                                                        }
+                                                );
                                             }]
                                     }
                                 })
+                                  // Transaksi
+                                .state('transaksi', {
+                                    url: '/trans',
+                                    templateUrl: 'tpl/app.html'
+                                })
+                                //
+                                 .state('transaksi.stokmasuk', {
+                                    url: '/masuk',
+                                    templateUrl: 'tpl/t_masuk/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load('js/controllers/t_masuk.js');
+                                            }]
+                                    }
+                                })
+                                 .state('transaksi.stokkeluar', {
+                                    url: '/keluar',
+                                    templateUrl: 'tpl/t_keluar/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load('js/controllers/t_keluar.js');
+                                            }]
+                                    }
+                                })
+                                 .state('transaksi.bayarhutang', {
+                                    url: '/bayarhutang',
+                                    templateUrl: 'tpl/t_bayarhutang/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load('js/controllers/t_bayarhutang.js');
+                                            }]
+                                    }
+                                })
+                                 .state('transaksi.returpembelian', {
+                                    url: '/returpembelian',
+                                    templateUrl: 'tpl/t_returpembelian/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load('js/controllers/t_returpembelian.js');
+                                            }]
+                                    }
+                                })
+                                 .state('transaksi.pembelian', {
+                                    url: '/pembelian',
+                                    templateUrl: 'tpl/t_pembelian/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load('js/controllers/t_pembelian.js');
+                                            }]
+                                    }
+                                })
+                                 .state('transaksi.penjualan', {
+                                    url: '/penjualan',
+                                    templateUrl: 'tpl/t_penjualan/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load('js/controllers/t_penjualan.js');
+                                            }]
+                                    }
+                                })
+                                 .state('transaksi.bayarpiutang', {
+                                    url: '/bayarpiutang',
+                                    templateUrl: 'tpl/t_bayarpiutang/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load('js/controllers/t_bayarpiutang.js');
+                                            }]
+                                    }
+                                })
+                                 .state('transaksi.returpenjualan', {
+                                    url: '/returpenjualan',
+                                    templateUrl: 'tpl/t_returpenjualan/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load('js/controllers/t_returpenjualan.js');
+                                            }]
+                                    }
+                                })
+                                
+                                 // Transaksi
+                                .state('laporan', {
+                                    url: '/laporan',
+                                    templateUrl: 'tpl/app.html'
+                                })
+                                //
+                                .state('laporan.kartustok', {
+                                    url: '/kartustok',
+                                    templateUrl: 'tpl/l_kartustok/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load('js/controllers/l_kartustok.js');
+                                            }]
+                                    }
+                                })
+                                .state('laporan.bonuskaryawan', {
+                                    url: '/bonuskaryawan',
+                                    templateUrl: 'tpl/l_bonuskaryawan/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load('js/controllers/l_bonuskaryawan.js');
+                                            }]
+                                    }
+                                })
+                                .state('laporan.labarugi', {
+                                    url: '/labarugi',
+                                    templateUrl: 'tpl/l_labarugi/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load('js/controllers/l_labarugi.js');
+                                            }]
+                                    }
+                                })
+                                
+                                
                     }
                 ]
                 );
