@@ -1,7 +1,12 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
+app.controller('l_bonuskaryawanCtrl', function($scope, Data, toaster) {
+    
+    $scope.form = {};
+    
+    Data.get('cabang/listcabang').then(function(data) {
+        $scope.listcabang = data.data;
+    });
+    
+    Data.get('pegawai/listpegawai').then(function(data) {
+        $scope.listpegawai = data.data;
+    });
+});

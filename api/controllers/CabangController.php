@@ -22,6 +22,7 @@ class CabangController extends Controller {
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
+                    'listcabang' => ['get'],
                 ],
             ]
         ];
@@ -48,6 +49,20 @@ class CabangController extends Controller {
         }
 
         return true;
+    }
+
+    public function actionListcabang() {
+        $query = new Query;
+        $query->from('m_cabang')
+                ->select("*")
+                ->where("is_deleted = 0");
+
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'data' => $models));
     }
 
     public function actionIndex() {
