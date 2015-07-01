@@ -24,6 +24,7 @@ class StokkeluarController extends Controller {
                     'update' => ['post'],
                     'delete' => ['delete'],
                     'cabang' => ['get'],
+                    'product' => ['get'],
                 ],
             ]
         ];
@@ -54,6 +55,20 @@ class StokkeluarController extends Controller {
     public function actionCabang() {
         $query = new Query;
         $query->from('m_cabang')
+                ->select("*")
+                ->where("is_deleted = 0");
+
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'data' => $models));
+    }
+
+    public function actionProduct() {
+        $query = new Query;
+        $query->from('m_produk')
                 ->select("*")
                 ->where("is_deleted = 0");
 
@@ -116,17 +131,32 @@ class StokkeluarController extends Controller {
     public function actionView($id) {
 
         $model = $this->findModel($id);
+        $det = StokKeluarDet::find()
+                ->where(['stok_keluar_id' => $models['id']])
+                ->all();
+        
+        $detail = array();
+        foreach ($det as $val) {
+            $detail[] = $val->attributes;
+        }
 
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
+        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes),'detail' => $detail) , JSON_PRETTY_PRINT);
     }
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
-        $model = new Supplier();
-        $model->attributes = $params;
+        $model = new StokKeluar();
+        $model->attributes = $params['stokkeluar'];
 
         if ($model->save()) {
+            $detailskeluar = $param['detailskeluar'];
+            foreach ($detailskeluar as $val) {
+                $det = new StokKeluarDet();
+                $det->attributes = $val;
+                $det->stok_keluar_id = $model->id;
+                $det->save();
+            }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -151,6 +181,7 @@ class StokkeluarController extends Controller {
 
     public function actionDelete($id) {
         $model = $this->findModel($id);
+        $deleteDetail = StokKeluarDet::deleteAll(['stok_keluar_id' => $id]);
 
         if ($model->delete()) {
             $this->setHeader(200);
@@ -163,7 +194,7 @@ class StokkeluarController extends Controller {
     }
 
     protected function findModel($id) {
-        if (($model = Supplier::findOne($id)) !== null) {
+        if (($model = StokKeluar::findOne($id)) !== null) {
             return $model;
         } else {
 
