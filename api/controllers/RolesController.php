@@ -19,6 +19,7 @@ class RolesController extends Controller {
                 'actions' => [
                     'index' => ['get'],
                     'view' => ['get'],
+                    'excel' => ['get'],
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
@@ -182,6 +183,14 @@ class RolesController extends Controller {
             501 => 'Not Implemented',
         );
         return (isset($codes[$status])) ? $codes[$status] : '';
+    }
+
+    public function actionExcel() {
+//        $encode = "\xEF\xBB\xBF"; // UTF-8 BOM
+//        $content = $encode . "aa";
+//        Yii::$app
+////var_dump($content);
+//        Yii::$app->getRequest()->sendFile('aa.xls', $content, "text/csv; charset=UTF-8", false);
     }
 
 }
