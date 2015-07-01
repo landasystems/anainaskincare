@@ -66,7 +66,7 @@ class SiteController extends Controller {
             $_SESSION['user']['id'] = $model->id;
             $_SESSION['user']['username'] = $model->username;
             $_SESSION['user']['nama'] = $model->nama;
-            $akses = (isset($model->roles->akses)) ? $model->roles->akses : [];
+            $akses = (isset($model->roles->akses)) ? $model->roles->akses : '[]';
             $_SESSION['user']['akses'] = json_decode($akses);
             
             $this->setHeader(200);
