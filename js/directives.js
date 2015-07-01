@@ -1,3 +1,11 @@
+/* Html from JSON*/
+angular.module('app')
+        .filter('thisHtml', ['$sce', function($sce) {
+                return function(text) {
+                    return $sce.trustAsHtml(text);
+                };
+            }]);
+
 /*pagination text*/
 angular.module('app')
         .directive('pageSelect', function() {

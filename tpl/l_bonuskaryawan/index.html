@@ -31,7 +31,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Tanggal</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control datepicker" datepicker close-text="Close" close-on-date-selection=true ng-model="form.tanggal" required>
+                                <input type="text" class="form-control datepicker" ng-model="form.tanggal" required>
                             </div>
                         </div>
                     </div>
@@ -39,12 +39,50 @@
                     <center style="width: 100%">
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <button type="submit" class="btn btn-success fa fa-file-excel-o"  ng-disabled="landaform.$invalid"  ng-click="cancel(form)">&nbsp;Export Excel</button>
-                                <button type="submit" class="btn btn-primary fa  fa-search" ng-disabled="landaform.$invalid" ng-click="save(form)">&nbsp;Tampilkan</button>
+                                <button type="submit" class="btn btn-success fa fa-file-excel-o"  ng-disabled="landaform.$invalid"  ng-click="export(form)">&nbsp;Export Excel</button>
+                                <button type="submit" class="btn btn-primary fa  fa-search" ng-disabled="landaform.$invalid" ng-click="view(form)">&nbsp;Tampilkan</button>
                             </div>
                         </div>
                     </center>	
                 </form>
+                <div ng-show="detail_laporan" style="margin-top: 50px;">
+                    <center>
+                        <h4>LAPORAN BONUS KARYAWAN ANAINA SKIN CARE</h4>
+                        <h5>CABANG : SEMUA CABANG</h5>
+                        <h5>PERIODE : </h5>
+                    </center>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <table class="table table-bordered ">
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Kode Transaksi</th>
+                                <th>Produk</th>
+                                <th>Jabatan</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="list in list_detail">
+                            <tr>
+                                <td colspan="4"><b>{{list.title.nama}}</b></td>
+                                <td><b>{{list.title.sub_total| currency}}</b></td>
+                            </tr>
+                            <tr ng-repeat="detail in list.body">
+                                <td>{{detail.tanggal| date}}</td>
+                                <td>{{detail.kode}}</td>
+                                <td>{{detail.produk}}</td>
+                                <td>{{detail.jabatan}}</td>
+                                <td>{{detail.fee| currency}}</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4" align="right"><b>Total</b></td>
+                                <td><b>{{total| currency}}</b></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
