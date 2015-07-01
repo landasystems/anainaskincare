@@ -186,11 +186,11 @@ class RolesController extends Controller {
     }
 
     public function actionExcel() {
-        $encode = "\xEF\xBB\xBF"; // UTF-8 BOM
-        $content = $encode . "aa";
-        Yii::$app
-//var_dump($content);
-        Yii::$app->getRequest()->sendFile('aa.xls', $content, "text/csv; charset=UTF-8", false);
+//        $encode = "\xEF\xBB\xBF"; // UTF-8 BOM
+//        $content = $encode . "aa";
+//        Yii::$app
+////var_dump($content);
+//        Yii::$app->getRequest()->sendFile('aa.xls', $content, "text/csv; charset=UTF-8", false);
     }
 
 }
