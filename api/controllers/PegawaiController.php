@@ -24,6 +24,7 @@ class PegawaiController extends Controller {
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
+                    'listpegawaicabang' => ['get'],
                     'listpegawai' => ['get'],
                 ],
             ]
@@ -57,6 +58,25 @@ class PegawaiController extends Controller {
         $query->from('m_pegawai')
                 ->select("*")
                 ->where("is_deleted = 0");
+
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'data' => $models));
+    }
+
+    public function actionListpegawaicabang() {
+        $id = $_GET['id'];
+        $criteria = '';
+        if (!empty($id)) {
+            $criteria = 'and cabang_id="' . $id . '"';
+        }
+        $query = new Query;
+        $query->from('m_pegawai')
+                ->select("*")
+                ->where("is_deleted = 0 $criteria");
 
         $command = $query->createCommand();
         $models = $command->queryAll();
