@@ -53,13 +53,13 @@
                             <div class="col-xs-6">
                                 <div class="m-l-xs m-t-xs m-b-xs font-bold">Inventory</div>
                                 <ul class="list-unstyled l-h-2x">
-                                    <li>
+                                    <li ng-show="user.akses.master_satuan">
                                         <a ui-sref="master.satuan"><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Satuan</a>
                                     </li>
-                                    <li>
+                                    <li ng-show='user.akses.master_kategori'>
                                         <a ui-sref="master.kategori"><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Kategori</a>
                                     </li>
-                                    <li>
+                                    <li ng-show='user.akses.master_barang'>
                                         <a ui-sref="master.barang"><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Barang</a>
                                     </li>
                                 </ul>
@@ -67,10 +67,10 @@
                             <div class="col-xs-6">
                                 <div class="m-l-xs m-t-xs m-b-xs font-bold">Pengguna</div>
                                 <ul class="list-unstyled l-h-2x">
-                                    <li>
-                                        <a ui-sref="master.pengguna"><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>User</a>
+                                    <li ng-show='user.akses.master_user'>
+                                        <a ui-sref="master.user"><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>User</a>
                                     </li>
-                                    <li>
+                                    <li ng-show='user.akses.master_roles'>
                                         <a ui-sref="master.roles"><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Hak Akses</a>
                                     </li>
                                 </ul>
@@ -92,11 +92,11 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <ul class="list-unstyled l-h-2x">
-                                    <li>
-                                        <a href><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Keluar</a>
+                                    <li ng-show="user.akses.transaksi_stokkeluar">
+                                        <a ui-sref='transaksi.stokkeluar'><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Keluar</a>
                                     </li>
-                                    <li>
-                                        <a href><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Masuk</a>
+                                    <li ng-show="user.akses.transaksi_stokmasuk">
+                                        <a ui-sref='transaksi.stokmasuk'><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Masuk</a>
                                     </li>
                                 </ul>
                             </div>
@@ -107,14 +107,14 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <ul class="list-unstyled l-h-2x">
-                                    <li>
-                                        <a href><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Pembelian</a>
+                                    <li ng-show="user.akses.transaksi_pembelian">
+                                        <a ui-sref='transaksi.pembelian'><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Pembelian</a>
                                     </li>
-                                    <li>
-                                        <a href><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Pembayaran Hutang</a>
+                                    <li ng-show="user.akses.transaksi_bayarhutang">
+                                        <a ui-sref='transaksi.bayarhutang'><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Pembayaran Hutang</a>
                                     </li>
-                                    <li>
-                                        <a href><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Retur</a>
+                                    <li ng-show="user.akses.transaksi_returpembelian">
+                                        <a ui-sref='transaksi.returpembelian'><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Retur Pembelian</a>
                                     </li>
                                 </ul>
                             </div>
@@ -125,14 +125,14 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <ul class="list-unstyled l-h-2x">
-                                    <li>
-                                        <a href><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Penjualan</a>
+                                    <li ng-show="user.akses.transaksi_penjualan">
+                                        <a ui-sref="transaksi.penjualan"><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Penjualan</a>
                                     </li>
-                                    <li>
-                                        <a href><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Pembayaran Piutang</a>
+                                    <li ng-show="user.akses.transaksi_bayarpiutang">
+                                        <a ui-sref="transaksi.bayarpiutang"><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Pembayaran Piutang</a>
                                     </li>
-                                    <li>
-                                        <a href><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Retur</a>
+                                    <li ng-show="user.akses.transaksi_returpenjualan">
+                                        <a ui-sref="transaksi.returpenjualan"><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Retur Penjualan</a>
                                     </li>
                                 </ul>
                             </div>
@@ -151,14 +151,14 @@
                         <div class="row">
                             <div class="col-xs-6">
                                 <ul class="list-unstyled l-h-2x">
-                                    <li>
-                                        <a href><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Kartu Stok</a>
+                                    <li ng-show="user.akses.laporan_kartustok">
+                                        <a ui-sref='laporan.kartustok'><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Kartu Stok</a>
                                     </li>
-                                    <li>
-                                        <a href><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Bonus Karyawan</a>
+                                    <li ng-show='user.akses.laporan_bonuskaryawan'>
+                                        <a ui-sref='laporan.bonuskaryawan'><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Bonus Karyawan</a>
                                     </li>
-                                    <li>
-                                        <a href><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Laba/ Rugi</a>
+                                    <li ng-show='user.akses.laporan_labarugi'>
+                                        <a ui-sref='laporan.labarugi'><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Laba/ Rugi</a>
                                     </li>
                                 </ul>
                             </div>

@@ -3,14 +3,15 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Cabang;
+use app\models\StokKeluar;
+use app\models\StokKeluarDet;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\db\Query;
 
-class CabangController extends Controller {
+class StokkeluarController extends Controller {
 
     public function behaviors() {
         return [
@@ -22,7 +23,7 @@ class CabangController extends Controller {
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
-                    'listcabang' => ['get'],
+                    'cabang' => ['get'],
                 ],
             ]
         ];
@@ -32,14 +33,13 @@ class CabangController extends Controller {
         $action = $event->id;
         if (isset($this->actions[$action])) {
             $verbs = $this->actions[$action];
-        } elseif (isset($this->actions['*'])) {
+        } elseif (excel(isset($this->actions['*']))) {
             $verbs = $this->actions['*'];
         } else {
             return $event->isValid;
         }
         $verb = Yii::$app->getRequest()->getMethod();
         $allowed = array_map('strtoupper', $verbs);
-//        Yii::error($allowed);
 
         if (!in_array($verb, $allowed)) {
 
@@ -51,7 +51,7 @@ class CabangController extends Controller {
         return true;
     }
 
-    public function actionListcabang() {
+    public function actionCabang() {
         $query = new Query;
         $query->from('m_cabang')
                 ->select("*")
@@ -69,17 +69,15 @@ class CabangController extends Controller {
         //init variable
         $params = $_REQUEST;
         $filter = array();
-        $sort = "m_cabang.kode ASC";
+        $sort = "stok_keluar.id ASC";
         $offset = 0;
         $limit = 10;
-        //        Yii::error($params);
-        //limit & offset pagination
+
         if (isset($params['limit']))
             $limit = $params['limit'];
         if (isset($params['offset']))
             $offset = $params['offset'];
 
-        //sorting
         if (isset($params['sort'])) {
             $sort = $params['sort'];
             if (isset($params['order'])) {
@@ -94,11 +92,9 @@ class CabangController extends Controller {
         $query = new Query;
         $query->offset($offset)
                 ->limit($limit)
-//                ->select('m_user.id as id', 'm_roles.nama as roles')
-                ->from('m_cabang')
-//                ->where('')
+                ->from(['stok_keluar', 'm_cabang'])
                 ->orderBy($sort)
-                ->select("*");
+                ->select("stok_keluar.kode, stok_keluar.tanggal, m_cabang.nama as cabang, stok_keluar.keterangan, stok_keluar.total");
 
         //filter
         if (isset($params['filter'])) {
@@ -127,7 +123,7 @@ class CabangController extends Controller {
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
-        $model = new Cabang();
+        $model = new Supplier();
         $model->attributes = $params;
 
         if ($model->save()) {
@@ -167,7 +163,7 @@ class CabangController extends Controller {
     }
 
     protected function findModel($id) {
-        if (($model = Cabang::findOne($id)) !== null) {
+        if (($model = Supplier::findOne($id)) !== null) {
             return $model;
         } else {
 

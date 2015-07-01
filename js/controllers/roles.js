@@ -42,11 +42,17 @@ app.controller('rolesCtrl', function ($scope, Data, toaster) {
                 "master_barang": false,
                 "master_user": false,
                 "master_roles": false,
-                "transaksi_stok_masuk": false,
-                "transaksi_stok_keluar": false,
-                "laporan_kartu_stok": false,
-                "laporan_bonus_karyawan": false,
-                "laporan_laba_rugi": false,
+                "transaksi_stokmasuk": false,
+                "transaksi_stokkeluar": false,
+                "transaksi_pembelian": false,
+                "transaksi_bayarhutang": false,
+                "transaksi_returpembelian": false,
+                "transaksi_penjualan": false,
+                "transaksi_bayarpiutang": false,
+                "transaksi_returpenjualan": false,
+                "laporan_kartustok": false,
+                "laporan_bonuskaryawan": false,
+                "laporan_labarugi": false,
             }};
 
         console.log($scope.form);
