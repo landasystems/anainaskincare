@@ -16,7 +16,7 @@ class LaporanController extends Controller {
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'bonus' => ['get'],
+                    'bonus' => ['post'],
                 ],
             ]
         ];
@@ -47,12 +47,34 @@ class LaporanController extends Controller {
 
     public function actionBonus() {
         $params = json_decode(file_get_contents("php://input"), true);
+        $detail = array();
+        $criteria = '';
+
+        if (!empty($params['cabang_id'])) {
+            $cbg = \app\models\Cabang::findOne(['id' => $params['cabang_id']]);
+            $detail['cabang'] = strtoupper($cbg->nama);
+            $criteria .= 'and penjualan.cabang_id = ' . $params['cabang_id'];
+        } else {
+            $detail['cabang'] = 'SEMUA CABANG';
+        }
+
+        if (!empty($params['pegawai_id'])) {
+            $pgw = \app\models\Pegawai::findOne(['id' => $params['pegawai_id']]);
+            $detail['pegawai'] = $pgw['nama'];
+            if ($pgw->jabatan == "terapis") {
+                $criteria .= 'and penjualan_det.pegawai_terapis_id = ' . $params['pegawai_id'];
+            } else {
+                $criteria .= 'and penjualan_det.pegawai_dokter_id = ' . $params['pegawai_id'];
+            }
+        } else {
+            $detail['pegawai'] = 'SEMUA PEGAWAI';
+        }
 
         //create query
         $query = new Query;
         $query->from(['m_pegawai', 'm_produk', 'penjualan', 'penjualan_det'])
                 ->select("m_pegawai.id as id_pegawai , m_produk.nama as produk, m_pegawai.nama as pegawai, penjualan.tanggal as tanggal, penjualan.kode as kode, m_pegawai.jabatan as jabatan, penjualan_det.fee_terapis as fee_terapis, penjualan_det.fee_dokter as fee_dokter")
-                ->where("(m_pegawai.id = penjualan_det.pegawai_terapis_id or m_pegawai.id = penjualan_det.pegawai_dokter_id) and penjualan_det.produk_id = m_produk.id and penjualan.id = penjualan_det.penjualan_id");
+                ->where("(m_pegawai.id = penjualan_det.pegawai_terapis_id or m_pegawai.id = penjualan_det.pegawai_dokter_id) and penjualan_det.produk_id = m_produk.id and penjualan.id = penjualan_det.penjualan_id $criteria");
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -72,21 +94,40 @@ class LaporanController extends Controller {
             } else {
                 $fee = $val['fee_dokter'];
             }
-            
-            $body[$val['id_pegawai']]['title']['nama'] = $val['pegawai'];
-            $body[$val['id_pegawai']]['title']['sub_total'] = isset($body[$val['id_pegawai']]['title']['sub_total']) ? $body[$val['id_pegawai']]['title']['sub_total'] += $fee : $fee;
-            $body[$val['id_pegawai']]['body'][$i]['tanggal'] = $val['tanggal'];
-            $body[$val['id_pegawai']]['body'][$i]['kode'] = $val['kode'];
-            $body[$val['id_pegawai']]['body'][$i]['produk'] = $val['produk'];
-            $body[$val['id_pegawai']]['body'][$i]['jabatan'] = $val['jabatan'];
-            $body[$val['id_pegawai']]['body'][$i]['fee'] = $fee;
 
-            $totalA += $body[$val['id_pegawai']]['body'][$i]['fee'];
+            if (!empty($params['pegawai_id'])) {
+                $pegawai_id = $params['pegawai_id'];
+                if ($val['jabatan'] == $pgw->jabatan) {
+                    $body[$pegawai_id]['title']['nama'] = $val['pegawai'];
+                    $body[$pegawai_id]['title']['sub_total'] = isset($body[$val['id_pegawai']]['title']['sub_total']) ? $body[$val['id_pegawai']]['title']['sub_total'] += $fee : $fee;
+                    $body[$pegawai_id]['body'][$i]['tanggal'] = $val['tanggal'];
+                    $body[$pegawai_id]['body'][$i]['kode'] = $val['kode'];
+                    $body[$pegawai_id]['body'][$i]['produk'] = $val['produk'];
+                    $body[$pegawai_id]['body'][$i]['jabatan'] = $val['jabatan'];
+                    $body[$pegawai_id]['body'][$i]['fee'] = $fee;
+
+                    $totalA += $body[$pegawai_id]['body'][$i]['fee'];
+                }
+            } else {
+                $pegawai_id = $val['id_pegawai'];
+                $body[$pegawai_id]['title']['nama'] = $val['pegawai'];
+                $body[$pegawai_id]['title']['sub_total'] = isset($body[$val['id_pegawai']]['title']['sub_total']) ? $body[$val['id_pegawai']]['title']['sub_total'] += $fee : $fee;
+                $body[$pegawai_id]['body'][$i]['tanggal'] = $val['tanggal'];
+                $body[$pegawai_id]['body'][$i]['kode'] = $val['kode'];
+                $body[$pegawai_id]['body'][$i]['produk'] = $val['produk'];
+                $body[$pegawai_id]['body'][$i]['jabatan'] = $val['jabatan'];
+                $body[$pegawai_id]['body'][$i]['fee'] = $fee;
+
+                $totalA += $body[$pegawai_id]['body'][$i]['fee'];
+            }
+
+
             $i++;
         }
+        $detail['total'] = $totalA;
         $this->setHeader(200);
 
-        echo json_encode(array('status' => 1, 'data' => $body, 'total' => $totalA), JSON_PRETTY_PRINT);
+        echo json_encode(array('status' => 1, 'data' => $body, 'detail' => $detail), JSON_PRETTY_PRINT);
     }
 
     protected function findModel($id) {
