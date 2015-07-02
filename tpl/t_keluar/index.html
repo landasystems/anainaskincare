@@ -140,24 +140,24 @@
                                             <option ng-repeat="produk in list_produk" value="{{produk.id}}">{{produk.nama}}</option>
                                         </select>
                                     </td>
-                                    <td>
-                                        <input type="text" class="form-control" ng-keyup="total()"  ng-model="detail.jumlah" ng-disabled="is_view" ng-readonly="is_create == false" required>
+                                    <td style="width:100px">
+                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.jumlah" " ng-disabled="is_view" ng-readonly="is_create == false" required>
                                     </td>
-                                    <td>
+                                    <td style="width:250px">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon">Rp</span>
-                                            <input type="text" class="form-control" ng-keyup="total()"  ng-model="detail.harga" ng-disabled="is_view" ng-readonly="is_create == false" required>
+                                            <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.harga"  ng-disabled="is_view" ng-readonly="is_create == false" required>
                                         </div>
                                     </td>
-                                    <td>
+                                    <td style="width:250px">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon">Rp</span>
-                                            <input type="text" class="form-control" name="total" value="{{detail.jumlah * detail.harga}}" ng-readonly="true"  ng-disabled="is_view" ng-readonly="is_create == false" required>
+                                            <input type="text" class="form-control" name="total" value="{{detail.jumlah * detail.harga | number}}" ng-readonly="true"  ng-disabled="is_view" required>
                                         </div>
                                     </td>
-                                    <td>
-                                        <button ng-click="addDetail()" class="btn btn-success" ng-show="$index == 0" ng-disabled="is_view"><i class="fa fa-arrows"></i></button>
-                                        <button ng-click="removeRow($index)" class="btn btn-danger" ng-show="$index > 0" ng-disabled="is_view"><i class="fa fa-trash-o"></i></button>
+                                    <td style="text-align: center;">
+                                        <button ng-click="addDetail()" title="Tambah Data" class="btn btn-success" ng-show="$index == 0" ng-disabled="is_view"><i class="fa fa-plus"></i></button>
+                                        <button ng-click="removeRow($index)" title="Hapus Data" class="btn btn-danger" ng-show="$index > 0" ng-disabled="is_view"><i class="fa fa-trash-o"></i></button>
                                     </td>
                                 </tr>
                                 <tr style="margin:0px;padding:0px;">
@@ -165,7 +165,7 @@
                                     <td colspan="2">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon">Rp</span>
-                                            <input type="text" class="form-control" ng-disabled="is_view"  ng-readonly="true" ng-readonly="is_create == false" ng-model="form.total" required>
+                                            <input type="text" class="form-control" ng-disabled="is_view"  ng-readonly="true" ng-model="form.total" required>
                                         </div>
                                     </td>
                                 </tr>

@@ -4,6 +4,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
+   
 
     $scope.detskeluar = [
         {
@@ -40,6 +41,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         var comArr = eval($scope.detskeluar);
         if (comArr.length > 1) {
             $scope.detskeluar.splice(paramindex, 1);
+            $scope.total();
         } else {
             alert("Something gone wrong");
         }
@@ -88,16 +90,17 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         $scope.is_view = false;
         $scope.formtitle = "Form Persediaan Keluar";
         $scope.form = {};
+
     };
     $scope.update = function (id) {
         Data.get('stokkeluar/view/' + id).then(function (data) {
             $scope.form = data.data;
             $scope.detskeluar = data.detail;
-            
+
             $scope.is_edit = true;
             $scope.is_view = false;
             $scope.formtitle = "Edit Persediaan Keluar : " + form.kode + " - " + form.nama;
-            
+
         })
     };
     $scope.view = function (form) {
@@ -128,6 +131,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         }
         $scope.is_edit = false;
         $scope.is_view = false;
+        $scope.detskeluar = {};
     };
 
     $scope.trash = function (row) {

@@ -153,12 +153,15 @@ class StokkeluarController extends Controller {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = new StokKeluar();
         $model->attributes = $params['stokkeluar'];
+        $model->total = str_replace('.','',$model->total);
 
         if ($model->save()) {
             $detailskeluar = $params['detailskeluar'];
             foreach ($detailskeluar as $val) {
                 $det = new StokKeluarDet();
                 $det->attributes = $val;
+                $det->jumlah = str_replace('.','',$det->jumlah);
+                $det->harga = str_replace('.','',$det->harga);
                 $det->stok_keluar_id = $model->id;
                 $det->save();
             }
