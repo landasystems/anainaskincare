@@ -48,7 +48,12 @@ class LaporanController extends Controller {
     public function actionBonus() {
         $params = json_decode(file_get_contents("php://input"), true);
         $detail = array();
-        $criteria = '';
+//        print_r($params['tanggal']);
+//        $tgl = explode(" - ", $params['tanggal']);
+        $start = $params['tanggal']['startDate'];
+        $end = $params['tanggal']['endDate'];
+
+        $criteria = 'and penjualan.tanggal >= "' . $start . '" and penjualan.tanggal <= "' . $end . '"';
 
         if (!empty($params['cabang_id'])) {
             $cbg = \app\models\Cabang::findOne(['id' => $params['cabang_id']]);

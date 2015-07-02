@@ -13,7 +13,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Cabang</label>
                             <div class="col-sm-9">
-                                <select ui-select2="" ng-model="form.cabang_id" style="width: 250px;" ng-change="ubah_pegawai(form.cabang_id)">
+                                <select ui-select2="" ng-model="form.cabang_id" style="width: 270px;" ng-change="ubah_pegawai(form.cabang_id)">
                                     <option value="">-Semua Cabang-</option>
                                     <option ng-repeat="cabang in listcabang" value="{{cabang.id}}">{{cabang.nama}}</option>
                                 </select>
@@ -22,7 +22,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Pegawai</label>
                             <div class="col-sm-9">
-                                <select ui-select2="" ng-model="form.pegawai_id" style="width: 250px;">
+                                <select ui-select2="" ng-model="form.pegawai_id" style="width: 270px;">
                                     <option value="">-Semua Pegawai-</option>
                                     <option ng-repeat="pegawai in listpegawai" value="{{pegawai.id}}">{{pegawai.nama}}</option>
                                 </select>
@@ -31,7 +31,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Tanggal</label>
                             <div class="col-sm-6">
-                                <input class="form-control" type="text" date-range-picker ng-model="date">
+                                <input class="form-control" type="text" date-range-picker ng-model="form.tanggal" required>
                             </div>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                         <tfoot>
                             <tr>
                                 <td colspan="4" align="right"><b>Total</b></td>
-                                <td><b>{{detail.total | currency}}</b></td>
+                                <td><b>{{detail.total| currency}}</b></td>
                             </tr>
                         </tfoot>
                     </table>
