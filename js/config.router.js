@@ -299,7 +299,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ng-bootstrap-datepicker','ui.select2']).then(
+                                                return $ocLazyLoad.load(['daterangepicker','ui.select2']).then(
                                                         function() {
                                                             return $ocLazyLoad.load('js/controllers/l_bonuskaryawan.js');
                                                         }

@@ -47,6 +47,15 @@ angular.module('app')
                     events: true,
                     modules: [
                         {
+                            name: 'daterangepicker',
+                            files: [
+                                'vendor/modules/angular-daterangepicker/moment.min.js',
+                                'vendor/modules/angular-daterangepicker/angular-daterangepicker.min.js',
+                                'vendor/modules/angular-daterangepicker/daterangepicker.min.js',
+                                'vendor/modules/angular-daterangepicker/daterangepicker.min.css',
+                            ]
+                        },
+                        {
                             name: 'ng-bootstrap-datepicker',
                             files: [
                                 'vendor/modules/angular-bootstrap-datepicker/bootstrap.min.js',
