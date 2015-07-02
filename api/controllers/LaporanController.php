@@ -48,12 +48,20 @@ class LaporanController extends Controller {
     public function actionBonus() {
         $params = json_decode(file_get_contents("php://input"), true);
         $detail = array();
-        $criteria = '';
+//        print_r($params['tanggal']);
+//        $tgl = explode(" - ", $params['tanggal']);
+        $start = date("Y-m-d", strtotime($params['tanggal']['startDate']));
+        $end = date("Y-m-d", strtotime($params['tanggal']['endDate']));
+
+        $detail['start'] = $start;
+        $detail['end'] = $end;
+
+        $criteria = ' and penjualan.tanggal >= "' . $start . '" and penjualan.tanggal <= "' . $end . '"';
 
         if (!empty($params['cabang_id'])) {
             $cbg = \app\models\Cabang::findOne(['id' => $params['cabang_id']]);
             $detail['cabang'] = strtoupper($cbg->nama);
-            $criteria .= 'and penjualan.cabang_id = ' . $params['cabang_id'];
+            $criteria .= ' and penjualan.cabang_id = ' . $params['cabang_id'];
         } else {
             $detail['cabang'] = 'SEMUA CABANG';
         }
@@ -62,9 +70,9 @@ class LaporanController extends Controller {
             $pgw = \app\models\Pegawai::findOne(['id' => $params['pegawai_id']]);
             $detail['pegawai'] = $pgw['nama'];
             if ($pgw->jabatan == "terapis") {
-                $criteria .= 'and penjualan_det.pegawai_terapis_id = ' . $params['pegawai_id'];
+                $criteria .= ' and penjualan_det.pegawai_terapis_id = ' . $params['pegawai_id'];
             } else {
-                $criteria .= 'and penjualan_det.pegawai_dokter_id = ' . $params['pegawai_id'];
+                $criteria .= ' and penjualan_det.pegawai_dokter_id = ' . $params['pegawai_id'];
             }
         } else {
             $detail['pegawai'] = 'SEMUA PEGAWAI';

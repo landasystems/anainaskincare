@@ -12,14 +12,7 @@ app.controller('l_bonuskaryawanCtrl', function($scope, Data, toaster) {
     Data.get('pegawai/listpegawai').then(function(data) {
         $scope.listpegawai = data.data;
     });
-
-    $scope.datepickerOptions = {
-        format: 'yyyy-mm-dd',
-        language: 'id',
-        autoclose: true,
-        weekStart: 0
-    }
-
+    
     $scope.ubah_pegawai = function(cabang) {
         Data.get('pegawai/listpegawaicabang/?id=' + cabang, '').then(function(data) {
             $scope.listpegawai = data.data;
