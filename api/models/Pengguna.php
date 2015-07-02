@@ -58,4 +58,8 @@ class Pengguna extends \yii\db\ActiveRecord
             'modified_by' => 'Modified By',
         ];
     }
+    
+    public function getRoles(){
+        return $this->hasOne(Roles::className(),['id'=>'roles_id']);
+    }
 }

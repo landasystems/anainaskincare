@@ -24,6 +24,7 @@ class PegawaiController extends Controller {
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
+                    'listpegawai' => ['get'],
                 ],
             ]
         ];
@@ -49,6 +50,20 @@ class PegawaiController extends Controller {
         }
 
         return true;
+    }
+
+    public function actionListpegawai() {
+        $query = new Query;
+        $query->from('m_pegawai')
+                ->select("*")
+                ->where("is_deleted = 0");
+
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'data' => $models));
     }
 
     public function actionIndex() {
@@ -89,7 +104,7 @@ class PegawaiController extends Controller {
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
-                $query->andFilterWhere(['like', 't1.'.$key, $val]);
+                $query->andFilterWhere(['like', 't1.' . $key, $val]);
             }
         }
 
@@ -101,7 +116,8 @@ class PegawaiController extends Controller {
 
         echo json_encode(array('status' => 1, 'data' => $models, 'totalItems' => $totalItems), JSON_PRETTY_PRINT);
     }
-    public function actionKlinik(){
+
+    public function actionKlinik() {
         $query = new Query;
         $query->from('m_cabang')
                 ->where("is_deleted = 0")
