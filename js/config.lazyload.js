@@ -47,6 +47,14 @@ angular.module('app')
                     events: true,
                     modules: [
                         {
+                            name: 'ng-bootstrap-datepicker',
+                            files: [
+                                'vendor/modules/angular-bootstrap-datepicker/bootstrap.min.js',
+                                'vendor/modules/angular-bootstrap-datepicker/bootstrap-datepicker.js',
+                                'vendor/modules/angular-bootstrap-datepicker/bootstrap-datepicker.min.css',
+                            ]
+                        },
+                        {
                             name: 'ngGrid',
                             files: [
                                 'vendor/modules/ng-grid/ng-grid.min.js',
@@ -58,9 +66,9 @@ angular.module('app')
                             name: 'ui.select2',
                             files: [
                                 'vendor/modules/angular-ui-select/select.min.js',
-                                'vendor/modules/angular-ui-select/select.min.css',
                                 'vendor/jquery/select2/select2.css',
-                                'vendor/jquery/select2/select2.min.js'
+                                'vendor/jquery/select2/select2.min.js',
+                                'vendor/modules/angular-ui-select/select.min.css',
                             ]
                         },
                         {
