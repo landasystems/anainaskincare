@@ -11,8 +11,6 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
             produk_id: '',
             jumlah: '',
             harga: '',
-            total: '',
-            subtotal: '',
         }
     ];
     $scope.addDetail = function () {
@@ -21,8 +19,6 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
             produk_id: '',
             jumlah: '',
             harga: '',
-            total: '',
-            subtotal: '',
         }
         $scope.detskeluar.push(newDet);
     };
@@ -35,7 +31,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         angular.forEach($scope.detskeluar, function (detail) {
             total += detail.jumlah * detail.harga;
         })
-        $scope.form.total =  total;
+        $scope.form.total = total;
 
     }
 //    $scope.form.total=total();
@@ -87,17 +83,22 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         $scope.isLoading = false;
     };
 
-    $scope.create = function (form) {
+    $scope.create = function (form, detail) {
         $scope.is_edit = true;
         $scope.is_view = false;
         $scope.formtitle = "Form Persediaan Keluar";
         $scope.form = {};
     };
-    $scope.update = function (form) {
-        $scope.is_edit = true;
-        $scope.is_view = false;
-        $scope.formtitle = "Edit Persediaan Keluar : " + form.kode + " - " + form.nama;
-        $scope.form = form;
+    $scope.update = function (id) {
+        Data.get('stokkeluar/view/' + id).then(function (data) {
+            $scope.form = data.data;
+            $scope.detskeluar = data.detail;
+            
+            $scope.is_edit = true;
+            $scope.is_view = false;
+            $scope.formtitle = "Edit Persediaan Keluar : " + form.kode + " - " + form.nama;
+            
+        })
     };
     $scope.view = function (form) {
         $scope.is_edit = true;
