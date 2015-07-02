@@ -163,7 +163,7 @@
                             <div class="col-sm-5">
                                 <div class="input-group">
                                     <span class="input-group-addon">Rp</span>
-                                    <input type="text" class="form-control" ng-model="form.harga_beli_terakhir" ng-disabled="is_view" required>
+                                    <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.harga_beli_terakhir" ng-disabled="is_view" required>
                                 </div>  
                             </div>
                         </div>
@@ -172,7 +172,7 @@
                             <div class="col-sm-5">
                                 <div class="input-group">
                                     <span class="input-group-addon">Rp</span>
-                                    <input type="text" class="form-control" ng-model="form.harga_jual" ng-disabled="is_view" required>
+                                    <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-pattern="/^[0-9]+$/" ng-model="form.harga_jual" ng-disabled="is_view" required>
                                 </div>  
                             </div>
                         </div>
@@ -181,7 +181,7 @@
                             <div class="col-sm-5">
                                 <div class="input-group">
                                     <span class="input-group-addon">Rp</span>
-                                    <input type="text" class="form-control" ng-model="form.diskon" ng-disabled="is_view" required>
+                                    <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.diskon" ng-disabled="is_view" required>
                                 </div>  
                             </div>
                         </div>
@@ -189,7 +189,7 @@
                             <label class="col-sm-5 control-label">Minimum Stok</label>
                             <div class="col-sm-5">
 
-                                <input type="text" class="form-control" ng-model="form.minimum_stok" ng-disabled="is_view" required>
+                                <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.minimum_stok" ng-disabled="is_view" required>
 
                             </div>
                         </div>
@@ -198,7 +198,7 @@
                             <div class="col-sm-5">
                                 <div class="input-group">
                                     <span class="input-group-addon">Rp</span>
-                                    <input type="text" class="form-control" ng-model="form.fee_terapis" ng-disabled="is_view" required>
+                                    <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.fee_terapis" ng-disabled="is_view" required>
                                 </div>  
                             </div>
                         </div>
@@ -207,7 +207,7 @@
                             <div class="col-sm-5">
                                 <div class="input-group">
                                     <span class="input-group-addon">Rp</span>
-                                    <input type="text" class="form-control" ng-model="form.fee_dokter" ng-disabled="is_view" required>
+                                    <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.fee_dokter" ng-disabled="is_view" required>
                                 </div>  
                             </div>
                         </div>
