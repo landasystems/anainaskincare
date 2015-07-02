@@ -204,7 +204,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select2']).then(
+                                                return $ocLazyLoad.load(['ui.select2','ng-bootstrap-datepicker']).then(
                                                         function() {
                                                             return $ocLazyLoad.load('js/controllers/t_keluar.js');
                                                         }

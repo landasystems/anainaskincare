@@ -53,7 +53,7 @@
                         </tr>
                     </thead>
                     <tbody ng-show="!isLoading">
-                        <tr ng-repeat="row in displayed" ng-dblclick="view(row)">
+                        <tr ng-repeat="row in displayed" ng-dblclick="view(row.id)">
                             <td>{{row.kode}}</td>
                             <td>{{row.tanggal| date}}</td>
                             <td>{{row.cabang}}</td>
@@ -109,7 +109,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Tanggal</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" ng-model="form.tanggal" ng-disabled="is_view" ng-readonly="is_create == false" required>
+                            <input type="text" data-ng-datepicker data-ng-options="datepickerOptions" data-ng-model="form.tanggal">
                         </div>
                     </div>
                     <div class="form-group">
@@ -152,7 +152,7 @@
                                     <td style="width:250px">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon">Rp</span>
-                                            <input type="text" class="form-control" name="total" value="{{detail.jumlah * detail.harga | number}}" ng-readonly="true"  ng-disabled="is_view" required>
+                                            <input type="text" class="form-control" name="total" value="{{detail.jumlah * detail.harga| number}}" ng-readonly="true"  ng-disabled="is_view" required>
                                         </div>
                                     </td>
                                     <td style="text-align: center;">
@@ -165,7 +165,7 @@
                                     <td colspan="2">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon">Rp</span>
-                                            <input type="text" class="form-control" ng-disabled="is_view"  ng-readonly="true" ng-model="form.total" required>
+                                            <input type="text" class="form-control" ng-disabled="is_view"  ng-readonly="true" ng-model="form.total | number" required>
                                         </div>
                                     </td>
                                 </tr>
@@ -176,7 +176,7 @@
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <button type="submit" class="btn btn-default fa fa-arrow-circle-o-left" ng-click="cancel(form)">&nbsp;Back</button>
-                                <button type="submit" class="btn btn-primary fa fa-save" ng-hide="is_view" ng-disabled="landaform.$invalid" ng-click="save(form)">&nbsp;Simpan Perubahan</button>
+                                <button type="submit" class="btn btn-primary fa fa-save" ng-hide="is_view" ng-disabled="landaform.$invalid" ng-click="save(form,detail)">&nbsp;Simpan Perubahan</button>
                             </div>
                         </div>
                     </center>	

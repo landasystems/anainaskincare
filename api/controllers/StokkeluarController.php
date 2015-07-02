@@ -116,10 +116,10 @@ class StokkeluarController extends Controller {
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
-                if($key  == 'cabang_id'){
-                    $query->andFilterWhere(['like', 'm_cabang.'.$key, $val]);
-                }else{
-                $query->andFilterWhere(['like', $key, $val]);
+                if ($key == 'cabang_id') {
+                    $query->andFilterWhere(['like', 'm_cabang.' . $key, $val]);
+                } else {
+                    $query->andFilterWhere(['like', $key, $val]);
                 }
             }
         }
@@ -139,29 +139,36 @@ class StokkeluarController extends Controller {
         $det = StokKeluarDet::find()
                 ->where(['stok_keluar_id' => $model['id']])
                 ->all();
-        
+
         $detail = array();
-        foreach ($det as $val) {
-            $detail[] = $val->attributes;
+        
+
+        if (!empty($det)) {
+            foreach ($det as $val) {
+                $detail = $val->attributes;
+            }
+        } else {
+        $detail = ' ';
         }
 
+
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes),'detail' => $detail) , JSON_PRETTY_PRINT);
+        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes), 'detail' => $detail), JSON_PRETTY_PRINT);
     }
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = new StokKeluar();
         $model->attributes = $params['stokkeluar'];
-        $model->total = str_replace('.','',$model->total);
+        $model->total = str_replace('.', '', $model->total);
 
         if ($model->save()) {
             $detailskeluar = $params['detailskeluar'];
             foreach ($detailskeluar as $val) {
                 $det = new StokKeluarDet();
                 $det->attributes = $val;
-                $det->jumlah = str_replace('.','',$det->jumlah);
-                $det->harga = str_replace('.','',$det->harga);
+                $det->jumlah = str_replace('.', '', $det->jumlah);
+                $det->harga = str_replace('.', '', $det->harga);
                 $det->stok_keluar_id = $model->id;
                 $det->save();
             }

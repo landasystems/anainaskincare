@@ -4,7 +4,13 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
-   
+
+    $scope.datepickerOptions = {
+        format: 'yyyy-mm-dd',
+        language: 'id',
+        autoclose: true,
+        weekStart: 0
+    }
 
     $scope.detskeluar = [
         {
@@ -47,7 +53,6 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         }
     };
 
-    $scope.detskeluar.subtotal = ($scope.detskeluar.jumlah * $scope.detskeluar.harga);
 
     $scope.cabang = {
         minimumInputLength: 3,
@@ -90,30 +95,37 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         $scope.is_view = false;
         $scope.formtitle = "Form Persediaan Keluar";
         $scope.form = {};
+        $scope.detskeluar = [{}];
+
 
     };
     $scope.update = function (id) {
         Data.get('stokkeluar/view/' + id).then(function (data) {
             $scope.form = data.data;
             $scope.detskeluar = data.detail;
-
             $scope.is_edit = true;
             $scope.is_view = false;
-            $scope.formtitle = "Edit Persediaan Keluar : " + form.kode + " - " + form.nama;
+            $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode + " - " + $scope.form.nama;
 
         })
     };
-    $scope.view = function (form) {
-        $scope.is_edit = true;
-        $scope.is_view = true;
-        $scope.formtitle = "Lihat Persediaan Keluar : " + form.kode + " - " + form.nama;
-        $scope.form = form;
+    $scope.view = function (id) {
+        Data.get('stokkeluar/view/' + id).then(function (data) {
+            $scope.form = data.data;
+            $scope.detskeluar = data.detail;
+
+            $scope.is_edit = true;
+            $scope.is_view = false;
+            $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode + " - " + $scope.form.nama;
+
+        })
     };
     $scope.save = function (form, detail) {
         var data = {
             stokkeluar: form,
             detailskeluar: detail,
         };
+
         var url = (form.id > 0) ? 'stokkeluar/update/' + form.id : 'stokkeluar/create';
         Data.post(url, data).then(function (result) {
             if (result.status == 0) {
@@ -131,7 +143,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         }
         $scope.is_edit = false;
         $scope.is_view = false;
-        $scope.detskeluar = {};
+        $scope.detskeluar = [{}];
     };
 
     $scope.trash = function (row) {
