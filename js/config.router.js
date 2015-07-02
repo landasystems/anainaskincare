@@ -266,9 +266,13 @@ angular.module('app')
                                     url: '/returpenjualan',
                                     templateUrl: 'tpl/t_returpenjualan/index.html',
                                     resolve: {
-                                        deps: ['$ocLazyLoad',
+                                         deps: ['$ocLazyLoad',
                                             function($ocLazyLoad) {
-                                                return $ocLazyLoad.load('js/controllers/t_returpenjualan.js');
+                                                return $ocLazyLoad.load('ui.select2').then(
+                                                        function() {
+                                                            return $ocLazyLoad.load('js/controllers/t_penjualan.js');
+                                                        }
+                                                );
                                             }]
                                     }
                                 })
@@ -295,7 +299,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ng-bootstrap-datepicker','ui.select2']).then(
+                                                return $ocLazyLoad.load('ui.select2').then(
                                                         function() {
                                                             return $ocLazyLoad.load('js/controllers/l_bonuskaryawan.js');
                                                         }
