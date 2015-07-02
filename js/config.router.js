@@ -266,9 +266,13 @@ angular.module('app')
                                     url: '/returpenjualan',
                                     templateUrl: 'tpl/t_returpenjualan/index.html',
                                     resolve: {
-                                        deps: ['$ocLazyLoad',
+                                         deps: ['$ocLazyLoad',
                                             function($ocLazyLoad) {
-                                                return $ocLazyLoad.load('js/controllers/t_returpenjualan.js');
+                                                return $ocLazyLoad.load('ui.select2').then(
+                                                        function() {
+                                                            return $ocLazyLoad.load('js/controllers/t_penjualan.js');
+                                                        }
+                                                );
                                             }]
                                     }
                                 })
