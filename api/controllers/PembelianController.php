@@ -3,15 +3,14 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\StokMasuk;
-use app\models\StokMasukDet;
+use app\models\Pembelian;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\db\Query;
 
-class StokmasukController extends Controller {
+class PembelianController extends Controller {
 
     public function behaviors() {
         return [
@@ -19,12 +18,14 @@ class StokmasukController extends Controller {
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'index' => ['get'],
+                    'detail' => ['get'],
                     'view' => ['get'],
+                    'selectedsupplier' => ['get'],
+                    'supplierlist' => ['get'],
+                    'kliniklist' => ['get'],
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
-                    'cabang' => ['get'],
-                    'product' => ['get'],
                 ],
             ]
         ];
@@ -41,6 +42,7 @@ class StokmasukController extends Controller {
         }
         $verb = Yii::$app->getRequest()->getMethod();
         $allowed = array_map('strtoupper', $verbs);
+//        Yii::error($allowed);
 
         if (!in_array($verb, $allowed)) {
 
@@ -52,47 +54,91 @@ class StokmasukController extends Controller {
         return true;
     }
 
-    public function actionCabang() {
+    public function actionDetail() {
+        //create query
         $query = new Query;
-        $query->from('m_cabang')
-                ->select("*")
-                ->where("is_deleted = 0");
+        $query->select("*")
+                ->from('pembelian_det')
+                ->where('pembelian_id=');
+
+        //filter
 
         $command = $query->createCommand();
         $models = $command->queryAll();
 
         $this->setHeader(200);
 
-        echo json_encode(array('status' => 1, 'data' => $models));
+        echo json_encode(array('status' => 1, 'data' => $models), JSON_PRETTY_PRINT);
+        
     }
-
-    public function actionProduct() {
+    public function actionKliniklist() {
+        //create query
         $query = new Query;
-        $query->from('m_produk')
-                ->select("*")
-                ->where("is_deleted = 0");
+        $query->select("*")
+                ->from('m_cabang')
+                ->where('is_deleted=0');
+
+        //filter
 
         $command = $query->createCommand();
         $models = $command->queryAll();
 
         $this->setHeader(200);
 
-        echo json_encode(array('status' => 1, 'data' => $models));
+        echo json_encode(array('status' => 1, 'listKlinik' => $models), JSON_PRETTY_PRINT);
+        
     }
+    public function actionSupplierlist() {
+        //create query
+        $query = new Query;
+        $query->select("*")
+                ->from('m_supplier')
+                ->where('is_deleted=0');
 
+        //filter
+
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'listSupplier' => $models), JSON_PRETTY_PRINT);
+        
+    }
+    public function actionSelectedsupplier($id) {
+//        $params = json_decode(file_get_contents("php://input"), true);
+//        create query
+        Yii::error($id);
+        $query = new Query;
+        $query->select("*")
+                ->from('m_supplier')
+                ->where('id='.$id);
+
+        //filter
+
+        $command = $query->createCommand();
+        $models = $command->queryOne();
+
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'selected' => $models), JSON_PRETTY_PRINT);
+        
+    }
     public function actionIndex() {
         //init variable
         $params = $_REQUEST;
         $filter = array();
-        $sort = "stok_masuk.id ASC";
+        $sort = "id ASC";
         $offset = 0;
         $limit = 10;
-
+        //        Yii::error($params);
+        //limit & offset pagination
         if (isset($params['limit']))
             $limit = $params['limit'];
         if (isset($params['offset']))
             $offset = $params['offset'];
 
+        //sorting
         if (isset($params['sort'])) {
             $sort = $params['sort'];
             if (isset($params['order'])) {
@@ -107,20 +153,15 @@ class StokmasukController extends Controller {
         $query = new Query;
         $query->offset($offset)
                 ->limit($limit)
-                ->from(['stok_masuk', 'm_cabang'])
+                ->from('pembelian')
                 ->orderBy($sort)
-                ->select("stok_masuk.id, stok_masuk.kode, stok_masuk.tanggal, m_cabang.nama as cabang, stok_masuk.keterangan, stok_masuk.total")
-                ->where('m_cabang.id = stok_masuk.cabang_id');
+                ->select("*");
 
         //filter
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
-                if($key  == 'cabang_id'){
-                    $query->andFilterWhere(['like', 'm_cabang.'.$key, $val]);
-                }else{
                 $query->andFilterWhere(['like', $key, $val]);
-                }
             }
         }
 
@@ -132,40 +173,22 @@ class StokmasukController extends Controller {
 
         echo json_encode(array('status' => 1, 'data' => $models, 'totalItems' => $totalItems), JSON_PRETTY_PRINT);
     }
+    
 
     public function actionView($id) {
 
         $model = $this->findModel($id);
-        $det = StokMasukDet::find()
-                ->where(['stok_masuk_id' => $model['id']])
-                ->all();
-        
-        $detail = array();
-        
-        foreach ($det as $val) {
-            $detail[] = $val->attributes;
-        }
-        
 
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes),'detail' => $detail) , JSON_PRETTY_PRINT);
+        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
     }
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
-        $model = new StokMasuk();
-        $model->attributes = $params['stokmasuk'];
+        $model = new Pembelian();
+        $model->attributes = $params;
 
         if ($model->save()) {
-            $detailsmasuk = $params['detailsmasuk'];
-//            Yii::error($detailsmasuk);
-            foreach ($detailsmasuk as $val) {
-                $det = new StokMasukDet();
-                $det->attributes = $val;
-                $det->stok_masuk_id = $model->id;
-                $det->save();
-//                Yii::error($det->getErrors());
-            }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -177,19 +200,9 @@ class StokmasukController extends Controller {
     public function actionUpdate($id) {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
-        $model->attributes = $params['stokmasuk'];;
+        $model->attributes = $params;
 
         if ($model->save()) {
-            $deleteDetail = StokMasukDet::deleteAll(['stok_masuk_id' => $model->id]);
-            $detailSmasuk = $params['detailsmasuk'];
-            foreach ( $detailSmasuk as $val) {
-                $det = new StokMasukDet();
-                $det->attributes = $val;
-                $det->jumlah = str_replace('.','',$det->jumlah);
-                $det->harga = str_replace('.','',$det->harga);
-                $det->stok_masuk_id = $model->id;
-                $det->save();
-            }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -200,7 +213,6 @@ class StokmasukController extends Controller {
 
     public function actionDelete($id) {
         $model = $this->findModel($id);
-        $deleteDetail = StokMasukDet::deleteAll(['stok_masuk_id' => $id]);
 
         if ($model->delete()) {
             $this->setHeader(200);
@@ -213,7 +225,7 @@ class StokmasukController extends Controller {
     }
 
     protected function findModel($id) {
-        if (($model = StokMasuk::findOne($id)) !== null) {
+        if (($model = Pembelian::findOne($id)) !== null) {
             return $model;
         } else {
 
