@@ -38,6 +38,14 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="control-group">
+                            <label class="col-sm-2 control-label">Tanggal</label>
+                            <div class="col-sm-3">
+                                <input class="form-control" type="text" date-range-picker ng-model="tanggal" required>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="table-responsive">
@@ -49,11 +57,11 @@
                             <th st-sort="cabang">Cabang</th>
                             <th st-sort="keterangan">Keterangan</th>
                             <th st-sort="total">Total</th>
-                            <th>#</th>
+                            <th style="text-align: center;">Action</th>
                         </tr>
                     </thead>
                     <tbody ng-show="!isLoading">
-                        <tr ng-repeat="row in displayed" ng-dblclick="view(row)">
+                        <tr ng-repeat="row in displayed" ng-dblclick="view(row.id)">
                             <td>{{row.kode}}</td>
                             <td>{{row.tanggal| date}}</td>
                             <td>{{row.cabang}}</td>
@@ -61,8 +69,8 @@
                             <td>{{row.total| currency}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
-                                    <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ng-show="row.is_deleted == 0"></button>
-                                    <button type="button" class="btn btn-danger fa fa-minus-circle" ng-click="delete(row);" ng-show="row.is_deleted == 1"></button>
+                                    <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row.id)" ></button>
+                                    <button type="button" class="btn btn-danger fa fa-minus-circle" ng-click="delete(row);"></button>
                                 </div> 
                             </td>
                         </tr>
@@ -100,7 +108,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Cabang</label>
                         <div class="col-sm-6">
-                            <select ui-select2="selectcabang" ng-model="form.cabang_id" ng-disabled="is_view" required style="width: 250px;">
+                            <select ui-select2="selectcabang" ng-model="form.cabang_id" ng-disabled="is_view" required style="width: 300px;">
                                 <option value="">-Pilih Cabang-</option>
                                 <option ng-repeat="cabang in listcabang" value="{{cabang.id}}">{{cabang.nama}}</option>
                             </select>
@@ -109,7 +117,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Tanggal</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" ng-model="form.tanggal" ng-disabled="is_view" ng-readonly="is_create == false" required>
+                            <input type="text" data-ng-datepicker data-ng-options="datepickerOptions" data-ng-model="form.tanggal">
                         </div>
                     </div>
                     <div class="form-group">
@@ -121,11 +129,62 @@
                     <div class="line line-dashed b-b line-lg pull-in"></div>
                     <h5 class="font-bold">- Detail Stok Keluar</h5>
                     <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" >
+                            <thead>
+                                <tr>
+                                    <th style="text-align: center;">Barang</th>
+                                    <th style="text-align: center;">Jumlah</th>
+                                    <th style="text-align: center;">Harga</th>
+                                    <th style="text-align: center;">Sub Total</th>
+                                    <th style="text-align: center;">#</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="detail in detskeluar" style="margin:0px;padding:0px;">
+                                    <td>
+                                        <select ui-select2="selectcabang" ng-model="detail.produk_id" ng-disabled="is_view" required style="width: 250px;">
+                                            <option value="">-Pilih Produk-</option>
+                                            <option ng-repeat="produk in list_produk" value="{{produk.id}}">{{produk.nama}}</option>
+                                        </select>
+                                    </td>
+                                    <td style="width:100px">
+                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.jumlah" " ng-disabled="is_view" ng-readonly="is_create == false" required>
+                                    </td>
+                                    <td style="width:250px">
+                                        <div class="input-group m-b">
+                                            <span class="input-group-addon">Rp</span>
+                                            <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.harga"  ng-disabled="is_view" ng-readonly="is_create == false" required>
+                                        </div>
+                                    </td>
+                                    <td style="width:250px">
+                                        <div class="input-group m-b">
+                                            <span class="input-group-addon">Rp</span>
+                                            <input type="text" class="form-control" name="total" value="{{detail.jumlah * detail.harga| number}}" ng-readonly="true"  ng-disabled="is_view" required>
+                                        </div>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <button ng-click="addDetail()" title="Tambah Data" class="btn btn-success" ng-show="$index == 0" ng-disabled="is_view"><i class="fa fa-plus"></i></button>
+                                        <button ng-click="removeRow($index)" title="Hapus Data" class="btn btn-danger" ng-show="$index > 0" ng-disabled="is_view"><i class="fa fa-trash-o"></i></button>
+                                    </td>
+                                </tr>
+                                <tr style="margin:0px;padding:0px;">
+                                    <th colspan="3" style="text-align: right;">Total :&nbsp;</th>
+                                    <td colspan="2">
+                                        <div class="input-group m-b">
+                                            <span class="input-group-addon">Rp</span>
+                                            <input type="text" class="form-control" ng-disabled="is_view"  ng-readonly="true" ng-model="form.total">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <center style="width: 100%">
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <button type="submit" class="btn btn-default fa fa-arrow-circle-o-left" ng-click="cancel(form)">&nbsp;Back</button>
-                                <button type="submit" class="btn btn-primary fa fa-save" ng-hide="is_view" ng-disabled="landaform.$invalid" ng-click="save(form)">&nbsp;Simpan Perubahan</button>
+                                <button type="submit" class="btn btn-default fa fa-arrow-circle-o-left" ng-click="cancel(form, detskeluar)">&nbsp;Back</button>
+                                <button type="submit" class="btn btn-primary fa fa-save" ng-hide="is_view" ng-disabled="landaform.$invalid" ng-click="save(form, detskeluar)">&nbsp;Simpan Perubahan</button>
                             </div>
                         </div>
                     </center>	
