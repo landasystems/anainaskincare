@@ -174,18 +174,21 @@ class LaporanController extends Controller {
 
         $criteria = !empty($params['cabang_id']) ? ' and pembelian.cabang_id = ' . $params['cabang_id'] : '';
 
-        $data['total_nett'] = $data['penjualan'] + $data['pemb_piutang'] - $data['pemb_piutang'] - $data['bonus_terapis'] - $data['bonus_dokter'];
-        $data['total_nett'] = ($data['total_nett'] > 0) ? $data['total_nett'] : "(" . $data['total_nett'] . ")";
+        $data['total_nett'] = $data['penjualan'] + $data['pemb_piutang'] - $data['diskon'] - $data['bonus_terapis'] - $data['bonus_dokter'];
+        
+//        $data['total_nett'] = ($data['total_nett'] > 0) ? $data['total_nett'] : "(" . $data['total_nett'] . ")";
+
+        //hpp
+        $pembelian = $connection->createCommand("SELECT sum(cash) as  pembelian FROM pembelian where (tanggal >= '" . $start . "' and tanggal <= '" . $end . "') $criteria")
+                ->queryOne();
+        $data['pembelian'] = empty($pembelian['pembelian']) ? 0 : $pembelian['pembelian'];
 
         //pembayaran hutang
         $pembelian = $connection->createCommand("SELECT sum(hutang.credit) as pemb_hutang FROM hutang, pembelian where (pembelian.tanggal >= '" . $start . "' and pembelian.tanggal <= '" . $end . "') $criteria")
                 ->queryOne();
         $data['pemb_hutang'] = empty($pembelian['pemb_hutang']) ? 0 : $pembelian['pemb_hutang'];
-        
-        //hpp
-        $penjualan = $connection->createCommand("SELECT sum(cash) as  penjualan FROM penjualan where (tanggal >= '" . $start . "' and tanggal <= '" . $end . "') $criteria")
-                ->queryOne();
-        $data['penjualan'] = empty($penjualan['penjualan']) ? 0 : $penjualan['penjualan'];
+
+        $data['laba_kotor'] = $data['total_nett'] - $data['pemb_hutang'] - $data['pembelian'];
 
         echo json_encode(array('status' => 1, 'data' => $data), JSON_PRETTY_PRINT);
     }

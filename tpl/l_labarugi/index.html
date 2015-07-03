@@ -36,7 +36,7 @@
                         </div>
                     </center>	
                 </form>
-                <div  style="margin-top: 50px;">
+                <div ng-show="detail_laporan" style="margin-top: 50px;">
                     <center>
                         <h4>LAPORAN LABA RUGI ANAINA SKIN CARE</h4>
                         <h5>CABANG : {{laporan.cabang}}</h5>
@@ -99,12 +99,12 @@
                             <td><b>HPP</b></td>
                             <td><b>:</b></td>
                             <td></td>
-                            <td>Rp 10.000.000</td>
+                            <td>({{laporan.pembelian | currency}})</td>
                             <td></td>
                         </tr>
                         <tr>
                             <td colspan="4"></td>
-                            <td>Rp 10.000.000</td>
+                            <td>({{laporan.pembelian | currency}})</td>
                         </tr>
                         <tr>
                             <td><b>Pengeluaran</b></td>
@@ -114,19 +114,19 @@
                             <td></td>
                             <td><b>Pembayaran Hutang</b></td>
                             <td></td>
-                            <td>{{laporan.pemb_hutang | currency}}</td>
+                            <td>({{laporan.pemb_hutang | currency}})</td>
                             <td></td>
                         </tr>
                         <tr>
                             <td colspan="4"></td>
-                            <td>Rp 10.000.000</td>
+                            <td>({{laporan.pemb_hutang | currency}})</td>
                         </tr>
                         <tr>
                             <td><b>Laba Kotor</b></td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td><b>Rp 10.000.000</b></td>
+                            <td><b>{{laporan.laba_kotor | currency}}</b></td>
                         </tr>
                     </table>
                 </div>
