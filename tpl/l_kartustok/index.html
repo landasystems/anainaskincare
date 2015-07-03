@@ -1,1 +1,136 @@
-Laporan Kartu stok
+<div ng-controller="l_kartustokCtrl">
+    <div class="bg-light lter b-b wrapper-md">
+        <h1 class="m-n font-thin h3">Laporan Kartu Stok</h1>
+    </div>
+    <div class="wrapper-md">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Laporan Bonus Karyawan 
+            </div>
+            <div class="panel-body">
+                <form name="landaform" class="form-horizontal form-validation ">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Cabang</label>
+                            <div class="col-sm-9">
+                                <select ui-select2="" ng-model="form.cabang_id" style="width: 270px;" ng-change="ubah_pegawai(form.cabang_id)">
+                                    <option value="">-Semua Cabang-</option>
+                                    <option ng-repeat="cabang in listcabang" value="{{cabang.id}}">{{cabang.nama}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Tanggal</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" type="text" date-range-picker ng-model="form.tanggal" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <center style="width: 100%">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn btn-success fa fa-file-excel-o"  ng-disabled="landaform.$invalid"  ng-click="export(form)">&nbsp;Export Excel</button>
+                                <button type="submit" class="btn btn-primary fa  fa-search" ng-disabled="landaform.$invalid" ng-click="view(form)">&nbsp;Tampilkan</button>
+                            </div>
+                        </div>
+                    </center>	
+                </form>
+                <div ng-show="detail_laporan" style="margin-top: 50px;">
+                    <center>
+                        <h4>LAPORAN LABA RUGI ANAINA SKIN CARE</h4>
+                        <h5>CABANG : {{laporan.cabang}}</h5>
+                        <h5>PERIODE : {{laporan.start| date}} s/d {{laporan.end| date}} </h5>
+                    </center>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <style>
+                        .table > tr > td{
+                            border-top: none;
+                        }
+                    </style>
+                    <table class="table">
+                        <tr>
+                            <td><b>Omset</b></td>
+                            <td colspan="4"><b>:</b></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><b>Penjualan Gross</b></td>
+                            <td>{{laporan.penjualan | currency}}</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><b>Pembayaran Piutang</b></td>
+                            <td>{{laporan.pemb_piutang | currency}}</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><b>Diskon</b></td>
+                            <td></td>
+                            <td>({{laporan.diskon | currency}})</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><b>Bonus Terapis</b></td>
+                            <td></td>
+                            <td>({{laporan.bonus_terapis | currency}})</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><b>Bonus Dokter</b></td>
+                            <td></td>
+                            <td>({{laporan.bonus_dokter | currency}})</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><b>Total Nett Omset</b></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{laporan.total_nett | currency}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>HPP</b></td>
+                            <td><b>:</b></td>
+                            <td></td>
+                            <td>({{laporan.pembelian | currency}})</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"></td>
+                            <td>({{laporan.pembelian | currency}})</td>
+                        </tr>
+                        <tr>
+                            <td><b>Pengeluaran</b></td>
+                            <td colspan="4"><b>:</b></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><b>Pembayaran Hutang</b></td>
+                            <td></td>
+                            <td>({{laporan.pemb_hutang | currency}})</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"></td>
+                            <td>({{laporan.pemb_hutang | currency}})</td>
+                        </tr>
+                        <tr>
+                            <td><b>Laba Kotor</b></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><b>{{laporan.laba_kotor | currency}}</b></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

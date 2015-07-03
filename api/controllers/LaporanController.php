@@ -18,6 +18,7 @@ class LaporanController extends Controller {
                 'actions' => [
                     'bonus' => ['post'],
                     'labarugi' => ['post'],
+                    'kartustok' => ['post'],
                 ],
             ]
         ];
@@ -175,8 +176,6 @@ class LaporanController extends Controller {
         $criteria = !empty($params['cabang_id']) ? ' and pembelian.cabang_id = ' . $params['cabang_id'] : '';
 
         $data['total_nett'] = $data['penjualan'] + $data['pemb_piutang'] - $data['diskon'] - $data['bonus_terapis'] - $data['bonus_dokter'];
-        
-//        $data['total_nett'] = ($data['total_nett'] > 0) ? $data['total_nett'] : "(" . $data['total_nett'] . ")";
 
         //hpp
         $pembelian = $connection->createCommand("SELECT sum(cash) as  pembelian FROM pembelian where (tanggal >= '" . $start . "' and tanggal <= '" . $end . "') $criteria")
@@ -191,6 +190,14 @@ class LaporanController extends Controller {
         $data['laba_kotor'] = $data['total_nett'] - $data['pemb_hutang'] - $data['pembelian'];
 
         echo json_encode(array('status' => 1, 'data' => $data), JSON_PRETTY_PRINT);
+    }
+
+    public function actionKartustok() {
+        $params = json_decode(file_get_contents("php://input"), true);
+        $start = date("Y-m-d", strtotime($params['tanggal']['startDate']));
+        $end = date("Y-m-d", strtotime($params['tanggal']['endDate']));
+        $data = array();
+        
     }
 
     protected function findModel($id) {
