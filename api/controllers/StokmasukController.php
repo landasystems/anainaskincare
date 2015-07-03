@@ -3,15 +3,15 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Pegawai;
-use app\models\Cabang;
+use app\models\StokMasuk;
+use app\models\StokMasukDet;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\db\Query;
 
-class PegawaiController extends Controller {
+class StokmasukController extends Controller {
 
     public function behaviors() {
         return [
@@ -20,12 +20,11 @@ class PegawaiController extends Controller {
                 'actions' => [
                     'index' => ['get'],
                     'view' => ['get'],
-                    'klinik' => ['get'],
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
-                    'listpegawaicabang' => ['get'],
-                    'listpegawai' => ['get'],
+                    'cabang' => ['get'],
+                    'product' => ['get'],
                 ],
             ]
         ];
@@ -53,9 +52,9 @@ class PegawaiController extends Controller {
         return true;
     }
 
-    public function actionListpegawai() {
+    public function actionCabang() {
         $query = new Query;
-        $query->from('m_pegawai')
+        $query->from('m_cabang')
                 ->select("*")
                 ->where("is_deleted = 0");
 
@@ -67,16 +66,11 @@ class PegawaiController extends Controller {
         echo json_encode(array('status' => 1, 'data' => $models));
     }
 
-    public function actionListpegawaicabang() {
-        $id = $_GET['id'];
-        $criteria = '';
-        if (!empty($id)) {
-            $criteria = 'and cabang_id="' . $id . '"';
-        }
+    public function actionProduct() {
         $query = new Query;
-        $query->from('m_pegawai')
+        $query->from('m_produk')
                 ->select("*")
-                ->where("is_deleted = 0 $criteria");
+                ->where("is_deleted = 0");
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -90,17 +84,15 @@ class PegawaiController extends Controller {
         //init variable
         $params = $_REQUEST;
         $filter = array();
-        $sort = "t1.kode ASC";
+        $sort = "stok_masuk.id ASC";
         $offset = 0;
         $limit = 10;
-        //        Yii::error($params);
-        //limit & offset pagination
+
         if (isset($params['limit']))
             $limit = $params['limit'];
         if (isset($params['offset']))
             $offset = $params['offset'];
 
-        //sorting
         if (isset($params['sort'])) {
             $sort = $params['sort'];
             if (isset($params['order'])) {
@@ -115,16 +107,20 @@ class PegawaiController extends Controller {
         $query = new Query;
         $query->offset($offset)
                 ->limit($limit)
-                ->from('m_pegawai as t1, m_cabang as t2')
-                ->where("t1.cabang_id = t2.id")
+                ->from(['stok_masuk', 'm_cabang'])
                 ->orderBy($sort)
-                ->select("t1.id as id,t1.kode as kode, t1.nama as nama, t1.jenis_kelamin as jenis_kelamin, t1.no_tlp as no_tlp, t1.email as email, t1.alamat as alamat, t1.jabatan as jabatan, t2.nama as office_place, t1.cabang_id as cabang_id, t1.is_deleted as is_deleted");
+                ->select("stok_masuk.id, stok_masuk.kode, stok_masuk.tanggal, m_cabang.nama as cabang, stok_masuk.keterangan, stok_masuk.total")
+                ->where('m_cabang.id = stok_masuk.cabang_id');
 
         //filter
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
-                $query->andFilterWhere(['like', 't1.' . $key, $val]);
+                if($key  == 'cabang_id'){
+                    $query->andFilterWhere(['like', 'm_cabang.'.$key, $val]);
+                }else{
+                $query->andFilterWhere(['like', $key, $val]);
+                }
             }
         }
 
@@ -137,34 +133,40 @@ class PegawaiController extends Controller {
         echo json_encode(array('status' => 1, 'data' => $models, 'totalItems' => $totalItems), JSON_PRETTY_PRINT);
     }
 
-    public function actionKlinik() {
-        $query = new Query;
-        $query->from('m_cabang')
-                ->where("is_deleted = 0")
-                ->select("*");
-
-        $command = $query->createCommand();
-        $models = $command->queryAll();
-
-        $this->setHeader(200);
-
-        echo json_encode(array('status' => 1, 'office_place' => $models));
-    }
-
     public function actionView($id) {
 
         $model = $this->findModel($id);
+        $det = StokMasukDet::find()
+                ->where(['stok_masuk_id' => $model['id']])
+                ->all();
+        
+        $detail = array();
+        
+        foreach ($det as $val) {
+            $detail[] = $val->attributes;
+        }
+        
 
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
+        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes),'detail' => $detail) , JSON_PRETTY_PRINT);
     }
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
-        $model = new Pegawai();
-        $model->attributes = $params;
+        $model = new StokMasuk();
+        $model->attributes = $params['stokmasuk'];
 
         if ($model->save()) {
+            $detailsmasuk = $params['detailsmasuk'];
+//            Yii::error($detailsmasuk);
+            foreach ($detailsmasuk as $val) {
+                $det = new StokMasukDet();
+                $det->attributes = $val;
+                $det->jumlah = str_replace('.','',$det->jumlah);
+                $det->harga = str_replace('.','',$det->harga);
+                $det->stok_masuk_id = $model->id;
+                $det->save();
+            }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -176,9 +178,19 @@ class PegawaiController extends Controller {
     public function actionUpdate($id) {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
-        $model->attributes = $params;
+        $model->attributes = $params['stokmasuk'];;
 
         if ($model->save()) {
+            $deleteDetail = StokMasukDet::deleteAll(['stok_masuk_id' => $model->id]);
+            $detailSmasuk = $params['detailsmasuk'];
+            foreach ( $detailSmasuk as $val) {
+                $det = new StokMasukDet();
+                $det->attributes = $val;
+                $det->jumlah = str_replace('.','',$det->jumlah);
+                $det->harga = str_replace('.','',$det->harga);
+                $det->stok_masuk_id = $model->id;
+                $det->save();
+            }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -189,6 +201,7 @@ class PegawaiController extends Controller {
 
     public function actionDelete($id) {
         $model = $this->findModel($id);
+        $deleteDetail = StokMasukDet::deleteAll(['stok_masuk_id' => $id]);
 
         if ($model->delete()) {
             $this->setHeader(200);
@@ -201,7 +214,7 @@ class PegawaiController extends Controller {
     }
 
     protected function findModel($id) {
-        if (($model = Pegawai::findOne($id)) !== null) {
+        if (($model = StokMasuk::findOne($id)) !== null) {
             return $model;
         } else {
 

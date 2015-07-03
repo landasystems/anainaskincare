@@ -3,15 +3,14 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Pegawai;
-use app\models\Cabang;
+use app\models\Penjualan;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\db\Query;
 
-class PegawaiController extends Controller {
+class PenjualanController extends Controller {
 
     public function behaviors() {
         return [
@@ -20,12 +19,13 @@ class PegawaiController extends Controller {
                 'actions' => [
                     'index' => ['get'],
                     'view' => ['get'],
-                    'klinik' => ['get'],
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
-                    'listpegawaicabang' => ['get'],
-                    'listpegawai' => ['get'],
+                    'cabang' => ['get'],
+                    'customer' => ['get'],
+                    'produk' => ['get'],
+                    'nm_customer' => ['post'],
                 ],
             ]
         ];
@@ -35,13 +35,14 @@ class PegawaiController extends Controller {
         $action = $event->id;
         if (isset($this->actions[$action])) {
             $verbs = $this->actions[$action];
-        } elseif (excel(isset($this->actions['*']))) {
+        } elseif (isset($this->actions['*'])) {
             $verbs = $this->actions['*'];
         } else {
             return $event->isValid;
         }
         $verb = Yii::$app->getRequest()->getMethod();
         $allowed = array_map('strtoupper', $verbs);
+//        Yii::error($allowed);
 
         if (!in_array($verb, $allowed)) {
 
@@ -53,44 +54,11 @@ class PegawaiController extends Controller {
         return true;
     }
 
-    public function actionListpegawai() {
-        $query = new Query;
-        $query->from('m_pegawai')
-                ->select("*")
-                ->where("is_deleted = 0");
-
-        $command = $query->createCommand();
-        $models = $command->queryAll();
-
-        $this->setHeader(200);
-
-        echo json_encode(array('status' => 1, 'data' => $models));
-    }
-
-    public function actionListpegawaicabang() {
-        $id = $_GET['id'];
-        $criteria = '';
-        if (!empty($id)) {
-            $criteria = 'and cabang_id="' . $id . '"';
-        }
-        $query = new Query;
-        $query->from('m_pegawai')
-                ->select("*")
-                ->where("is_deleted = 0 $criteria");
-
-        $command = $query->createCommand();
-        $models = $command->queryAll();
-
-        $this->setHeader(200);
-
-        echo json_encode(array('status' => 1, 'data' => $models));
-    }
-
     public function actionIndex() {
         //init variable
         $params = $_REQUEST;
         $filter = array();
-        $sort = "t1.kode ASC";
+        $sort = "penjualan.id ASC";
         $offset = 0;
         $limit = 10;
         //        Yii::error($params);
@@ -115,16 +83,17 @@ class PegawaiController extends Controller {
         $query = new Query;
         $query->offset($offset)
                 ->limit($limit)
-                ->from('m_pegawai as t1, m_cabang as t2')
-                ->where("t1.cabang_id = t2.id")
+                ->from(['penjualan', 'm_cabang', 'm_customer'])
+                ->where('penjualan.cabang_id = m_cabang.id and penjualan.customer_id = m_customer.id')
                 ->orderBy($sort)
-                ->select("t1.id as id,t1.kode as kode, t1.nama as nama, t1.jenis_kelamin as jenis_kelamin, t1.no_tlp as no_tlp, t1.email as email, t1.alamat as alamat, t1.jabatan as jabatan, t2.nama as office_place, t1.cabang_id as cabang_id, t1.is_deleted as is_deleted");
+                ->select("m_cabang.nama as cabang, m_customer.nama as customer, penjualan.kode as kode, penjualan.tanggal as tanggal,
+                    penjualan.keterangan as keterangan, penjualan.total as total, penjualan.cash as cash, penjualan.credit as credit, penjualan.status as status");
 
         //filter
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
-                $query->andFilterWhere(['like', 't1.' . $key, $val]);
+                $query->andFilterWhere(['like', $key, $val]);
             }
         }
 
@@ -137,20 +106,6 @@ class PegawaiController extends Controller {
         echo json_encode(array('status' => 1, 'data' => $models, 'totalItems' => $totalItems), JSON_PRETTY_PRINT);
     }
 
-    public function actionKlinik() {
-        $query = new Query;
-        $query->from('m_cabang')
-                ->where("is_deleted = 0")
-                ->select("*");
-
-        $command = $query->createCommand();
-        $models = $command->queryAll();
-
-        $this->setHeader(200);
-
-        echo json_encode(array('status' => 1, 'office_place' => $models));
-    }
-
     public function actionView($id) {
 
         $model = $this->findModel($id);
@@ -161,7 +116,7 @@ class PegawaiController extends Controller {
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
-        $model = new Pegawai();
+        $model = new Penjualan();
         $model->attributes = $params;
 
         if ($model->save()) {
@@ -171,6 +126,58 @@ class PegawaiController extends Controller {
             $this->setHeader(400);
             echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $model->errors), JSON_PRETTY_PRINT);
         }
+    }
+
+    public function actionCustomer() {
+        $query = new Query;
+        $query->from('m_customer')
+                ->select('*');
+
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'customer' => $models));
+    }
+
+    public function actionCabang() {
+        $query = new Query;
+        $query->from('m_cabang')
+                ->select('*');
+
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'cabang' => $models));
+    }
+     public function actionProduk() {
+        if (!empty($_GET['kata'])) {
+            $query = new Query;
+            $query->from('m_barang')
+                    ->select("*")
+                    ->where('nama like "%' . $_GET['kata'] . '%"');
+
+            $command = $query->createCommand();
+            $models = $command->queryAll();
+            $this->setHeader(200);
+
+            echo json_encode(array('status' => 1, 'produk' => $models));
+        }
+    }
+    public function actionNm_customer() {
+        $params = json_decode(file_get_contents("php://input"), true);
+        $query = new Query;
+        $query->from('m_customer')
+                ->where('id="'.$params['customer_id'].'"')
+                ->select("*");
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'customer' =>$models));
     }
 
     public function actionUpdate($id) {
@@ -201,7 +208,7 @@ class PegawaiController extends Controller {
     }
 
     protected function findModel($id) {
-        if (($model = Pegawai::findOne($id)) !== null) {
+        if (($model = Penjualan::findOne($id)) !== null) {
             return $model;
         } else {
 

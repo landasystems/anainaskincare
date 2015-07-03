@@ -385,3 +385,17 @@ angular.module('ui.select2', []).value('uiSelect2Config', {}).directive('uiSelec
             }
         };
     }]);
+
+/*datepicker*/
+//angular.module('app')
+//        .directive('pageSelect', function() {
+//            return {
+//                restrict: 'E',
+//                template: '<input type="text" class="select-page" ng-model="inputPage" ng-change="selectPage(inputPage)">',
+//                link: function(scope, element, attrs) {
+//                    scope.$watch('currentPage', function(c) {
+//                        scope.inputPage = c;
+//                    });
+//                }
+//            }
+//        });

@@ -109,13 +109,20 @@ class StokkeluarController extends Controller {
                 ->limit($limit)
                 ->from(['stok_keluar', 'm_cabang'])
                 ->orderBy($sort)
-                ->select("stok_keluar.kode, stok_keluar.tanggal, m_cabang.nama as cabang, stok_keluar.keterangan, stok_keluar.total");
+                ->select("stok_keluar.id, stok_keluar.kode, stok_keluar.tanggal, m_cabang.nama as cabang, stok_keluar.keterangan, stok_keluar.total")
+                ->where('m_cabang.id = stok_keluar.cabang_id');
 
         //filter
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
+                Yii::error($val);
+                if($key  == 'cabang_id'){
+                    $query->andFilterWhere(['like', 'm_cabang.'.$key, $val]);
+                }else{
                 $query->andFilterWhere(['like', $key, $val]);
+                }
+                
             }
         }
 
@@ -132,13 +139,15 @@ class StokkeluarController extends Controller {
 
         $model = $this->findModel($id);
         $det = StokKeluarDet::find()
-                ->where(['stok_keluar_id' => $models['id']])
+                ->where(['stok_keluar_id' => $model['id']])
                 ->all();
         
         $detail = array();
+        
         foreach ($det as $val) {
             $detail[] = $val->attributes;
         }
+        
 
         $this->setHeader(200);
         echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes),'detail' => $detail) , JSON_PRETTY_PRINT);
@@ -148,12 +157,15 @@ class StokkeluarController extends Controller {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = new StokKeluar();
         $model->attributes = $params['stokkeluar'];
+        $model->total = str_replace('.','',$model->total);
 
         if ($model->save()) {
-            $detailskeluar = $param['detailskeluar'];
+            $detailskeluar = $params['detailskeluar'];
             foreach ($detailskeluar as $val) {
                 $det = new StokKeluarDet();
                 $det->attributes = $val;
+                $det->jumlah = str_replace('.','',$det->jumlah);
+                $det->harga = str_replace('.','',$det->harga);
                 $det->stok_keluar_id = $model->id;
                 $det->save();
             }
@@ -168,9 +180,19 @@ class StokkeluarController extends Controller {
     public function actionUpdate($id) {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
-        $model->attributes = $params;
+        $model->attributes = $params['stokkeluar'];;
 
         if ($model->save()) {
+            $deleteDetail = StokKeluarDet::deleteAll(['stok_keluar_id' => $model->id]);
+            $detailSkeluar = $params['detailskeluar'];
+            foreach ( $detailSkeluar as $val) {
+                $det = new StokKeluarDet();
+                $det->attributes = $val;
+                $det->jumlah = str_replace('.','',$det->jumlah);
+                $det->harga = str_replace('.','',$det->harga);
+                $det->stok_keluar_id = $model->id;
+                $det->save();
+            }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {

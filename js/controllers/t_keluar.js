@@ -5,24 +5,59 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
     $scope.is_edit = false;
     $scope.is_view = false;
 
-    $scope.detskeluar = [
+    $scope.datepickerOptions = {
+        format: 'yyyy-mm-dd',
+        language: 'id',
+        autoclose: true,
+        weekStart: 0
+    }
+
+    $scope.detskeluar = 
         {
             stok_keluar_id: '',
             produk_id: '',
             jumlah: '',
             harga: '',
-            total: '',
-            subtotal: '',
-        }
-    ];
+        };
+        
+//    $scope.produk = {
+//        minimumInputLength: 3,
+//        allowClear: false,
+//        ajax: {
+//            url: "api/web/stokkeluar/product/",
+//            dataType: 'json',
+//            data: function(term) {
+//                return {
+//                    kata: term,
+//                };
+//            },
+//            results: function(data, page) {
+//                return {
+//                    results: data.produk
+//                };
+//            }
+//        },
+//        formatResult: function(object) {
+//            return object.produk;
+//        },
+//        formatSelection: function(object) {
+//            return object.produk;
+//        },
+//        id: function(data) {
+//            return data.produk
+//        },
+//        initSelection : function(element, callback) {
+//            var obj = {id: 1, text: 'whatever value'};
+//            callback(obj);
+//        },
+//    };
+        
     $scope.addDetail = function () {
         var newDet = {
             stok_keluar_id: '',
             produk_id: '',
             jumlah: '',
             harga: '',
-            total: '',
-            subtotal: '',
         }
         $scope.detskeluar.push(newDet);
     };
@@ -35,7 +70,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         angular.forEach($scope.detskeluar, function (detail) {
             total += detail.jumlah * detail.harga;
         })
-        $scope.form.total =  total;
+        $scope.form.total = total;
 
     }
 //    $scope.form.total=total();
@@ -44,12 +79,12 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         var comArr = eval($scope.detskeluar);
         if (comArr.length > 1) {
             $scope.detskeluar.splice(paramindex, 1);
+            $scope.total();
         } else {
             alert("Something gone wrong");
         }
     };
 
-    $scope.detskeluar.subtotal = ($scope.detskeluar.jumlah * $scope.detskeluar.harga);
 
     $scope.cabang = {
         minimumInputLength: 3,
@@ -60,6 +95,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
     Data.get('stokkeluar/cabang').then(function (data) {
         $scope.listcabang = data.data;
     });
+    
     Data.get('stokkeluar/product').then(function (data) {
         $scope.list_produk = data.data;
     });
@@ -87,29 +123,42 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         $scope.isLoading = false;
     };
 
-    $scope.create = function (form) {
+    $scope.create = function (form, detail) {
         $scope.is_edit = true;
         $scope.is_view = false;
         $scope.formtitle = "Form Persediaan Keluar";
         $scope.form = {};
+        $scope.detskeluar = [{}];
+
+
     };
-    $scope.update = function (form) {
-        $scope.is_edit = true;
-        $scope.is_view = false;
-        $scope.formtitle = "Edit Persediaan Keluar : " + form.kode + " - " + form.nama;
-        $scope.form = form;
+    $scope.update = function (id) {
+        Data.get('stokkeluar/view/' + id).then(function (data) {
+            $scope.form = data.data;
+            $scope.detskeluar = data.detail;
+            $scope.is_edit = true;
+            $scope.is_view = false;
+            $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode + " - " + $scope.form.nama;
+
+        })
     };
-    $scope.view = function (form) {
-        $scope.is_edit = true;
-        $scope.is_view = true;
-        $scope.formtitle = "Lihat Persediaan Keluar : " + form.kode + " - " + form.nama;
-        $scope.form = form;
+    $scope.view = function (id) {
+        Data.get('stokkeluar/view/' + id).then(function (data) {
+            $scope.form = data.data;
+            $scope.detskeluar = data.detail;
+
+            $scope.is_edit = true;
+            $scope.is_view = false;
+            $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode + " - " + $scope.form.nama;
+
+        })
     };
     $scope.save = function (form, detail) {
         var data = {
             stokkeluar: form,
             detailskeluar: detail,
         };
+        
         var url = (form.id > 0) ? 'stokkeluar/update/' + form.id : 'stokkeluar/create';
         Data.post(url, data).then(function (result) {
             if (result.status == 0) {
@@ -127,6 +176,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         }
         $scope.is_edit = false;
         $scope.is_view = false;
+        $scope.detskeluar = [{}];
     };
 
     $scope.trash = function (row) {
