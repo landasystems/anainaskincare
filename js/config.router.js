@@ -266,7 +266,7 @@ angular.module('app')
                                     url: '/returpenjualan',
                                     templateUrl: 'tpl/t_returpenjualan/index.html',
                                     resolve: {
-                                         deps: ['$ocLazyLoad',
+                                        deps: ['$ocLazyLoad',
                                             function($ocLazyLoad) {
                                                 return $ocLazyLoad.load('ui.select2').then(
                                                         function() {
@@ -299,7 +299,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['daterangepicker','ui.select2']).then(
+                                                return $ocLazyLoad.load(['daterangepicker', 'ui.select2']).then(
                                                         function() {
                                                             return $ocLazyLoad.load('js/controllers/l_bonuskaryawan.js');
                                                         }
@@ -313,7 +313,11 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function($ocLazyLoad) {
-                                                return $ocLazyLoad.load('js/controllers/l_labarugi.js');
+                                                return $ocLazyLoad.load(['daterangepicker', 'ui.select2']).then(
+                                                        function() {
+                                                            return $ocLazyLoad.load('js/controllers/l_labarugi.js');
+                                                        }
+                                                );
                                             }]
                                     }
                                 })

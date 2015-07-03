@@ -17,6 +17,7 @@ class LaporanController extends Controller {
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'bonus' => ['post'],
+                    'labarugi' => ['post'],
                 ],
             ]
         ];
@@ -48,8 +49,6 @@ class LaporanController extends Controller {
     public function actionBonus() {
         $params = json_decode(file_get_contents("php://input"), true);
         $detail = array();
-//        print_r($params['tanggal']);
-//        $tgl = explode(" - ", $params['tanggal']);
         $start = date("Y-m-d", strtotime($params['tanggal']['startDate']));
         $end = date("Y-m-d", strtotime($params['tanggal']['endDate']));
 
@@ -136,6 +135,59 @@ class LaporanController extends Controller {
         $this->setHeader(200);
 
         echo json_encode(array('status' => 1, 'data' => $body, 'detail' => $detail), JSON_PRETTY_PRINT);
+    }
+
+    public function actionLabarugi() {
+        $params = json_decode(file_get_contents("php://input"), true);
+        $data = array();
+        $start = date("Y-m-d", strtotime($params['tanggal']['startDate']));
+        $end = date("Y-m-d", strtotime($params['tanggal']['endDate']));
+        if (!empty($params['cabang_id'])) {
+            $cbg = \app\models\Cabang::findOne(['id' => $params['cabang_id']]);
+            $data['cabang'] = strtoupper($cbg->nama);
+            $criteria = ' and penjualan.cabang_id = ' . $params['cabang_id'];
+        } else {
+            $data['cabang'] = 'SEMUA CABANG';
+            $criteria = '';
+        }
+        $connection = \Yii::$app->db;
+
+        $data['start'] = $start;
+        $data['end'] = $end;
+
+        //penjualan gross
+        $penjualan = $connection->createCommand("SELECT sum(cash) as  penjualan FROM penjualan where (tanggal >= '" . $start . "' and tanggal <= '" . $end . "') $criteria")
+                ->queryOne();
+        $data['penjualan'] = empty($penjualan['penjualan']) ? 0 : $penjualan['penjualan'];
+
+        //pembayaran piutang
+        $penjualan = $connection->createCommand("SELECT sum(pinjaman.credit) as pinjaman FROM pinjaman, penjualan where pinjaman.penjualan_id = penjualan.id and (penjualan.tanggal >= '" . $start . "' and penjualan.tanggal <= '" . $end . "') $criteria")
+                ->queryOne();
+        $data['pemb_piutang'] = empty($penjualan['pinjaman']) ? 0 : $penjualan['pinjaman'];
+
+        //diskon, bonus terapis, bonus dokter
+        $penjualan = $connection->createCommand("SELECT sum(penjualan_det.diskon) as diskon, sum(penjualan_det.fee_terapis) as bonus_terapis, sum(penjualan_det.fee_dokter) as bonus_dokter FROM penjualan, penjualan_det where penjualan.id=penjualan_det.penjualan_id and (penjualan.tanggal >= '" . $start . "' and penjualan.tanggal <= '" . $end . "') $criteria")
+                ->queryOne();
+        $data['diskon'] = empty($penjualan['diskon']) ? 0 : $penjualan['diskon'];
+        $data['bonus_terapis'] = empty($penjualan['bonus_terapis']) ? 0 : $penjualan['bonus_terapis'];
+        $data['bonus_dokter'] = empty($penjualan['bonus_dokter']) ? 0 : $penjualan['bonus_dokter'];
+
+        $criteria = !empty($params['cabang_id']) ? ' and pembelian.cabang_id = ' . $params['cabang_id'] : '';
+
+        $data['total_nett'] = $data['penjualan'] + $data['pemb_piutang'] - $data['pemb_piutang'] - $data['bonus_terapis'] - $data['bonus_dokter'];
+        $data['total_nett'] = ($data['total_nett'] > 0) ? $data['total_nett'] : "(" . $data['total_nett'] . ")";
+
+        //pembayaran hutang
+        $pembelian = $connection->createCommand("SELECT sum(hutang.credit) as pemb_hutang FROM hutang, pembelian where (pembelian.tanggal >= '" . $start . "' and pembelian.tanggal <= '" . $end . "') $criteria")
+                ->queryOne();
+        $data['pemb_hutang'] = empty($pembelian['pemb_hutang']) ? 0 : $pembelian['pemb_hutang'];
+        
+        //hpp
+        $penjualan = $connection->createCommand("SELECT sum(cash) as  penjualan FROM penjualan where (tanggal >= '" . $start . "' and tanggal <= '" . $end . "') $criteria")
+                ->queryOne();
+        $data['penjualan'] = empty($penjualan['penjualan']) ? 0 : $penjualan['penjualan'];
+
+        echo json_encode(array('status' => 1, 'data' => $data), JSON_PRETTY_PRINT);
     }
 
     protected function findModel($id) {
