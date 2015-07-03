@@ -166,26 +166,27 @@
                                     <td>Harga</td>
                                     <td>Diskon</td>
                                     <td>Sub total</td>
+                                    <td>#</td>
                                 </tr>
+                                </thead>
                                 <tr ng-repeat="detail in detPenjualan">
                                     <td>
-                                        <input type="hidden" 
-                                               ui-select2="produk"
-                                               ng-model="produk_id"
-                                               data-placeholder="-Pilih Produk-"
-                                               style="width:100%" />
-                                        <input type="hidden" ng-model="detail.produk_id" value="{{kd_jab.id_jabatan}}">
+                                        <select ui-select2="selectproduk" ng-model="detail.produk_id" ng-disabled="is_view" required style="width: 250px;">
+                                            <option value="">-Pilih Produk-</option>
+                                            <option ng-repeat="produk in list_produk" value="{{produk.id}}">{{produk.nama}}</option>
+                                        </select> 
                                     </td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td  style="margin:0px;padding:0px;">
+                                    <td></td>
+                                    <td >
                                         <button ng-click="addDetail()" class="btn btn-success" ng-show="$index == 0" ng-disabled="is_view"><i class="fa fa-arrows"></i></button>
                                         <button ng-click="removeRow($index)" class="btn btn-danger" ng-show="$index > 0" ng-disabled="is_view"><i class="fa fa-trash-o"></i></button>
                                     </td>
                                 </tr>
-                            </thead>
+                            
                         </table>
                         <div class="line line-dashed b-b line-lg pull-in"></div>
                         <div align="center">

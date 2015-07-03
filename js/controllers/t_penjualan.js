@@ -28,36 +28,9 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         });
     };
     
-    $scope.produk = {
-        minimumInputLength: 3,
-        allowClear: true,
-        initSelection: function(el, fn) {
-        },
-        ajax: {
-            url: "api/web/penjualan/produk/",
-            dataType: 'json',
-            data: function(term) {
-                return {
-                    kata: term,
-                };
-            },
-            results: function(data, page) {
-                return {
-                    results: data.produk,
-                };
-            }
-        },
-        formatResult: function(object) {
-            return object.produk;
-        },
-        formatSelection: function(object) {
-            return object.produk;
-        },
-        id: function(data) {
-            return data.id
-        }
-    };
-    
+    Data.get('penjualan/produk').then(function (data) {
+        $scope.list_produk = data.produk;
+    });
     var tableStateRef;
     $scope.displayed = [];
     $scope.is_edit = false;
