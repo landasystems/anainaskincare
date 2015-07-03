@@ -3,15 +3,14 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\StokKeluar;
-use app\models\StokKeluarDet;
+use app\models\Pembelian;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\db\Query;
 
-class StokkeluarController extends Controller {
+class PembelianController extends Controller {
 
     public function behaviors() {
         return [
@@ -19,12 +18,14 @@ class StokkeluarController extends Controller {
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'index' => ['get'],
+                    'detail' => ['get'],
                     'view' => ['get'],
+                    'selectedsupplier' => ['get'],
+                    'supplierlist' => ['get'],
+                    'kliniklist' => ['get'],
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
-                    'cabang' => ['get'],
-                    'product' => ['get'],
                 ],
             ]
         ];
@@ -41,6 +42,7 @@ class StokkeluarController extends Controller {
         }
         $verb = Yii::$app->getRequest()->getMethod();
         $allowed = array_map('strtoupper', $verbs);
+//        Yii::error($allowed);
 
         if (!in_array($verb, $allowed)) {
 
@@ -52,47 +54,91 @@ class StokkeluarController extends Controller {
         return true;
     }
 
-    public function actionCabang() {
+    public function actionDetail() {
+        //create query
         $query = new Query;
-        $query->from('m_cabang')
-                ->select("*")
-                ->where("is_deleted = 0");
+        $query->select("*")
+                ->from('pembelian_det')
+                ->where('pembelian_id=');
+
+        //filter
 
         $command = $query->createCommand();
         $models = $command->queryAll();
 
         $this->setHeader(200);
 
-        echo json_encode(array('status' => 1, 'data' => $models));
+        echo json_encode(array('status' => 1, 'data' => $models), JSON_PRETTY_PRINT);
+        
     }
-
-    public function actionProduct() {
+    public function actionKliniklist() {
+        //create query
         $query = new Query;
-        $query->from('m_produk')
-                ->select("*")
-                ->where("is_deleted = 0");
+        $query->select("*")
+                ->from('m_cabang')
+                ->where('is_deleted=0');
+
+        //filter
 
         $command = $query->createCommand();
         $models = $command->queryAll();
 
         $this->setHeader(200);
 
-        echo json_encode(array('status' => 1, 'data' => $models));
+        echo json_encode(array('status' => 1, 'listKlinik' => $models), JSON_PRETTY_PRINT);
+        
     }
+    public function actionSupplierlist() {
+        //create query
+        $query = new Query;
+        $query->select("*")
+                ->from('m_supplier')
+                ->where('is_deleted=0');
 
+        //filter
+
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'listSupplier' => $models), JSON_PRETTY_PRINT);
+        
+    }
+    public function actionSelectedsupplier($id) {
+//        $params = json_decode(file_get_contents("php://input"), true);
+//        create query
+        Yii::error($id);
+        $query = new Query;
+        $query->select("*")
+                ->from('m_supplier')
+                ->where('id='.$id);
+
+        //filter
+
+        $command = $query->createCommand();
+        $models = $command->queryOne();
+
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'selected' => $models), JSON_PRETTY_PRINT);
+        
+    }
     public function actionIndex() {
         //init variable
         $params = $_REQUEST;
         $filter = array();
-        $sort = "stok_keluar.id ASC";
+        $sort = "id ASC";
         $offset = 0;
         $limit = 10;
-
+        //        Yii::error($params);
+        //limit & offset pagination
         if (isset($params['limit']))
             $limit = $params['limit'];
         if (isset($params['offset']))
             $offset = $params['offset'];
 
+        //sorting
         if (isset($params['sort'])) {
             $sort = $params['sort'];
             if (isset($params['order'])) {
@@ -107,22 +153,15 @@ class StokkeluarController extends Controller {
         $query = new Query;
         $query->offset($offset)
                 ->limit($limit)
-                ->from(['stok_keluar', 'm_cabang'])
+                ->from('pembelian')
                 ->orderBy($sort)
-                ->select("stok_keluar.id, stok_keluar.kode, stok_keluar.tanggal, m_cabang.nama as cabang, stok_keluar.keterangan, stok_keluar.total")
-                ->where('m_cabang.id = stok_keluar.cabang_id');
+                ->select("*");
 
         //filter
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
-                Yii::error($val);
-                if($key  == 'cabang_id'){
-                    $query->andFilterWhere(['like', 'm_cabang.'.$key, $val]);
-                }else{
                 $query->andFilterWhere(['like', $key, $val]);
-                }
-                
             }
         }
 
@@ -134,41 +173,22 @@ class StokkeluarController extends Controller {
 
         echo json_encode(array('status' => 1, 'data' => $models, 'totalItems' => $totalItems), JSON_PRETTY_PRINT);
     }
+    
 
     public function actionView($id) {
 
         $model = $this->findModel($id);
-        $det = StokKeluarDet::find()
-                ->where(['stok_keluar_id' => $model['id']])
-                ->all();
-        
-        $detail = array();
-        
-        foreach ($det as $val) {
-            $detail[] = $val->attributes;
-        }
-        
 
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes),'detail' => $detail) , JSON_PRETTY_PRINT);
+        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
     }
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
-        $model = new StokKeluar();
-        $model->attributes = $params['stokkeluar'];
-        $model->total = str_replace('.','',$model->total);
+        $model = new Pembelian();
+        $model->attributes = $params;
 
         if ($model->save()) {
-            $detailskeluar = $params['detailskeluar'];
-            foreach ($detailskeluar as $val) {
-                $det = new StokKeluarDet();
-                $det->attributes = $val;
-                $det->jumlah = str_replace('.','',$det->jumlah);
-                $det->harga = str_replace('.','',$det->harga);
-                $det->stok_keluar_id = $model->id;
-                $det->save();
-            }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -180,19 +200,9 @@ class StokkeluarController extends Controller {
     public function actionUpdate($id) {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
-        $model->attributes = $params['stokkeluar'];;
+        $model->attributes = $params;
 
         if ($model->save()) {
-            $deleteDetail = StokKeluarDet::deleteAll(['stok_keluar_id' => $model->id]);
-            $detailSkeluar = $params['detailskeluar'];
-            foreach ( $detailSkeluar as $val) {
-                $det = new StokKeluarDet();
-                $det->attributes = $val;
-                $det->jumlah = str_replace('.','',$det->jumlah);
-                $det->harga = str_replace('.','',$det->harga);
-                $det->stok_keluar_id = $model->id;
-                $det->save();
-            }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -203,7 +213,6 @@ class StokkeluarController extends Controller {
 
     public function actionDelete($id) {
         $model = $this->findModel($id);
-        $deleteDetail = StokKeluarDet::deleteAll(['stok_keluar_id' => $id]);
 
         if ($model->delete()) {
             $this->setHeader(200);
@@ -216,7 +225,7 @@ class StokkeluarController extends Controller {
     }
 
     protected function findModel($id) {
-        if (($model = StokKeluar::findOne($id)) !== null) {
+        if (($model = Pembelian::findOne($id)) !== null) {
             return $model;
         } else {
 
