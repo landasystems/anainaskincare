@@ -12,14 +12,46 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         weekStart: 0
     }
 
-    $scope.detskeluar = [
+    $scope.detskeluar = 
         {
             stok_keluar_id: '',
             produk_id: '',
             jumlah: '',
             harga: '',
-        }
-    ];
+        };
+        
+//    $scope.produk = {
+//        minimumInputLength: 3,
+//        allowClear: false,
+//        ajax: {
+//            url: "api/web/stokkeluar/product/",
+//            dataType: 'json',
+//            data: function(term) {
+//                return {
+//                    kata: term,
+//                };
+//            },
+//            results: function(data, page) {
+//                return {
+//                    results: data.produk
+//                };
+//            }
+//        },
+//        formatResult: function(object) {
+//            return object.produk;
+//        },
+//        formatSelection: function(object) {
+//            return object.produk;
+//        },
+//        id: function(data) {
+//            return data.produk
+//        },
+//        initSelection : function(element, callback) {
+//            var obj = {id: 1, text: 'whatever value'};
+//            callback(obj);
+//        },
+//    };
+        
     $scope.addDetail = function () {
         var newDet = {
             stok_keluar_id: '',
@@ -63,6 +95,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
     Data.get('stokkeluar/cabang').then(function (data) {
         $scope.listcabang = data.data;
     });
+    
     Data.get('stokkeluar/product').then(function (data) {
         $scope.list_produk = data.data;
     });
@@ -125,7 +158,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
             stokkeluar: form,
             detailskeluar: detail,
         };
-
+        
         var url = (form.id > 0) ? 'stokkeluar/update/' + form.id : 'stokkeluar/create';
         Data.post(url, data).then(function (result) {
             if (result.status == 0) {

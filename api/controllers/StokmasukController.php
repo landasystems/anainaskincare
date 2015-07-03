@@ -3,15 +3,15 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\StokKeluar;
-use app\models\StokKeluarDet;
+use app\models\StokMasuk;
+use app\models\StokMasukDet;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\db\Query;
 
-class StokkeluarController extends Controller {
+class StokmasukController extends Controller {
 
     public function behaviors() {
         return [
@@ -84,7 +84,7 @@ class StokkeluarController extends Controller {
         //init variable
         $params = $_REQUEST;
         $filter = array();
-        $sort = "stok_keluar.id ASC";
+        $sort = "stok_masuk.id ASC";
         $offset = 0;
         $limit = 10;
 
@@ -107,22 +107,20 @@ class StokkeluarController extends Controller {
         $query = new Query;
         $query->offset($offset)
                 ->limit($limit)
-                ->from(['stok_keluar', 'm_cabang'])
+                ->from(['stok_masuk', 'm_cabang'])
                 ->orderBy($sort)
-                ->select("stok_keluar.id, stok_keluar.kode, stok_keluar.tanggal, m_cabang.nama as cabang, stok_keluar.keterangan, stok_keluar.total")
-                ->where('m_cabang.id = stok_keluar.cabang_id');
+                ->select("stok_masuk.id, stok_masuk.kode, stok_masuk.tanggal, m_cabang.nama as cabang, stok_masuk.keterangan, stok_masuk.total")
+                ->where('m_cabang.id = stok_masuk.cabang_id');
 
         //filter
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
-                Yii::error($val);
                 if($key  == 'cabang_id'){
                     $query->andFilterWhere(['like', 'm_cabang.'.$key, $val]);
                 }else{
                 $query->andFilterWhere(['like', $key, $val]);
                 }
-                
             }
         }
 
@@ -138,8 +136,8 @@ class StokkeluarController extends Controller {
     public function actionView($id) {
 
         $model = $this->findModel($id);
-        $det = StokKeluarDet::find()
-                ->where(['stok_keluar_id' => $model['id']])
+        $det = StokMasukDet::find()
+                ->where(['stok_masuk_id' => $model['id']])
                 ->all();
         
         $detail = array();
@@ -155,18 +153,18 @@ class StokkeluarController extends Controller {
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
-        $model = new StokKeluar();
-        $model->attributes = $params['stokkeluar'];
-        $model->total = str_replace('.','',$model->total);
+        $model = new StokMasuk();
+        $model->attributes = $params['stokmasuk'];
 
         if ($model->save()) {
-            $detailskeluar = $params['detailskeluar'];
-            foreach ($detailskeluar as $val) {
-                $det = new StokKeluarDet();
+            $detailsmasuk = $params['detailsmasuk'];
+//            Yii::error($detailsmasuk);
+            foreach ($detailsmasuk as $val) {
+                $det = new StokMasukDet();
                 $det->attributes = $val;
                 $det->jumlah = str_replace('.','',$det->jumlah);
                 $det->harga = str_replace('.','',$det->harga);
-                $det->stok_keluar_id = $model->id;
+                $det->stok_masuk_id = $model->id;
                 $det->save();
             }
             $this->setHeader(200);
@@ -180,17 +178,17 @@ class StokkeluarController extends Controller {
     public function actionUpdate($id) {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
-        $model->attributes = $params['stokkeluar'];;
+        $model->attributes = $params['stokmasuk'];;
 
         if ($model->save()) {
-            $deleteDetail = StokKeluarDet::deleteAll(['stok_keluar_id' => $model->id]);
-            $detailSkeluar = $params['detailskeluar'];
-            foreach ( $detailSkeluar as $val) {
-                $det = new StokKeluarDet();
+            $deleteDetail = StokMasukDet::deleteAll(['stok_masuk_id' => $model->id]);
+            $detailSmasuk = $params['detailsmasuk'];
+            foreach ( $detailSmasuk as $val) {
+                $det = new StokMasukDet();
                 $det->attributes = $val;
                 $det->jumlah = str_replace('.','',$det->jumlah);
                 $det->harga = str_replace('.','',$det->harga);
-                $det->stok_keluar_id = $model->id;
+                $det->stok_masuk_id = $model->id;
                 $det->save();
             }
             $this->setHeader(200);
@@ -203,7 +201,7 @@ class StokkeluarController extends Controller {
 
     public function actionDelete($id) {
         $model = $this->findModel($id);
-        $deleteDetail = StokKeluarDet::deleteAll(['stok_keluar_id' => $id]);
+        $deleteDetail = StokMasukDet::deleteAll(['stok_masuk_id' => $id]);
 
         if ($model->delete()) {
             $this->setHeader(200);
@@ -216,7 +214,7 @@ class StokkeluarController extends Controller {
     }
 
     protected function findModel($id) {
-        if (($model = StokKeluar::findOne($id)) !== null) {
+        if (($model = StokMasuk::findOne($id)) !== null) {
             return $model;
         } else {
 
