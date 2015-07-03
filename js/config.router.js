@@ -297,7 +297,11 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function($ocLazyLoad) {
-                                                return $ocLazyLoad.load('js/controllers/l_kartustok.js');
+                                                return $ocLazyLoad.load(['daterangepicker', 'ui.select2']).then(
+                                                        function() {
+                                                            return $ocLazyLoad.load('js/controllers/l_kartustok.js');
+                                                        }
+                                                );
                                             }]
                                     }
                                 })
