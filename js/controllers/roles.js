@@ -1,6 +1,7 @@
 app.controller('rolesCtrl', function ($scope, Data, toaster) {
     //init data
     var tableStateRef;
+    var paramRef;
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
@@ -20,6 +21,7 @@ app.controller('rolesCtrl', function ($scope, Data, toaster) {
             param['filter'] = tableState.search.predicateObject;
         }
 
+        paramRef = param;
         Data.get('roles', param).then(function (data) {
             $scope.displayed = data.data;
             tableState.pagination.numberOfPages = Math.round(data.totalItems / limit);
@@ -27,6 +29,12 @@ app.controller('rolesCtrl', function ($scope, Data, toaster) {
 
         $scope.isLoading = false;
     };
+    
+    $scope.excel = function(){
+        Data.get('roles', paramRef).then(function (data) {
+            
+        });
+    }
 
     $scope.create = function (form) {
         $scope.is_edit = true;

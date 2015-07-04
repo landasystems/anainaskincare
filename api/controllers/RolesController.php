@@ -96,8 +96,8 @@ class RolesController extends Controller {
         $models = $command->queryAll();
         $totalItems = $query->count();
 
-        $this->setHeader(200);
-
+//        $this->setHeader(200);
+        $this->actionExcel();
         echo json_encode(array('status' => 1, 'data' => $models, 'totalItems' => $totalItems), JSON_PRETTY_PRINT);
     }
 
@@ -186,11 +186,7 @@ class RolesController extends Controller {
     }
 
     public function actionExcel() {
-//        $encode = "\xEF\xBB\xBF"; // UTF-8 BOM
-//        $content = $encode . "aa";
-//        Yii::$app
-////var_dump($content);
-//        Yii::$app->getRequest()->sendFile('aa.xls', $content, "text/csv; charset=UTF-8", false);
+        return $this->render("excel");
     }
 
 }
