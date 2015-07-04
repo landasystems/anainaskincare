@@ -197,7 +197,25 @@ class LaporanController extends Controller {
         $start = date("Y-m-d", strtotime($params['tanggal']['startDate']));
         $end = date("Y-m-d", strtotime($params['tanggal']['endDate']));
         $data = array();
-        
+        $kartu = array();
+        if (!empty($params['cabang_id'])) {
+            $cbg = \app\models\Cabang::findOne(['id' => $params['cabang_id']]);
+            $data['cabang'] = strtoupper($cbg->nama);
+        } else {
+            $data['cabang'] = 'SEMUA CABANG';
+        }
+
+        $connection = \Yii::$app->db;
+
+//        $criteria = (!empty($params['cabang_id'])) ? ' and StokMasuk.cabang_id=' . $params['cabang_id'] : '';
+////        $stokMasuk = \app\models\StokMasukDet::find()->with('StokMasuk')->where("t.tanggal <= '" . $start . "' and t.tanggal >= '" . $start . "' $criteria");
+//        $stokMasuk = $connection->createCommand("SELECT sum(cash) as  penjualan FROM penjualan where (tanggal >= '" . $start . "' and tanggal <= '" . $end . "') $criteria")
+//                ->queryOne();
+//        foreach ($stokMasuk as $val) {
+//            $kartu['kode'] = $val->kode;
+//            $kartu['tanggal'] = $val->tanggal;
+//            $kartu['tanggal'] = $val->tanggal;
+//        }
     }
 
     protected function findModel($id) {

@@ -22,23 +22,22 @@ use Yii;
  *
  * @property Penjualan $penjualan
  */
-class PenjualanDet extends \yii\db\ActiveRecord
-{
+class PenjualanDet extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'penjualan_det';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['penjualan_id', 'produk_id', 'jumlah', 'harga', 'diskon', 'sub_total', 'pegawai_terapis_id', 'pegawai_dokter_id', 'fee_terapis', 'fee_dokter'], 'integer'],
+            [['id'], 'unique'],
             [['type'], 'string', 'max' => 45]
         ];
     }
@@ -46,8 +45,7 @@ class PenjualanDet extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'penjualan_id' => 'Penjualan ID',
@@ -67,8 +65,8 @@ class PenjualanDet extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPenjualan()
-    {
+    public function getPenjualan() {
         return $this->hasOne(Penjualan::className(), ['id' => 'penjualan_id']);
     }
+
 }
