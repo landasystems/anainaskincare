@@ -50,8 +50,10 @@ class LaporanController extends Controller {
     public function actionBonus() {
         $params = json_decode(file_get_contents("php://input"), true);
         $detail = array();
-        $start = date("Y-m-d", strtotime($params['tanggal']['startDate']));
-        $end = date("Y-m-d", strtotime($params['tanggal']['endDate']));
+        $s = strtotime(date("Y-m-d", strtotime($params['tanggal']['startDate'])));
+        $e = strtotime(date("Y-m-d", strtotime($params['tanggal']['endDate'])));
+        $start = date("Y-m-d", strtotime('+1 day', $s));
+        $end = date("Y-m-d", strtotime($e));
 
         $detail['start'] = $start;
         $detail['end'] = $end;
@@ -141,8 +143,10 @@ class LaporanController extends Controller {
     public function actionLabarugi() {
         $params = json_decode(file_get_contents("php://input"), true);
         $data = array();
-        $start = date("Y-m-d", strtotime($params['tanggal']['startDate']));
-        $end = date("Y-m-d", strtotime($params['tanggal']['endDate']));
+        $s = strtotime(date("Y-m-d", strtotime($params['tanggal']['startDate'])));
+        $e = strtotime(date("Y-m-d", strtotime($params['tanggal']['endDate'])));
+        $start = date("Y-m-d", strtotime('+1 day', $s));
+        $end = date("Y-m-d", strtotime($e));
         if (!empty($params['cabang_id'])) {
             $cbg = \app\models\Cabang::findOne(['id' => $params['cabang_id']]);
             $data['cabang'] = strtoupper($cbg->nama);
@@ -207,15 +211,15 @@ class LaporanController extends Controller {
 
         $connection = \Yii::$app->db;
 
-//        $criteria = (!empty($params['cabang_id'])) ? ' and StokMasuk.cabang_id=' . $params['cabang_id'] : '';
-////        $stokMasuk = \app\models\StokMasukDet::find()->with('StokMasuk')->where("t.tanggal <= '" . $start . "' and t.tanggal >= '" . $start . "' $criteria");
-//        $stokMasuk = $connection->createCommand("SELECT sum(cash) as  penjualan FROM penjualan where (tanggal >= '" . $start . "' and tanggal <= '" . $end . "') $criteria")
-//                ->queryOne();
-//        foreach ($stokMasuk as $val) {
-//            $kartu['kode'] = $val->kode;
-//            $kartu['tanggal'] = $val->tanggal;
-//            $kartu['tanggal'] = $val->tanggal;
-//        }
+        $criteria = (!empty($params['cabang_id'])) ? ' and StokMasuk.cabang_id=' . $params['cabang_id'] : '';
+        $stokMasuk = \app\models\StokMasukDet::find()->with('StokMasuk')->where("t.tanggal <= '" . $start . "' and t.tanggal >= '" . $start . "' $criteria");
+        $stokMasuk = $connection->createCommand("SELECT sum(cash) as  penjualan FROM penjualan where (tanggal >= '" . $start . "' and tanggal <= '" . $end . "') $criteria")
+                ->queryOne();
+        foreach ($stokMasuk as $val) {
+            $kartu['kode'] = $val->kode;
+            $kartu['tanggal'] = $val->tanggal;
+            $kartu['tanggal'] = $val->tanggal;
+        }
     }
 
     protected function findModel($id) {

@@ -3,6 +3,7 @@ app.controller('l_bonuskaryawanCtrl', function($scope, Data, toaster) {
     $scope.detail_laporan = false;
     $scope.form = {};
     $scope.list_detail = '';
+    $scope.tanggal = {startDate: null, endDate: null};
 //    $scope.listpegawai = {};
 
     Data.get('cabang/listcabang').then(function(data) {
@@ -12,7 +13,7 @@ app.controller('l_bonuskaryawanCtrl', function($scope, Data, toaster) {
     Data.get('pegawai/listpegawai').then(function(data) {
         $scope.listpegawai = data.data;
     });
-    
+
     $scope.ubah_pegawai = function(cabang) {
         Data.get('pegawai/listpegawaicabang/?id=' + cabang, '').then(function(data) {
             $scope.listpegawai = data.data;
@@ -20,6 +21,7 @@ app.controller('l_bonuskaryawanCtrl', function($scope, Data, toaster) {
     }
 
     $scope.view = function(form) {
+        console.log(form.tanggal);
         $scope.detail_laporan = true;
         Data.post('laporan/bonus/', form).then(function(data) {
             $scope.list_detail = data.data;
