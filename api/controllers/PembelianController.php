@@ -221,7 +221,6 @@ class PembelianController extends Controller {
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
-        Yii::error($params);
         $model = new Pembelian();
         $model->attributes = $params['pembelian'];
 
