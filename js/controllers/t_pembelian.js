@@ -4,6 +4,7 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
     $scope.displayed = [];
     $scope.pembeliandet = [
         {
+            nama : '',
             produk : '',
             jumlah : '',
             harga : '',
@@ -20,6 +21,9 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
     });
     Data.get('pembelian/kliniklist').then(function(data) {
         $scope.listKlinik= data.listKlinik;
+    });
+    Data.get('pembelian/produklist').then(function(data) {
+        $scope.listProduk= data.listProduct;
     });
 
     $scope.callServer = function callServer(tableState) {
@@ -50,7 +54,7 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
         $scope.is_view = false;
         $scope.formtitle = "Form Pembelian";
         $scope.form = {};
-        $scope.pembeliandet = [];
+//        $scope.pembeliandet = [];
         $scope.det = {};
     };
     $scope.update = function (form) {
@@ -73,7 +77,7 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
             $scope.pembeliandet = data.data;
         });
     };
-    $scope.save = function (form) {
+    $scope.save = function (form,det) {
         var url = (form.id > 0) ? 'pembelian/update/' + form.id : 'pembelian/create';
         Data.post(url, form).then(function (result) {
             if (result.status == 0) {
@@ -106,21 +110,30 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
                 $scope.form.email = result.selected.email;
                 $scope.form.alamat = result.selected.alamat;
             });
-    }
+    };
+    $scope.selectedProduk = function(detail){
+        $scope.detail = detail;
+        Data.get('pembelian/selectedproduk/' + detail.produk_id).then(function (result) {
+                $scope.detail.diskon = parseInt(result.selected.diskon);
+                $scope.detail.harga = parseInt(result.selected.harga_beli_terakhir);
+            });
+    };
     $scope.addrow = function(){
-        $scope.pembeliandet.push({
-            produk : $scope.det.produk,
+        $scope.pembeliandet.unshift({
+            nama : $scope.det.nama,
+            produk_id : $scope.det.produk,
             jumlah : $scope.det.jumlah,
             harga : $scope.det.harga,
             diskon : $scope.det.diskon,
-            subtotal : $scope.det.subtotal,
-        });
+            sub_total : $scope.det.subtotal,
+        });   
+        $scope.det.nama = '';
         $scope.det.produk = '';
         $scope.det.jumlah = '';
         $scope.det.harga = '';
         $scope.det.diskon = '';
         $scope.det.subtotal = '';
-    }
+    };
     $scope.removeRow = function(paramindex) {
         var comArr = eval($scope.pembeliandet);
         if (comArr.length > 1) {
@@ -128,6 +141,13 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
         } else {
             alert("Something gone wrong");
         }
+    };
+    $scope.calculate = function(){
+        var jml = parseInt($scope.detail.jumlah);
+        var harga = parseInt($scope.detail.harga);
+        var diskon = parseInt($scope.detail.diskon);
+        
+        $scope.detail.sub_total = (jml * harga) - (jml * diskon);
     };
 
 })

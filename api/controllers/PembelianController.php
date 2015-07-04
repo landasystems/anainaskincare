@@ -21,8 +21,10 @@ class PembelianController extends Controller {
                     'detail' => ['get'],
                     'view' => ['get'],
                     'selectedsupplier' => ['get'],
+                    'selectedproduk' => ['get'],
                     'supplierlist' => ['get'],
                     'kliniklist' => ['get'],
+                    'produklist' => ['get'],
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
@@ -105,13 +107,44 @@ class PembelianController extends Controller {
         echo json_encode(array('status' => 1, 'listSupplier' => $models), JSON_PRETTY_PRINT);
         
     }
+    public function actionProduklist() {
+        //create query
+        $query = new Query;
+        $query->select("*")
+                ->from('m_produk as p')
+//                ->join('JOIN')
+                ->where('is_deleted=0 AND type="Barang"');
+
+        //filter
+
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'listProduct' => $models), JSON_PRETTY_PRINT);
+        
+    }
     public function actionSelectedsupplier($id) {
-//        $params = json_decode(file_get_contents("php://input"), true);
-//        create query
-        Yii::error($id);
         $query = new Query;
         $query->select("*")
                 ->from('m_supplier')
+                ->where('id='.$id);
+
+        //filter
+
+        $command = $query->createCommand();
+        $models = $command->queryOne();
+
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'selected' => $models), JSON_PRETTY_PRINT);
+        
+    }
+    public function actionSelectedproduk($id) {
+        $query = new Query;
+        $query->select("*")
+                ->from('m_produk')
                 ->where('id='.$id);
 
         //filter
