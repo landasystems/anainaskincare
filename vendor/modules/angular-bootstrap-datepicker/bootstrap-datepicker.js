@@ -1140,7 +1140,7 @@
 		daysOfWeekDisabled: [],
 		endDate: Infinity,
 		forceParse: true,
-		format: 'mm/dd/yyyy',
+		format: 'dd-mm-yyyy',
 		keyboardNavigation: true,
 		language: 'en',
 		minViewMode: 0,
@@ -1561,7 +1561,7 @@
 		today: "Aujourd'hui",
 		clear: "Effacer",
 		weekStart: 1,
-		format: "dd/mm/yyyy"
+		format: "dd-mm-yyyy"
 	};
 }(jQuery));
 
@@ -1624,7 +1624,8 @@
 		months: ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"],
 		monthsShort: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Ags", "Sep", "Okt", "Nov", "Des"],
 		today: "Hari Ini",
-		clear: "Kosongkan"
+		clear: "Kosongkan",
+                format: "dd-mm-yyyy"
 	};
 }(jQuery));
 
@@ -1984,7 +1985,7 @@
 		months: ["Januari", "Februari", "Mars", "April", "Maj", "Juni", "Juli", "Augusti", "September", "Oktober", "November", "December"],
 		monthsShort: ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"],
 		today: "I Dag",
-		format: "yyyy-mm-dd",
+		format: "dd-mm-yyyy",
 		weekStart: 1
 	};
 }(jQuery));
