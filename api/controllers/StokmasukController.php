@@ -162,10 +162,9 @@ class StokmasukController extends Controller {
             foreach ($detailsmasuk as $val) {
                 $det = new StokMasukDet();
                 $det->attributes = $val;
-                $det->jumlah = str_replace('.','',$det->jumlah);
-                $det->harga = str_replace('.','',$det->harga);
                 $det->stok_masuk_id = $model->id;
                 $det->save();
+//                Yii::error($det->getErrors());
             }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);

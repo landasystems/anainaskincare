@@ -26,6 +26,7 @@ class PenjualanController extends Controller {
                     'customer' => ['get'],
                     'produk' => ['get'],
                     'nm_customer' => ['post'],
+                    'det_produk' => ['get'],
                 ],
             ]
         ];
@@ -154,30 +155,43 @@ class PenjualanController extends Controller {
         echo json_encode(array('status' => 1, 'cabang' => $models));
     }
      public function actionProduk() {
-        if (!empty($_GET['kata'])) {
-            $query = new Query;
-            $query->from('m_barang')
-                    ->select("*")
-                    ->where('nama like "%' . $_GET['kata'] . '%"');
+        $query = new Query;
+        $query->from('m_produk')
+                ->select('*');
 
-            $command = $query->createCommand();
-            $models = $command->queryAll();
-            $this->setHeader(200);
+        $command = $query->createCommand();
+        $models = $command->queryAll();
 
-            echo json_encode(array('status' => 1, 'produk' => $models));
-        }
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'produk' => $models));
     }
     public function actionNm_customer() {
         $params = json_decode(file_get_contents("php://input"), true);
         $query = new Query;
+        
         $query->from('m_customer')
-                ->where('id="'.$params['customer_id'].'"')
+                ->where('id="'.$params.'"')
                 ->select("*");
         $command = $query->createCommand();
-        $models = $command->queryAll();
+        $models = $command->query()->read();
+        $this->setHeader(200);
+        $model['no_tlp'] = $models['no_tlp'];
+        $model['alamat'] = $models['alamat'];
+        $model['email'] = $models['email'];
+
+        echo json_encode(array('customer' =>$model));
+    }
+    public function actionDet_produk($id) {
+        $query = new Query;
+        $query->from('m_produk')
+                ->where('id="'.$id.'"')
+                ->select("*");
+        $command = $query->createCommand();
+        $models = $command->queryOne();
         $this->setHeader(200);
 
-        echo json_encode(array('status' => 1, 'customer' =>$models));
+        echo json_encode(array('produk' =>$models));
     }
 
     public function actionUpdate($id) {
