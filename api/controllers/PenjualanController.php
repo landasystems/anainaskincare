@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Penjualan;
+use app\models\PenjualanDet;
+use app\models\Pinjaman;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -88,7 +90,9 @@ class PenjualanController extends Controller {
                 ->where('penjualan.cabang_id = m_cabang.id and penjualan.customer_id = m_customer.id')
                 ->orderBy($sort)
                 ->select("m_cabang.nama as cabang, m_customer.nama as customer, penjualan.kode as kode, penjualan.tanggal as tanggal,
-                    penjualan.keterangan as keterangan, penjualan.total as total, penjualan.cash as cash, penjualan.credit as credit, penjualan.status as status");
+                    penjualan.keterangan as keterangan, penjualan.total as total, penjualan.cash as cash, penjualan.credit as credit, penjualan.status as status,
+                    penjualan.kode as kode, penjualan.id as id, penjualan.total_diskon as total_diskon, penjualan.customer_id as customer_id, penjualan.cabang_id as cabang_id,
+                    penjualan.total_belanja as total_belanja");
 
         //filter
         if (isset($params['filter'])) {
@@ -110,17 +114,77 @@ class PenjualanController extends Controller {
     public function actionView($id) {
 
         $model = $this->findModel($id);
+        $det = PenjualanDet::find()
+                ->where(['penjualan_id' => $model['id']])
+                ->all();
+
+        $detail = array();
+
+        foreach ($det as $val) {
+            $detail[] = $val->attributes;
+        }
+
 
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
+        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes), 'detail' => $detail), JSON_PRETTY_PRINT);
     }
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = new Penjualan();
-        $model->attributes = $params;
+//        print_r($params['penjualandet']);
+
+        $model->attributes = $params['penjualan'];
+//        $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
+        
 
         if ($model->save()) {
+            if($model->credit > 0){
+            $pinjaman = new Pinjaman();
+            $pinjaman->penjualan_id = $model->id;
+            $pinjaman->credit = $model->credit;
+            $pinjaman->status = 'Belum Lunas';
+            $pinjaman->save();
+            
+        }
+            foreach ($params['penjualandet'] as $data) {
+                $det = new PenjualanDet();
+                $det->attributes = $data;
+                $det->penjualan_id = $model->id;
+                $det->sub_total = str_replace('.','',$data['sub_total']);
+
+                $det->save();
+            }
+            $this->setHeader(200);
+            echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
+        } else {
+            $this->setHeader(400);
+            echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $model->errors), JSON_PRETTY_PRINT);
+        }
+    }
+     public function actionUpdate($id) {
+        $params = json_decode(file_get_contents("php://input"), true);
+        $model = $this->findModel($id);
+        $model->attributes = $params['penjualan'];
+
+        
+        if ($model->save()) {
+            if($model->credit > 0){
+            $pinjaman = new Pinjaman();
+            $pinjaman->penjualan_id = $model->id;
+            $pinjaman->credit = $model->credit;
+            $pinjaman->status = 'Belum Lunas';
+            $pinjaman->save();
+            
+        }
+            foreach ($params['penjualandet'] as $data) {
+                $det = new PenjualanDet();
+                $det->attributes = $data;
+                $det->penjualan_id = $model->id;
+                $det->sub_total = str_replace('.','',$data['sub_total']);
+
+                $det->save();
+            }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -154,7 +218,8 @@ class PenjualanController extends Controller {
 
         echo json_encode(array('status' => 1, 'cabang' => $models));
     }
-     public function actionProduk() {
+
+    public function actionProduk() {
         $query = new Query;
         $query->from('m_produk')
                 ->select('*');
@@ -166,12 +231,13 @@ class PenjualanController extends Controller {
 
         echo json_encode(array('status' => 1, 'produk' => $models));
     }
+
     public function actionNm_customer() {
         $params = json_decode(file_get_contents("php://input"), true);
         $query = new Query;
-        
+
         $query->from('m_customer')
-                ->where('id="'.$params.'"')
+                ->where('id="' . $params . '"')
                 ->select("*");
         $command = $query->createCommand();
         $models = $command->query()->read();
@@ -180,36 +246,26 @@ class PenjualanController extends Controller {
         $model['alamat'] = $models['alamat'];
         $model['email'] = $models['email'];
 
-        echo json_encode(array('customer' =>$model));
+        echo json_encode(array('customer' => $model));
     }
+
     public function actionDet_produk($id) {
         $query = new Query;
         $query->from('m_produk')
-                ->where('id="'.$id.'"')
+                ->where('id="' . $id . '"')
                 ->select("*");
         $command = $query->createCommand();
         $models = $command->queryOne();
         $this->setHeader(200);
 
-        echo json_encode(array('produk' =>$models));
+        echo json_encode(array('produk' => $models));
     }
 
-    public function actionUpdate($id) {
-        $params = json_decode(file_get_contents("php://input"), true);
-        $model = $this->findModel($id);
-        $model->attributes = $params;
-
-        if ($model->save()) {
-            $this->setHeader(200);
-            echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
-        } else {
-            $this->setHeader(400);
-            echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $model->errors), JSON_PRETTY_PRINT);
-        }
-    }
+   
 
     public function actionDelete($id) {
         $model = $this->findModel($id);
+        $deleteDetail = PenjualanDet::deleteAll(['penjualan_id' => $id]);
 
         if ($model->delete()) {
             $this->setHeader(200);

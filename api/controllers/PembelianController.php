@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Pembelian;
+use app\models\PembelianDet;
+use app\models\Hutang;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -21,8 +23,10 @@ class PembelianController extends Controller {
                     'detail' => ['get'],
                     'view' => ['get'],
                     'selectedsupplier' => ['get'],
+                    'selectedproduk' => ['get'],
                     'supplierlist' => ['get'],
                     'kliniklist' => ['get'],
+                    'produklist' => ['get'],
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
@@ -54,12 +58,12 @@ class PembelianController extends Controller {
         return true;
     }
 
-    public function actionDetail() {
+    public function actionDetail($id) {
         //create query
         $query = new Query;
         $query->select("*")
                 ->from('pembelian_det')
-                ->where('pembelian_id=');
+                ->where('pembelian_id=' . $id);
 
         //filter
 
@@ -68,9 +72,9 @@ class PembelianController extends Controller {
 
         $this->setHeader(200);
 
-        echo json_encode(array('status' => 1, 'data' => $models), JSON_PRETTY_PRINT);
-        
+        echo json_encode(array('status' => 1, 'detail' => $models), JSON_PRETTY_PRINT);
     }
+
     public function actionKliniklist() {
         //create query
         $query = new Query;
@@ -86,8 +90,8 @@ class PembelianController extends Controller {
         $this->setHeader(200);
 
         echo json_encode(array('status' => 1, 'listKlinik' => $models), JSON_PRETTY_PRINT);
-        
     }
+
     public function actionSupplierlist() {
         //create query
         $query = new Query;
@@ -103,16 +107,31 @@ class PembelianController extends Controller {
         $this->setHeader(200);
 
         echo json_encode(array('status' => 1, 'listSupplier' => $models), JSON_PRETTY_PRINT);
-        
     }
+
+    public function actionProduklist() {
+        //create query
+        $query = new Query;
+        $query->select("*")
+                ->from('m_produk as p')
+//                ->join('JOIN')
+                ->where('is_deleted=0 AND type="Barang"');
+
+        //filter
+
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'listProduct' => $models), JSON_PRETTY_PRINT);
+    }
+
     public function actionSelectedsupplier($id) {
-//        $params = json_decode(file_get_contents("php://input"), true);
-//        create query
-        Yii::error($id);
         $query = new Query;
         $query->select("*")
                 ->from('m_supplier')
-                ->where('id='.$id);
+                ->where('id=' . $id);
 
         //filter
 
@@ -122,13 +141,29 @@ class PembelianController extends Controller {
         $this->setHeader(200);
 
         echo json_encode(array('status' => 1, 'selected' => $models), JSON_PRETTY_PRINT);
-        
     }
+
+    public function actionSelectedproduk($id) {
+        $query = new Query;
+        $query->select("*")
+                ->from('m_produk')
+                ->where('id=' . $id);
+
+        //filter
+
+        $command = $query->createCommand();
+        $models = $command->queryOne();
+
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'selected' => $models), JSON_PRETTY_PRINT);
+    }
+
     public function actionIndex() {
         //init variable
         $params = $_REQUEST;
         $filter = array();
-        $sort = "id ASC";
+        $sort = "tanggal DESC";
         $offset = 0;
         $limit = 10;
         //        Yii::error($params);
@@ -153,9 +188,11 @@ class PembelianController extends Controller {
         $query = new Query;
         $query->offset($offset)
                 ->limit($limit)
-                ->from('pembelian')
+                ->from('pembelian as pe')
+                ->join('JOIN', 'm_supplier as su', 'pe.supplier_id = su.id')
+                ->join('JOIN', 'm_cabang as ca', 'pe.cabang_id= ca.id')
                 ->orderBy($sort)
-                ->select("*");
+                ->select("pe.*,ca.nama as klinik, su.nama as nama_supplier,su.alamat as alamat, su.no_tlp as no_tlp,su.email as email");
 
         //filter
         if (isset($params['filter'])) {
@@ -173,7 +210,6 @@ class PembelianController extends Controller {
 
         echo json_encode(array('status' => 1, 'data' => $models, 'totalItems' => $totalItems), JSON_PRETTY_PRINT);
     }
-    
 
     public function actionView($id) {
 
@@ -186,9 +222,24 @@ class PembelianController extends Controller {
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = new Pembelian();
-        $model->attributes = $params;
+        $model->attributes = $params['pembelian'];
+
 
         if ($model->save()) {
+            if ($model->credit > 0) {
+                $credit = new Hutang();
+                $credit->pembelian_id = $model->id;
+                $credit->credit = $model->credit;
+                $credit->status = 'belum lunas';
+                $credit->save();
+            }
+            foreach ($params['pembeliandet'] as $val) {
+                $modelDet = new PembelianDet();
+                $modelDet->attributes = $val;
+                $modelDet->pembelian_id = $model->id;
+                $modelDet->save();
+            }
+
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -200,9 +251,24 @@ class PembelianController extends Controller {
     public function actionUpdate($id) {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
-        $model->attributes = $params;
+        $model->attributes = $params['pembelian'];
 
         if ($model->save()) {
+            $credit = Hutang::find()->where('pembelian_id=' . $model->id)->one();
+            if (!empty($credit)) {
+                $credit->credit = $model->credit;
+                $credit->status = ($model->credit > 0) ? 'belum lunas' : 'lunas';
+                $credit->save();
+            }
+
+            $deleteDetail = PembelianDet::deleteAll(['pembelian_id' => $model->id]);
+            $pembelianDet = $params['pembeliandet'];
+            foreach ($pembelianDet as $val) {
+                $det = new PembelianDet();
+                $det->attributes = $val;
+                $det->pembelian_id = $model->id;
+                $det->save();
+            }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -213,7 +279,7 @@ class PembelianController extends Controller {
 
     public function actionDelete($id) {
         $model = $this->findModel($id);
-
+        $deleteDetail = PembelianDet::deleteAll(['pembelian_id' => $model->id]);
         if ($model->delete()) {
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
