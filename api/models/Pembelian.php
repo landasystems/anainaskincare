@@ -72,14 +72,14 @@ class Pembelian extends \yii\db\ActiveRecord {
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getId0() {
+    public function getPembelianDet() {
         return $this->hasOne(PembelianDet::className(), ['pembelian_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getId1() {
+    public function getPinjaman() {
         return $this->hasOne(Pinjaman::className(), ['pembelian_id' => 'id']);
     }
 

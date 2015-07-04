@@ -31,7 +31,7 @@ class StokMasukDet extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id'], 'required'],
+            [['id'], 'unique'],
             [['id', 'stok_masuk_id', 'produk_id', 'jumlah', 'harga'], 'integer']
         ];
     }
