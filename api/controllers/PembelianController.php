@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Pembelian;
 use app\models\PembelianDet;
+use app\models\Hutang;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -62,7 +63,7 @@ class PembelianController extends Controller {
         $query = new Query;
         $query->select("*")
                 ->from('pembelian_det')
-                ->where('pembelian_id='.$id);
+                ->where('pembelian_id=' . $id);
 
         //filter
 
@@ -188,8 +189,8 @@ class PembelianController extends Controller {
         $query->offset($offset)
                 ->limit($limit)
                 ->from('pembelian as pe')
-                ->join('JOIN','m_supplier as su','pe.supplier_id = su.id')
-                ->join('JOIN','m_cabang as ca','pe.cabang_id= ca.id')
+                ->join('JOIN', 'm_supplier as su', 'pe.supplier_id = su.id')
+                ->join('JOIN', 'm_cabang as ca', 'pe.cabang_id= ca.id')
                 ->orderBy($sort)
                 ->select("pe.*,ca.nama as klinik, su.nama as nama_supplier,su.alamat as alamat, su.no_tlp as no_tlp,su.email as email");
 
@@ -224,7 +225,15 @@ class PembelianController extends Controller {
         $model = new Pembelian();
         $model->attributes = $params['pembelian'];
 
+
         if ($model->save()) {
+            if ($model->credit > 0) {
+                $credit = new Hutang();
+                $credit->pembelian_id = $model->id;
+                $credit->credit = $model->credit;
+                $credit->status = 'belum lunas';
+                $credit->save();
+            }
             foreach ($params['pembeliandet'] as $val) {
                 $modelDet = new PembelianDet();
                 $modelDet->attributes = $val;
@@ -246,12 +255,19 @@ class PembelianController extends Controller {
         $model->attributes = $params['pembelian'];
 
         if ($model->save()) {
+            $credit = Hutang::find()->where('pembelian_id=' . $model->id)->one();
+            if (!empty($credit)) {
+                $credit->credit = $model->credit;
+                $credit->status = ($model->credit > 0) ? 'belum lunas' : 'lunas';
+                $credit->save();
+            }
+
             $deleteDetail = PembelianDet::deleteAll(['pembelian_id' => $model->id]);
             $pembelianDet = $params['pembeliandet'];
             foreach ($pembelianDet as $val) {
                 $det = new PembelianDet();
                 $det->attributes = $val;
-                $modelDet->pembelian_id = $model->id;
+                $det->pembelian_id = $model->id;
                 $det->save();
             }
             $this->setHeader(200);

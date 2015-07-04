@@ -247,7 +247,7 @@
                         <div class="col-sm-8">
                             <div class="input-group m-b">
                                 <span class="input-group-addon">Rp.</span>
-                                <input type="text" ng-pattern="/^[0-9]+$/" class="form-control" ng-model="form.cash" ng-disabled="is_view">
+                                <input type="text" ng-pattern="/^[0-9]+$/" ng-change="bayar()" class="form-control" ng-model="form.cash" ng-disabled="is_view">
                             </div>
                         </div>
                     </div>

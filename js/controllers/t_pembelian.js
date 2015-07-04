@@ -174,4 +174,10 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
         $scope.form.total_belanja = total_belanja;
         $scope.form.diskon = total_diskon;
     };
+    $scope.bayar = function(){
+        var cash = parseInt($scope.form.cash);
+        var total = parseInt($scope.form.total);
+        var credit = total - cash;
+        $scope.form.credit = (credit > 0) ? credit : 0;
+    }
 })
