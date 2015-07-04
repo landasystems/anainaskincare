@@ -6,7 +6,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
     $scope.is_view = false;
 
     $scope.datepickerOptions = {
-        format: 'yyyy-mm-dd',
+        format: 'dd-mm-yyyy',
         language: 'id',
         autoclose: true,
         weekStart: 0
@@ -127,7 +127,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         $scope.is_edit = true;
         $scope.is_view = false;
         $scope.formtitle = "Form Persediaan Keluar";
-        $scope.form = {};
+        $scope.form = [{}];
         $scope.detskeluar = [{}];
 
 

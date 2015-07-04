@@ -128,6 +128,7 @@ class StokkeluarController extends Controller {
 
         $command = $query->createCommand();
         $models = $command->queryAll();
+//        $models['tanggal'] = strtotime($model['tanggal']);
         $totalItems = $query->count();
 
         $this->setHeader(200);
@@ -158,6 +159,7 @@ class StokkeluarController extends Controller {
         $model = new StokKeluar();
         $model->attributes = $params['stokkeluar'];
         $model->total = str_replace('.','',$model->total);
+        $model->tanggal = strtotime($params['stokkeluar']['tanggal']);
 
         if ($model->save()) {
             $detailskeluar = $params['detailskeluar'];
