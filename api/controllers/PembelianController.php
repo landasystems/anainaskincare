@@ -222,6 +222,8 @@ class PembelianController extends Controller {
         $model->attributes = $params;
 
         if ($model->save()) {
+            
+            
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
