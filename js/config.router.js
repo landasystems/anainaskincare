@@ -255,8 +255,12 @@ angular.module('app')
                                     templateUrl: 'tpl/t_penjualan/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function($ocLazyLoad) {
-                                                return $ocLazyLoad.load('js/controllers/t_penjualan.js');
+                                            function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load(['ui.select2','ng-bootstrap-datepicker']).then(
+                                                        function () {
+                                                            return $ocLazyLoad.load('js/controllers/t_penjualan.js');
+                                                        }
+                                                );
                                             }]
                                     }
                                 })
