@@ -41,7 +41,7 @@ class Penjualan extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cabang_id', 'customer_id', 'total', 'cash', 'credit', 'created_at', 'created_by', 'modified_at', 'modified_by'], 'integer'],
+            [['cabang_id', 'customer_id', 'total','total_diskon', 'cash', 'credit', 'created_at', 'created_by', 'modified_at', 'modified_by'], 'integer'],
             [['tanggal'], 'safe'],
             [['keterangan'], 'string'],
             [['kode'], 'string', 'max' => 25],
@@ -75,16 +75,16 @@ class Penjualan extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getId0()
-    {
-        return $this->hasOne(Hutang::className(), ['penjualan_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getId1()
-    {
-        return $this->hasOne(PenjualanDet::className(), ['penjualan_id' => 'id']);
-    }
+//    public function getId0()
+//    {
+//        return $this->hasOne(Hutang::className(), ['penjualan_id' => 'id']);
+//    }
+//
+//    /**
+//     * @return \yii\db\ActiveQuery
+//     */
+//    public function getId1()
+//    {
+//        return $this->hasOne(PenjualanDet::className(), ['penjualan_id' => 'id']);
+//    }
 }

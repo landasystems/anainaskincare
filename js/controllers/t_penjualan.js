@@ -53,7 +53,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
 //            alert(data.produk.type);
         });
     };
-    
+
 
 
     $scope.addDetail = function() {
@@ -76,13 +76,23 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
     };
     $scope.total = function() {
         var total = 0;
+        var diskon = 0;
         angular.forEach($scope.detPenjualan, function(detail) {
-            total += (detail.jumlah * detail.harga) - detail.diskon;
+            diskon += detail.jumlah * detail.diskon;
+            total += detail.jumlah * detail.harga;
         })
-        $scope.form.total = total;
+        $scope.form.total = (total - diskon);
 
     }
-       $scope.detail.type = {
+    $scope.total_diskon = function() {
+        var total_diskon = 0;
+        angular.forEach($scope.detPenjualan, function(detail) {
+            total_diskon += detail.diskon;
+        })
+        $scope.form.total_diskon = total_diskon;
+
+    }
+    $scope.detail.type = {
         allowClear: true,
     }
     $scope.callServer = function callServer(tableState) {
@@ -102,6 +112,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
 
         Data.get('penjualan/', param).then(function(data) {
             $scope.displayed = data.data;
+//            console.log($scope.displayed);
             tableState.pagination.numberOfPages = Math.round(data.totalItems / limit);
         });
 
@@ -114,14 +125,28 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         $scope.is_view = false;
         $scope.formtitle = "Form Tambah Data";
         $scope.form = {};
+         $scope.detPenjualan = [
+        {
+            type: '',
+            jumlah: '',
+            diskon: '',
+            pegawai_terapis_id: '',
+            pegawai_dokter_id: '',
+        }
+    ];
 
     };
-    $scope.update = function(form) {
-        $scope.is_create = false;
-        $scope.is_edit = true;
-        $scope.is_view = false;
-        $scope.formtitle = "Edit Data : " + form.nama;
-        $scope.form = form;
+    $scope.update = function(row) {
+        console.log(row);
+        $scope.form = row;
+        Data.get('penjualan/view/' + row.id).then(function(data) {
+//            $scope.form = data.data;
+            $scope.detPenjualan = data.detail;
+            $scope.is_edit = true;
+            $scope.is_view = false;
+            $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode;
+
+        })
     };
     $scope.view = function(form) {
         $scope.is_edit = true;
@@ -129,9 +154,13 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         $scope.formtitle = "Lihat Data : " + form.nama;
         $scope.form = form;
     };
-    $scope.save = function(form) {
-        var url = ($scope.is_create == true) ? 'penjualan/create/' : 'penjualan/update/' + form.id;
-        Data.post(url, form).then(function(result) {
+    $scope.save = function(form, detail) {
+        var data = {
+            penjualan: form,
+            penjualandet: detail,
+        };
+        var url = (form.id > 0) ? 'penjualan/update/' + form.id : 'penjualan/create'
+        Data.post(url, data).then(function(result) {
             if (result.status == 0) {
                 toaster.pop('error', "Terjadi Kesalahan", result.errors);
             } else {
