@@ -223,7 +223,6 @@ class PembelianController extends Controller {
         Yii::error($params);
         $model = new Pembelian();
         $model->attributes = $params['pembelian'];
-        $model->kode = 'd000123';
 
         if ($model->save()) {
             foreach ($params['pembeliandet'] as $val) {
@@ -244,9 +243,17 @@ class PembelianController extends Controller {
     public function actionUpdate($id) {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
-        $model->attributes = $params;
+        $model->attributes = $params['pembelian'];
 
         if ($model->save()) {
+            $deleteDetail = PembelianDet::deleteAll(['pembelian_id' => $model->id]);
+            $pembelianDet = $params['pembeliandet'];
+            foreach ($pembelianDet as $val) {
+                $det = new PembelianDet();
+                $det->attributes = $val;
+                $modelDet->pembelian_id = $model->id;
+                $det->save();
+            }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -257,7 +264,7 @@ class PembelianController extends Controller {
 
     public function actionDelete($id) {
         $model = $this->findModel($id);
-
+        $deleteDetail = PembelianDet::deleteAll(['pembelian_id' => $model->id]);
         if ($model->delete()) {
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);

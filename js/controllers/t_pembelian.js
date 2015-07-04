@@ -15,6 +15,7 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
     ];
     $scope.is_edit = false;
     $scope.is_view = false;
+    $scope.is_create = false;
 
     Data.get('pembelian/supplierlist').then(function (data) {
         $scope.listSupplier = data.listSupplier;
@@ -52,6 +53,7 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
     $scope.create = function (form) {
         $scope.is_edit = true;
         $scope.is_view = false;
+        $scope.is_create = true;
         $scope.formtitle = "Form Pembelian";
         $scope.form = {};
         $scope.pembeliandet = [
@@ -68,21 +70,25 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
     $scope.update = function (form) {
         $scope.is_edit = true;
         $scope.is_view = false;
-        $scope.formtitle = "Edit Pembelian : " + form.kode + " - " + form.nama;
+        $scope.is_create = false;
+        $scope.formtitle = "Edit Pembelian : " + form.kode;
         $scope.form = form;
         $scope.det = {};
         Data.get('pembelian/detail/' + form.id).then(function (data) {
-           console.log(data);
+           $scope.pembeliandet = data.detail;
+           $scope.calculate();
         });
     };
     $scope.view = function (form) {
         $scope.is_edit = true;
         $scope.is_view = true;
-        $scope.formtitle = "Lihat Pembelian : " + form.kode + " - " + form.nama;
+        $scope.is_create = false;
+        $scope.formtitle = "Lihat Pembelian : " + form.kode;
         $scope.form = form;
         $scope.det = {};
         Data.get('pembelian/detail/' + form.id).then(function (data) {
-            $scope.pembeliandet = data.data;
+            $scope.pembeliandet = data.detail;
+            $scope.calculate();
         });
     };
     $scope.save = function (form, detail) {
