@@ -90,12 +90,7 @@
                     <div class="panel-body">
                         <div class="col-md-4 col-sm-12">
                             <p class="text-muted font-bold">Detail Customer</p>
-                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Kode</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" ng-model="form.kode" ng-disabled="is_view" required>
-                                </div>
-                            </div>
+                             
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Customer</label>
                                 <div class="col-sm-9">
@@ -127,6 +122,12 @@
                         <div class="col-md-4 col-sm-12">
                             <p class="text-muted font-bold">Detail Klinik</p>
                             <div class="form-group">
+                                <label class="col-sm-3 control-label">Kode</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="form.kode" ng-disabled="is_view" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-3 control-label">Cabang</label>
                                 <div class="col-sm-9">
                                     <select class="form-control" ui-select2="" ui-jq="chosen" ng-change="" ng-model="form.cabang_id" ng-disabled="is_view" >
@@ -145,8 +146,8 @@
                                 <label class="col-sm-3 control-label">Status</label>
                                 <div class="col-sm-9">
                                     <div class="btn-group">
-                                        <label class="btn btn-sm btn-success" ng-model="form.status" ng-disabled="is_view" btn-radio="'1'"><i class="fa fa-check text-active"></i> Purchase Order</label>
-                                        <label class="btn btn-sm btn-info" ng-model="form.status" ng-disabled="is_view" btn-radio="'0'"><i class="fa fa-check text-active"></i> Clear</label>
+                                        <label class="btn btn-sm btn-success" ng-model="form.status" ng-disabled="is_view" btn-radio="'Pesan'"><i class="fa fa-check text-active"></i>Pesan</label>
+                                        <label class="btn btn-sm btn-info" ng-model="form.status" ng-disabled="is_view" btn-radio="'Selesai'"><i class="fa fa-check text-active"></i> Selesai</label>
                                     </div>
                                 </div>
                             </div>
@@ -267,7 +268,7 @@
                                     <td colspan="2">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon">Rp</span>
-                                            <input type="text" class="form-control" ng-disabled="is_view"  ng-readonly="true" ng-model="form.total_belanja">
+                                            <input type="text" class="form-control" ng-disabled="is_view"  ng-readonly="true" ng-model="form.total">
                                         </div>
                                     </td>
                                 </tr>

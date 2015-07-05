@@ -22,7 +22,6 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         }
     ];
     $scope.datepickerOptions = {
-        format: 'yyyy-mm-dd',
         language: 'id',
         autoclose: true,
         weekStart: 0
@@ -82,6 +81,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
             total += detail.jumlah * detail.harga;
         })
         $scope.form.total = (total - diskon);
+        $scope.form.belanja = (total - diskon);
         $scope.form.total_belanja = total;
         $scope.detail.sub_total = (total - diskon);
         $scope.form.total_diskon = diskon;
