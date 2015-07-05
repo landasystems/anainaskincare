@@ -41,7 +41,7 @@ class Penjualan extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cabang_id', 'customer_id', 'total','total_diskon', 'cash', 'credit', 'created_at', 'created_by', 'modified_at', 'modified_by'], 'integer'],
+            [['cabang_id', 'customer_id', 'total','total_diskon','total_belanja', 'cash', 'credit', 'created_at', 'created_by', 'modified_at', 'modified_by'], 'integer'],
             [['tanggal'], 'safe'],
             [['keterangan'], 'string'],
             [['kode'], 'string', 'max' => 25],

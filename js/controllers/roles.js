@@ -44,7 +44,7 @@ app.controller('rolesCtrl', function ($scope, Data, toaster) {
                 "master_cabang": false,
                 "master_customer": false,
                 "master_supplier": false,
-                "master_karyawan": false,
+                "master_pegawai": false,
                 "master_satuan": false,
                 "master_kategori": false,
                 "master_barang": false,

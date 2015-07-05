@@ -22,7 +22,6 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         }
     ];
     $scope.datepickerOptions = {
-        format: 'yyyy-mm-dd',
         language: 'id',
         autoclose: true,
         weekStart: 0
@@ -82,14 +81,18 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
             total += detail.jumlah * detail.harga;
         })
         $scope.form.total = (total - diskon);
+        $scope.form.belanja = (total - diskon);
+        $scope.form.total_belanja = total;
+        $scope.detail.sub_total = (total - diskon);
+        $scope.form.total_diskon = diskon;
 
     }
-    $scope.total_diskon = function() {
-        var total_diskon = 0;
-        angular.forEach($scope.detPenjualan, function(detail) {
-            total_diskon += detail.diskon;
-        })
-        $scope.form.total_diskon = total_diskon;
+    $scope.bayar = function() {
+        var total = parseInt($scope.form.total);
+        var cash = parseInt($scope.form.cash);
+        var diskon = parseInt($scope.form.total_diskon);
+        var credit = (total - diskon) - cash;
+        $scope.form.credit = (credit > 0) ? credit : 0;
 
     }
     $scope.detail.type = {
@@ -144,6 +147,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
             $scope.detPenjualan = data.detail;
             $scope.is_edit = true;
             $scope.is_view = false;
+            $scope.is_create = true;
             $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode;
 
         })

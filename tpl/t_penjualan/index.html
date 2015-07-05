@@ -90,12 +90,7 @@
                     <div class="panel-body">
                         <div class="col-md-4 col-sm-12">
                             <p class="text-muted font-bold">Detail Customer</p>
-                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Kode</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" ng-model="form.kode" ng-disabled="is_view" required>
-                                </div>
-                            </div>
+                             
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Customer</label>
                                 <div class="col-sm-9">
@@ -108,24 +103,30 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">No Telpon</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" ng-model="form.no_tlp" ng-disabled="true" required>
+                                    <input type="text" class="form-control" ng-model="form.no_tlp" ng-disabled="true" >
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Email</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" ng-model="form.email" ng-disabled="true" required>
+                                    <input type="text" class="form-control" ng-model="form.email" ng-disabled="true" >
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Alamat</label>
                                 <div class="col-sm-9">
-                                    <textarea class="form-control" rows="4" ng-model="form.alamat" ng-disabled="true" required></textarea>
+                                    <textarea class="form-control" rows="4" ng-model="form.alamat" ng-disabled="true" ></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-12">
                             <p class="text-muted font-bold">Detail Klinik</p>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Kode</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="form.kode" ng-disabled="is_view" required>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Cabang</label>
                                 <div class="col-sm-9">
@@ -145,8 +146,8 @@
                                 <label class="col-sm-3 control-label">Status</label>
                                 <div class="col-sm-9">
                                     <div class="btn-group">
-                                        <label class="btn btn-sm btn-success" ng-model="form.status" ng-disabled="is_view" btn-radio="'1'"><i class="fa fa-check text-active"></i> Purchase Order</label>
-                                        <label class="btn btn-sm btn-info" ng-model="form.status" ng-disabled="is_view" btn-radio="'0'"><i class="fa fa-check text-active"></i> Clear</label>
+                                        <label class="btn btn-sm btn-success" ng-model="form.status" ng-disabled="is_view" btn-radio="'Pesan'"><i class="fa fa-check text-active"></i>Pesan</label>
+                                        <label class="btn btn-sm btn-info" ng-model="form.status" ng-disabled="is_view" btn-radio="'Selesai'"><i class="fa fa-check text-active"></i> Selesai</label>
                                     </div>
                                 </div>
                             </div>
@@ -163,11 +164,11 @@
                         <div class="col-md-4 col-sm-12">
                             <p class="text-muted font-bold">Pembayaran</p>
                             <div class="form-group">
-                                <label class="col-sm-5 control-label">Total</label>
+                                <label class="col-sm-5 control-label">Total Belanja</label>
                                 <div class="col-sm-7">
                                     <div class="input-group">
                                         <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.total" ng-disabled="is_view" required>
+                                        <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.total_belanja" ng-disabled="is_view" required>
                                     </div>  
                                 </div>
                             </div>
@@ -180,13 +181,23 @@
                                     </div>  
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label">Total</label>
+                                <div class="col-sm-7">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Rp</span>
+                                        <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.total" ng-disabled="is_view" required>
+                                    </div>  
+                                </div>
+                            </div>
+                            
                             
                             <div class="form-group">
                                 <label class="col-sm-5 control-label">Cash</label>
                                 <div class="col-sm-7">
                                     <div class="input-group">
                                         <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.cash" ng-disabled="is_view" required>
+                                        <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.cash" ng-change="bayar()" ng-disabled="is_view" required>
                                     </div>  
                                 </div>
                             </div>
@@ -195,7 +206,7 @@
                                 <div class="col-sm-7">
                                     <div class="input-group">
                                         <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.credit" ng-disabled="is_view" required>
+                                        <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.credit" ng-readonly="true" ng-disabled="is_view" required>
                                     </div>  
                                 </div>
                         </div>
@@ -232,7 +243,7 @@
                                     <td width="18%">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon">Rp</span>
-                                            <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.harga"  ng-disabled="is_view" ng-readonly="is_create == false" required>
+                                            <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.harga"  ng-disabled="is_view"  required>
                                         </div>
                                     </td>
                                     <td width="18%">
