@@ -128,6 +128,7 @@ class StokkeluarController extends Controller {
 
         $command = $query->createCommand();
         $models = $command->queryAll();
+//        $models['tanggal'] = strtotime($model['tanggal']);
         $totalItems = $query->count();
 
         $this->setHeader(200);
@@ -147,17 +148,19 @@ class StokkeluarController extends Controller {
         foreach ($det as $val) {
             $detail[] = $val->attributes;
         }
-        
+        $data = array();
+        $data = $model->attributes;
+        $data['tanggal'] = date("d-m-Y",  strtotime($model['tanggal']));
 
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes),'detail' => $detail) , JSON_PRETTY_PRINT);
+        echo json_encode(array('status' => 1, 'data' => array_filter($data),'detail' => $detail) , JSON_PRETTY_PRINT);
     }
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = new StokKeluar();
         $model->attributes = $params['stokkeluar'];
-        $model->total = str_replace('.','',$model->total);
+        $model->tanggal = date("Y-m-d", strtotime($params['stokkeluar']['tanggal']));
 
         if ($model->save()) {
             $detailskeluar = $params['detailskeluar'];
@@ -180,7 +183,8 @@ class StokkeluarController extends Controller {
     public function actionUpdate($id) {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
-        $model->attributes = $params['stokkeluar'];;
+        $model->attributes = $params['stokkeluar'];
+        $model->tanggal = date("Y-m-d", strtotime($params['stokkeluar']['tanggal']));
 
         if ($model->save()) {
             $deleteDetail = StokKeluarDet::deleteAll(['stok_keluar_id' => $model->id]);

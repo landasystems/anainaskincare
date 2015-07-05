@@ -116,10 +116,10 @@ class StokmasukController extends Controller {
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
-                if($key  == 'cabang_id'){
-                    $query->andFilterWhere(['like', 'm_cabang.'.$key, $val]);
-                }else{
-                $query->andFilterWhere(['like', $key, $val]);
+                if ($key == 'cabang_id') {
+                    $query->andFilterWhere(['like', 'm_cabang.' . $key, $val]);
+                } else {
+                    $query->andFilterWhere(['like', $key, $val]);
                 }
             }
         }
@@ -139,23 +139,23 @@ class StokmasukController extends Controller {
         $det = StokMasukDet::find()
                 ->where(['stok_masuk_id' => $model['id']])
                 ->all();
-        
+
         $detail = array();
-        
+
         foreach ($det as $val) {
             $detail[] = $val->attributes;
         }
-        
+
 
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes),'detail' => $detail) , JSON_PRETTY_PRINT);
+        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes), 'detail' => $detail), JSON_PRETTY_PRINT);
     }
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = new StokMasuk();
         $model->attributes = $params['stokmasuk'];
-
+        $model->tanggal = date("Y-m-d", strtotime($params['stokmasuk']['tanggal']));
         if ($model->save()) {
             $detailsmasuk = $params['detailsmasuk'];
 //            Yii::error($detailsmasuk);
@@ -177,16 +177,17 @@ class StokmasukController extends Controller {
     public function actionUpdate($id) {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
-        $model->attributes = $params['stokmasuk'];;
+        $model->attributes = $params['stokmasuk'];
+        $model->tanggal = date("Y-m-d", strtotime($params['stokmasuk']['tanggal']));
 
         if ($model->save()) {
             $deleteDetail = StokMasukDet::deleteAll(['stok_masuk_id' => $model->id]);
             $detailSmasuk = $params['detailsmasuk'];
-            foreach ( $detailSmasuk as $val) {
+            foreach ($detailSmasuk as $val) {
                 $det = new StokMasukDet();
                 $det->attributes = $val;
-                $det->jumlah = str_replace('.','',$det->jumlah);
-                $det->harga = str_replace('.','',$det->harga);
+                $det->jumlah = str_replace('.', '', $det->jumlah);
+                $det->harga = str_replace('.', '', $det->harga);
                 $det->stok_masuk_id = $model->id;
                 $det->save();
             }
