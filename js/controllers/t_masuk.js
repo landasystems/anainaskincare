@@ -6,7 +6,6 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
     $scope.is_view = false;
 
     $scope.datepickerOptions = {
-        format: 'yyyy-mm-dd',
         language: 'id',
         autoclose: true,
         weekStart: 0
