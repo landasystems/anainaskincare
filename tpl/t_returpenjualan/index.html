@@ -114,7 +114,7 @@
                                             <div class="col-sm-9">
                                                 <select class="form-control" ui-select2="" ui-jq="chosen" ng-change="getkodepenjualan(form.penjualan_id)" ng-model="form.penjualan_id" ng-disabled="is_view" >
                                                     <option value="">-- Kode Penjualan --</option>
-                                                    <option ng-repeat="kodepenjualan in listkodepenjualan" value="{{kodepenjualan.id}}">{{kodepenjualan.kode}}</option>
+                                                    <option ng-repeat="kodepenjualan in listkodepenjualan" value="{{kodepenjualan.id}}">{{kodepenjualan.kode}} - {{kodepenjualan.cabang}} - {{kodepenjualan.customer}}</option>
                                                 </select>
                                             </div>
                                         </div>

@@ -222,7 +222,10 @@ class ReturpenjualanController extends Controller {
     public function actionKodepenjualan() {
         $query = new Query;
         $query->from('penjualan')
-                ->select(['id','kode']);
+                ->join('JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
+                ->join('JOIN', 'm_cabang', 'penjualan.cabang_id= m_cabang.id')
+                ->where('penjualan.status="selesai"')
+                ->select('penjualan.kode as kode, penjualan.id as id, m_customer.nama as customer, m_cabang.nama as cabang');
 
         $command = $query->createCommand();
         $models = $command->queryAll();
