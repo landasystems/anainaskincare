@@ -24,6 +24,7 @@ class HutangController extends Controller {
                     'update' => ['post'],
                     'delete' => ['delete'],
                     'listpembelian' => ['get'],
+                    'selected' => ['get'],
                 ],
             ]
         ];
@@ -52,18 +53,42 @@ class HutangController extends Controller {
         return true;
     }
 
-    public function actionListpembelian($id) {
+//
+//    public function actionListpembelian() {
+//        $query = new Query;
+//        $query->from('hutang as h')
+//                ->JOIN('JOIN','pembelian as p',' h.pembelian_id = p.id')
+//                ->join('LEFT JOIN', 'm_supplier as s', 'p.supplier_id = s.id')
+//                ->where('h.credit IS NOT NULL')
+//                ->select("p.*,s.kode as kode_supplier, s.nama as nama,");
+//
+//        $command = $query->createCommand();
+//        $models = $command->queryAll();
+//
+//        $this->setHeader(200);
+//
+//        echo json_encode(array('status' => 1, 'listPembelian' => $models));
+//    }
+    public function actionSelected($id) {
         $query = new Query;
-        $query->from('pembelian')
-                ->where('pembelian_id='.$id)
-                ->select("*");
+        $query->from('hutang as h')
+                ->JOIN('JOIN', 'pembelian as p', ' h.pembelian_id = p.id')
+                ->JOIN('JOIN', 'm_cabang as c', ' p.cabang_id = c.id')
+                ->join('LEFT JOIN', 'm_supplier as s', 'p.supplier_id = s.id')
+                ->where('pembelian_id=' . $id)
+                ->select("h.*, sum(h.debet) as sumDebet,sum(h.credit) as sumCredit,p.*,s.kode as kode_supplier, s.nama as nama,s.no_tlp as no_tlp, s.email as email, s.alamat as alamat,c.nama as nama_cabang");
 
         $command = $query->createCommand();
-        $models = $command->queryAll();
+        $models = $command->queryOne();
+        $query2 = new Query;
+        $query2->select("*")
+                ->from("hutang")
+                ->where("pembelian_id=" . $id)
+                ->orderBy('tanggal_transaksi DESC');
+        $history = $query2->createCommand()->queryAll();
 
         $this->setHeader(200);
-
-        echo json_encode(array('status' => 1, 'listPembelian' => $models));
+        echo json_encode(array('status' => 1, 'selected' => $models, 'history' => $history));
     }
 
     public function actionIndex() {
@@ -96,9 +121,10 @@ class HutangController extends Controller {
         $query->offset($offset)
                 ->limit($limit)
                 ->from('hutang as h')
-                ->join('JOIN','pembelian as p',' h.pembelian_id= p.id')
-                ->join('JOIN','m_supplier as s',' p.supplier_id= s.id')
-                ->join('JOIN','m_cabang as c',' p.cabang_id= c.id')
+                ->join('JOIN', 'pembelian as p', ' h.pembelian_id= p.id')
+                ->join('JOIN', 'm_supplier as s', ' p.supplier_id= s.id')
+                ->join('JOIN', 'm_cabang as c', ' p.cabang_id= c.id')
+                ->where('h.credit IS NOT NULL')
                 ->orderBy($sort)
                 ->select("h.*,p.*,s.nama as nama,c.nama as klinik");
 
@@ -129,10 +155,24 @@ class HutangController extends Controller {
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
-        $model = new Hutang();
-        $model->attributes = $params;
-
-        if ($model->save()) {
+        $noErrors = false;
+        $detail = $params['detail'];
+        $id = array();
+        foreach ($detail as $value) {
+            $model = Hutang::findOne($value['id']);
+            if (empty($model)) {
+                $model = new Hutang();
+            }
+            $model->attributes = $value;
+            $model->pembelian_id = $params['form']['pembelian_id'];
+            if ($model->save()) {
+                $noErrors = true;
+            }
+            $id[] = $model->id;
+        }
+        $deleteAll = Hutang::deleteAll('id NOT IN(' . implode(',', $id) . ') AND pembelian_id=' . $params['form']['pembelian_id']);
+        
+        if ($deleteAll) {
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {

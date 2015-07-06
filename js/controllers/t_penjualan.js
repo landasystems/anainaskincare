@@ -79,7 +79,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         angular.forEach($scope.detPenjualan, function(detail) {
             diskon += detail.jumlah * detail.diskon;
             total += detail.jumlah * detail.harga;
-        })
+        });
         $scope.form.total = (total - diskon);
         $scope.form.belanja = (total - diskon);
         $scope.form.total_belanja = total;
@@ -90,8 +90,9 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
     $scope.bayar = function() {
         var total = parseInt($scope.form.total);
         var cash = parseInt($scope.form.cash);
-        var diskon = parseInt($scope.form.total_diskon);
-        var credit = (total - diskon) - cash;
+//        alert(cash);
+        var credit = total - cash;
+//        alert(credit);
         $scope.form.credit = (credit > 0) ? credit : 0;
 
     }

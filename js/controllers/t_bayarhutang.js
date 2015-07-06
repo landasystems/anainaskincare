@@ -1,13 +1,12 @@
 app.controller('hutangCtrl', function ($scope, Data, toaster) {
-    //init data
+
+
+    //init data;
     var tableStateRef;
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
     $scope.is_create = false;
-//    Data.get('hutang/klinik').then(function (data) {
-//        $scope.office_place = data.office_place;
-//    });
 
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
@@ -24,7 +23,7 @@ app.controller('hutangCtrl', function ($scope, Data, toaster) {
             param['filter'] = tableState.search.predicateObject;
         }
 
-        Data.get('hutang', param).then(function (data) {
+        Data.get('hutang/', param).then(function (data) {
             $scope.displayed = data.data;
             tableState.pagination.numberOfPages = Math.round(data.totalItems / limit);
         });
@@ -33,29 +32,52 @@ app.controller('hutangCtrl', function ($scope, Data, toaster) {
     };
 
     $scope.create = function (form) {
+        $scope.is_create = true;
         $scope.is_edit = true;
         $scope.is_view = false;
-        $scope.is_create = true;
-        $scope.formtitle = "Form Pembayaran Hutang";
+        $scope.formtitle = "Form Tambah Data";
         $scope.form = {};
+        $scope.history = [
+            {
+                id: '',
+                tanggal_transaksi: '',
+                status: '',
+                debet: '',
+                credit: ''
+            }
+        ];
+
     };
-    $scope.update = function (form) {
+    $scope.update = function (row) {
+        $scope.form = row;
+        $scope.selected(row);
         $scope.is_edit = true;
         $scope.is_view = false;
         $scope.is_create = false;
-        $scope.formtitle = "Edit Hutang : " + form.kode;
-        $scope.form = form;
+        $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode;
+
+//        })
     };
     $scope.view = function (form) {
         $scope.is_edit = true;
         $scope.is_view = true;
-        $scope.is_create = false;
-        $scope.formtitle = "Lihat Hutang : " + form.kode;
+        $scope.formtitle = "Lihat Data : " + form.nama;
         $scope.form = form;
+        $scope.selected(form);
+        $scope.is_edit = true;
+        $scope.is_view = true;
+        $scope.is_create = false;
+        $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode;
+
+//        })
     };
-    $scope.save = function (form) {
-        var url = (form.id > 0) ? 'pegawai/update/' + form.id : 'pegawai/create';
-        Data.post(url, form).then(function (result) {
+    $scope.save = function (form, detail) {
+        var data = {
+            form: form,
+            detail: detail
+        };
+        var url = 'hutang/create';
+        Data.post(url, data).then(function (result) {
             if (result.status == 0) {
                 toaster.pop('error', "Terjadi Kesalahan", result.errors);
             } else {
@@ -69,16 +91,39 @@ app.controller('hutangCtrl', function ($scope, Data, toaster) {
         if (!$scope.is_view) { //hanya waktu edit cancel, di load table lagi
             $scope.callServer(tableStateRef);
         }
+
         $scope.is_edit = false;
         $scope.is_view = false;
     };
     $scope.delete = function (row) {
         if (confirm("Apa anda yakin akan MENGHAPUS PERMANENT item ini ?")) {
-            Data.delete('pegawai/delete/' + row.id).then(function (result) {
+            Data.delete('hutang/delete/' + row.id).then(function (result) {
                 $scope.displayed.splice($scope.displayed.indexOf(row), 1);
             });
         }
     };
-
-
+    $scope.selected = function (form) {
+        Data.get('hutang/selected/' + form.pembelian_id).then(function (result) {
+            $scope.detail = result.selected;
+            $scope.history = result.history;
+        });
+    };
+    $scope.addrow = function () {
+        $scope.history.unshift({
+            id: '',
+//            pembelian_id: ($scope.form.id != '') ? $scope.form.id : '',
+            tanggal_transaksi: '',
+            status: '',
+            debet: '',
+            credit: '',
+        });
+    };
+    $scope.removeRow = function (paramindex) {
+        var comArr = eval($scope.history);
+        if (comArr.length > 1) {
+            $scope.history.splice(paramindex, 1);
+        } else {
+            alert("Something gone wrong");
+        }
+    };
 })
