@@ -90,7 +90,7 @@ class BayarpiutangController extends Controller {
                 ->join('JOIN', 'penjualan', 'pinjaman.penjualan_id= penjualan.id')
                 ->join('JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
                 ->join('JOIN', 'm_cabang', 'penjualan.cabang_id= m_cabang.id')
-//                ->where('pinjaman.debet is NOT NULL')
+                ->where('pinjaman.debet is NOT NULL')
                 ->orderBy($sort)
                 ->select("pinjaman.*,m_cabang.nama as klinik, m_customer.nama as customer,penjualan.tanggal as tanggal, penjualan.kode as kode, m_customer.no_tlp as no_tlp,
                             m_customer.email as email, m_customer.alamat as alamat, penjualan.keterangan as keterangan, penjualan.id as penjualan_id");
