@@ -116,7 +116,7 @@ class StokkeluarController extends Controller {
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
-                Yii::error($val);
+//                Yii::error($val);
                 if($key  == 'cabang_id'){
                     $query->andFilterWhere(['like', 'm_cabang.'.$key, $val]);
                 }else{
