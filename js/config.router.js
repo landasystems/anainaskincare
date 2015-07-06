@@ -222,7 +222,11 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load('js/controllers/t_bayarhutang.js');
+                                                return $ocLazyLoad.load(['ui.select2', 'ng-bootstrap-datepicker', 'daterangepicker']).then(
+                                                        function () {
+                                                            return $ocLazyLoad.load('js/controllers/t_bayarhutang.js');
+                                                        }
+                                                );
                                             }]
                                     }
                                 })
