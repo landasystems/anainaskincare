@@ -3,14 +3,15 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Kategori;
+use app\models\Hutang;
+use app\models\Pembelian;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\db\Query;
 
-class KategoriController extends Controller {
+class HutangController extends Controller {
 
     public function behaviors() {
         return [
@@ -22,7 +23,7 @@ class KategoriController extends Controller {
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
-                    'listkategori' => ['get'],
+                    'listpembelian' => ['get'],
                 ],
             ]
         ];
@@ -32,7 +33,7 @@ class KategoriController extends Controller {
         $action = $event->id;
         if (isset($this->actions[$action])) {
             $verbs = $this->actions[$action];
-        } elseif (excel(isset($this->actions['*']))) {
+        } elseif (isset($this->actions['*'])) {
             $verbs = $this->actions['*'];
         } else {
             return $event->isValid;
@@ -51,11 +52,25 @@ class KategoriController extends Controller {
         return true;
     }
 
+    public function actionListpembelian($id) {
+        $query = new Query;
+        $query->from('pembelian')
+                ->where('pembelian_id='.$id)
+                ->select("*");
+
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'listPembelian' => $models));
+    }
+
     public function actionIndex() {
         //init variable
         $params = $_REQUEST;
         $filter = array();
-        $sort = "id ASC";
+        $sort = "h.id ASC";
         $offset = 0;
         $limit = 10;
         //        Yii::error($params);
@@ -80,9 +95,12 @@ class KategoriController extends Controller {
         $query = new Query;
         $query->offset($offset)
                 ->limit($limit)
-                ->from('m_kategori')
+                ->from('hutang as h')
+                ->join('JOIN','pembelian as p',' h.pembelian_id= p.id')
+                ->join('JOIN','m_supplier as s',' p.supplier_id= s.id')
+                ->join('JOIN','m_cabang as c',' p.cabang_id= c.id')
                 ->orderBy($sort)
-                ->select("*");
+                ->select("h.*,p.*,s.nama as nama,c.nama as klinik");
 
         //filter
         if (isset($params['filter'])) {
@@ -100,21 +118,6 @@ class KategoriController extends Controller {
 
         echo json_encode(array('status' => 1, 'data' => $models, 'totalItems' => $totalItems), JSON_PRETTY_PRINT);
     }
-    
-    public function actionListkategori() {
-        $query = new Query;
-        $query->from('m_kategori')
-                ->select("*")
-                ->where("is_deleted = 0");
-
-        $command = $query->createCommand();
-        $models = $command->queryAll();
-
-        $this->setHeader(200);
-
-        echo json_encode(array('status' => 1, 'data' => $models));
-    }
-    
 
     public function actionView($id) {
 
@@ -126,7 +129,7 @@ class KategoriController extends Controller {
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
-        $model = new Kategori();
+        $model = new Hutang();
         $model->attributes = $params;
 
         if ($model->save()) {
@@ -166,7 +169,7 @@ class KategoriController extends Controller {
     }
 
     protected function findModel($id) {
-        if (($model = Kategori::findOne($id)) !== null) {
+        if (($model = Hutang::findOne($id)) !== null) {
             return $model;
         } else {
 
