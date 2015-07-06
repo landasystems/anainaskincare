@@ -136,22 +136,23 @@ class PenjualanController extends Controller {
 
         $model->attributes = $params['penjualan'];
         $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
-        
+
 
         if ($model->save()) {
-            if($model->credit > 0){
-            $pinjaman = new Pinjaman();
-            $pinjaman->penjualan_id = $model->id;
-            $pinjaman->credit = $model->credit;
-            $pinjaman->status = 'Belum Lunas';
-            $pinjaman->save();
-            
-        }
+            if ($model->status == "Pesan") {
+                if ($model->credit > 0) {
+                    $pinjaman = new Pinjaman();
+                    $pinjaman->penjualan_id = $model->id;
+                    $pinjaman->debet = $model->credit;
+                    $pinjaman->status = 'Belum Lunas';
+                    $pinjaman->save();
+                }
+            }
             foreach ($params['penjualandet'] as $data) {
                 $det = new PenjualanDet();
                 $det->attributes = $data;
                 $det->penjualan_id = $model->id;
-                $det->sub_total = str_replace('.','',$data['sub_total']);
+                $det->sub_total = str_replace('.', '', $data['sub_total']);
 
                 $det->save();
             }
@@ -162,26 +163,35 @@ class PenjualanController extends Controller {
             echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $model->errors), JSON_PRETTY_PRINT);
         }
     }
-     public function actionUpdate($id) {
+
+    public function actionUpdate($id) {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
         $model->attributes = $params['penjualan'];
 
-        
+
         if ($model->save()) {
-               if($model->credit > 0){
-            $pinjaman = Pinjaman::find()->where('penjualan_id=' . $model->id)->one();
-            $pinjaman->credit = $model->credit ;
-            $pinjaman->status = ($model->credit > 0) ? 'belum lunas' : 'lunas';
-            $pinjaman->save();
-            
-        }
-         
+            if ($model->status == 'Selesai') {
+                if ($model->credit > 0) {
+                    $pinjaman = Pinjaman::find()->where('penjualan_id=' . $model->id)->one();
+                    if (empty($pinjaman)) {
+                        $pinjaman = new Pinjaman();
+//                        $pinjaman->save();
+                    }
+
+                    $pinjaman->penjualan_id = $model->id;
+                    $pinjaman->debet = $model->credit;
+                    $pinjaman->status = 'Belum Lunas';
+                    $pinjaman->save();
+                    Yii::error($pinjaman->getErrors());
+                }
+            }
+
             foreach ($params['penjualandet'] as $data) {
                 $det = new PenjualanDet();
                 $det->attributes = $data;
                 $det->penjualan_id = $model->id;
-                $det->sub_total = str_replace('.','',$data['sub_total']);
+                $det->sub_total = str_replace('.', '', $data['sub_total']);
 
                 $det->save();
             }
@@ -260,8 +270,6 @@ class PenjualanController extends Controller {
 
         echo json_encode(array('produk' => $models));
     }
-
-   
 
     public function actionDelete($id) {
         $model = $this->findModel($id);
