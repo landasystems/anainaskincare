@@ -23,7 +23,7 @@
                         <div class="control-group">
                             <label class="col-sm-2 control-label">Cabang</label>
                             <div class="col-sm-3">
-                                <select ui-select2="selectcabang" ng-model="cabang" ng-disabled="is_view" required style="width: 250px;">
+                                <select ui-select2="selectcabang" st-search="cabang_id" ng-model="cabang" ng-disabled="is_view" required style="width: 250px;">
                                     <option value="">-Pilih Cabang-</option>
                                     <option ng-repeat="cabang in listcabang" value="{{cabang.id}}">{{cabang.nama}}</option>
                                 </select>
