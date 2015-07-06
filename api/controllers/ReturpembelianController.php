@@ -3,16 +3,18 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\RPembelian;
+use app\models\RPembelianDet;
+use app\models\Pinjaman;
 use app\models\Penjualan;
 use app\models\PenjualanDet;
-use app\models\Pinjaman;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\db\Query;
 
-class BayarpiutangController extends Controller {
+class ReturpembelianController extends Controller {
 
     public function behaviors() {
         return [
@@ -27,8 +29,8 @@ class BayarpiutangController extends Controller {
                     'cabang' => ['get'],
                     'customer' => ['get'],
                     'produk' => ['get'],
-                    'det_penjualan' => ['get'],
-                    'kode' => ['get'],
+                    'nm_customer' => ['post'],
+                    'det_produk' => ['get'],
                 ],
             ]
         ];
@@ -61,7 +63,7 @@ class BayarpiutangController extends Controller {
         //init variable
         $params = $_REQUEST;
         $filter = array();
-        $sort = "pinjaman.id ASC";
+        $sort = "pembelian.id ASC";
         $offset = 0;
         $limit = 10;
         //        Yii::error($params);
@@ -86,28 +88,15 @@ class BayarpiutangController extends Controller {
         $query = new Query;
         $query->offset($offset)
                 ->limit($limit)
-                ->from('pinjaman')
-                ->join('JOIN', 'penjualan', 'pinjaman.penjualan_id= penjualan.id')
-                ->join('JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
-                ->join('JOIN', 'm_cabang', 'penjualan.cabang_id= m_cabang.id')
-                ->where('pinjaman.debet is NOT NULL')
+                ->from(['pembelian'])
                 ->orderBy($sort)
-                ->select("pinjaman.*,m_cabang.nama as klinik, m_customer.nama as customer,penjualan.tanggal as tanggal, penjualan.kode as kode, m_customer.no_tlp as no_tlp,
-                            m_customer.email as email, m_customer.alamat as alamat, penjualan.keterangan as keterangan, penjualan.id as penjualan_id");
+                ->select("*");
 
         //filter
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
-                if ($key == 'kode') {
-                    $query->andFilterWhere(['like', 'penjualan.' . $key, $val]);
-                } elseif ($key == 'customer_id') {
-                    $query->andFilterWhere(['like', 'm_customer.' . $key, $val]);
-                } elseif ($key == 'cabang_id') {
-                    $query->andFilterWhere(['like', 'm_cabang.' . $key, $val]);
-                } else {
-                    $query->andFilterWhere(['like', $key, $val]);
-                }
+                $query->andFilterWhere(['like', $key, $val]);
             }
         }
 
@@ -121,43 +110,49 @@ class BayarpiutangController extends Controller {
     }
 
     public function actionView($id) {
-        $total = 0;
+
         $model = $this->findModel($id);
-        $query2 = new Query;
-        $query2->from('pinjaman')
-                ->where('penjualan_id="' . $model['penjualan_id'] . '"')
-                ->select('*');
-        $command2 = $query2->createCommand();
-        $detail = $command2->queryAll();
-        foreach ($detail as $data) {
-            $total += $data['credit'];
+        $det = RPenjualanDet::find()
+                ->where(['r_penjualan_id' => $model['id']])
+                ->all();
+
+        $detail = array();
+
+        foreach ($det as $val) {
+            $detail[] = $val->attributes;
         }
 
+
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes), 'detail' => $detail, 'total' => $total), JSON_PRETTY_PRINT);
+        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes), 'detail' => $detail), JSON_PRETTY_PRINT);
     }
 
     public function actionCreate() {
-        $total = 0;
         $params = json_decode(file_get_contents("php://input"), true);
-        $noErrors = false;
-        $detail = $params['detail'];
-        $id = array();
-        foreach ($detail as $value) {
-            $model = Pinjaman::findOne($value['id']);
-            if (empty($model)) {
-                $model = new Pinjaman();
-            }
-            $model->attributes = $value;
-            $model->penjualan_id = $params['form']['penjualan_id'];
-            if ($model->save()) {
-                $noErrors = true;
-            }
-            $id[] = $model->id;
-        }
-        $deleteAll = Pinjaman::deleteAll('id NOT IN(' . implode(',', $id) . ') AND penjualan_id=' . $params['form']['penjualan_id']);
+        $model = new RPenjualan();
+//        print_r($params['penjualandet']);
 
-        if ($deleteAll) {
+        $model->attributes = $params['penjualan'];
+        $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
+        
+
+        if ($model->save()) {
+            if($model->credit > 0){
+            $pinjaman = new Pinjaman();
+            $pinjaman->penjualan_id = $model->id;
+            $pinjaman->credit = $model->credit;
+            $pinjaman->status = 'Belum Lunas';
+            $pinjaman->save();
+            
+        }
+            foreach ($params['penjualandet'] as $data) {
+                $det = new PenjualanDet();
+                $det->attributes = $data;
+                $det->penjualan_id = $model->id;
+                $det->sub_total = str_replace('.','',$data['sub_total']);
+
+                $det->save();
+            }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -165,15 +160,29 @@ class BayarpiutangController extends Controller {
             echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $model->errors), JSON_PRETTY_PRINT);
         }
     }
-
-    public function actionUpdate($id) {
+     public function actionUpdate($id) {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
-        $model->attributes = $params;
+        $model->attributes = $params['penjualan'];
 
-
+        
         if ($model->save()) {
+               if($model->credit > 0){
+            $pinjaman = Pinjaman::find()->where('penjualan_id=' . $model->id)->one();
+            $pinjaman->credit = $model->credit ;
+            $pinjaman->status = ($model->credit > 0) ? 'belum lunas' : 'lunas';
+            $pinjaman->save();
+            
+        }
+         
+            foreach ($params['penjualandet'] as $data) {
+                $det = new PenjualanDet();
+                $det->attributes = $data;
+                $det->penjualan_id = $model->id;
+                $det->sub_total = str_replace('.','',$data['sub_total']);
 
+                $det->save();
+            }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -208,48 +217,49 @@ class BayarpiutangController extends Controller {
         echo json_encode(array('status' => 1, 'cabang' => $models));
     }
 
-    public function actionKode() {
+    public function actionProduk() {
         $query = new Query;
-        $query->from('pinjaman')
-                ->join('JOIN', 'penjualan', 'pinjaman.penjualan_id= penjualan.id')
-                ->join('JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
-                ->join('JOIN', 'm_cabang', 'penjualan.cabang_id= m_cabang.id')
-                ->where('pinjaman.status !="lunas" and debet is not null')
-                ->select("m_cabang.nama as klinik, m_customer.nama as customer, penjualan.kode as kode,penjualan.id as id");
+        $query->from('m_produk')
+                ->select('*');
 
         $command = $query->createCommand();
         $models = $command->queryAll();
 
         $this->setHeader(200);
 
-        echo json_encode(array('status' => 1, 'kode' => $models));
+        echo json_encode(array('status' => 1, 'produk' => $models));
     }
 
-    public function actionDet_penjualan($id) {
-        $total = 0;
+    public function actionNm_customer() {
+        $params = json_decode(file_get_contents("php://input"), true);
         $query = new Query;
-        $query->from('penjualan')
-                ->join('JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
-                ->join('JOIN', 'm_cabang', 'penjualan.cabang_id= m_cabang.id')
-                ->where('penjualan.id="' . $id . '"')
-                ->select("m_customer.no_tlp as no_tlp, m_customer.email as email, m_customer.alamat as alamat, penjualan.tanggal as tanggal,
-                        m_cabang.nama as klinik, penjualan.keterangan as keterangan");
+
+        $query->from('m_customer')
+                ->where('id="' . $params . '"')
+                ->select("*");
+        $command = $query->createCommand();
+        $models = $command->query()->read();
+        $this->setHeader(200);
+        $model['no_tlp'] = $models['no_tlp'];
+        $model['alamat'] = $models['alamat'];
+        $model['email'] = $models['email'];
+
+        echo json_encode(array('customer' => $model));
+    }
+
+    public function actionDet_produk($id) {
+        $query = new Query;
+        $query->from('m_produk')
+                ->where('id="' . $id . '"')
+                ->select("*");
         $command = $query->createCommand();
         $models = $command->queryOne();
-
-        $query2 = new Query;
-        $query2->from('pinjaman')
-                ->where('penjualan_id="' . $id . '"')
-                ->select('*');
-        $command2 = $query2->createCommand();
-        $detail = $command2->queryAll();
-        foreach ($detail as $data) {
-            $total += $data['credit'];
-        }
         $this->setHeader(200);
 
-        echo json_encode(array('penjualan' => $models, 'detail' => $detail, 'total' => $total));
+        echo json_encode(array('produk' => $models));
     }
+
+   
 
     public function actionDelete($id) {
         $model = $this->findModel($id);
@@ -266,7 +276,7 @@ class BayarpiutangController extends Controller {
     }
 
     protected function findModel($id) {
-        if (($model = Pinjaman::findOne($id)) !== null) {
+        if (($model = Penjualan::findOne($id)) !== null) {
             return $model;
         } else {
 
