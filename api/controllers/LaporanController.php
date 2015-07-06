@@ -92,7 +92,6 @@ class LaporanController extends Controller {
         $total = 0;
         $totalA = 0;
         foreach ($models as $val) {
-
             if (isset($body[$val['id_pegawai']])) {
                 $i = $i;
             } else {
@@ -130,8 +129,6 @@ class LaporanController extends Controller {
 
                 $totalA += $body[$pegawai_id]['body'][$i]['fee'];
             }
-
-
             $i++;
         }
         $detail['total'] = $totalA;
@@ -198,10 +195,12 @@ class LaporanController extends Controller {
 
     public function actionKartustok() {
         $params = json_decode(file_get_contents("php://input"), true);
-        $start = date("Y-m-d", strtotime($params['tanggal']['startDate']));
-        $end = date("Y-m-d", strtotime($params['tanggal']['endDate']));
         $data = array();
         $kartu = array();
+        $s = strtotime(date("Y-m-d", strtotime($params['tanggal']['startDate'])));
+        $start = date("Y-m-d", strtotime('+1 day', $s));
+        $end = date("Y-m-d", strtotime($params['tanggal']['endDate']));
+//        print_r($start." ".$end);
         if (!empty($params['cabang_id'])) {
             $cbg = \app\models\Cabang::findOne(['id' => $params['cabang_id']]);
             $data['cabang'] = strtoupper($cbg->nama);
@@ -209,17 +208,160 @@ class LaporanController extends Controller {
             $data['cabang'] = 'SEMUA CABANG';
         }
 
-        $connection = \Yii::$app->db;
-
-        $criteria = (!empty($params['cabang_id'])) ? ' and StokMasuk.cabang_id=' . $params['cabang_id'] : '';
-        $stokMasuk = \app\models\StokMasukDet::find()->with('StokMasuk')->where("t.tanggal <= '" . $start . "' and t.tanggal >= '" . $start . "' $criteria");
-        $stokMasuk = $connection->createCommand("SELECT sum(cash) as  penjualan FROM penjualan where (tanggal >= '" . $start . "' and tanggal <= '" . $end . "') $criteria")
-                ->queryOne();
-        foreach ($stokMasuk as $val) {
-            $kartu['kode'] = $val->kode;
-            $kartu['tanggal'] = $val->tanggal;
-            $kartu['tanggal'] = $val->tanggal;
+        if (!empty($params['kategori_id'])) {
+            $cbg = \app\models\Cabang::findOne(['id' => $params['kategori_id']]);
+            $data['kategori'] = strtoupper($cbg->nama);
+        } else {
+            $data['kategori'] = 'SEMUA KATEGORI';
         }
+
+        $connection = \Yii::$app->db;
+        $criteria = '';
+        $criteria .= (!empty($params['cabang_id'])) ? ' and stok_masuk.cabang_id=' . $params['cabang_id'] : '';
+        $criteria .= (!empty($params['kategori_id'])) ? ' and m_produk.kategori_id=' . $params['kategori_id'] : '';
+
+        $stokMasuk = $connection->createCommand("select m_satuan.nama as satuan, stok_masuk_det.harga as harga, stok_masuk_det.jumlah as jumlah, stok_masuk.kode as kode, m_produk.kategori_id as kategori_id, m_kategori.nama as kategori, stok_masuk.tanggal as tanggal, m_produk.nama as produk "
+                        . " from m_satuan, m_kategori, stok_masuk, stok_masuk_det, m_produk "
+                        . " where m_satuan.id = m_produk.satuan_id and m_produk.kategori_id = m_kategori.id and stok_masuk.id = stok_masuk_det.stok_masuk_id and stok_masuk_det.produk_id = m_produk.id and (stok_masuk.tanggal >= '" . $start . "' and stok_masuk.tanggal <= '" . $end . "') $criteria"
+                        . " order by stok_masuk.tanggal ASC")
+                ->queryAll();
+        $i = 0;
+        foreach ($stokMasuk as $val) {
+            $kartu[$val['kategori_id']]['title']['produk'] = $val['produk'];
+            $kartu[$val['kategori_id']]['title']['kategori'] = $val['kategori'];
+            $kartu[$val['kategori_id']]['body'][$i]['tanggal'] = $val['tanggal'];
+            $kartu[$val['kategori_id']]['body'][$i]['kode'] = $val['kode'];
+            $kartu[$val['kategori_id']]['body'][$i]['jumlah']['masuk'] = $val['jumlah'] . ' ' . $val['satuan'];
+            $kartu[$val['kategori_id']]['body'][$i]['harga']['masuk'] = $val['harga'];
+            $kartu[$val['kategori_id']]['body'][$i]['sub_total']['masuk'] = $val['harga'] * $val['jumlah'];
+            $kartu[$val['kategori_id']]['body'][$i]['jumlah']['keluar'] = '-';
+            $kartu[$val['kategori_id']]['body'][$i]['harga']['keluar'] = '';
+            $kartu[$val['kategori_id']]['body'][$i]['sub_total']['keluar'] = '';
+
+            $i++;
+        }
+
+        $criteria = '';
+        $criteria .= (!empty($params['cabang_id'])) ? ' and stok_keluar.cabang_id=' . $params['cabang_id'] : '';
+        $criteria .= (!empty($params['kategori_id'])) ? ' and m_produk.kategori_id=' . $params['kategori_id'] : '';
+
+        $stokKeluar = $connection->createCommand("select m_satuan.nama as satuan, stok_keluar_det.harga as harga, stok_keluar_det.jumlah as jumlah, stok_keluar.kode as kode, m_produk.kategori_id as kategori_id, m_kategori.nama as kategori, stok_keluar.tanggal as tanggal, m_produk.nama as produk "
+                        . "from m_satuan, m_kategori, stok_keluar, stok_keluar_det, m_produk "
+                        . "where m_satuan.id = m_produk.satuan_id and m_produk.kategori_id = m_kategori.id and stok_keluar.id = stok_keluar_det.stok_keluar_id and stok_keluar_det.produk_id = m_produk.id and (stok_keluar.tanggal >= '" . $start . "' and stok_keluar.tanggal <= '" . $end . "') $criteria"
+                        . "order by stok_keluar.tanggal ASC")
+                ->queryAll();
+        foreach ($stokKeluar as $val) {
+            $kartu[$val['kategori_id']]['title']['produk'] = $val['produk'];
+            $kartu[$val['kategori_id']]['title']['kategori'] = $val['kategori'];
+            $kartu[$val['kategori_id']]['body'][$i]['tanggal'] = $val['tanggal'];
+            $kartu[$val['kategori_id']]['body'][$i]['kode'] = $val['kode'];
+            $kartu[$val['kategori_id']]['body'][$i]['jumlah']['keluar'] = $val['jumlah'] . ' ' . $val['satuan'];
+            $kartu[$val['kategori_id']]['body'][$i]['harga']['keluar'] = $val['harga'];
+            $kartu[$val['kategori_id']]['body'][$i]['sub_total']['keluar'] = $val['harga'] * $val['jumlah'];
+            $kartu[$val['kategori_id']]['body'][$i]['jumlah']['masuk'] = '-';
+            $kartu[$val['kategori_id']]['body'][$i]['harga']['masuk'] = '';
+            $kartu[$val['kategori_id']]['body'][$i]['sub_total']['masuk'] = '';
+
+            $i++;
+        }
+
+        $criteria = '';
+        $criteria .= (!empty($params['cabang_id'])) ? ' and pembelian.cabang_id=' . $params['cabang_id'] : '';
+        $criteria .= (!empty($params['kategori_id'])) ? ' and m_produk.kategori_id=' . $params['kategori_id'] : '';
+
+        $pembelian = $connection->createCommand("select m_satuan.nama as satuan, pembelian_det.harga as harga, pembelian_det.jumlah as jumlah, pembelian.kode as kode, m_produk.kategori_id as kategori_id, m_kategori.nama as kategori, pembelian.tanggal as tanggal, m_produk.nama as produk "
+                        . "from m_satuan, m_kategori, pembelian, pembelian_det, m_produk "
+                        . "where m_satuan.id = m_produk.satuan_id and m_produk.kategori_id = m_kategori.id and pembelian.id = pembelian_det.pembelian_id and pembelian_det.produk_id = m_produk.id and (pembelian.tanggal >= '" . $start . "' and pembelian.tanggal <= '" . $end . "') $criteria"
+                        . "order by pembelian.tanggal ASC")
+                ->queryAll();
+        foreach ($pembelian as $val) {
+            $kartu[$val['kategori_id']]['title']['produk'] = $val['produk'];
+            $kartu[$val['kategori_id']]['title']['kategori'] = $val['kategori'];
+            $kartu[$val['kategori_id']]['body'][$i]['tanggal'] = $val['tanggal'];
+            $kartu[$val['kategori_id']]['body'][$i]['kode'] = $val['kode'];
+            $kartu[$val['kategori_id']]['body'][$i]['jumlah']['masuk'] = $val['jumlah'] . ' ' . $val['satuan'];
+            $kartu[$val['kategori_id']]['body'][$i]['harga']['masuk'] = $val['harga'];
+            $kartu[$val['kategori_id']]['body'][$i]['sub_total']['masuk'] = $val['harga'] * $val['jumlah'];
+            $kartu[$val['kategori_id']]['body'][$i]['jumlah']['keluar'] = '-';
+            $kartu[$val['kategori_id']]['body'][$i]['harga']['keluar'] = '';
+            $kartu[$val['kategori_id']]['body'][$i]['sub_total']['keluar'] = '';
+
+            $i++;
+        }
+
+        $criteria = '';
+        $criteria .= (!empty($params['cabang_id'])) ? ' and penjualan.cabang_id=' . $params['cabang_id'] : '';
+        $criteria .= (!empty($params['kategori_id'])) ? ' and m_produk.kategori_id=' . $params['kategori_id'] : '';
+
+        $penjualan = $connection->createCommand("select m_satuan.nama as satuan, penjualan_det.harga as harga, penjualan_det.jumlah as jumlah, penjualan.kode as kode, m_produk.kategori_id as kategori_id, m_kategori.nama as kategori, penjualan.tanggal as tanggal, m_produk.nama as produk "
+                        . "from m_satuan, m_kategori, penjualan, penjualan_det, m_produk "
+                        . "where m_satuan.id = m_produk.satuan_id and m_produk.kategori_id = m_kategori.id and penjualan.id = penjualan_det.penjualan_id and penjualan_det.produk_id = m_produk.id and (penjualan.tanggal >= '" . $start . "' and penjualan.tanggal <= '" . $end . "') $criteria"
+                        . "order by penjualan.tanggal ASC")
+                ->queryAll();
+        foreach ($penjualan as $val) {
+            $kartu[$val['kategori_id']]['title']['produk'] = $val['produk'];
+            $kartu[$val['kategori_id']]['title']['kategori'] = $val['kategori'];
+            $kartu[$val['kategori_id']]['body'][$i]['tanggal'] = $val['tanggal'];
+            $kartu[$val['kategori_id']]['body'][$i]['kode'] = $val['kode'];
+            $kartu[$val['kategori_id']]['body'][$i]['jumlah']['keluar'] = $val['jumlah'] . ' ' . $val['satuan'];
+            $kartu[$val['kategori_id']]['body'][$i]['harga']['keluar'] = $val['harga'];
+            $kartu[$val['kategori_id']]['body'][$i]['sub_total']['keluar'] = $val['harga'] * $val['jumlah'];
+            $kartu[$val['kategori_id']]['body'][$i]['jumlah']['masuk'] = '-';
+            $kartu[$val['kategori_id']]['body'][$i]['harga']['masuk'] = '';
+            $kartu[$val['kategori_id']]['body'][$i]['sub_total']['masuk'] = '';
+
+            $i++;
+        }
+
+        $criteria = '';
+        $criteria .= (!empty($params['cabang_id'])) ? ' and pembelian.cabang_id=' . $params['cabang_id'] : '';
+        $criteria .= (!empty($params['kategori_id'])) ? ' and m_produk.kategori_id=' . $params['kategori_id'] : '';
+
+        $r_pembelian = $connection->createCommand("select m_satuan.nama as satuan, r_pembelian_det.harga as harga, r_pembelian_det.jumlah as jumlah, r_pembelian.kode as kode, m_produk.kategori_id as kategori_id, m_kategori.nama as kategori, r_pembelian.tanggal as tanggal, m_produk.nama as produk "
+                        . "from pembelian, m_satuan, m_kategori, r_pembelian, r_pembelian_det, m_produk "
+                        . "where r_pembelian.pembelian_id = pembelian.id and m_satuan.id = m_produk.satuan_id and m_produk.kategori_id = m_kategori.id and r_pembelian.id = r_pembelian_det.r_pembelian_id and r_pembelian_det.produk_id = m_produk.id and (r_pembelian.tanggal >= '" . $start . "' and r_pembelian.tanggal <= '" . $end . "') $criteria"
+                        . "order by r_pembelian.tanggal ASC")
+                ->queryAll();
+        foreach ($r_pembelian as $val) {
+            $kartu[$val['kategori_id']]['title']['produk'] = $val['produk'];
+            $kartu[$val['kategori_id']]['title']['kategori'] = $val['kategori'];
+            $kartu[$val['kategori_id']]['body'][$i]['tanggal'] = $val['tanggal'];
+            $kartu[$val['kategori_id']]['body'][$i]['kode'] = $val['kode'];
+            $kartu[$val['kategori_id']]['body'][$i]['jumlah']['keluar'] = $val['jumlah'] . ' ' . $val['satuan'];
+            $kartu[$val['kategori_id']]['body'][$i]['harga']['keluar'] = $val['harga'];
+            $kartu[$val['kategori_id']]['body'][$i]['sub_total']['keluar'] = $val['harga'] * $val['jumlah'];
+            $kartu[$val['kategori_id']]['body'][$i]['jumlah']['masuk'] = '-';
+            $kartu[$val['kategori_id']]['body'][$i]['harga']['masuk'] = '';
+            $kartu[$val['kategori_id']]['body'][$i]['sub_total']['masuk'] = '';
+
+            $i++;
+        }
+
+        $criteria = '';
+        $criteria .= (!empty($params['cabang_id'])) ? ' and penjualan.cabang_id=' . $params['cabang_id'] : '';
+        $criteria .= (!empty($params['kategori_id'])) ? ' and m_produk.kategori_id=' . $params['kategori_id'] : '';
+
+        $r_penjualan = $connection->createCommand("select m_satuan.nama as satuan, r_penjualan_det.harga as harga, r_penjualan_det.jumlah as jumlah, r_penjualan.kode as kode, m_produk.kategori_id as kategori_id, m_kategori.nama as kategori, r_penjualan.tanggal as tanggal, m_produk.nama as produk "
+                        . "from penjualan, m_satuan, m_kategori, r_penjualan, r_penjualan_det, m_produk "
+                        . "where r_penjualan.penjualan_id = penjualan.id and m_satuan.id = m_produk.satuan_id and m_produk.kategori_id = m_kategori.id and r_penjualan.id = r_penjualan_det.r_penjualan_id and r_penjualan_det.produk_id = m_produk.id and (r_penjualan.tanggal >= '" . $start . "' and r_penjualan.tanggal <= '" . $end . "') $criteria"
+                        . "order by r_penjualan.tanggal ASC")
+                ->queryAll();
+        foreach ($r_penjualan as $val) {
+            $kartu[$val['kategori_id']]['title']['produk'] = $val['produk'];
+            $kartu[$val['kategori_id']]['title']['kategori'] = $val['kategori'];
+            $kartu[$val['kategori_id']]['body'][$i]['tanggal'] = $val['tanggal'];
+            $kartu[$val['kategori_id']]['body'][$i]['kode'] = $val['kode'];
+            $kartu[$val['kategori_id']]['body'][$i]['jumlah']['masuk'] = $val['jumlah'] . ' ' . $val['satuan'];
+            $kartu[$val['kategori_id']]['body'][$i]['harga']['masuk'] = $val['harga'];
+            $kartu[$val['kategori_id']]['body'][$i]['sub_total']['masuk'] = $val['harga'] * $val['jumlah'];
+            $kartu[$val['kategori_id']]['body'][$i]['jumlah']['keluar'] = '-';
+            $kartu[$val['kategori_id']]['body'][$i]['harga']['keluar'] = '';
+            $kartu[$val['kategori_id']]['body'][$i]['sub_total']['keluar'] = '';
+
+            $i++;
+        }
+
+        echo json_encode(array('status' => 1, 'data' => $data, 'detail' => $kartu), JSON_PRETTY_PRINT);
     }
 
     protected function findModel($id) {

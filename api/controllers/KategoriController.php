@@ -22,6 +22,7 @@ class KategoriController extends Controller {
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
+                    'listkategori' => ['get'],
                 ],
             ]
         ];
@@ -98,6 +99,20 @@ class KategoriController extends Controller {
         $this->setHeader(200);
 
         echo json_encode(array('status' => 1, 'data' => $models, 'totalItems' => $totalItems), JSON_PRETTY_PRINT);
+    }
+    
+    public function actionListkategori() {
+        $query = new Query;
+        $query->from('m_kategori')
+                ->select("*")
+                ->where("is_deleted = 0");
+
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'data' => $models));
     }
     
 
