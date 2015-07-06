@@ -70,12 +70,12 @@
                     <tbody ng-show="!isLoading">
                         <tr ng-repeat="row in displayed" ng-dblclick="view(row)">
                             <td>{{row.kode}}</td>
-                            <td>{{row.tanggal | date:'dd-MMM-yyyy'}}</td>
+                            <td>{{row.tanggal| date:'dd-MMM-yyyy'}}</td>
                             <td>{{row.customer}}</td>
                             <td>{{row.klinik}}</td>
 
-                            <td>{{row.debet | currency}}</td>
-                            <td>{{row.credit | currency}}</td>
+                            <td>{{row.debet| currency}}</td>
+                            <td>{{row.credit| currency}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ></button>
@@ -177,7 +177,7 @@
                                     <td>Total</td>
                                     <td>Terbayar</td>
                                     <td>Bayar</td>
-                                    
+
                                 </tr>
                             </thead>
                             <tr ng-repeat="detail in detPenjualan">
@@ -188,18 +188,18 @@
                                     {{form.keterangan}}
                                 </td>
                                 <td>
-                                    {{detail.credit | currency}}
+                                    {{detail.credit| currency}}
                                 </td>
                                 <td>
-                                    {{detail.credit - detail.debet | currency}}
+                                    {{detail.credit - detail.debet| currency}}
                                 </td>
                                 <td>
-                                    {{detail.debet | currency}}
+                                    {{detail.debet| currency}}
                                 </td>
-                                
-                                
+
+
                             </tr>
-                            
+
 
                         </table>
                         <div class="line line-dashed b-b line-lg pull-in"></div>
@@ -211,8 +211,6 @@
 
                 </div>
             </div>
-
+        </form>
     </div>
-</form>
-</div>
 </div>
