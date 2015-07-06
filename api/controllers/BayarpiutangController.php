@@ -90,7 +90,7 @@ class BayarpiutangController extends Controller {
                 ->join('JOIN', 'penjualan', 'pinjaman.penjualan_id= penjualan.id')
                 ->join('JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
                 ->join('JOIN', 'm_cabang', 'penjualan.cabang_id= m_cabang.id')
-                ->where('pinjaman.debet is NOT NULL')
+//                ->where('pinjaman.debet is NOT NULL')
                 ->orderBy($sort)
                 ->select("pinjaman.*,m_cabang.nama as klinik, m_customer.nama as customer,penjualan.tanggal as tanggal, penjualan.kode as kode, m_customer.no_tlp as no_tlp,
                             m_customer.email as email, m_customer.alamat as alamat, penjualan.keterangan as keterangan, penjualan.id as penjualan_id");
@@ -99,14 +99,14 @@ class BayarpiutangController extends Controller {
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
-                if($key == 'kode'){
-                     $query->andFilterWhere(['like', 'penjualan.'.$key, $val]);
-                }elseif($key == 'customer_id'){
-                     $query->andFilterWhere(['like', 'm_customer.'.$key, $val]);
-                }elseif($key == 'cabang_id'){
-                    $query->andFilterWhere(['like', 'm_cabang.'.$key, $val]);
-                }else{
-                $query->andFilterWhere(['like', $key, $val]);
+                if ($key == 'kode') {
+                    $query->andFilterWhere(['like', 'penjualan.' . $key, $val]);
+                } elseif ($key == 'customer_id') {
+                    $query->andFilterWhere(['like', 'm_customer.' . $key, $val]);
+                } elseif ($key == 'cabang_id') {
+                    $query->andFilterWhere(['like', 'm_cabang.' . $key, $val]);
+                } else {
+                    $query->andFilterWhere(['like', $key, $val]);
                 }
             }
         }
@@ -121,34 +121,36 @@ class BayarpiutangController extends Controller {
     }
 
     public function actionView($id) {
-
+        $total = 0;
         $model = $this->findModel($id);
         $query2 = new Query;
         $query2->from('pinjaman')
-                ->where('penjualan_id="'.$model['penjualan_id'].'"')
+                ->where('penjualan_id="' . $model['penjualan_id'] . '"')
                 ->select('*');
         $command2 = $query2->createCommand();
         $detail = $command2->queryAll();
-
+        foreach ($detail as $data) {
+            $total += $data['credit'];
+        }
 
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes), 'detail' => $detail), JSON_PRETTY_PRINT);
+        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes), 'detail' => $detail, 'total' => $total), JSON_PRETTY_PRINT);
     }
 
     public function actionCreate() {
-        $total=0;
-         $params = json_decode(file_get_contents("php://input"), true);
+        $total = 0;
+        $params = json_decode(file_get_contents("php://input"), true);
         $model = new Pinjaman();
         $model->attributes = $params;
         $pertama = Pinjaman::find()->where('penjualan_id=' . $model->penjualan_id)->orderBy('id ASC')->one();
         $pinjaman = Pinjaman::find()->where('penjualan_id=' . $model->penjualan_id)->all();
-        foreach($pinjaman as $data){
+        foreach ($pinjaman as $data) {
             $total += $data->debet;
         }
-        if($total + $model->credit == $pertama->debet){
-            $model->status="lunas";
-        }else{
-            $model->status="belum lunas";
+        if ($total + $model->credit == $pertama->debet) {
+            $model->status = "Lunas";
+        } else {
+            $model->status = "Belum Lunas";
         }
 
         if ($model->save()) {
@@ -167,7 +169,7 @@ class BayarpiutangController extends Controller {
 
 
         if ($model->save()) {
-           
+
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -220,6 +222,7 @@ class BayarpiutangController extends Controller {
     }
 
     public function actionDet_penjualan($id) {
+        $total = 0;
         $query = new Query;
         $query->from('penjualan')
                 ->join('JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
@@ -232,13 +235,16 @@ class BayarpiutangController extends Controller {
 
         $query2 = new Query;
         $query2->from('pinjaman')
-                ->where('penjualan_id="'.$id.'"')
+                ->where('penjualan_id="' . $id . '"')
                 ->select('*');
         $command2 = $query2->createCommand();
         $detail = $command2->queryAll();
+        foreach ($detail as $data) {
+            $total += $data['credit'];
+        }
         $this->setHeader(200);
 
-        echo json_encode(array('penjualan' => $models, 'detail' => $detail));
+        echo json_encode(array('penjualan' => $models, 'detail' => $detail, 'total' => $total));
     }
 
     public function actionDelete($id) {
