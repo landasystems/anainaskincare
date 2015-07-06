@@ -8,7 +8,12 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
     $scope.is_view = false;
     $scope.is_create = false;
    
-
+    $scope.datepickerOptions = {
+        language: 'id',
+        autoclose: true,
+        weekStart: 0
+    }
+    
     Data.get('bayarpiutang/customer').then(function(data) {
         $scope.sCustomer = data.customer;
     });
@@ -93,7 +98,6 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
 
     };
     $scope.update = function(row) {
-        console.log(row);
         $scope.form = row;
         Data.get('bayarpiutang/view/' + row.id).then(function(data) {
 //            $scope.form = data.data;
@@ -106,10 +110,14 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
         })
     };
     $scope.view = function(form) {
+         Data.get('bayarpiutang/view/' + form.id).then(function(data) {
+//            $scope.form = data.data;
+            $scope.detPenjualan = data.detail;
         $scope.is_edit = true;
         $scope.is_view = true;
         $scope.formtitle = "Lihat Data : " + form.nama;
         $scope.form = form;
+        })
     };
     $scope.save = function(form, detail) {
      

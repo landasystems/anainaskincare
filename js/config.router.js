@@ -274,7 +274,11 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load('js/controllers/t_bayarpiutang.js');
+                                                return $ocLazyLoad.load(['ng-bootstrap-datepicker']).then(
+                                                        function () {
+                                                            return $ocLazyLoad.load('js/controllers/t_bayarpiutang.js');
+                                                        }
+                                                );
                                             }]
                                     }
                                 })
@@ -284,9 +288,9 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load('ui.select2').then(
+                                                return $ocLazyLoad.load(['ui.select2']).then(
                                                         function () {
-                                                            return $ocLazyLoad.load('js/controllers/t_penjualan.js');
+                                                            return $ocLazyLoad.load('js/controllers/t_returpenjualan.js');
                                                         }
                                                 );
                                             }]

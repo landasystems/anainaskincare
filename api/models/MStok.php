@@ -34,6 +34,10 @@ class MStok extends \yii\db\ActiveRecord
             [['tanggal'], 'safe']
         ];
     }
+    
+    public function updateStok(){
+        
+    }
 
     /**
      * @inheritdoc

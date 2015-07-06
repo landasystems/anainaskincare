@@ -61,7 +61,7 @@ class BayarpiutangController extends Controller {
         //init variable
         $params = $_REQUEST;
         $filter = array();
-        $sort = "penjualan.id ASC";
+        $sort = "pinjaman.id ASC";
         $offset = 0;
         $limit = 10;
         //        Yii::error($params);
@@ -90,6 +90,7 @@ class BayarpiutangController extends Controller {
                 ->join('JOIN', 'penjualan', 'pinjaman.penjualan_id= penjualan.id')
                 ->join('JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
                 ->join('JOIN', 'm_cabang', 'penjualan.cabang_id= m_cabang.id')
+                ->where('pinjaman.debet is NOT NULL')
                 ->orderBy($sort)
                 ->select("pinjaman.*,m_cabang.nama as klinik, m_customer.nama as customer,penjualan.tanggal as tanggal, penjualan.kode as kode, m_customer.no_tlp as no_tlp,
                             m_customer.email as email, m_customer.alamat as alamat, penjualan.keterangan as keterangan, penjualan.id as penjualan_id");
@@ -98,7 +99,15 @@ class BayarpiutangController extends Controller {
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
+                if($key == 'kode'){
+                     $query->andFilterWhere(['like', 'penjualan.'.$key, $val]);
+                }elseif($key == 'customer_id'){
+                     $query->andFilterWhere(['like', 'm_customer.'.$key, $val]);
+                }elseif($key == 'cabang_id'){
+                    $query->andFilterWhere(['like', 'm_cabang.'.$key, $val]);
+                }else{
                 $query->andFilterWhere(['like', $key, $val]);
+                }
             }
         }
 
@@ -136,7 +145,7 @@ class BayarpiutangController extends Controller {
         foreach($pinjaman as $data){
             $total += $data->debet;
         }
-        if($total + $model->debet == $pertama->credit){
+        if($total + $model->credit == $pertama->debet){
             $model->status="lunas";
         }else{
             $model->status="belum lunas";
@@ -199,7 +208,7 @@ class BayarpiutangController extends Controller {
                 ->join('JOIN', 'penjualan', 'pinjaman.penjualan_id= penjualan.id')
                 ->join('JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
                 ->join('JOIN', 'm_cabang', 'penjualan.cabang_id= m_cabang.id')
-                ->where('pinjaman.status !="lunas"')
+                ->where('pinjaman.status !="lunas" and debet is not null')
                 ->select("m_cabang.nama as klinik, m_customer.nama as customer, penjualan.kode as kode,penjualan.id as id");
 
         $command = $query->createCommand();

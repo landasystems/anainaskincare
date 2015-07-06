@@ -3,16 +3,18 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\RPenjualan;
+use app\models\RPenjualanDet;
+use app\models\Pinjaman;
 use app\models\Penjualan;
 use app\models\PenjualanDet;
-use app\models\Pinjaman;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\db\Query;
 
-class PenjualanController extends Controller {
+class ReturpenjualanController extends Controller {
 
     public function behaviors() {
         return [
@@ -61,7 +63,7 @@ class PenjualanController extends Controller {
         //init variable
         $params = $_REQUEST;
         $filter = array();
-        $sort = "penjualan.id ASC";
+        $sort = "r_penjualan.id ASC";
         $offset = 0;
         $limit = 10;
         //        Yii::error($params);
@@ -86,13 +88,12 @@ class PenjualanController extends Controller {
         $query = new Query;
         $query->offset($offset)
                 ->limit($limit)
-                ->from(['penjualan', 'm_cabang', 'm_customer'])
-                ->where('penjualan.cabang_id = m_cabang.id and penjualan.customer_id = m_customer.id')
+                ->from(['r_penjualan','penjualan','m_cabang','m_customer'])
+                ->where('r_penjualan.penjualan_id = penjualan.id and penjualan.cabang_id = m_cabang.id and penjualan.customer_id = m_customer.id')
                 ->orderBy($sort)
-                ->select("m_cabang.nama as cabang, m_customer.nama as customer, penjualan.kode as kode, penjualan.tanggal as tanggal,
-                    penjualan.keterangan as keterangan, penjualan.total as total, penjualan.cash as cash, penjualan.credit as credit, penjualan.status as status,
-                    penjualan.kode as kode, penjualan.id as id, penjualan.total_diskon as total_diskon, penjualan.customer_id as customer_id, penjualan.cabang_id as cabang_id,
-                    penjualan.total_belanja as total_belanja, m_customer.no_tlp as no_tlp, m_customer.email as email, m_customer.alamat as alamat");
+                ->select("r_penjualan.id as id, r_penjualan.tanggal as tanggal_retur, r_penjualan.total as total_retur, r_penjualan.keterangan as ketrangan_retur,"
+                        . " r_penjualan.kode as kode_retur, penjualan.kode as kode_penjualan , penjualan.total as total_penjualan, m_cabang.nama as cabang, "
+                        . "m_customer.nama as nama_customer");
 
         //filter
         if (isset($params['filter'])) {
@@ -114,8 +115,8 @@ class PenjualanController extends Controller {
     public function actionView($id) {
 
         $model = $this->findModel($id);
-        $det = PenjualanDet::find()
-                ->where(['penjualan_id' => $model['id']])
+        $det = RPenjualanDet::find()
+                ->where(['r_penjualan_id' => $model['id']])
                 ->all();
 
         $detail = array();
@@ -131,28 +132,27 @@ class PenjualanController extends Controller {
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
-        $model = new Penjualan();
+        $model = new RPenjualan();
 //        print_r($params['penjualandet']);
 
         $model->attributes = $params['penjualan'];
         $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
-
+        
 
         if ($model->save()) {
-            if ($model->status == "Pesan") {
-                if ($model->credit > 0) {
-                    $pinjaman = new Pinjaman();
-                    $pinjaman->penjualan_id = $model->id;
-                    $pinjaman->debet = $model->credit;
-                    $pinjaman->status = 'Belum Lunas';
-                    $pinjaman->save();
-                }
-            }
+            if($model->credit > 0){
+            $pinjaman = new Pinjaman();
+            $pinjaman->penjualan_id = $model->id;
+            $pinjaman->credit = $model->credit;
+            $pinjaman->status = 'Belum Lunas';
+            $pinjaman->save();
+            
+        }
             foreach ($params['penjualandet'] as $data) {
                 $det = new PenjualanDet();
                 $det->attributes = $data;
                 $det->penjualan_id = $model->id;
-                $det->sub_total = str_replace('.', '', $data['sub_total']);
+                $det->sub_total = str_replace('.','',$data['sub_total']);
 
                 $det->save();
             }
@@ -163,35 +163,26 @@ class PenjualanController extends Controller {
             echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $model->errors), JSON_PRETTY_PRINT);
         }
     }
-
-    public function actionUpdate($id) {
+     public function actionUpdate($id) {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
         $model->attributes = $params['penjualan'];
 
-
+        
         if ($model->save()) {
-            if ($model->status == 'Selesai') {
-                if ($model->credit > 0) {
-                    $pinjaman = Pinjaman::find()->where('penjualan_id=' . $model->id)->one();
-                    if (empty($pinjaman)) {
-                        $pinjaman = new Pinjaman();
-//                        $pinjaman->save();
-                    }
-
-                    $pinjaman->penjualan_id = $model->id;
-                    $pinjaman->debet = $model->credit;
-                    $pinjaman->status = 'Belum Lunas';
-                    $pinjaman->save();
-                    Yii::error($pinjaman->getErrors());
-                }
-            }
-
+               if($model->credit > 0){
+            $pinjaman = Pinjaman::find()->where('penjualan_id=' . $model->id)->one();
+            $pinjaman->credit = $model->credit ;
+            $pinjaman->status = ($model->credit > 0) ? 'belum lunas' : 'lunas';
+            $pinjaman->save();
+            
+        }
+         
             foreach ($params['penjualandet'] as $data) {
                 $det = new PenjualanDet();
                 $det->attributes = $data;
                 $det->penjualan_id = $model->id;
-                $det->sub_total = str_replace('.', '', $data['sub_total']);
+                $det->sub_total = str_replace('.','',$data['sub_total']);
 
                 $det->save();
             }
@@ -270,6 +261,8 @@ class PenjualanController extends Controller {
 
         echo json_encode(array('produk' => $models));
     }
+
+   
 
     public function actionDelete($id) {
         $model = $this->findModel($id);
