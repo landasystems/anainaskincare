@@ -56,7 +56,7 @@ class StokkeluarController extends Controller {
         $query = new Query;
         $query->from('m_cabang')
                 ->select("*")
-                ->where("is_deleted = 0");
+                ->where("is_deleted = '0'");
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -70,7 +70,7 @@ class StokkeluarController extends Controller {
         $query = new Query;
         $query->from('m_produk')
                 ->select("*")
-                ->where("is_deleted = 0");
+                ->where("is_deleted = '0'");
 
         $command = $query->createCommand();
         $models = $command->queryAll();

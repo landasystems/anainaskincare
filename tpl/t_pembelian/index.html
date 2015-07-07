@@ -41,7 +41,7 @@
                     <tbody ng-show="!isLoading">
                         <tr ng-repeat="row in displayed" ng-dblclick="view(row)">
                             <td>{{row.kode}}</td>
-                            <td>{{row.tanggal}}</td>
+                            <td>{{row.tanggal| date}}</td>
                             <td>{{row.nama_supplier}}</td>
                             <td>{{row.klinik}}</td>
                             <td>{{row.total}}</td>
@@ -84,7 +84,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Kode Pembelian</label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" ng-model="form.kode" ng-disabled="is_create== false">
+                                            <input type="text" class="form-control" ng-model="form.kode" ng-disabled="is_create == false">
                                         </div>
                                     </div>
                                 </td>
@@ -133,14 +133,16 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Tanggal</label>
                                         <div class="col-sm-7">
-                                            <input type="date" class="form-control" ng-model="form.tanggal" ng-disabled="is_view">
+                                            <input type="text" data-ng-datepicker data-ng-options="datepickerOptions" data-ng-model="form.tanggal">
+                                        <!--<input type="text" class="form-control" ng-model="form.tanggal" ng-disabled="is_view" ng-readonly="true">-->
+                                       
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Klinik</label>
                                         <div class="col-sm-7">
                                             <div class="btn-group m-r">
-                                                <select stInputEvent="change" ng-model="form.cabang_id" ui-select2>
+                                                <select stInputEvent="change" ng-model="form.cabang_id" ui-select2 style="width:180px;">
                                                     <option value="">-Pilih Klinik-</option>
                                                     <option ng-repeat="klinik in listKlinik" value="{{klinik.id}}">{{klinik.nama}}</option>
                                                 </select>
