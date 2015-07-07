@@ -66,12 +66,14 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         $scope.detPenjualan.unshift(newDet);
     };
     $scope.removeRow = function(paramindex) {
-        var comArr = eval($scope.detBom);
+        var comArr = eval($scope.detPenjualan);
         if (comArr.length > 1) {
             $scope.detPenjualan.splice(paramindex, 1);
+            $scope.total();
         } else {
             alert("Something gone wrong");
         }
+        
     };
     $scope.total = function() {
         var total = 0;
@@ -85,6 +87,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         $scope.form.total_belanja = total;
         $scope.detail.sub_total = (total - diskon);
         $scope.form.total_diskon = diskon;
+        $scope.bayar();
 
     }
     $scope.bayar = function() {
@@ -94,6 +97,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         var credit = total - cash;
 //        alert(credit);
         $scope.form.credit = (credit > 0) ? credit : 0;
+//        $scope.total();
 
     }
     $scope.detail.type = {
@@ -117,7 +121,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         Data.get('penjualan/', param).then(function(data) {
             $scope.displayed = data.data;
 //            console.log($scope.displayed);
-            tableState.pagination.numberOfPages = Math.round(data.totalItems / limit);
+            tableState.pagination.numberOfPages = Math.ceil(data.totalItems / limit);
         });
 
         $scope.isLoading = false;
