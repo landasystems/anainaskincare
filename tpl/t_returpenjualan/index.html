@@ -233,56 +233,58 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <td>#</td>
                                     <td>Barang</td>
                                     <td>Jumlah</td>
+                                    <td>Jumlah Retur</td>
                                     <td>Tipe</td>
                                     <td>Harga</td>
                                     <td>Diskon</td>
-                                    <td>Sub total</td>
-                                    <td>#</td>
+                                    <td>Sub total Retur</td>
                                 </tr>
                             </thead>
                             <tr ng-repeat="detail in detPenjualan">
-                                <td><label class="i-checks">
-                                        <input type="checkbox" ng-model="detail.id[row.id]" ><i></i> 
-                                    </label></td>
-                                <td>
+                             
+                                <td width="25%">
                                     <input type="text" class="form-control" ng-maxlength="8"  ng-model="detail.nama"  ng-disabled="true" ng-readonly="is_create == false" required>
+                                    <input type="hidden" class="form-control" ng-maxlength="8"  ng-model="detail.id"  ng-disabled="true" ng-readonly="is_create == false" required>
                                 </td>
                                 <td width="6%">
-                                    <input type="text" class="form-control" ng-maxlength="4" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.jumlah" " ng-disabled="true" ng-readonly="is_create == false" required>
+                                    <input type="text" class="form-control" maxlength="4" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.jumlah"  ng-readonly="true" required>
+
+                                </td>
+                                <td width="6%">
+                                    <input type="text" class="form-control" ng-maxlength="4" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.jumlah_retur"  ng-readonly="is_create == false" >
 
                                 </td>
                                 <td width="8%">
                                     <input type="text" class="form-control" ng-maxlength="8"  ng-model="detail.type"  ng-disabled="true" ng-readonly="is_create == false" required>
                                 </td>
-                                <td width="18%">
+                                <td width="14%">
                                     <div class="input-group m-b">
                                         <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.harga"  ng-disabled="true"  required>
+                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.harga"  >
                                     </div>
                                 </td>
-                                <td width="18%">
+                                <td width="14%">
                                     <div class="input-group m-b">
                                         <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.diskon"  ng-disabled="true" ng-readonly="is_create == false" required>
+                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.diskon"  >
                                     </div>
                                 </td>
-                                <td width="18%">
+
+                               
+                                <td width="14%">
                                     <div class="input-group m-b">
                                         <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" name="total" value="{{(detail.jumlah * detail.harga) - (detail.jumlah * detail.diskon) | number}}" ng-readonly="true"  ng-disabled="is_view" required>
+                                        <input type="hidden" class="form-control" name="detail.sub_total_retur"  ng-readonly="true"  ng-disabled="is_view" required>
+                                        <input type="text" class="form-control" name="total" value="{{(detail.jumlah_retur * detail.harga) - (detail.jumlah_retur * detail.diskon) | number}}" ng-readonly="true"  ng-disabled="is_view" required>
                                     </div>
                                 </td>
-                                <td >
-                                    <button ng-click="addDetail()" class="btn btn-success" ng-show="$index == 0" ng-disabled="is_view"><i class="fa fa-plus"></i></button>
-                                    <button ng-click="removeRow($index)" class="btn btn-danger" ng-show="$index > 0" ng-disabled="is_view"><i class="fa fa-trash-o"></i></button>
-                                </td>
+
                             </tr>
                             <tr style="margin:0px;padding:0px;">
                                 <th colspan="5" style="text-align: right;">Total :&nbsp;</th>
-                                <td colspan="2">
+                                <td>
                                     <div class="input-group m-b">
                                         <span class="input-group-addon">Rp</span>
                                         <input type="text" class="form-control" ng-disabled="is_view"  ng-readonly="true" ng-model="form.total">

@@ -4,10 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\RPembelian;
-use app\models\RPembelianDet;
-use app\models\Pinjaman;
-use app\models\Penjualan;
-use app\models\PenjualanDet;
+use app\models\PembelianDet;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -26,11 +23,8 @@ class ReturpembelianController extends Controller {
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
-                    'cabang' => ['get'],
-                    'customer' => ['get'],
-                    'produk' => ['get'],
-                    'nm_customer' => ['post'],
-                    'det_produk' => ['get'],
+                    'pembelianlist' => ['get'],
+                    'selected' => ['get'],
                 ],
             ]
         ];
@@ -129,57 +123,46 @@ class ReturpembelianController extends Controller {
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
-        $model = new RPenjualan();
-//        print_r($params['penjualandet']);
-
-        $model->attributes = $params['penjualan'];
-        $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
-        
-
-        if ($model->save()) {
-            if($model->credit > 0){
-            $pinjaman = new Pinjaman();
-            $pinjaman->penjualan_id = $model->id;
-            $pinjaman->credit = $model->credit;
-            $pinjaman->status = 'Belum Lunas';
-            $pinjaman->save();
-            
-        }
-            foreach ($params['penjualandet'] as $data) {
-                $det = new PenjualanDet();
-                $det->attributes = $data;
-                $det->penjualan_id = $model->id;
-                $det->sub_total = str_replace('.','',$data['sub_total']);
-
-                $det->save();
-            }
-            $this->setHeader(200);
-            echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
-        } else {
-            $this->setHeader(400);
-            echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $model->errors), JSON_PRETTY_PRINT);
-        }
+        Yii::error($params);
+//        $model = new RPembelian();
+//
+//        $model->attributes = $params['retur'];
+//        $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
+//
+//
+//        if ($model->save()) {
+//            foreach ($params['returdet'] as $data) {
+//                $det = PembelianDet::findOne($data['id']);
+//                $det->attributes = $data;
+//                $det->save();
+//            }
+//            $this->setHeader(200);
+//            echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
+//        } else {
+//            $this->setHeader(400);
+//            echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $model->errors), JSON_PRETTY_PRINT);
+//        }
     }
-     public function actionUpdate($id) {
+
+    public function actionUpdate($id) {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
         $model->attributes = $params['penjualan'];
 
-        
+
         if ($model->save()) {
-               if($model->credit > 0){
-            $pinjaman = Pinjaman::find()->where('penjualan_id=' . $model->id)->one();
-            $pinjaman->credit = $model->credit ;
-            $pinjaman->status = ($model->credit > 0) ? 'belum lunas' : 'lunas';
-            $pinjaman->save();
-            
-        }
-         
+            if ($model->credit > 0) {
+                $pinjaman = Pinjaman::find()->where('penjualan_id=' . $model->id)->one();
+                $pinjaman->credit = $model->credit;
+                $pinjaman->status = ($model->credit > 0) ? 'belum lunas' : 'lunas';
+                $pinjaman->save();
+            }
+
             foreach ($params['penjualandet'] as $data) {
                 $det = new PenjualanDet();
                 $det->attributes = $data;
                 $det->penjualan_id = $model->id;
-                $det->sub_total = str_replace('.','',$data['sub_total']);
+                $det->sub_total = str_replace('.', '', $data['sub_total']);
 
                 $det->save();
             }
@@ -191,9 +174,9 @@ class ReturpembelianController extends Controller {
         }
     }
 
-    public function actionCustomer() {
+    public function actionPembelianlist() {
         $query = new Query;
-        $query->from('m_customer')
+        $query->from('pembelian')
                 ->select('*');
 
         $command = $query->createCommand();
@@ -201,65 +184,31 @@ class ReturpembelianController extends Controller {
 
         $this->setHeader(200);
 
-        echo json_encode(array('status' => 1, 'customer' => $models));
+        echo json_encode(array('status' => 1, 'listPembelian' => $models));
     }
 
-    public function actionCabang() {
+    public function actionSelected($id) {
         $query = new Query;
-        $query->from('m_cabang')
-                ->select('*');
+        $query->select('p.*,c.nama as klinik,s.*')
+                ->from('pembelian as p')
+                ->join('LEFT JOIN', 'm_supplier as s', 'p.supplier_id = s.id')
+                ->join('LEFT JOIN', 'm_cabang as c', 'p.cabang_id = c.id')
+                ->where('p.id=' . $id);
 
-        $command = $query->createCommand();
-        $models = $command->queryAll();
-
-        $this->setHeader(200);
-
-        echo json_encode(array('status' => 1, 'cabang' => $models));
-    }
-
-    public function actionProduk() {
-        $query = new Query;
-        $query->from('m_produk')
-                ->select('*');
-
-        $command = $query->createCommand();
-        $models = $command->queryAll();
-
-        $this->setHeader(200);
-
-        echo json_encode(array('status' => 1, 'produk' => $models));
-    }
-
-    public function actionNm_customer() {
-        $params = json_decode(file_get_contents("php://input"), true);
-        $query = new Query;
-
-        $query->from('m_customer')
-                ->where('id="' . $params . '"')
-                ->select("*");
-        $command = $query->createCommand();
-        $models = $command->query()->read();
-        $this->setHeader(200);
-        $model['no_tlp'] = $models['no_tlp'];
-        $model['alamat'] = $models['alamat'];
-        $model['email'] = $models['email'];
-
-        echo json_encode(array('customer' => $model));
-    }
-
-    public function actionDet_produk($id) {
-        $query = new Query;
-        $query->from('m_produk')
-                ->where('id="' . $id . '"')
-                ->select("*");
         $command = $query->createCommand();
         $models = $command->queryOne();
+        $query2 = new Query;
+        $query2->select('pb.*,pr.nama as nama_produk,rp.jumlah as jumlah_retur,rp.harga as harga_retur')
+                ->from('pembelian_det as pb')
+                ->join('LEFT JOIN', 'm_produk as pr', 'pb.produk_id = pr.id')
+                ->join('LEFT JOIN', 'r_pembelian_det as rp', 'rp.produk_id = pb.id')
+                ->where('pembelian_id=' . $id);
+        $command2 = $query2->createCommand();
+        $details = $command2->queryAll();
         $this->setHeader(200);
 
-        echo json_encode(array('produk' => $models));
+        echo json_encode(array('status' => 1, 'pembelian' => $models, 'details' => $details));
     }
-
-   
 
     public function actionDelete($id) {
         $model = $this->findModel($id);

@@ -120,7 +120,8 @@ class StokkeluarController extends Controller {
                     $value = explode(' - ', $val);
                     $start = date("Y-m-d", strtotime($value[0]));
                     $end = date("Y-m-d", strtotime($value[1]));
-                    $query->where("stok_keluar.tanggal >= '$start' and stok_keluar.tanggal <= '$end'");
+                    $query->andFilterWhere(['between', 'stok_keluar.tanggal', $start, $end]);
+//                    $query->where("stok_keluar.tanggal >= '$start' and stok_keluar.tanggal <= '$end'");
                 } else {
                     $query->andFilterWhere(['like', 'stok_keluar.' . $key, $val]);
                 }
