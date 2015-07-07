@@ -19,10 +19,11 @@ class CabangController extends Controller {
                 'actions' => [
                     'index' => ['get'],
                     'view' => ['get'],
+                    'listcabang' => ['get'],
+                    'excel' => ['get'],
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
-                    'listcabang' => ['get'],
                 ],
             ]
         ];
@@ -107,6 +108,9 @@ class CabangController extends Controller {
                 $query->andFilterWhere(['like', $key, $val]);
             }
         }
+        
+        session_start();
+        $_SESSION['query'] = $query;
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -199,6 +203,15 @@ class CabangController extends Controller {
             501 => 'Not Implemented',
         );
         return (isset($codes[$status])) ? $codes[$status] : '';
+    }
+    
+    //excel
+     public function actionExcel() {
+        session_start();
+        $query = $_SESSION['query'];
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+        return $this->render("excel", ['models'=>$models]);
     }
 
 }
