@@ -46,10 +46,11 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
         $scope.sProduk = data.produk;
     });
     $scope.getkodepenjualan = function(id) {
-        Data.get('returpenjualan/det_kodepenjualan/', id).then(function(data) {
+        Data.get('returpenjualan/det_kodepenjualan/'+ id).then(function(data) {
             $scope.form = data.penjualan;
             $scope.form.penjualan_id = id;
              $scope.detPenjualan = data.detail;
+             alert(id);
 
         });
     };

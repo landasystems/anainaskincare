@@ -47,8 +47,9 @@
                 </form>
                 <div ng-show="detail_laporan" style="margin-top: 50px;">
                     <center>
-                        <h4>LAPORAN LABA RUGI ANAINA SKIN CARE</h4>
+                        <h4>KARTU STOK ANAINA SKIN CARE</h4>
                         <h5>CABANG : {{laporan.cabang}}</h5>
+                        <h5>KATEGORI PRODUK : {{laporan.kategori}}</h5>
                         <h5>PERIODE : {{laporan.start| date}} s/d {{laporan.end| date}} </h5>
                     </center>
                     <div class="line line-dashed b-b line-lg pull-in"></div>
@@ -81,22 +82,47 @@
                         <tbody ng-repeat="list in list_detail">
                             <tr>
                                 <td colspan="9"><b>{{list.title.produk}}</b></td>
-                                <td colspan="2"><b>{{list.title.kategori}}</b></td>
+                                <td colspan="2" align="right"><b>{{list.title.kategori}}</b></td>
+                            </tr>
+                            <tr>
+                                <td>{{list.title.saldo.tanggal | date}}</td>
+                                <td colspan="7">Saldo Awal</td>
+                                <td>{{list.title.saldo.jumlah}} {{list.title.saldo.satuan}}</td>
+                                <td>{{list.title.saldo.harga | currency}}</td>
+                                <td>{{list.title.saldo.jumlah * list.title.saldo.harga | currency}}</td>
                             </tr>
                             <tr ng-repeat="detail in list.body">
-                                <td>{{detail.tanggal | date}}</td>
+                                <td>{{detail.tanggal| date}}</td>
                                 <td>{{detail.kode}}</td>
-                                <td>{{detail.jumlah.masuk}}</td>
-                                <td>{{detail.harga.masuk | currency}}</td>
-                                <td>{{detail.sub_total.masuk | currency}}</td>
+                                <td>{{detail.jumlah.masuk}} {{detail.satuan}}</td>
+                                <td>{{detail.harga.masuk| currency}}</td>
+                                <td>{{detail.sub_total.masuk| currency}}</td>
                                 <td>{{detail.jumlah.keluar}}</td>
-                                <td>{{detail.harga.keluar | currency}}</td>
-                                <td>{{detail.sub_total.keluar | currency}}</td>
+                                <td>{{detail.harga.keluar| currency}}</td>
+                                <td>{{detail.sub_total.keluar| currency}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><b>Total</b></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                             </tr>
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="10" align="right"><b>Total Seluruh Stok</b></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>

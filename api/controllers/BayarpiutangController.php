@@ -90,7 +90,7 @@ class BayarpiutangController extends Controller {
                 ->join('JOIN', 'penjualan', 'pinjaman.penjualan_id= penjualan.id')
                 ->join('JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
                 ->join('JOIN', 'm_cabang', 'penjualan.cabang_id= m_cabang.id')
-//                ->where('pinjaman.debet is NOT NULL')
+                ->where('pinjaman.debet is NOT NULL')
                 ->orderBy($sort)
                 ->select("pinjaman.*,m_cabang.nama as klinik, m_customer.nama as customer,penjualan.tanggal as tanggal, penjualan.kode as kode, m_customer.no_tlp as no_tlp,
                             m_customer.email as email, m_customer.alamat as alamat, penjualan.keterangan as keterangan, penjualan.id as penjualan_id");
@@ -140,20 +140,24 @@ class BayarpiutangController extends Controller {
     public function actionCreate() {
         $total = 0;
         $params = json_decode(file_get_contents("php://input"), true);
-        $model = new Pinjaman();
-        $model->attributes = $params;
-        $pertama = Pinjaman::find()->where('penjualan_id=' . $model->penjualan_id)->orderBy('id ASC')->one();
-        $pinjaman = Pinjaman::find()->where('penjualan_id=' . $model->penjualan_id)->all();
-        foreach ($pinjaman as $data) {
-            $total += $data->debet;
+        $noErrors = false;
+        $detail = $params['detail'];
+        $id = array();
+        foreach ($detail as $value) {
+            $model = Pinjaman::findOne($value['id']);
+            if (empty($model)) {
+                $model = new Pinjaman();
+            }
+            $model->attributes = $value;
+            $model->penjualan_id = $params['form']['penjualan_id'];
+            if ($model->save()) {
+                $noErrors = true;
+            }
+            $id[] = $model->id;
         }
-        if ($total + $model->credit == $pertama->debet) {
-            $model->status = "Lunas";
-        } else {
-            $model->status = "Belum Lunas";
-        }
+        $deleteAll = Pinjaman::deleteAll('id NOT IN(' . implode(',', $id) . ') AND penjualan_id=' . $params['form']['penjualan_id']);
 
-        if ($model->save()) {
+        if ($deleteAll) {
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
