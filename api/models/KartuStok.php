@@ -40,8 +40,9 @@ class KartuStok extends \yii\db\ActiveRecord {
         ];
     }
 
-    public function process($keterangan, $kode, $produk_id, $masuk, $keluar, $saldo, $cabang_id) {
+    public function process($keterangan, $date, $kode, $produk_id, $masuk, $keluar, $saldo, $cabang_id) {
         $sv = new KartuStok();
+        $sv->created_at = $date;
         $sv->kode = $kode;
         $sv->produk_id = $produk_id;
         $sv->cabang_id = $cabang_id;

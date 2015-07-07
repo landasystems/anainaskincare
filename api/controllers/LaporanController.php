@@ -227,7 +227,8 @@ class LaporanController extends Controller {
         $query = new Query;
         $query->from(['m_produk', 'm_satuan', 'm_kategori', 'kartu_stok'])
                 ->select("kartu_stok.*, m_produk.nama as produk, m_kategori.nama as kategori, m_satuan.nama as satuan")
-                ->where("m_produk.kategori_id = m_kategori.id and m_produk.satuan_id = m_satuan.id and m_produk.id = kartu_stok.produk_id and (date(kartu_stok.created_at) >= '" . $start . "' and date(kartu_stok.created_at) <= '" . $end . "') $criteria");
+                ->where("m_produk.kategori_id = m_kategori.id and m_produk.satuan_id = m_satuan.id and m_produk.id = kartu_stok.produk_id and (date(kartu_stok.created_at) >= '" . $start . "' and date(kartu_stok.created_at) <= '" . $end . "') $criteria")
+                ->orderBy("kartu_stok.produk_id, kartu_stok.created_at ASC");
 
         $command = $query->createCommand();
         $kartu = $command->queryAll();
@@ -236,20 +237,53 @@ class LaporanController extends Controller {
         if (empty($kartu)) {
             
         } else {
-
+            $produk_id = 0;
             foreach ($kartu as $val) {
-                $tmpSaldo = array('jumlah' => '', 'harga' => '', 'sub_total' => '');
-                $saldo = json_decode($val['saldo'], true);
-
-                $totalJml = 0;
-                $totalHarga = 0;
-                foreach ($saldo as $valSaldo) {
-                    $tmpSaldo['jumlah'][] = $valSaldo['jumlah'];
-                    $tmpSaldo['harga'][] = $valSaldo['harga'];
-                    $tmpSaldo['sub_total'][] = $valSaldo['jumlah'] * $valSaldo['harga'];
-                    $totalJml += $valSaldo['jumlah'];
-                    $totalHarga += ($valSaldo['harga'] * $valSaldo['jumlah']);
+                if ($produk_id != $val['produk_id']) {
+                    $tmpSaldo = array('jumlah' => '', 'harga' => '', 'sub_total' => '');
+//                    unset($tmpSaldo);
+                } else {
+                    
                 }
+
+                if ($val['jumlah_keluar'] == 0) {
+                    $tmpSaldo['jumlah'][] = $val['jumlah_masuk'];
+                    $tmpSaldo['harga'][] = (int) $val['harga_masuk'];
+                    $tmpSaldo['sub_total'][] = ($val['harga_masuk'] * $val['jumlah_masuk']);
+                } else {
+                    $stokProduk = \app\models\KartuStok::find()->
+                            where('produk_id = ' . $val['produk_id'] . ' and cabang_id = ' . $val['cabang_id'] . ' and jumlah_keluar = 0')->
+                            orderBy('created_at ASC')->
+                            all();
+                    $tempQty = $val['jumlah_keluar'];
+                    $boolStatus = true;
+                    $tmpSaldo = array('jumlah' => '', 'harga' => '', 'sub_total' => '');
+                    foreach ($stokProduk as $valS) {
+                        if ($boolStatus) {
+                            if ($valS->jumlah_masuk > $tempQty) {
+                                $valS->jumlah_masuk -= $tempQty;
+
+                                $boolStatus = false;
+                                $tmpSaldo['jumlah'][] = $valS->jumlah_masuk;
+                                $tmpSaldo['harga'][] = $val['harga_masuk'];
+                                $tmpSaldo['sub_total'][] = ($val['harga_masuk'] * $val['jumlah_masuk']);
+//                                $saldo[] = array('jumlah' => $val->jumlah, 'harga' => $val->harga);
+                            }
+                        } else {
+                            $tmpSaldo['jumlah'][] = $valS->jumlah_masuk;
+                            $tmpSaldo['harga'][] = $val['harga_masuk'];
+                            $tmpSaldo['sub_total'][] = ($val['harga_masuk'] * $val['jumlah_masuk']);
+//                            $saldo[] = array('jumlah' => $val->jumlah, 'harga' => $val->harga);
+                        }
+                    }
+                }
+//
+                $tmpSaldo['jumlah'] = array_unique($tmpSaldo['jumlah']);
+                $tmpSaldo['harga'] = array_unique($tmpSaldo['harga']);
+                $tmpSaldo['sub_total'] = array_unique($tmpSaldo['sub_total']);
+
+//                $tmpSaldo = array_unique($tmpSaldo);
+                
                 $body[$val['produk_id']]['title']['produk'] = $val['produk'];
                 $body[$val['produk_id']]['title']['kategori'] = $val['kategori'];
                 $body[$val['produk_id']]['title']['satuan'] = $val['satuan'];
@@ -265,9 +299,12 @@ class LaporanController extends Controller {
                 $body[$val['produk_id']]['body'][$i]['saldo']['jumlah'] = $tmpSaldo['jumlah'];
                 $body[$val['produk_id']]['body'][$i]['saldo']['harga'] = $tmpSaldo['harga'];
                 $body[$val['produk_id']]['body'][$i]['saldo']['sub_total'] = $tmpSaldo['sub_total'];
-                $body[$val['produk_id']]['total']['jumlah'] = $totalJml;
-                $body[$val['produk_id']]['total']['harga'] = $totalHarga;
+//                $body[$val['produk_id']]['total']['jumlah'] = $totalJml;
+//                $body[$val['produk_id']]['total']['harga'] = $totalHarga;
+                $body[$val['produk_id']]['total']['jumlah'] = 0;
+                $body[$val['produk_id']]['total']['harga'] = 0;
                 $i++;
+                $produk_id = $val['produk_id'];
             }
         }
         $grandJml = 0;
@@ -276,7 +313,7 @@ class LaporanController extends Controller {
             $grandJml += $val['total']['jumlah'];
             $grandHarga += $val['total']['harga'];
         }
-
+//        print_r($tmpSaldo);
         $data['grandJml'] = $grandJml;
         $data['grandHarga'] = $grandHarga;
 
