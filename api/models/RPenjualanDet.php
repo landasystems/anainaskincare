@@ -32,7 +32,7 @@ class RPenjualanDet extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['r_penjualan_id', 'produk_id', 'jumlah', 'harga', 'sub_total'], 'integer']
+            [['r_penjualan_id', 'produk_id', 'jumlah_retur', 'harga','diskon', 'sub_total'], 'integer']
         ];
     }
 

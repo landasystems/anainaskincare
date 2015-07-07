@@ -46,7 +46,7 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
         $scope.sProduk = data.produk;
     });
     $scope.getkodepenjualan = function(id) {
-        Data.get('returpenjualan/det_kodepenjualan/', id).then(function(data) {
+        Data.get('returpenjualan/det_kodepenjualan/'+ id).then(function(data) {
             $scope.form = data.penjualan;
             $scope.form.penjualan_id = id;
              $scope.detPenjualan = data.detail;
@@ -85,15 +85,20 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
     };
     $scope.total = function() {
         var total = 0;
+        var total_retur = 0;
         var diskon = 0;
+        var diskon_retur = 0;
         angular.forEach($scope.detPenjualan, function(detail) {
             diskon += detail.jumlah * detail.diskon;
             total += detail.jumlah * detail.harga;
+            
+            diskon_retur += detail.jumlah_retur * detail.diskon;
+            total_retur += detail.jumlah_retur * detail.harga;
         })
-        $scope.form.total = (total - diskon);
+        $scope.form.total = (total_retur - diskon_retur);
         $scope.form.belanja = (total - diskon);
         $scope.form.total_belanja = total;
-        $scope.detail.sub_total = (total - diskon);
+        $scope.detail.sub_total = (total_retur - diskon_retur);
         $scope.form.total_diskon = diskon;
 
     }
@@ -126,7 +131,7 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
         Data.get('returpenjualan/', param).then(function(data) {
             $scope.displayed = data.data;
 //            console.log($scope.displayed);
-            tableState.pagination.numberOfPages = Math.round(data.totalItems / limit);
+            tableState.pagination.numberOfPages = Math.ceil(data.totalItems / limit);
         });
 
         $scope.isLoading = false;
@@ -152,7 +157,7 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
     $scope.update = function(row) {
         console.log(row);
         $scope.form = row;
-        Data.get('penjualan/view/' + row.id).then(function(data) {
+        Data.get('returpenjualan/view/' + row.id).then(function(data) {
 //            $scope.form = data.data;
             $scope.detPenjualan = data.detail;
             $scope.is_edit = true;
@@ -170,10 +175,10 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
     };
     $scope.save = function(form, detail) {
         var data = {
-            penjualan: form,
-            penjualandet: detail,
+            retur_penjualan: form,
+            retur_penjualandet: detail,
         };
-        var url = (form.id > 0) ? 'penjualan/update/' + form.id : 'penjualan/create'
+        var url = 'returpenjualan/create'
         Data.post(url, data).then(function(result) {
             if (result.status == 0) {
                 toaster.pop('error', "Terjadi Kesalahan", result.errors);

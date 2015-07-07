@@ -30,12 +30,12 @@
                             </div>
                         </div>
                     </div>
-              
+
                     <div class="form-group">
                         <div class="control-group">
                             <label class="col-sm-2 control-label">Tanggal</label>
                             <div class="col-sm-3">
-                                <input class="form-control" type="text" date-range-picker ng-model="tanggal" required>
+                                <input class="form-control" st-search="tanggal" type="text" date-range-picker ng-model="tanggals">
                             </div>
                         </div>
                     </div>
@@ -136,10 +136,19 @@
                             <tbody>
                                 <tr ng-repeat="detail in detsmasuk" style="margin:0px;padding:0px;">
                                     <td>
-                                        <select ui-select2="selectcabang" ng-model="detail.produk_id" ng-disabled="is_view" required style="width: 100%;">
-                                            <option value="">-Pilih Produk-</option>
-                                            <option ng-repeat="produk in list_produk" value="{{produk.id}}">{{produk.nama}}</option>
-                                        </select>
+
+                                        <input type="text" 
+                                               ui-select2="produk"
+                                               ng-model="produk_id"
+                                               ng-change="form.produk_id = produk_id.id"
+                                               data-placeholder="-Pilih Model-" required style="width: 100%;">
+                                        <!--{{form.produk_id.id}}-->
+                                        <input type="hidden" ng-model="form.produk_id">
+
+                                        <!--                                        <select ui-select2="selectcabang" ng-model="detail.produk_id" ng-disabled="is_view" required style="width: 100%;">
+                                                                                    <option value="">-Pilih Produk-</option>
+                                                                                    <option ng-repeat="produk in list_produk" value="{{produk.id}}">{{produk.nama}}</option>
+                                                                                </select>-->
                                     </td>
                                     <td style="width:50px">
                                         <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.jumlah" " ng-disabled="is_view" ng-readonly="is_create == false" required>
@@ -161,15 +170,15 @@
                                         <button ng-click="removeRow($index)" title="Hapus Data" class="btn btn-danger" ng-show="$index > 0" ng-disabled="is_view"><i class="fa fa-trash-o"></i></button>
                                     </td>
                                 </tr>
-                               
-                                    <th colspan="3" style="text-align: right;">Total :&nbsp;</th>
-                                    <td colspan="2">
-                                        <div class="input-group m-b" style="margin:0px;">
-                                            <span class="input-group-addon">Rp</span>
-                                            <input type="text" class="form-control" ng-disabled="is_view"  ng-readonly="true" ng-model="form.total" style="width:200px;">
-                                        </div>
-                                    </td>
-                                </tr>
+
+                            <th colspan="3" style="text-align: right;">Total :&nbsp;</th>
+                            <td colspan="2">
+                                <div class="input-group m-b" style="margin:0px;">
+                                    <span class="input-group-addon">Rp</span>
+                                    <input type="text" class="form-control" ng-disabled="is_view"  ng-readonly="true" ng-model="form.total" style="width:200px;">
+                                </div>
+                            </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>

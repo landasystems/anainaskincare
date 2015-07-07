@@ -19,37 +19,37 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
             harga: '',
         };
         
-//    $scope.produk = {
-//        minimumInputLength: 3,
-//        allowClear: false,
-//        ajax: {
-//            url: "api/web/stokmasuk/product/",
-//            dataType: 'json',
-//            data: function(term) {
-//                return {
-//                    kata: term,
-//                };
-//            },
-//            results: function(data, page) {
-//                return {
-//                    results: data.produk
-//                };
-//            }
-//        },
-//        formatResult: function(object) {
-//            return object.produk;
-//        },
-//        formatSelection: function(object) {
-//            return object.produk;
-//        },
-//        id: function(data) {
-//            return data.produk
-//        },
-//        initSelection : function(element, callback) {
-//            var obj = {id: 1, text: 'whatever value'};
+    $scope.produk = {
+        minimumInputLength: 3,
+        allowClear: false,
+        ajax: {
+            url: "api/web/stokmasuk/product/",
+            dataType: 'json',
+            data: function(term) {
+                return {
+                    kata: term,
+                };
+            },
+            results: function(data, page) {
+                return {
+                    results: data.data
+                };
+            }
+        },
+        formatResult: function(object) {
+            return object.nama;
+        },
+        formatSelection: function(object) {
+            return object.nama;
+        },
+        id: function(data) {
+            return data.id
+        },
+        initSelection : function(element, callback) {
+            var obj = {id: 1, text: 'whatever value'};
 //            callback(obj);
-//        },
-//    };
+        },
+    };
         
     $scope.addDetail = function () {
         var newDet = {
@@ -58,7 +58,7 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
             jumlah: '',
             harga: '',
         }
-        $scope.detsmasuk.push(newDet);
+        $scope.detsmasuk.unshift(newDet);
     };
 
     //subtotal
@@ -116,7 +116,7 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
 
         Data.get('stokmasuk/', param).then(function (data) {
             $scope.displayed = data.data;
-            tableState.pagination.numberOfPages = Math.round(data.totalItems / limit);
+            tableState.pagination.numberOfPages = Math.ceil(data.totalItems / limit);
         });
 
         $scope.isLoading = false;

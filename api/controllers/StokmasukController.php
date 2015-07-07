@@ -56,7 +56,7 @@ class StokmasukController extends Controller {
         $query = new Query;
         $query->from('m_cabang')
                 ->select("*")
-                ->where("is_deleted = 0");
+                ->where("is_deleted = '0'");
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -70,7 +70,7 @@ class StokmasukController extends Controller {
         $query = new Query;
         $query->from('m_produk')
                 ->select("*")
-                ->where("is_deleted = 0");
+                ->where("is_deleted = '0'");
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -116,10 +116,14 @@ class StokmasukController extends Controller {
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
-                if ($key == 'cabang_id') {
-                    $query->andFilterWhere(['like', 'm_cabang.' . $key, $val]);
+                if ($key == 'tanggal') {
+                    $value = explode(' - ', $val);
+                    $start = date("Y-m-d", strtotime($value[0]));
+                    $end = date("Y-m-d", strtotime($value[1]));
+                    $query->andFilterWhere(['between', 'stok_masuk.tanggal', $start, $end]);
+//                    $query->where("stok_keluar.tanggal >= '$start' and stok_keluar.tanggal <= '$end'");
                 } else {
-                    $query->andFilterWhere(['like', $key, $val]);
+                    $query->andFilterWhere(['like', 'stok_keluar.' . $key, $val]);
                 }
             }
         }
@@ -158,13 +162,15 @@ class StokmasukController extends Controller {
         $model->tanggal = date("Y-m-d", strtotime($params['stokmasuk']['tanggal']));
         if ($model->save()) {
             $detailsmasuk = $params['detailsmasuk'];
-//            Yii::error($detailsmasuk);
             foreach ($detailsmasuk as $val) {
                 $det = new StokMasukDet();
                 $det->attributes = $val;
                 $det->stok_masuk_id = $model->id;
                 $det->save();
-//                Yii::error($det->getErrors());
+
+                $stok = new \app\models\MStok();
+                $update = $stok->process('in', $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, 'initial');
+//                $updateStok = \app\models\MStok::
             }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
