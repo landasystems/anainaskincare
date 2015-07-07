@@ -98,13 +98,13 @@
                                         <td><p ng-if="detail.keluar.harga !== 0">{{detail.keluar.harga| currency}}</p></td>
                                         <td><p ng-if="detail.keluar.sub_total !== 0">{{detail.keluar.sub_total| currency}}</p></td>
                                         <td>
-                                            <p ng-repeat="jmlSaldo in detail.saldo.jumlah" ng-init="jumlah = jumlah + jmlSaldo">{{jmlSaldo}} {{list.title.satuan}}</p>
+                                            <p ng-repeat="jmlSaldo in detail.saldo.jumlah">{{jmlSaldo}} {{list.title.satuan}}</p>
                                         </td>
                                         <td>
                                             <p ng-repeat="hargaSaldo in detail.saldo.harga">{{hargaSaldo| currency }}</p>
                                         </td>
                                         <td>
-                                            <p ng-repeat="subSaldo in detail.saldo.sub_total" ng-init="harga = harga + subSaldo">{{subSaldo| currency }}</p>
+                                            <p ng-repeat="subSaldo in detail.saldo.sub_total">{{subSaldo| currency }}</p>
                                         </td>
                                     </tr>
                                     <tr>
