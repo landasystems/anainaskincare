@@ -123,7 +123,7 @@ class StokmasukController extends Controller {
                     $query->andFilterWhere(['between', 'stok_masuk.tanggal', $start, $end]);
 //                    $query->where("stok_keluar.tanggal >= '$start' and stok_keluar.tanggal <= '$end'");
                 } else {
-                    $query->andFilterWhere(['like', 'stok_keluar.' . $key, $val]);
+                    $query->andFilterWhere(['like', 'stok_masuk.' . $key, $val]);
                 }
             }
         }
