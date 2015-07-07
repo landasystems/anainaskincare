@@ -33,11 +33,15 @@ class MStok extends \yii\db\ActiveRecord {
         ];
     }
 
-    public function process($type, $product_id, $qty, $departement_id, $price = 0, $keterangan = '') {
+    public static function process($type, $kode, $product_id, $qty, $departement_id, $price = 0, $keterangan = '') {
         $produk = Barang::findOne(['id' => $product_id]);
         $masuk = array();
         $keluar = array();
         $saldo = array();
+        $masuk['jumlah'] = 0;
+        $masuk['harga'] = 0;
+        $keluar['jumlah'] = 0;
+        $keluar['harga'] = 0;
 
         if ($type == 'in') {
             $stokProduk = new MStok();
@@ -46,6 +50,17 @@ class MStok extends \yii\db\ActiveRecord {
             $stokProduk->jumlah = $qty;
             $stokProduk->harga = $price;
             $stokProduk->save();
+
+            $boolStatus = true;
+            $masuk['jumlah'] = $qty;
+            $masuk['harga'] = $price;
+            $stokProduk = KartuStok::findOne(['produk_id' => $product_id, 'cabang_id' => $departement_id]);
+            if (!empty($stokProduk)) {
+                $saldo = json_decode($stokProduk->saldo, true);
+                $saldo[] = array('jumlah' => $masuk['jumlah'], 'harga' => $masuk['harga']);
+            } else {
+                $saldo[] = array('jumlah' => $masuk['jumlah'], 'harga' => $masuk['harga']);
+            }
         } else if ($type == 'out') {
             $stokProduk = MStok::find()->
                     where(['produk_id' => $product_id, 'cabang_id' => $departement_id])->
@@ -60,8 +75,7 @@ class MStok extends \yii\db\ActiveRecord {
                         $val->save();
 
                         $boolStatus = false;
-                        $saldo['jumlah'] = $val->jumlah;
-                        $saldo['harga'] = $val->harga;
+                        $saldo[] = array('jumlah' => $val->jumlah, 'harga' => $val->harga);
 
                         $keluar['jumlah'] = $tempQty;
                         $keluar['harga'] = $val->harga;
@@ -73,12 +87,14 @@ class MStok extends \yii\db\ActiveRecord {
                         $val->delete();
                     }
                 } else {
-                    $saldo['jumlah'] = $val->jumlah;
-                    $saldo['harga'] = $val->harga;
+                    $saldo[] = array('jumlah' => $val->jumlah, 'harga' => $val->harga);
+//                    $saldo['jumlah'] = $val->jumlah;
+//                    $saldo['harga'] = $val->harga;
                 }
             }
         }
-        KartuStok::process($keterangan, $produk_id, $masuk, $keluar, $saldo, $cabang_id);
+        $kartuStok = new KartuStok();
+        $update = $kartuStok->process($keterangan, $kode, $product_id, $masuk, $keluar, $saldo, $departement_id);
     }
 
     /**

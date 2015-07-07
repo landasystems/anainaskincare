@@ -158,13 +158,15 @@ class StokmasukController extends Controller {
         $model->tanggal = date("Y-m-d", strtotime($params['stokmasuk']['tanggal']));
         if ($model->save()) {
             $detailsmasuk = $params['detailsmasuk'];
-//            Yii::error($detailsmasuk);
             foreach ($detailsmasuk as $val) {
                 $det = new StokMasukDet();
                 $det->attributes = $val;
                 $det->stok_masuk_id = $model->id;
                 $det->save();
-//                Yii::error($det->getErrors());
+
+                $stok = new \app\models\MStok();
+                $update = $stok->process('in', $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, 'initial');
+//                $updateStok = \app\models\MStok::
             }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
