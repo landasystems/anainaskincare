@@ -168,7 +168,7 @@ class StokmasukController extends Controller {
                 $det->save();
 
                 $stok = new \app\models\MStok();
-                $update = $stok->process('in', $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, 'initial');
+                $update = $stok->process('in', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, 'initial');
 //                $updateStok = \app\models\MStok::
             }
             $this->setHeader(200);
