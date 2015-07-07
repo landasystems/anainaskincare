@@ -195,6 +195,9 @@ class StokmasukController extends Controller {
                 $det->harga = str_replace('.', '', $det->harga);
                 $det->stok_masuk_id = $model->id;
                 $det->save();
+
+                \app\models\MStok::deleteAll('cabang_id=' . $model->cabang_id . ' and produk_id=' . $det->produk_id . ' and kode= "' . $model->kode . '"');
+                $update = $stok->process('in', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, 'initial');
             }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);

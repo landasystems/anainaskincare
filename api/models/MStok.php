@@ -45,6 +45,7 @@ class MStok extends \yii\db\ActiveRecord {
 
         if ($type == 'in') {
             $stokProduk = new MStok();
+            $stokProduk->kode = $kode;
             $stokProduk->produk_id = $product_id;
             $stokProduk->cabang_id = $departement_id;
             $stokProduk->jumlah = $qty;
