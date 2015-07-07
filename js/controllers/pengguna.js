@@ -26,7 +26,7 @@ app.controller('penggunaCtrl', function($scope, Data, toaster) {
 
         Data.get('pengguna', param).then(function(data) {
             $scope.displayed = data.data;
-            tableState.pagination.numberOfPages = Math.round(data.totalItems / limit);
+            tableState.pagination.numberOfPages = Math.ceil(data.totalItems / limit);
         });
 
         $scope.isLoading = false;

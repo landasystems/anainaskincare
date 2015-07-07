@@ -55,7 +55,7 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
         Data.get('bayarpiutang/', param).then(function(data) {
             $scope.displayed = data.data;
 //            console.log($scope.displayed);
-            tableState.pagination.numberOfPages = Math.round(data.totalItems / limit);
+            tableState.pagination.numberOfPages = Math.ceil(data.totalItems / limit);
         });
 
         $scope.isLoading = false;

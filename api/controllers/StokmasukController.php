@@ -56,7 +56,7 @@ class StokmasukController extends Controller {
         $query = new Query;
         $query->from('m_cabang')
                 ->select("*")
-                ->where("is_deleted = 0");
+                ->where("is_deleted = '0'");
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -70,7 +70,7 @@ class StokmasukController extends Controller {
         $query = new Query;
         $query->from('m_produk')
                 ->select("*")
-                ->where("is_deleted = 0");
+                ->where("is_deleted = '0'");
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -116,10 +116,13 @@ class StokmasukController extends Controller {
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
-                if ($key == 'cabang_id') {
-                    $query->andFilterWhere(['like', 'm_cabang.' . $key, $val]);
+                if ($key == 'tanggal') {
+                    $value = explode(' - ', $val);
+                    $start = date("Y-m-d", strtotime($value[0]));
+                    $end = date("Y-m-d", strtotime($value[1]));
+                    $query->where("stok_keluar.tanggal >= '$start' and stok_keluar.tanggal <= '$end'");
                 } else {
-                    $query->andFilterWhere(['like', $key, $val]);
+                    $query->andFilterWhere(['like', 'stok_keluar.' . $key, $val]);
                 }
             }
         }
