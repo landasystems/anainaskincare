@@ -24,18 +24,16 @@ app.controller('rolesCtrl', function ($scope, Data, toaster, $state) {
         paramRef = param;
         Data.get('roles', param).then(function (data) {
             $scope.displayed = data.data;
-            tableState.pagination.numberOfPages = Math.round(data.totalItems / limit);
+            tableState.pagination.numberOfPages = Math.ceil(data.totalItems / limit);
         });
 
         $scope.isLoading = false;
     };
 
     $scope.excel = function () {
-//         console.log(Data.get('roles', paramRef));
-//        var url = $state.href('master.roles', paramRef);
-//        console.log(paramRef);
-//        window.open(url, '_blank');
-        window.location= 'api/web/roles/index?excel=true';
+        Data.get('roles', paramRef).then(function (data) {
+            window.location = 'api/web/roles/excel';
+        });
     }
 
     $scope.create = function (form) {

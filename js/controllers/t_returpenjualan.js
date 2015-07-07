@@ -127,7 +127,7 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
         Data.get('returpenjualan/', param).then(function(data) {
             $scope.displayed = data.data;
 //            console.log($scope.displayed);
-            tableState.pagination.numberOfPages = Math.round(data.totalItems / limit);
+            tableState.pagination.numberOfPages = Math.ceil(data.totalItems / limit);
         });
 
         $scope.isLoading = false;
