@@ -223,6 +223,7 @@ class PembelianController extends Controller {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = new Pembelian();
         $model->attributes = $params['pembelian'];
+        $model->tanggal = date("Y-m-d", strtotime($params['pembelian']['tanggal']));
 
 
         if ($model->save()) {
@@ -252,6 +253,7 @@ class PembelianController extends Controller {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
         $model->attributes = $params['pembelian'];
+        $model->tanggal = date("Y-m-d", strtotime($params['pembelian']['tanggal']));
 
         if ($model->save()) {
             $credit = Hutang::find()->where('pembelian_id=' . $model->id)->one();

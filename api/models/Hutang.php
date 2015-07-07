@@ -17,21 +17,19 @@ use Yii;
  * @property integer $modified_at
  * @property integer $modified_by
  */
-class Hutang extends \yii\db\ActiveRecord
-{
+class Hutang extends \yii\db\ActiveRecord {
+    public $sumDebet,$sumCredit;
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'hutang';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'pembelian_id', 'debet', 'credit', 'created_at', 'created_by', 'modified_at', 'modified_by'], 'integer'],
             [['status'], 'string', 'max' => 20]
@@ -41,8 +39,7 @@ class Hutang extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'pembelian_id' => 'Pembelian ID',
@@ -55,4 +52,5 @@ class Hutang extends \yii\db\ActiveRecord
             'modified_by' => 'Modified By',
         ];
     }
+
 }

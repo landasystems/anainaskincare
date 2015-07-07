@@ -27,11 +27,14 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
         weekStart: 0
     }
 
-    Data.get('penjualan/customer').then(function(data) {
+    Data.get('returpenjualan/customer').then(function(data) {
         $scope.sCustomer = data.customer;
     });
     Data.get('returpenjualan/cabang').then(function(data) {
         $scope.sCabang = data.cabang;
+    });
+    Data.get('returpenjualan/kodepenjualan').then(function(data) {
+        $scope.listkodepenjualan = data.listkode;
     });
     
     $scope.cabang = {
@@ -42,10 +45,12 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
     Data.get('returpenjualan/produk').then(function(data) {
         $scope.sProduk = data.produk;
     });
-    $scope.getcustomer = function(wo) {
-        Data.post('returpenjualan/nm_customer/', wo).then(function(data) {
-            $scope.form = data.customer;
-            $scope.form.customer_id = wo;
+    $scope.getkodepenjualan = function(id) {
+        Data.get('returpenjualan/det_kodepenjualan/'+ id).then(function(data) {
+            $scope.form = data.penjualan;
+            $scope.form.penjualan_id = id;
+             $scope.detPenjualan = data.detail;
+             alert(id);
 
         });
     };

@@ -13,6 +13,12 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
             sub_total: ''
         }
     ];
+    $scope.datepickerOptions = {
+        language: "id",
+        autoclose: true,
+        weekStart: 0
+    }
+    
     $scope.is_edit = false;
     $scope.is_view = false;
     $scope.is_create = false;
@@ -83,7 +89,7 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
         $scope.is_edit = true;
         $scope.is_view = true;
         $scope.is_create = false;
-        $scope.formtitle = "Lihat Pembelian : " + form.kode;
+        $scope.formtitle = "Lihat Pembelian : " + $scope.form.kode;
         $scope.form = form;
         $scope.det = {};
         Data.get('pembelian/detail/' + form.id).then(function (data) {

@@ -56,7 +56,7 @@ class StokkeluarController extends Controller {
         $query = new Query;
         $query->from('m_cabang')
                 ->select("*")
-                ->where("is_deleted = 0");
+                ->where("is_deleted = '0'");
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -70,7 +70,7 @@ class StokkeluarController extends Controller {
         $query = new Query;
         $query->from('m_produk')
                 ->select("*")
-                ->where("is_deleted = 0");
+                ->where("is_deleted = '0'");
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -116,7 +116,7 @@ class StokkeluarController extends Controller {
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
-                Yii::error($val);
+//                Yii::error($val);
                 if($key  == 'cabang_id'){
                     $query->andFilterWhere(['like', 'm_cabang.'.$key, $val]);
                 }else{
