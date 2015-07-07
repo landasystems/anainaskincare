@@ -173,6 +173,9 @@ class StokkeluarController extends Controller {
                 $det->harga = str_replace('.', '', $det->harga);
                 $det->stok_keluar_id = $model->id;
                 $det->save();
+
+                $stok = new \app\models\MStok();
+                $update = $stok->process('out', $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, 'initial');
             }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
