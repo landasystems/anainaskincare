@@ -131,7 +131,8 @@ class BarangController extends Controller {
     public function actionKategori() {
         $query = new Query;
         $query->from('m_kategori')
-                ->select('*');
+                ->select('*')
+                ->where("is_deleted = '0'");
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -143,7 +144,8 @@ class BarangController extends Controller {
     public function actionSatuan() {
         $query = new Query;
         $query->from('m_satuan')
-                ->select('*');
+                ->select('*')
+                ->where("is_deleted = '0'");
 
         $command = $query->createCommand();
         $models = $command->queryAll();

@@ -58,7 +58,7 @@ app.controller('t_keluarCtrl', function($scope, Data, toaster) {
             jumlah: '',
             harga: '',
         }
-        $scope.detskeluar.push(newDet);
+        $scope.detskeluar.unshift(newDet);
     };
 
     //subtotal

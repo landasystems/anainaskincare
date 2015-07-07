@@ -185,7 +185,8 @@ class BayarpiutangController extends Controller {
     public function actionCustomer() {
         $query = new Query;
         $query->from('m_customer')
-                ->select('*');
+                ->select('*')
+                ->where("is_deleted = '0'");
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -198,7 +199,8 @@ class BayarpiutangController extends Controller {
     public function actionCabang() {
         $query = new Query;
         $query->from('m_cabang')
-                ->select('*');
+                ->select('*')
+                ->where("is_deleted = '0'");
 
         $command = $query->createCommand();
         $models = $command->queryAll();
