@@ -19,7 +19,6 @@ class PenggunaController extends Controller {
                 'actions' => [
                     'index' => ['get'],
                     'view' => ['get'],
-                    'excel' => ['get'],
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
@@ -95,8 +94,7 @@ class PenggunaController extends Controller {
             }
         }
 
-        session_start();
-        $_SESSION['query'] = $query;
+        
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -206,14 +204,7 @@ class PenggunaController extends Controller {
         return (isset($codes[$status])) ? $codes[$status] : '';
     }
 
-//excel
-    public function actionExcel() {
-        session_start();
-        $query = $_SESSION['query'];
-        $command = $query->createCommand();
-        $models = $command->queryAll();
-        return $this->render("excel", ['models' => $models]);
-    }
+
 
 }
 
