@@ -206,7 +206,8 @@ class PenjualanController extends Controller {
     public function actionCustomer() {
         $query = new Query;
         $query->from('m_customer')
-                ->select('*');
+                ->select('*')
+                ->where("is_deleted = '0'");
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -219,7 +220,8 @@ class PenjualanController extends Controller {
     public function actionCabang() {
         $query = new Query;
         $query->from('m_cabang')
-                ->select('*');
+                ->select('*')
+                ->where("is_deleted = '0'");
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -232,7 +234,8 @@ class PenjualanController extends Controller {
     public function actionProduk() {
         $query = new Query;
         $query->from('m_produk')
-                ->select('*');
+                ->select('*')
+                ->where("is_deleted = '0'");
 
         $command = $query->createCommand();
         $models = $command->queryAll();

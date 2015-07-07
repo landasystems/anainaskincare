@@ -58,7 +58,7 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
             jumlah: '',
             harga: '',
         }
-        $scope.detsmasuk.push(newDet);
+        $scope.detsmasuk.unshift(newDet);
     };
 
     //subtotal
