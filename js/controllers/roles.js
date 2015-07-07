@@ -1,4 +1,4 @@
-app.controller('rolesCtrl', function ($scope, Data, toaster) {
+app.controller('rolesCtrl', function ($scope, Data, toaster, $state) {
     //init data
     var tableStateRef;
     var paramRef;
@@ -29,11 +29,13 @@ app.controller('rolesCtrl', function ($scope, Data, toaster) {
 
         $scope.isLoading = false;
     };
-    
-    $scope.excel = function(){
-        Data.get('roles', paramRef).then(function (data) {
-            
-        });
+
+    $scope.excel = function () {
+//         console.log(Data.get('roles', paramRef));
+//        var url = $state.href('master.roles', paramRef);
+//        console.log(paramRef);
+//        window.open(url, '_blank');
+        window.location= 'api/web/roles/index?excel=true';
     }
 
     $scope.create = function (form) {

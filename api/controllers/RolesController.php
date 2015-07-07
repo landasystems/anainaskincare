@@ -52,6 +52,7 @@ class RolesController extends Controller {
     }
 
     public function actionIndex() {
+        Yii::error($_REQUEST);
         //init variable
         $params = $_REQUEST;
         $filter = array();
