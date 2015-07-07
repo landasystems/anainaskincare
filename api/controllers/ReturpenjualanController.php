@@ -268,15 +268,16 @@ class ReturpenjualanController extends Controller {
                 ->join('JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
                 ->join('JOIN', 'm_cabang', 'penjualan.cabang_id= m_cabang.id')
                 ->where('penjualan.id="' . $id . '"')
-                ->select("m_customer.no_tlp as no_tlp, m_customer.email as email, m_customer.alamat as alamat, penjualan.tanggal as tanggal,
-                        m_cabang.nama as klinik, penjualan.keterangan as keterangan");
+                ->select("penjualan.*,m_customer.no_tlp as no_tlp, m_customer.email as email, m_customer.alamat as alamat, penjualan.tanggal as tanggal,
+                        m_cabang.nama as klinik");
         $command = $query->createCommand();
         $models = $command->queryOne();
 
         $query2 = new Query;
         $query2->from('penjualan_det')
+                ->join('JOIN', 'm_produk', 'penjualan_det.produk_id = m_produk.id')
                 ->where('penjualan_id="'.$id.'"')
-                ->select('*');
+                ->select('penjualan_det.*, m_produk.*');
         $command2 = $query2->createCommand();
         $detail = $command2->queryAll();
         $this->setHeader(200);

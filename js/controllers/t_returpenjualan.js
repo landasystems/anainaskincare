@@ -50,7 +50,6 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
             $scope.form = data.penjualan;
             $scope.form.penjualan_id = id;
              $scope.detPenjualan = data.detail;
-             alert(id);
 
         });
     };
