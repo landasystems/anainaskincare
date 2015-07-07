@@ -34,22 +34,23 @@ class KartuStok extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['produk_id', 'cabang_id', 'jumlah_masuk', 'harga_masuk', 'jumlah_keluar', 'harga_keluar', 'jumlah_saldo', 'harga_saldo', 'created_by'], 'integer'],
+            [['produk_id', 'cabang_id', 'jumlah_masuk', 'harga_masuk', 'jumlah_keluar', 'harga_keluar', 'created_by'], 'integer'],
             [['created_at'], 'safe'],
             [['keterangan'], 'string', 'max' => 255]
         ];
     }
 
-    public function process($keterangan, $produk_id, $masuk, $keluar, $saldo, $cabang_id) {
+    public function process($keterangan, $kode, $produk_id, $masuk, $keluar, $saldo, $cabang_id) {
         $sv = new KartuStok();
+        $sv->kode = $kode;
         $sv->produk_id = $produk_id;
         $sv->cabang_id = $cabang_id;
+        $sv->keterangan = $keterangan;
         $sv->jumlah_masuk = $masuk['jumlah'];
         $sv->harga_masuk = $masuk['harga'];
         $sv->jumlah_keluar = $keluar['jumlah'];
         $sv->harga_keluar = $keluar['harga'];
-        $sv->jumlah_saldo = $saldo['jumlah'];
-        $sv->harga_saldo = $saldo['harga'];
+        $sv->saldo = json_encode($saldo);
         $sv->save();
     }
 
@@ -66,8 +67,6 @@ class KartuStok extends \yii\db\ActiveRecord {
             'harga_masuk' => 'Harga Masuk',
             'jumlah_keluar' => 'Jumlah Keluar',
             'harga_keluar' => 'Harga Keluar',
-            'jumlah_saldo' => 'Jumlah Saldo',
-            'harga_saldo' => 'Harga Saldo',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
         ];

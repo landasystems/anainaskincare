@@ -58,7 +58,7 @@ class RolesController extends Controller {
         $sort = "nama ASC";
         $offset = 0;
         $limit = 10;
-        //        Yii::error($params);
+
         //limit & offset pagination
         if (isset($params['limit']))
             $limit = $params['limit'];
@@ -92,12 +92,14 @@ class RolesController extends Controller {
             }
         }
 
+        session_start();
+        $_SESSION['query'] = $query;
+
         $command = $query->createCommand();
         $models = $command->queryAll();
         $totalItems = $query->count();
 
-//        $this->setHeader(200);
-        $this->actionExcel();
+        $this->setHeader(200);
         echo json_encode(array('status' => 1, 'data' => $models, 'totalItems' => $totalItems), JSON_PRETTY_PRINT);
     }
 
@@ -186,7 +188,11 @@ class RolesController extends Controller {
     }
 
     public function actionExcel() {
-        return $this->render("excel");
+        session_start();
+        $query = $_SESSION['query'];
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+        return $this->render("excel", ['models'=>$models]);
     }
 
 }

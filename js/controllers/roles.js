@@ -1,4 +1,4 @@
-app.controller('rolesCtrl', function ($scope, Data, toaster) {
+app.controller('rolesCtrl', function ($scope, Data, toaster, $state) {
     //init data
     var tableStateRef;
     var paramRef;
@@ -24,15 +24,15 @@ app.controller('rolesCtrl', function ($scope, Data, toaster) {
         paramRef = param;
         Data.get('roles', param).then(function (data) {
             $scope.displayed = data.data;
-            tableState.pagination.numberOfPages = Math.round(data.totalItems / limit);
+            tableState.pagination.numberOfPages = Math.ceil(data.totalItems / limit);
         });
 
         $scope.isLoading = false;
     };
-    
-    $scope.excel = function(){
+
+    $scope.excel = function () {
         Data.get('roles', paramRef).then(function (data) {
-            
+            window.location = 'api/web/roles/excel';
         });
     }
 

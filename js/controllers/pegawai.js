@@ -27,7 +27,7 @@ app.controller('pegawaiCtrl', function ($scope, Data, toaster) {
         Data.get('pegawai', param).then(function (data) {
             $scope.displayed = data.data;
 //            console.log(data);
-            tableState.pagination.numberOfPages = Math.round(data.totalItems / limit);
+            tableState.pagination.numberOfPages = Math.ceil(data.totalItems / limit);
         });
 
         $scope.isLoading = false;
