@@ -186,18 +186,16 @@ class PenjualanController extends Controller {
                 }
             }
              $penjualanDet = $params['penjualandet'];
-            $deleteDetail = PenjualanDet::deleteAll(['penjualan_id' => $model->id . ' AND id NOT IN(' . implode(',', $penjualanDet['id']) . ')']);
-            
-            foreach ($params['penjualandet'] as $data) {
-//                $deleteDetail = PenjualanDet::deleteAll(['pembelian_id' => $model->id,'id NOT IN ('.$data['id'].')']);
-                $pinjaman = PenjualanDet::find()->where('penjualan_id=' . $model->id)->one();
-//                $det = new PenjualanDet();
+            $id = array();
+            foreach ($params['penjualandet'] as $data) { $pinjaman = PenjualanDet::find()->where('penjualan_id=' . $model->id)->one();
                 $pinjaman->attributes = $data;
                 $pinjaman->penjualan_id = $model->id;
                 $pinjaman->sub_total = str_replace('.', '', $data['sub_total']);
-
                 $pinjaman->save();
+                $id[]=$data['id'];
             }
+            $deleteDetail = PenjualanDet::deleteAll(['penjualan_id' => $model->id . ' AND id NOT IN(' . implode(',', $id) . ')']);
+            
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
