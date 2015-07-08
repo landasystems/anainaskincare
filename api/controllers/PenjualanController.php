@@ -186,18 +186,20 @@ class PenjualanController extends Controller {
                     $pinjaman->save();
                 }
             }
-             $penjualanDet = $params['penjualandet'];
-            
-            foreach ($params['penjualandet'] as $data) {
-                $pinjaman = PenjualanDet::find()->where('penjualan_id=' . $model->id)->one();
-                $pinjaman->attributes = $data;
-                $pinjaman->penjualan_id = $model->id;
-                $pinjaman->sub_total = str_replace('.', '', $data['sub_total']);
-                $pinjaman->save();
-                $id_det[]=$pinjaman->id;
+            $penjualanDet = $params['penjualandet'];
+
+            foreach ($params['penjualandet'] as $val) {
+                $det = PenjualanDet::findOne($val['id']);
+                if (empty($det)) {
+                    $det = new PenjualanDet();
+                }
+                $det->attributes = $val;
+                $det->penjualan_id = $model->id;
+                $det->save();
+                $id_det[] = $val['id'];
             }
-            $deleteDetail = PenjualanDet::deleteAll('id NOT IN ('.implode(',',$id_det).') AND penjualan_id='.$model->id);
-            
+            $deleteDetail = PenjualanDet::deleteAll('id NOT IN (' . implode(',', $id_det) . ') AND penjualan_id=' . $model->id);
+
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
