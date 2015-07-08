@@ -122,8 +122,8 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
     $scope.getkodepenjualan = function(form) {
         Data.get('returpenjualan/det_kodepenjualan/' + form.penjualan_id).then(function(data) {
             $scope.penjualan = data.penjualan;
-//            $scope.form.penjualan_id = form.penjualan_id;
             $scope.detPenjualan = data.detail;
+            $scope.form.kode = data.kode;
             angular.forEach($scope.detPenjualan, function(detail) {
                 detail.jumlah_retur = (detail.jumlah_retur !== null) ? detail.jumlah_retur : 0;
             })
