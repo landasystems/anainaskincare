@@ -15,8 +15,6 @@
                 <div class="form-horizontal">
                     <div class="form-group">
 
-
-
                         <label class="col-sm-2 control-label">Nama</label>
                         <div class="col-sm-3">
                             <input st-search="nama" class="form-control"/>
@@ -25,9 +23,7 @@
                         <label class="col-sm-2 control-label">Kode</label>
                         <div class="col-sm-3">
                             <input st-search="kode" class="form-control"/>
-
                         </div>
-
 
                     </div>
 
@@ -53,8 +49,8 @@
                             <td>{{row.kode}}</td>
                             <td>{{row.cabang}}</td>
                             <td>{{row.customer}}</td>
-                            <td>{{row.tanggal | date:'dd-MMM-yyyy'}}</td>
-                            <td>{{row.total | currency}}</td>
+                            <td>{{row.tanggal| date:'dd-MMM-yyyy'}}</td>
+                            <td>{{row.total| currency}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ></button>
@@ -88,9 +84,8 @@
                         <div class="font-bold"> {{formtitle}} Penjualan</div>
                     </div>
                     <div class="panel-body">
-                        <div class="col-md-4 col-sm-12">
-                            <p class="text-muted font-bold">Detail Customer</p>
-                             
+                        <div class="col-md-6 col-sm-12">
+                            <p class="text-muted font-bold"></p>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Customer</label>
                                 <div class="col-sm-9">
@@ -103,19 +98,19 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">No Telpon</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" ng-model="form.no_tlp" ng-disabled="true" >
+                                    <input type="text" class="form-control" ng-model="retrive.no_tlp" ng-disabled="true" >
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Email</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" ng-model="form.email" ng-disabled="true" >
+                                    <input type="text" class="form-control" ng-model="retrive.email" ng-disabled="true" >
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Alamat</label>
                                 <div class="col-sm-9">
-                                    <textarea class="form-control" rows="4" ng-model="form.alamat" ng-disabled="true" ></textarea>
+                                    <textarea class="form-control" rows="4" ng-model="retrive.alamat" ng-disabled="true" ></textarea>
                                 </div>
                             </div>
                         </div>
@@ -157,59 +152,36 @@
                                     <textarea class="form-control" rows="4" ng-model="form.keterangan" ng-disabled="is_view"></textarea> 
                                 </div>
                             </div>
-
-
-
                         </div>
-                        <div class="col-md-4 col-sm-12 img-thumbnail">
-                            <p class="text-muted font-bold">Pembayaran</p>
+                        <div class="col-md-6 col-sm-12">
+                            <p class="text-muted font-bold">Detail Customer</p>
                             <div class="form-group">
-                                <label class="col-sm-5 control-label">Total Belanja</label>
-                                <div class="col-sm-7">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.total_belanja" ng-readonly="true" required>
-                                    </div>  
+                                <label class="col-sm-3 control-label">Customer</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" ui-select2="" ui-jq="chosen" ng-change="getcustomer(form.customer_id)" ng-model="form.customer_id" ng-disabled="is_view" >
+                                        <option value="">-- Customer --</option>
+                                        <option ng-repeat="customer in sCustomer" value="{{customer.id}}">{{customer.nama}}</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-5 control-label">Total Diskon</label>
-                                <div class="col-sm-7">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.total_diskon" ng-readonly="true" required>
-                                    </div>  
+                                <label class="col-sm-3 control-label">No Telpon</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="form.no_tlp" ng-disabled="true" >
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-5 control-label">Total</label>
-                                <div class="col-sm-7">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.total" ng-readonly="true" required>
-                                    </div>  
-                                </div>
-                            </div>
-                            
-                            
-                            <div class="form-group">
-                                <label class="col-sm-5 control-label">Cash</label>
-                                <div class="col-sm-7">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.cash" ng-change="bayar()" ng-disabled="is_view" required>
-                                    </div>  
+                                <label class="col-sm-3 control-label">Email</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="form.email" ng-disabled="true" >
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-5 control-label">Credit</label>
-                                <div class="col-sm-7">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.credit" ng-readonly="true" ng-disabled="is_view" required>
-                                    </div>  
+                                <label class="col-sm-3 control-label">Alamat</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" rows="4" ng-model="form.alamat" ng-disabled="true" ></textarea>
                                 </div>
-                        </div>
+                            </div>
                         </div>
 
                         <div class="line line-dashed b-b line-lg pull-in"></div>
@@ -225,54 +197,80 @@
                                     <td>Sub total</td>
                                     <td>#</td>
                                 </tr>
-                                </thead>
-                                <tr ng-repeat="detail in detPenjualan">
-                                    <td>
-                                        <select ui-select2="" ng-change="getproduk(detail)" ng-model="detail.produk_id" ng-disabled="is_view" required style="width: 250px;">
-                                            <option value="">-Pilih Produk-</option>
-                                            <option ng-repeat="produk in sProduk" value="{{produk.id}}">{{produk.nama}}</option>
-                                        </select> 
-                                    </td>
-                                    <td width="6%">
-                                        <input type="text" class="form-control" ng-maxlength="4" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.jumlah" " ng-disabled="is_view" ng-readonly="is_create == false" required>
-                                        
-                                    </td>
-                                    <td width="8%">
-                                        <input type="text" class="form-control" ng-maxlength="8"  ng-model="detail.type"  ng-disabled="true" ng-readonly="is_create == false" required>
-                                    </td>
-                                    <td width="18%">
-                                        <div class="input-group m-b" style="margin:0px;">
-                                            <span class="input-group-addon">Rp</span>
-                                            <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.harga"  ng-disabled="is_view"  required>
-                                        </div>
-                                    </td>
-                                    <td width="18%">
-                                         <div class="input-group m-b" style="margin:0px;">
-                                            <span class="input-group-addon">Rp</span>
-                                            <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.diskon"  ng-disabled="is_view" ng-readonly="is_create == false" required>
-                                        </div>
-                                    </td>
-                                    <td width="18%">
-                                        <div class="input-group m-b" style="margin:0px;">
-                                            <span class="input-group-addon">Rp</span>
-                                            <input type="text" class="form-control" name="total" value="{{(detail.jumlah * detail.harga) - (detail.jumlah * detail.diskon) | number}}" ng-readonly="true"  ng-disabled="is_view" required>
-                                        </div>
-                                    </td>
-                                    <td >
-                                        <button ng-click="addDetail()" class="btn btn-success" ng-show="$index == 0" ng-disabled="is_view"><i class="fa fa-plus"></i></button>
-                                        <button ng-click="removeRow($index)" class="btn btn-danger" ng-show="$index > 0" ng-disabled="is_view"><i class="fa fa-trash-o"></i></button>
-                                    </td>
-                                </tr>
-                                <tr style="">
-                                    <th colspan="5" style="text-align: right;">Total :&nbsp;</th>
-                                    <td colspan="2">
-                                        <div class="input-group m-b" style="margin:0px;">
-                                            <span class="input-group-addon">Rp</span>
-                                            <input type="text" class="form-control" ng-disabled="is_view"  ng-readonly="true" ng-model="form.total">
-                                        </div>
-                                    </td>
-                                </tr>
-                            
+                            </thead>
+                            <tr ng-repeat="detail in detPenjualan">
+                                <td>
+                                    <select ui-select2="" ng-change="getproduk(detail)" ng-model="detail.produk_id" ng-disabled="is_view" required style="width: 250px;">
+                                        <option value="">-Pilih Produk-</option>
+                                        <option ng-repeat="produk in sProduk" value="{{produk.id}}">{{produk.nama}}</option>
+                                    </select> 
+                                </td>
+                                <td width="6%">
+                                    <input type="text" class="form-control" ng-maxlength="4" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.jumlah" ng-disabled="is_view" ng-readonly="is_create == false" required>
+                                </td>
+                                <td width="8%">
+                                    <input type="text" class="form-control" ng-maxlength="8"  ng-model="detail.type"  ng-disabled="true" ng-readonly="is_create == false" required>
+                                </td>
+                                <td width="18%">
+                                    <div class="input-group m-b" style="margin:0px;">
+                                        <span class="input-group-addon">Rp</span>
+                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.harga"  ng-disabled="is_view"  required>
+                                    </div>
+                                </td>
+                                <td width="18%">
+                                    <div class="input-group m-b" style="margin:0px;">
+                                        <span class="input-group-addon">Rp</span>
+                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.diskon"  ng-disabled="is_view" ng-readonly="is_create == false" required>
+                                    </div>
+                                </td>
+                                <td width="18%">
+                                    <div class="input-group m-b" style="margin:0px;">
+                                        <span class="input-group-addon">Rp</span>
+                                        <input type="text" class="form-control" name="total" value="{{(detail.jumlah * detail.harga) - (detail.jumlah * detail.diskon) | number}}" ng-readonly="true"  ng-disabled="is_view" required>
+                                    </div>
+                                </td>
+                                <td >
+                                    <button ng-click="addDetail()" class="btn btn-success" ng-show="$index == 0" ng-disabled="is_view"><i class="fa fa-plus"></i></button>
+                                    <button ng-click="removeRow($index)" class="btn btn-danger" ng-show="$index > 0" ng-disabled="is_view"><i class="fa fa-trash-o"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="5" style="text-align: right;">Total :&nbsp;</th>
+                                <td colspan="2">
+                                    <div class="input-group m-b" style="margin:0px;">
+                                        <span class="input-group-addon">Rp</span>
+                                        <input type="text" class="form-control" ng-disabled="is_view"  ng-readonly="true" ng-model="form.total">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="5" style="text-align: right;">Cash :&nbsp;</th>
+                                <td colspan="2">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Rp</span>
+                                        <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.cash" ng-disabled="is_view" required>
+                                    </div>  
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="5" style="text-align: right;">Credit :&nbsp;</th>
+                                <td colspan="2">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Rp</span>
+                                        <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.credit" ng-disabled="is_view" required>
+                                    </div> 
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="5" style="text-align: right;">Kembalian :&nbsp;</th>
+                                <td colspan="2">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Rp</span>
+                                        <input type="text" class="form-control" ng-readonly="true" ng-disabled="is_view" value="{{((form.cash*1 + form.credit*1)-form.total) | number}}">
+                                    </div> 
+                                </td>
+                            </tr>
+
                         </table>
                         <div class="line line-dashed b-b line-lg pull-in"></div>
                         <div align="center">
@@ -283,8 +281,8 @@
                     </div>
                 </div>
             </div>
-            
-            </div>
-        </form>
+
     </div>
+</form>
+</div>
 </div>

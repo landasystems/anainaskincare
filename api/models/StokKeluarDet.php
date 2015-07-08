@@ -32,7 +32,7 @@ class StokKeluarDet extends \yii\db\ActiveRecord
     {
         return [
             [['id'], 'unique'],
-            [['id', 'stok_masuk_id', 'produk_id', 'jumlah', 'harga'], 'integer']
+            [['id', 'stok_keluar_id', 'produk_id', 'jumlah', 'harga'], 'integer']
         ];
     }
 

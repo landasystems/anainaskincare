@@ -38,7 +38,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
     });
     $scope.getcustomer = function(wo) {
         Data.post('penjualan/nm_customer/', wo).then(function(data) {
-            $scope.form = data.customer;
+            $scope.retrive = data.customer;
             $scope.form.customer_id = wo;
 
         });
@@ -79,7 +79,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         $scope.form.total_belanja = total;
         $scope.detail.sub_total = (total - diskon);
         $scope.form.total_diskon = diskon;
-        $scope.bayar();
+//        $scope.bayar();
 
     }
     $scope.removeRow = function(paramindex) {
