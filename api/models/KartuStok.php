@@ -69,13 +69,13 @@ class KartuStok extends \yii\db\ActiveRecord {
         } elseif ($keterangan == "stok keluar") {
             $criteria .= ' and stok_keluar_id = ' . $trans_id;
         } elseif ($keterangan == "penjualan") {
-            $criteria .= ' and penjualan = ' . $trans_id;
+            $criteria .= ' and penjualan_id = ' . $trans_id;
         } elseif ($keterangan == "pembelian") {
-            $criteria .= ' and pembelian = ' . $trans_id;
+            $criteria .= ' and pembelian_id = ' . $trans_id;
         } elseif ($keterangan == "r_penjualan") {
-            $criteria .= ' and r_penjualan = ' . $trans_id;
+            $criteria .= ' and r_penjualan_id = ' . $trans_id;
         } elseif ($keterangan == "r_pembelian") {
-            $criteria .= ' and r_pembelian = ' . $trans_id;
+            $criteria .= ' and r_pembelian_id = ' . $trans_id;
         }
 
         KartuStok::deleteAll("keterangan = '" . $keterangan . "' $criteria");
