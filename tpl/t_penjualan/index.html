@@ -129,7 +129,7 @@
                                         <option value="">-- Cabang --</option>
                                         <option ng-repeat="cabang in sCabang" value="{{cabang.id}}">{{cabang.nama}}</option>
                                     </select>
-                                </div>
+                                </div>35
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Tanggal</label>
@@ -266,7 +266,7 @@
                                 <td colspan="2">
                                     <div class="input-group">
                                         <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-readonly="true" ng-disabled="is_view" value="{{(form.total-(form.cash*1 + form.credit*1)) | number}}">
+                                        <input type="text" class="form-control" ng-readonly="true" ng-disabled="is_view" value="{{((form.cash*1 + form.credit*1)-form.total) | number}}">
                                     </div> 
                                 </td>
                             </tr>

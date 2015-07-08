@@ -153,8 +153,11 @@ class PenjualanController extends Controller {
                 $det->attributes = $data;
                 $det->penjualan_id = $model->id;
                 $det->sub_total = str_replace('.', '', $data['sub_total']);
-
                 $det->save();
+                // stock
+                $keterangan = 'penjualan';
+                $stok = new \app\models\KartuStok();
+                $update = $stok->process('out', $model->tanggal, $model->kode, $data['produk_id'], $data['jumlah'], $model->cabang_id, $data['harga'], $keterangan, $model->id);
             }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
@@ -184,6 +187,7 @@ class PenjualanController extends Controller {
                     $pinjaman->debet = $model->credit;
                     $pinjaman->status = 'Belum Lunas';
                     $pinjaman->save();
+                    //stock
                 }
             }
             $penjualanDet = $params['penjualandet'];
@@ -197,6 +201,12 @@ class PenjualanController extends Controller {
                 $det->penjualan_id = $model->id;
                 $det->save();
                 $id_det[] = $val['id'];
+                
+                //stok
+                $keterangan = 'penjualan';
+                $stok = new \app\models\KartuStok();
+                $hapus = $stok->hapusKartu($keterangan, $model->id);
+                $update = $stok->process('out', $model->tanggal, $model->kode, $val['produk_id'], $val['jumlah'], $model->cabang_id, $val['harga'], $keterangan, $model->id);
             }
             $deleteDetail = PenjualanDet::deleteAll('id NOT IN (' . implode(',', $id_det) . ') AND penjualan_id=' . $model->id);
 
@@ -282,6 +292,11 @@ class PenjualanController extends Controller {
     public function actionDelete($id) {
         $model = $this->findModel($id);
         $deleteDetail = PenjualanDet::deleteAll(['penjualan_id' => $id]);
+        
+        //hapus kartu stok
+        $keterangan = 'penjualan';
+        $stok = new \app\models\KartuStok();
+        $hapus = $stok->hapusKartu($keterangan, $id);
 
         if ($model->delete()) {
             $this->setHeader(200);
