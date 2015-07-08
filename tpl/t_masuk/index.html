@@ -62,7 +62,7 @@
                             <td>{{row.total| currency}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
-                                    <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row.id)" ></button>
+                                    <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ></button>
                                     <button type="button" class="btn btn-danger fa fa-minus-circle" ng-click="delete(row);"></button>
                                 </div> 
                             </td>
@@ -95,13 +95,13 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Kode</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" ng-model="form.kode" ng-disabled="is_view" ng-readonly="is_create == false" required>
+                            <input type="text" class="form-control" ng-model="form.kode" ng-disabled="true" ng-readonly="is_create == false" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Cabang</label>
                         <div class="col-sm-6">
-                            <select ui-select2="selectcabang" ng-model="form.cabang_id" ng-disabled="is_view" required style="width: 48%;">
+                            <select ui-select2="selectcabang" ui-jq="chosen" ng-change="getkode(form.cabang_id)" ng-model="form.cabang_id" ng-disabled="is_view" required style="width: 48%;">
                                 <option value="">-Pilih Cabang-</option>
                                 <option ng-repeat="cabang in listcabang" value="{{cabang.id}}">{{cabang.nama}}</option>
                             </select>
@@ -136,23 +136,22 @@
                             <tbody>
                                 <tr ng-repeat="detail in detsmasuk" style="margin:0px;padding:0px;">
                                     <td>
-                                        {{produk_id}}
                                         <input type="text" 
                                                ui-select2="produk"
                                                ng-model="produk_id"
-                                               ng-change="form.produk_id = produk_id.id"
+                                               ng-change="detail.produk_id = produk_id.id"
                                                data-placeholder="-Pilih Model-" required style="width: 100%;">
                                         
-                                        <input type="hidden" ng-model="form.produk_id">
+                                        <input type="hidden" ng-model="detail.produk_id">
 
                                     </td>
                                     <td style="width:50px">
-                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="subtotal()"  ng-model="detail.jumlah" " ng-disabled="is_view" ng-readonly="is_create == false" required>
+                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-change="subtotal()"  ng-model="detail.jumlah" " ng-disabled="is_view" ng-readonly="is_create == false" required>
                                     </td>
                                     <td style="width:200px">
                                         <div class="input-group m-b" style="margin:0px;">
                                             <span class="input-group-addon">Rp</span>
-                                            <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="subtotal()"  ng-model="detail.harga"  ng-disabled="is_view" ng-readonly="is_create == false" required>
+                                            <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-change="subtotal()"  ng-model="detail.harga"  ng-disabled="is_view" ng-readonly="is_create == false" required>
                                         </div>
                                     </td>
                                     <td style="width:200px">

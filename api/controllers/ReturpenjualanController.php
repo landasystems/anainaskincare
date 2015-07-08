@@ -33,6 +33,7 @@ class ReturpenjualanController extends Controller {
                     'det_produk' => ['get'],
                     'kodepenjualan' => ['get'],
                     'det_kodepenjualan' => ['get'],
+                    'kode_cabang' => ['get'],
                 ],
             ]
         ];
@@ -171,6 +172,11 @@ class ReturpenjualanController extends Controller {
                     $detail->penjualan_det_id = $data['id'];
                     $detail->sub_total = ($data['jumlah_retur'] * $data['harga']) - ($data['jumlah_retur'] * $data['diskon']);
                     $detail->save();
+                    // stock
+                    $pinjaman = Pinjaman::find()->where('id=' . $model->penjualan_id)->one();
+                    $keterangan = 'r_penjualan';
+                    $stok = new \app\models\KartuStok();
+                    $update = $stok->process('in', $model->tanggal, $model->kode, $data['produk_id'], $data['jumlah_retur'], $pinjaman->cabang_id, $data['harga'], $keterangan, $model->id);
                 }
             }
             $this->setHeader(200);
@@ -191,12 +197,18 @@ class ReturpenjualanController extends Controller {
             $deleteAll = RPenjualanDet::deleteAll('r_penjualan_id=' . $model->id);
             foreach ($params['retur_penjualandet'] as $data) {
                 if (!empty($data['jumlah_retur']) || $data['jumlah_retur'] != 0) {
-                $detail = new RPenjualanDet();
-                $detail->attributes = $data;
-                $detail->r_penjualan_id = $model->id;
-                $detail->penjualan_det_id = $data['id'];
-                $detail->sub_total = ($data['jumlah_retur'] * $data['harga']) - ($data['jumlah_retur'] * $data['diskon']);
-                $detail->save();
+                    $detail = new RPenjualanDet();
+                    $detail->attributes = $data;
+                    $detail->r_penjualan_id = $model->id;
+                    $detail->penjualan_det_id = $data['id'];
+                    $detail->sub_total = ($data['jumlah_retur'] * $data['harga']) - ($data['jumlah_retur'] * $data['diskon']);
+                    $detail->save();
+
+                    $pinjaman = Pinjaman::find()->where('id=' . $model->penjualan_id)->one();
+                    $keterangan = 'r_penjualan';
+                    $stok = new \app\models\KartuStok();
+                    $hapus = $stok->hapusKartu($keterangan, $id);
+                    $update = $stok->process('in', $model->tanggal, $model->kode, $data['produk_id'], $data['jumlah_retur'], $pinjaman->cabang_id, $data['harga'], $keterangan, $model->id);
                 }
             }
             $this->setHeader(200);
@@ -300,10 +312,37 @@ class ReturpenjualanController extends Controller {
 
         echo json_encode(array('produk' => $models));
     }
+    public function actionKode_cabang($id) {
+        $query = new Query;
+
+        $query->from('m_cabang')
+                ->where('id="' . $id . '"')
+                ->select("*");
+        $command = $query->createCommand();
+        $models = $command->query()->read();
+        $code = $models['kode'];
+        
+        $query2 = new Query;
+        $query2->from('penjualan')
+                ->select('kode')
+                ->orderBy('kode DESC')
+                ->limit(1);
+
+        $command2 = $query2->createCommand();
+        $models2 = $command2->query()->read();
+        $kode_mdl = (substr($models2['kode'],-5) + 1);
+        $kode=substr('00000'.$kode_mdl,strlen($kode_mdl));
+        $this->setHeader(200);
+        echo json_encode(array('status' => 1,'kode' => 'JUAL/'.$code.'/'.$kode));
+    }
 
     public function actionDelete($id) {
         $model = $this->findModel($id);
         $deleteDetail = RPenjualanDet::deleteAll(['r_penjualan_id' => $id]);
+
+        $keterangan = 'r_penjualan';
+        $stok = new \app\models\KartuStok();
+        $hapus = $stok->hapusKartu($keterangan, $id);
 
         if ($model->delete()) {
             $this->setHeader(200);

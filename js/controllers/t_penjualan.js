@@ -38,8 +38,16 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
     });
     $scope.getcustomer = function(wo) {
         Data.post('penjualan/nm_customer/', wo).then(function(data) {
-            $scope.form = data.customer;
+            $scope.retrive = data.customer;
             $scope.form.customer_id = wo;
+            $scope.form.credit = 0;
+
+        });
+    };
+    $scope.getkode_cabang = function(id) {
+        Data.get('penjualan/kode_cabang/'+ id).then(function(data) {
+            $scope.form.kode = data.kode;
+            $scope.form.cabang_id = id;
 
         });
     };
@@ -79,7 +87,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         $scope.form.total_belanja = total;
         $scope.detail.sub_total = (total - diskon);
         $scope.form.total_diskon = diskon;
-        $scope.bayar();
+//        $scope.bayar();
 
     }
     $scope.removeRow = function(paramindex) {
