@@ -182,29 +182,29 @@
                                         {{list.nama_produk}}
                                     </td>
                                     <td style="text-align: center; width: 10%">{{list.jumlah}}</td>
-                                    <td style="text-align: center; width: 10%"><input ng-change="subtotal()" class="form-control" style="width:100%" type="text" ng-pattern="/^[0-9]+$" ng-model="list.jumlah_retur"></td>
+                                    <td style="text-align: center; width: 10%"><input ng-change="subtotal()" class="form-control" style="width:100%" type="text" ng-pattern="/^[0-9]+$/" ng-model="list.jumlah_retur"></td>
                                     <td style="text-align: center; width: 20%">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon">Rp.</span>
-                                            <input class="form-control" style="width:100%" type="text" ng-pattern="/^[0-9]+$" ng-model="list.harga" ng-disabled="true">
+                                            <input class="form-control" style="width:100%" type="text" ng-pattern="/^[0-9]+$/" ng-model="list.harga" ng-disabled="true">
                                         </div>
                                     </td>
                                     <td style="text-align: center; width: 20%">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon">Rp.</span>
-                                            <input class="form-control" style="width:100%" ng-change="subtotal()" type="text" ng-pattern="/^[0-9]+$" ng-model="list.harga_retur">
+                                            <input class="form-control" style="width:100%" ng-change="subtotal()" type="text" ng-pattern="/^[0-9]+$/" ng-model="list.harga_retur">
                                         </div>
                                     </td>
                                     <td style="text-align: center; width: 20%">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon">Rp.</span>
-                                            <input class="form-control" style="width:100%" ng-change="subtotal()" type="text" ng-pattern="/^[0-9]+$" ng-model="list.diskon">
+                                            <input class="form-control" style="width:100%" ng-change="subtotal()" type="text" ng-pattern="/^[0-9]+$/" ng-model="list.diskon">
                                         </div>
                                     </td>
                                     <td style="text-align: center; width: 20%">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon">Rp.</span>
-                                            <input class="form-control" style="width:100%" type="text" ng-pattern="/^[0-9]+$" ng-model="list.sub_total_retur" ng-disabled="true"">
+                                            <input class="form-control" style="width:100%" type="text" ng-pattern="/^[0-9]+$/" ng-model="list.sub_total_retur" ng-disabled="true">
                                         </div>
                                     </td>
                                 </tr>
