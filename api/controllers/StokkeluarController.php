@@ -20,6 +20,7 @@ class StokkeluarController extends Controller {
                 'actions' => [
                     'index' => ['get'],
                     'view' => ['get'],
+                    'excel' => ['get'],
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
@@ -70,7 +71,7 @@ class StokkeluarController extends Controller {
         $query = new Query;
         $query->from('m_produk')
                 ->select("*")
-                ->where("is_deleted = '0'");
+                ->where("is_deleted = '0' and type = 'barang'");
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -112,6 +113,7 @@ class StokkeluarController extends Controller {
                 ->select("stok_keluar.id, stok_keluar.kode, stok_keluar.tanggal, m_cabang.nama as cabang, stok_keluar.keterangan, stok_keluar.total")
                 ->where('m_cabang.id = stok_keluar.cabang_id');
 
+        
         //filter
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
@@ -127,6 +129,9 @@ class StokkeluarController extends Controller {
                 }
             }
         }
+        
+        session_start();
+        $_SESSION['query'] = $query;
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -257,6 +262,14 @@ class StokkeluarController extends Controller {
             501 => 'Not Implemented',
         );
         return (isset($codes[$status])) ? $codes[$status] : '';
+    }
+    
+    public function actionExcel() {
+        session_start();
+        $query = $_SESSION['query'];
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+        return $this->render("excel", ['models'=>$models]);
     }
 
 }

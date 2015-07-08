@@ -20,6 +20,7 @@ class StokmasukController extends Controller {
                 'actions' => [
                     'index' => ['get'],
                     'view' => ['get'],
+                    'excel' => ['get'],
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
@@ -70,7 +71,7 @@ class StokmasukController extends Controller {
         $query = new Query;
         $query->from('m_produk')
                 ->select("*")
-                ->where("is_deleted = '0'");
+                ->where("is_deleted = '0' and type = 'barang'");
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -127,7 +128,9 @@ class StokmasukController extends Controller {
                 }
             }
         }
-
+        session_start();
+        $_SESSION['query'] = $query;
+        
         $command = $query->createCommand();
         $models = $command->queryAll();
         $totalItems = $query->count();
@@ -255,6 +258,14 @@ class StokmasukController extends Controller {
             501 => 'Not Implemented',
         );
         return (isset($codes[$status])) ? $codes[$status] : '';
+    }
+
+    public function actionExcel() {
+        session_start();
+        $query = $_SESSION['query'];
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+        return $this->render("excel", ['models' => $models]);
     }
 
 }

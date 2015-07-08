@@ -1,6 +1,7 @@
 app.controller('t_masukCtrl', function ($scope, Data, toaster) {
     //init data
     var tableStateRef;
+    var paramRef;
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
@@ -17,6 +18,7 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
             produk_id: '',
             jumlah: '',
             harga: '',
+            sub_total: '0'
         };
         
     $scope.produk = {
@@ -64,13 +66,17 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
     //subtotal
 
     //total
-    $scope.total = function () {
+    $scope.subtotal = function () {
         var total = 0;
+        var sub_total = 0;
         angular.forEach($scope.detsmasuk, function (detail) {
-            total += detail.jumlah * detail.harga;
+            var jml = (detail.jumlah) ? parseInt(detail.jumlah) : 0;
+            var hrg = (detail.harga) ? parseInt(detail.harga) : 0;
+            sub_total = (jml * hrg);
+            detail.sub_total = sub_total;
+            total += sub_total;
         })
         $scope.form.total = total;
-
     }
 //    $scope.form.total=total();
 
@@ -78,7 +84,7 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
         var comArr = eval($scope.detsmasuk);
         if (comArr.length > 1) {
             $scope.detsmasuk.splice(paramindex, 1);
-            $scope.total();
+            $scope.subtotal();
         } else {
             alert("Something gone wrong");
         }
@@ -113,7 +119,7 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
         if (tableState.search.predicateObject) {
             param['filter'] = tableState.search.predicateObject;
         }
-
+        paramRef = param;
         Data.get('stokmasuk/', param).then(function (data) {
             $scope.displayed = data.data;
             tableState.pagination.numberOfPages = Math.ceil(data.totalItems / limit);
@@ -121,6 +127,12 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
 
         $scope.isLoading = false;
     };
+    
+    $scope.excel = function () {
+        Data.get('stokmasuk', paramRef).then(function (data) {
+            window.location = 'api/web/stokmasuk/excel';
+        });
+    }
 
     $scope.create = function (form, detail) {
         $scope.is_edit = true;

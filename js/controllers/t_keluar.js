@@ -1,6 +1,7 @@
 app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
     //init data
     var tableStateRef;
+    var paramRef;
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
@@ -11,13 +12,14 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         weekStart: 0
     }
 
-    $scope.detskeluar =
-            {
-                stok_keluar_id: '',
-                produk_id: '',
-                jumlah: '',
-                harga: '',
-            };
+    $scope.detskeluar = [
+        {
+            stok_keluar_id: '',
+            produk_id: '',
+            jumlah: '',
+            harga: '',
+            sub_total: '0'
+        }];
 
 //    $scope.produk = {
 //        minimumInputLength: 3,
@@ -51,38 +53,40 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
 //        },
 //    };
 
-   
 
     //subtotal
-
-    //total
-    $scope.total = function () {
+    $scope.subtotal = function () {
         var total = 0;
-//        var detail.jumlah = (detail.jumlah.lenght == null) ? parseInt(detail.jumlah) : '0';
+        var sub_total = 0;
         angular.forEach($scope.detskeluar, function (detail) {
-            total += detail.jumlah * detail.harga;
+            var jml = (detail.jumlah) ? parseInt(detail.jumlah) : 0;
+            var hrg = (detail.harga) ? parseInt(detail.harga) : 0;
+            sub_total = (jml * hrg);
+            detail.sub_total = sub_total;
+            total += sub_total;
         })
         $scope.form.total = total;
-
     }
-    
-     $scope.addDetail = function () {
+
+
+    $scope.addDetail = function () {
         var newDet = {
             stok_keluar_id: '',
             produk_id: '',
             jumlah: '',
             harga: '',
+            sub_total: 0
         }
-         
+
         $scope.detskeluar.unshift(newDet);
     };
-    
+
     $scope.removeRow = function (paramindex) {
         var comArr = eval($scope.detskeluar);
-       
+
         if (comArr.length > 1) {
             $scope.detskeluar.splice(paramindex, 1);
-            $scope.total();
+            $scope.subtotal();
         } else {
             alert("Something gone wrong");
         }
@@ -117,7 +121,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         if (tableState.search.predicateObject) {
             param['filter'] = tableState.search.predicateObject;
         }
-
+        paramRef = param;
         Data.get('stokkeluar/', param).then(function (data) {
             $scope.displayed = data.data;
             tableState.pagination.numberOfPages = Math.ceil(data.totalItems / limit);
@@ -126,12 +130,18 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         $scope.isLoading = false;
     };
 
+    $scope.excel = function () {
+        Data.get('stokkeluar', paramRef).then(function (data) {
+            window.location = 'api/web/stokkeluar/excel';
+        });
+    }
+
     $scope.create = function (form, detail) {
         $scope.is_edit = true;
         $scope.is_view = false;
         $scope.formtitle = "Form Persediaan Keluar";
         $scope.form = {};
-        $scope.detskeluar = [{}];
+//        $scope.detskeluar = [{}];
 
 
     };
@@ -180,7 +190,6 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         $scope.is_edit = false;
         $scope.is_view = false;
         $scope.detskeluar = [{}];
-        console.log($scope.form.tanggal);
     };
 
     $scope.trash = function (row) {
