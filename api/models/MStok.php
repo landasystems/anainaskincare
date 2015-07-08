@@ -50,7 +50,7 @@ class MStok extends \yii\db\ActiveRecord {
             $stokProduk->cabang_id = $departement_id;
             $stokProduk->jumlah = $qty;
             $stokProduk->harga = $price;
-            $stokProduk->tanggal = $date;
+            $stokProduk->tanggal = $date . " " . date("H:i:s");
             $stokProduk->save();
 
             $boolStatus = true;
@@ -70,28 +70,30 @@ class MStok extends \yii\db\ActiveRecord {
                     all();
             $tempQty = $qty;
             $boolStatus = true;
-            foreach ($stokProduk as $val) {
-                if ($boolStatus) {
-                    if ($val->jumlah > $tempQty) {
-                        $val->jumlah -= $tempQty;
-                        $val->save();
-
-                        $boolStatus = false;
-                        $saldo[] = array('jumlah' => $val->jumlah, 'harga' => $val->harga);
-
-                        $keluar['jumlah'] = $tempQty;
-                        $keluar['harga'] = $val->harga;
-                    } else {
-                        $keluar['jumlah'] = $val->jumlah;
-                        $keluar['harga'] = $val->harga;
-
-                        $tempQty -= $val->jumlah;
-                        $val->delete();
-                    }
-                } else {
-                    $saldo[] = array('jumlah' => $val->jumlah, 'harga' => $val->harga);
-                }
-            }
+            $keluar['jumlah'] = $qty;
+            $keluar['harga'] = $price;
+//            foreach ($stokProduk as $val) {
+//                if ($boolStatus) {
+//                    if ($val->jumlah > $tempQty) {
+//                        $val->jumlah -= $tempQty;
+//                        $val->save();
+//
+//                        $boolStatus = false;
+//                        $saldo[] = array('jumlah' => $val->jumlah, 'harga' => $val->harga);
+//
+//                        $keluar['jumlah'] = $tempQty;
+//                        $keluar['harga'] = $val->harga;
+//                    } else {
+//                        $keluar['jumlah'] = $val->jumlah;
+//                        $keluar['harga'] = $val->harga;
+//
+//                        $tempQty -= $val->jumlah;
+////                        $val->delete();
+//                    }
+//                } else {
+//                    $saldo[] = array('jumlah' => $val->jumlah, 'harga' => $val->harga);
+//                }
+//            }
         }
         $kartuStok = new KartuStok();
         $update = $kartuStok->process($keterangan, $date, $kode, $product_id, $masuk, $keluar, $saldo, $departement_id);
