@@ -136,14 +136,13 @@
                             <tbody>
                                 <tr ng-repeat="detail in detsmasuk" style="margin:0px;padding:0px;">
                                     <td>
-                                        {{produk_id}}
                                         <input type="text" 
                                                ui-select2="produk"
                                                ng-model="produk_id"
-                                               ng-change="form.produk_id = produk_id.id"
+                                               ng-change="detail.produk_id = produk_id.id"
                                                data-placeholder="-Pilih Model-" required style="width: 100%;">
                                         
-                                        <input type="hidden" ng-model="form.produk_id">
+                                        <input type="hidden" ng-model="detail.produk_id">
 
                                     </td>
                                     <td style="width:50px">

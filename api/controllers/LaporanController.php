@@ -283,9 +283,8 @@ class LaporanController extends Controller {
                     $body[$val['produk_id']]['saldo_awal']['harga'] = $tmpSaldo['harga'];
                     $body[$val['produk_id']]['saldo_awal']['sub_total'] = $tmpSaldo['sub_total'];
                     $tmpSaldo = array('jumlah' => '', 'harga' => '', 'sub_total' => '');
-                } else {
-                    
                 }
+
                 $totalJml['masuk'] += $val['jumlah_masuk'];
                 $totalHarga['masuk'] += ($val['jumlah_masuk'] * $val['harga_masuk']);
 
@@ -321,41 +320,54 @@ class LaporanController extends Controller {
                                 $tmp[$index]['jumlah'] = $valS['jumlah'];
 
                                 $boolStatus = false;
-                                $tmpSaldo['jumlah'][$a] = $valS['jumlah'];
-                                $tmpSaldo['harga'][$a] = $valS['harga'];
-                                $tmpSaldo['sub_total'][$a] = ($valS['jumlah'] * $valS['harga']);
 
-                                $tmpKeluar['jumlah'][$a] = $tempQty;
+                                $sub = $valS['jumlah'] * $valS['harga'];
+
+                                $tmpSaldo['jumlah'][$a] = !empty($valS['jumlah']) ? $valS['jumlah'] : 0;
+                                $tmpSaldo['harga'][$a] = !empty($valS['harga']) ? $valS['harga'] : 0;
+                                $tmpSaldo['sub_total'][$a] = !empty($sub) ? $sub : 0;
+
+                                $tmpKeluar['jumlah'][$a] = $tempQty; //$valS['jumlah'];
                                 $tmpKeluar['harga'][$a] = $val['harga_keluar'];
-                                $tmpKeluar['sub_total'][$a] = $tempQty * $tmpKeluar['harga'][$a];
+                                $tmpKeluar['sub_total'][$a] = $valS['jumlah'] * $tmpKeluar['harga'][$a];
                             } else {
                                 $tmpKeluar['jumlah'][$a] = $valS['jumlah'];
                                 $tmpKeluar['harga'][$a] = $val['harga_keluar'];
                                 $tmpKeluar['sub_total'][$a] = $valS['jumlah'] * $tmpKeluar['harga'][$a];
 
-                                $tempQty -= $valS['jumlah'];
+                                $valS['jumlah'] -= $tempQty;
+
+                                $tmpSaldo['jumlah'][$a] = $valS['jumlah']; //$valS['jumlah'];
+                                $tmpSaldo['harga'][$a] = $val['harga_keluar'];
+                                $tmpSaldo['sub_total'][$a] = $valS['jumlah'] * $tmpKeluar['harga'][$a];
                                 unset($tmp[$index]);
                             }
                         } else {
-                            $tmpSaldo['jumlah'][$a] = $valS['jumlah'];
-                            $tmpSaldo['harga'][$a] = $valS['harga'];
-                            $tmpSaldo['sub_total'][$a] = ($valS['jumlah'] * $valS['harga']);
+                            $sub = ($valS['jumlah'] * $valS['harga']);
+                            $tmpSaldo['jumlah'][$a] = !empty($valS['jumlah']) ? (int) $valS['jumlah'] : 0;
+                            $tmpSaldo['harga'][$a] = !empty($valS['harga']) ? (int) $valS['harga'] : 0;
+                            $tmpSaldo['sub_total'][$a] = !empty($sub) ? (int) $sub : 0;
                         }
-                        $totalJml['saldo'] += isset($tmpSaldo['jumlah'][$a]) ? $tmpSaldo['jumlah'][$a] : 0;
-                        $totalHarga['saldo'] += isset($tmpSaldo['sub_total'][$a]) ? $tmpSaldo['sub_total'][$a] : 0;
+                        $totalJml['saldo'] += isset($tmpSaldo['jumlah'][$a]) ? (int) $tmpSaldo['jumlah'][$a] : 0;
+                        $totalHarga['saldo'] += isset($tmpSaldo['sub_total'][$a]) ? (int) $tmpSaldo['sub_total'][$a] : 0;
                         $a++;
                         $index++;
-                        $totalJml['saldo'] += isset($valS['jumlah']) ? $valS['jumlah'] : 0;
-                        $totalHarga['saldo'] += isset($valS['sub_total']) ? $valS['sub_total'] : 0;
+                        $totalJml['saldo'] += isset($valS['jumlah']) ? (int) $valS['jumlah'] : 0;
+                        $totalHarga['saldo'] += isset($valS['sub_total']) ? (int) $valS['sub_total'] : 0;
                     }
                 }
-                
+
                 $totalJml['saldo'] = 0;
                 $totalHarga['saldo'] = 0;
-                foreach ($tmpSaldo['jumlah'] as $totSaldo => $o) {
-                    $key = array_search($o, $tmpSaldo['jumlah']);
-                    $totalJml['saldo'] += $o;
-                    $totalHarga['saldo'] += ($tmpSaldo['sub_total'][$key]);
+                if (!empty($tmpSaldo['jumlah'])) {
+                    foreach ($tmpSaldo['jumlah'] as $totSaldo => $o) {
+                        $totalJml['saldo'] += $o;
+                    }
+                }
+                if (!empty($tmpSaldo['sub_total'])) {
+                    foreach ($tmpSaldo['sub_total'] as $totSaldo => $o) {
+                        $totalHarga['saldo'] += $o;
+                    }
                 }
 
                 $body[$val['produk_id']]['title']['produk'] = $val['produk'];

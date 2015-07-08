@@ -130,7 +130,7 @@ class StokmasukController extends Controller {
         }
         session_start();
         $_SESSION['query'] = $query;
-        
+
         $command = $query->createCommand();
         $models = $command->queryAll();
         $totalItems = $query->count();
@@ -196,6 +196,7 @@ class StokmasukController extends Controller {
             foreach ($detailSmasuk as $val) {
                 $det = new StokMasukDet();
                 $det->attributes = $val;
+                $det->produk_id = $val['produk_id'];
                 $det->jumlah = str_replace('.', '', $det->jumlah);
                 $det->harga = str_replace('.', '', $det->harga);
                 $det->stok_masuk_id = $model->id;
