@@ -33,7 +33,7 @@ class PembelianDet extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pembelian_id', 'produk_id', 'jumlah', 'harga', 'diskon', 'sub_total'], 'integer']
+            [['pembelian_id', 'produk_id', 'jumlah', 'harga', 'diskon', 'sub_total','is_retur'], 'integer']
         ];
     }
 
@@ -50,6 +50,7 @@ class PembelianDet extends \yii\db\ActiveRecord
             'harga' => 'Harga',
             'diskon' => 'Diskon',
             'sub_total' => 'Sub Total',
+            'is_retur' => 'Is Retur',
         ];
     }
 

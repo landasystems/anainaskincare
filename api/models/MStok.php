@@ -33,7 +33,7 @@ class MStok extends \yii\db\ActiveRecord {
         ];
     }
 
-    public static function process($type, $kode, $product_id, $qty, $departement_id, $price = 0, $keterangan = '') {
+    public static function process($type, $date, $kode, $product_id, $qty, $departement_id, $price = 0, $keterangan = '') {
         $produk = Barang::findOne(['id' => $product_id]);
         $masuk = array();
         $keluar = array();
@@ -45,10 +45,12 @@ class MStok extends \yii\db\ActiveRecord {
 
         if ($type == 'in') {
             $stokProduk = new MStok();
+            $stokProduk->kode = $kode;
             $stokProduk->produk_id = $product_id;
             $stokProduk->cabang_id = $departement_id;
             $stokProduk->jumlah = $qty;
             $stokProduk->harga = $price;
+            $stokProduk->tanggal = $date . " " . date("H:i:s");
             $stokProduk->save();
 
             $boolStatus = true;
@@ -68,33 +70,33 @@ class MStok extends \yii\db\ActiveRecord {
                     all();
             $tempQty = $qty;
             $boolStatus = true;
-            foreach ($stokProduk as $val) {
-                if ($boolStatus) {
-                    if ($val->jumlah > $tempQty) {
-                        $val->jumlah -= $tempQty;
-                        $val->save();
-
-                        $boolStatus = false;
-                        $saldo[] = array('jumlah' => $val->jumlah, 'harga' => $val->harga);
-
-                        $keluar['jumlah'] = $tempQty;
-                        $keluar['harga'] = $val->harga;
-                    } else {
-                        $keluar['jumlah'] = $val->jumlah;
-                        $keluar['harga'] = $val->harga;
-
-                        $tempQty -= $val->jumlah;
-                        $val->delete();
-                    }
-                } else {
-                    $saldo[] = array('jumlah' => $val->jumlah, 'harga' => $val->harga);
-//                    $saldo['jumlah'] = $val->jumlah;
-//                    $saldo['harga'] = $val->harga;
-                }
-            }
+            $keluar['jumlah'] = $qty;
+            $keluar['harga'] = $price;
+//            foreach ($stokProduk as $val) {
+//                if ($boolStatus) {
+//                    if ($val->jumlah > $tempQty) {
+//                        $val->jumlah -= $tempQty;
+//                        $val->save();
+//
+//                        $boolStatus = false;
+//                        $saldo[] = array('jumlah' => $val->jumlah, 'harga' => $val->harga);
+//
+//                        $keluar['jumlah'] = $tempQty;
+//                        $keluar['harga'] = $val->harga;
+//                    } else {
+//                        $keluar['jumlah'] = $val->jumlah;
+//                        $keluar['harga'] = $val->harga;
+//
+//                        $tempQty -= $val->jumlah;
+////                        $val->delete();
+//                    }
+//                } else {
+//                    $saldo[] = array('jumlah' => $val->jumlah, 'harga' => $val->harga);
+//                }
+//            }
         }
         $kartuStok = new KartuStok();
-        $update = $kartuStok->process($keterangan, $kode, $product_id, $masuk, $keluar, $saldo, $departement_id);
+        $update = $kartuStok->process($keterangan, $date, $kode, $product_id, $masuk, $keluar, $saldo, $departement_id);
     }
 
     /**

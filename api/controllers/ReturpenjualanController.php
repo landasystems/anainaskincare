@@ -93,8 +93,8 @@ class ReturpenjualanController extends Controller {
                 ->from(['r_penjualan', 'penjualan', 'm_cabang', 'm_customer'])
                 ->where('r_penjualan.penjualan_id = penjualan.id and penjualan.cabang_id = m_cabang.id and penjualan.customer_id = m_customer.id')
                 ->orderBy($sort)
-                ->select("r_penjualan.id as id, r_penjualan.tanggal as tanggal_retur, r_penjualan.total as total_retur, r_penjualan.keterangan as ketrangan_retur,"
-                        . " r_penjualan.kode as kode_retur, penjualan.kode as kode_penjualan , penjualan.total as total_penjualan, m_cabang.nama as cabang, "
+                ->select("r_penjualan.id as id, r_penjualan.tanggal as tanggal_retur, r_penjualan.penjualan_id as penjualan_id, r_penjualan.total as total_retur, r_penjualan.keterangan as ketrangan_retur,"
+                        . " r_penjualan.kode as kode, penjualan.kode as kode_penjualan , penjualan.total as total_penjualan, m_cabang.nama as cabang, "
                         . "m_customer.nama as nama_customer, penjualan.customer_id as customer_id,penjualan.cabang_id as cabang_id");
 
         //filter
@@ -136,37 +136,43 @@ class ReturpenjualanController extends Controller {
         foreach ($det as $val) {
             $detail[] = $val->attributes;
         }
+         $query = new Query;
+        $query->from('penjualan')
+                ->join('JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
+                ->join('JOIN', 'm_cabang', 'penjualan.cabang_id= m_cabang.id')
+                ->where('penjualan.id="' . $model['penjualan_id'] . '"')
+                ->select("m_customer.no_tlp as no_tlp, m_customer.email as email, m_customer.alamat as alamat, 
+                        m_cabang.nama as klinik");
+        $command = $query->createCommand();
+        $models = $command->queryOne();
+
 
 
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes), 'detail' => $detail), JSON_PRETTY_PRINT);
+        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes), 'detail' => $detail,'penjualan'=>$models), JSON_PRETTY_PRINT);
     }
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = new RPenjualan();
-//        print_r($params['penjualandet']);
-
-        $model->attributes = $params['penjualan'];
-        $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
+        print_r($params['retur_penjualandet']);
+        Yii::error($params);
+        $model->attributes = $params['retur_penjualan'];
 
 
         if ($model->save()) {
-            if ($model->credit > 0) {
-                $pinjaman = new Pinjaman();
-                $pinjaman->penjualan_id = $model->id;
-                $pinjaman->credit = $model->credit;
-                $pinjaman->status = 'Belum Lunas';
-                $pinjaman->save();
+        foreach($params['retur_penjualandet'] as $data){
+            if(!empty($data['jumlah_retur']) || $data['jumlah_retur'] != 0){
+                $detail= new RPenjualanDet();
+                $detail->attributes = $data;
+                $detail->r_penjualan_id = $model->id;
+                $detail->penjualan_det_id = $data['id'];
+                $detail->sub_total = ($data['jumlah_retur'] * $data['harga']) - ($data['jumlah_retur'] * $data['diskon']);
+                $detail->save();
+                
+                
             }
-            foreach ($params['penjualandet'] as $data) {
-                $det = new PenjualanDet();
-                $det->attributes = $data;
-                $det->penjualan_id = $model->id;
-                $det->sub_total = str_replace('.', '', $data['sub_total']);
-
-                $det->save();
-            }
+        }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -178,24 +184,18 @@ class ReturpenjualanController extends Controller {
     public function actionUpdate($id) {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
-        $model->attributes = $params['penjualan'];
+        $model->attributes = $params['retur_penjualan'];
 
 
         if ($model->save()) {
-            if ($model->credit > 0) {
-                $pinjaman = Pinjaman::find()->where('penjualan_id=' . $model->id)->one();
-                $pinjaman->credit = $model->credit;
-                $pinjaman->status = ($model->credit > 0) ? 'belum lunas' : 'lunas';
+            foreach ($params['retur_penjualandet'] as $data) {
+                $pinjaman = RPenjualanDet::find()->where('r_penjualan_id=' . $model->id)->one();
+//                $det = new PenjualanDet();
+                $pinjaman->attributes = $data;
+//                $pinjaman->penjualan_id = $model->id;
+//                $pinjaman->sub_total = str_replace('.', '', $data['sub_total']);
+
                 $pinjaman->save();
-            }
-
-            foreach ($params['penjualandet'] as $data) {
-                $det = new PenjualanDet();
-                $det->attributes = $data;
-                $det->penjualan_id = $model->id;
-                $det->sub_total = str_replace('.', '', $data['sub_total']);
-
-                $det->save();
             }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
@@ -268,16 +268,18 @@ class ReturpenjualanController extends Controller {
                 ->join('JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
                 ->join('JOIN', 'm_cabang', 'penjualan.cabang_id= m_cabang.id')
                 ->where('penjualan.id="' . $id . '"')
-                ->select("penjualan.*,m_customer.no_tlp as no_tlp, m_customer.email as email, m_customer.alamat as alamat, penjualan.tanggal as tanggal,
+                ->select("m_customer.no_tlp as no_tlp, m_customer.email as email, m_customer.alamat as alamat, 
                         m_cabang.nama as klinik");
         $command = $query->createCommand();
         $models = $command->queryOne();
 
         $query2 = new Query;
         $query2->from('penjualan_det')
-                ->join('JOIN', 'm_produk', 'penjualan_det.produk_id = m_produk.id')
+                ->join('LEFT JOIN', 'm_produk', 'penjualan_det.produk_id = m_produk.id')
+                ->join('LEFt JOIN', 'r_penjualan_det as rp', 'rp.penjualan_det_id= penjualan_det.id')
                 ->where('penjualan_id="'.$id.'"')
-                ->select('penjualan_det.*, m_produk.*');
+                ->select('penjualan_det.id as id, penjualan_det.type as type, penjualan_det.produk_id as produk_id,penjualan_det.jumlah as jumlah, penjualan_det.harga as harga_awal, penjualan_det.diskon as diskon_awal , m_produk.nama,
+                        rp.harga as harga, rp.diskon as diskon, rp.jumlah_retur as jumlah_retur');
         $command2 = $query2->createCommand();
         $detail = $command2->queryAll();
         $this->setHeader(200);
@@ -285,22 +287,6 @@ class ReturpenjualanController extends Controller {
         echo json_encode(array('penjualan' => $models, 'detail' => $detail));
        
     }
-//    public function actionNm_customer() {
-//        $params = json_decode(file_get_contents("php://input"), true);
-//        $query = new Query;
-//
-//        $query->from('m_customer')
-//                ->where('id="' . $params . '"')
-//                ->select("*");
-//        $command = $query->createCommand();
-//        $models = $command->query()->read();
-//        $this->setHeader(200);
-//        $model['no_tlp'] = $models['no_tlp'];
-//        $model['alamat'] = $models['alamat'];
-//        $model['email'] = $models['email'];
-//
-//        echo json_encode(array('customer' => $model));
-//    }
 
     public function actionDet_produk($id) {
         $query = new Query;
@@ -316,7 +302,7 @@ class ReturpenjualanController extends Controller {
 
     public function actionDelete($id) {
         $model = $this->findModel($id);
-        $deleteDetail = PenjualanDet::deleteAll(['penjualan_id' => $id]);
+        $deleteDetail = RPenjualanDet::deleteAll(['r_penjualan_id' => $id]);
 
         if ($model->delete()) {
             $this->setHeader(200);
@@ -329,7 +315,7 @@ class ReturpenjualanController extends Controller {
     }
 
     protected function findModel($id) {
-        if (($model = Penjualan::findOne($id)) !== null) {
+        if (($model = RPenjualan::findOne($id)) !== null) {
             return $model;
         } else {
 

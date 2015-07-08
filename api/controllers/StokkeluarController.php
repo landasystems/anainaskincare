@@ -175,7 +175,7 @@ class StokkeluarController extends Controller {
                 $det->save();
 
                 $stok = new \app\models\MStok();
-                $update = $stok->process('out', $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, 'initial');
+                $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, 'initial');
             }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
@@ -201,6 +201,11 @@ class StokkeluarController extends Controller {
                 $det->harga = str_replace('.', '', $det->harga);
                 $det->stok_keluar_id = $model->id;
                 $det->save();
+
+                \app\models\MStok::deleteAll('cabang_id=' . $model->cabang_id . ' and produk_id=' . $det->produk_id . ' and kode= "' . $model->kode . '"');
+                \app\models\KartuStok::deleteAll('cabang_id=' . $model->cabang_id . ' and produk_id=' . $det->produk_id . ' and kode= "' . $model->kode . '"');
+                $stok = new \app\models\MStok();
+                $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, 'initial');
             }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
@@ -213,6 +218,8 @@ class StokkeluarController extends Controller {
     public function actionDelete($id) {
         $model = $this->findModel($id);
         $deleteDetail = StokKeluarDet::deleteAll(['stok_keluar_id' => $id]);
+        \app\models\MStok::deleteAll('cabang_id=' . $model->cabang_id . ' and produk_id=' . $det->produk_id . ' and kode= "' . $model->kode . '"');
+        \app\models\KartuStok::deleteAll('cabang_id=' . $model->cabang_id . ' and produk_id=' . $det->produk_id . ' and kode= "' . $model->kode . '"');
 
         if ($model->delete()) {
             $this->setHeader(200);
