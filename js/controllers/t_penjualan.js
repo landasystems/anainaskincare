@@ -38,7 +38,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
     });
     $scope.getcustomer = function(wo) {
         Data.post('penjualan/nm_customer/', wo).then(function(data) {
-            $scope.form = data.customer;
+            $scope.retrive = data.customer;
             $scope.form.customer_id = wo;
 
         });

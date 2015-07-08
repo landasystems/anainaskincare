@@ -106,6 +106,16 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
     Data.get('stokkeluar/product').then(function (data) {
         $scope.list_produk = data.data;
     });
+    
+//    $scope.code_cabang = null;
+    
+    $scope.getkode = function(id) {
+        Data.get('stokkeluar/kode_cabang/'+ id).then(function(data) {
+             $scope.form.kode = data.kode;
+            $scope.form.cabang_id = id;
+
+        });
+    };
 
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
@@ -141,7 +151,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         $scope.is_view = false;
         $scope.formtitle = "Form Persediaan Keluar";
         $scope.form = {};
-//        $scope.detskeluar = [{}];
+       
 
 
     };
