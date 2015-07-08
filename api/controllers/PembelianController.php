@@ -282,7 +282,7 @@ class PembelianController extends Controller {
                 $id[] = $val['id'];
             }
 //            Yii::error($pembelianDet);
-            $deleteDetail = PembelianDet::deleteAll(['pembelian_id' => $model->id . ' AND id NOT IN(' . implode(',',$id) . ')']);
+            $deleteDetail = PembelianDet::deleteAll('id NOT IN ('.implode(',',$id).') AND pembelian_id='.$model->id);
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {

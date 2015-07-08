@@ -83,20 +83,31 @@
                                 </thead>
                                 <tbody ng-repeat="list in list_detail">
                                     <tr>
-                                        <td colspan="10"><b>{{list.title.produk}}</b></td>
-                                        <td colspan="2" align="right"><b>{{list.title.kategori}}</b></td>
+                                        <td colspan="9"><b>{{list.title.produk}}</b></td>
+                                        <td colspan="3" align="right"><b>{{list.title.kategori}}</b></td>
                                     </tr>
-                                    <tr ng-repeat="detail in list.body" ng-init="jumlah = 0;
-                                                        harga = 0">
+                                    <tr ng-repeat="detail in list.body">
                                         <td>{{detail.tanggal| date}}</td>
                                         <td>{{detail.keterangan}}</td>
                                         <td>{{detail.kode}}</td>
-                                        <td><p ng-if="detail.masuk.jumlah !== 0">{{detail.masuk.jumlah}} {{list.title.satuan}}</p></td>
-                                        <td><p ng-if="detail.masuk.harga !== 0">{{detail.masuk.harga| currency}}</p></td>
-                                        <td><p ng-if="detail.masuk.sub_total !== 0">{{detail.masuk.sub_total| currency}}</p></td>
-                                        <td><p ng-if="detail.keluar.jumlah !== 0">{{detail.keluar.jumlah}} {{list.title.satuan}}</p></td>
-                                        <td><p ng-if="detail.keluar.harga !== 0">{{detail.keluar.harga| currency}}</p></td>
-                                        <td><p ng-if="detail.keluar.sub_total !== 0">{{detail.keluar.sub_total| currency}}</p></td>
+                                        <td>
+                                            <p ng-if="detail.masuk.jumlah !== 0">{{detail.masuk.jumlah}} {{list.title.satuan}}</p>
+                                        </td>
+                                        <td>
+                                            <p ng-if="detail.masuk.harga !== 0">{{detail.masuk.harga| currency}}</p>
+                                        </td>
+                                        <td>
+                                            <p ng-if="detail.masuk.sub_total !== 0">{{detail.masuk.sub_total| currency}}</p>
+                                        </td>
+                                        <td>
+                                            <p ng-repeat="jmlKeluar in detail.keluar.jumlah">{{jmlKeluar}} {{list.title.satuan}}</p>
+                                        </td>
+                                        <td>
+                                            <p ng-repeat="hargaKeluar in detail.keluar.harga">{{hargaKeluar| currency}}</p>
+                                        </td>
+                                        <td>
+                                            <p ng-repeat="saldoKeluar in detail.keluar.sub_total">{{saldoKeluar| currency}}</p>
+                                        </td>
                                         <td>
                                             <p ng-repeat="jmlSaldo in detail.saldo.jumlah">{{jmlSaldo}} {{list.title.satuan}}</p>
                                         </td>
@@ -109,28 +120,28 @@
                                     </tr>
                                     <tr>
                                         <td colspan="3"><b>Total</b></td>
+                                        <td><b>{{list.total.masuk.jumlah}}</b></td>
                                         <td></td>
+                                        <td><b>{{list.total.masuk.harga| currency}}</b></td>
+                                        <td><b>{{list.total.keluar.jumlah}}</b></td>
                                         <td></td>
+                                        <td><b>{{list.total.keluar.harga| currency}}</b></td>
+                                        <td><b>{{list.total.saldo.jumlah}}</b></td>
                                         <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td><b>{{list.total.jumlah}}</b></td>
-                                        <td></td>
-                                        <td><b>{{list.total.harga| currency}}</b></td>
+                                        <td><b>{{list.total.saldo.harga| currency}}</b></td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <td colspan="9" align="right"><b>Total Seluruh Stok</b></td>
-                                        <td><b>{{laporan.grandJml}}<b></td>
-                                                    <td></td>
-                                                    <td><b>{{laporan.grandHarga| currency}}</b></td>
-                                                    </tr>
-                                                    </tfoot>
-                                                    </table>
-                                                    </div>
-                                                    </div>
-                                                    </div>
-                                                    </div>
-                                                    </div>
+                                        <td><b>{{laporan.grandJml}}</b></td>
+                                        <td></td>
+                                        <td><b>{{laporan.grandHarga| currency}}</b></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
