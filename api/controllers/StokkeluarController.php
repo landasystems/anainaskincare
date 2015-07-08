@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\StokKeluar;
+use app\models\MStok;
+use app\models\KartuStok;
 use app\models\StokKeluarDet;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -20,6 +22,8 @@ class StokkeluarController extends Controller {
                 'actions' => [
                     'index' => ['get'],
                     'view' => ['get'],
+                    'kode' => ['get'],
+                    'kode_cabang' => ['get'],
                     'excel' => ['get'],
                     'create' => ['post'],
                     'update' => ['post'],
@@ -79,6 +83,32 @@ class StokkeluarController extends Controller {
         $this->setHeader(200);
 
         echo json_encode(array('status' => 1, 'data' => $models));
+    }
+    
+    
+    
+    public function actionKode_cabang($id) {
+        $query = new Query;
+
+        $query->from('m_cabang')
+                ->where('id="' . $id . '"')
+                ->select("*");
+        $command = $query->createCommand();
+        $models = $command->query()->read();
+        $code = $models['kode'];
+        
+        $query2 = new Query;
+        $query2->from('stok_keluar')
+                ->select('kode')
+                ->orderBy('kode DESC')
+                ->limit(1);
+
+        $command2 = $query2->createCommand();
+        $models2 = $command2->query()->read();
+        $kode_mdl = (substr($models2['kode'],-5) + 1);
+        $kode=substr('00000'.$kode_mdl,strlen($kode_mdl));
+        $this->setHeader(200);
+        echo json_encode(array('status' => 1,'kode' => 'KELUAR/'.$code.'/'.$kode));
     }
 
     public function actionIndex() {
@@ -174,12 +204,10 @@ class StokkeluarController extends Controller {
             foreach ($detailskeluar as $val) {
                 $det = new StokKeluarDet();
                 $det->attributes = $val;
-                $det->jumlah = str_replace('.', '', $det->jumlah);
-                $det->harga = str_replace('.', '', $det->harga);
                 $det->stok_keluar_id = $model->id;
                 $det->save();
 
-                $stok = new \app\models\MStok();
+                $stok = new MStok();
                 $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, 'initial');
             }
             $this->setHeader(200);
@@ -207,9 +235,9 @@ class StokkeluarController extends Controller {
                 $det->stok_keluar_id = $model->id;
                 $det->save();
 
-                \app\models\MStok::deleteAll('cabang_id=' . $model->cabang_id . ' and produk_id=' . $det->produk_id . ' and kode= "' . $model->kode . '"');
+                MStok::deleteAll('cabang_id=' . $model->cabang_id . ' and produk_id=' . $det->produk_id . ' and kode= "' . $model->kode . '"');
                 \app\models\KartuStok::deleteAll('cabang_id=' . $model->cabang_id . ' and produk_id=' . $det->produk_id . ' and kode= "' . $model->kode . '"');
-                $stok = new \app\models\MStok();
+                $stok = new MStok();
                 $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, 'initial');
             }
             $this->setHeader(200);
@@ -223,7 +251,7 @@ class StokkeluarController extends Controller {
     public function actionDelete($id) {
         $model = $this->findModel($id);
         $deleteDetail = StokKeluarDet::deleteAll(['stok_keluar_id' => $id]);
-        \app\models\MStok::deleteAll('cabang_id=' . $model->cabang_id . ' and produk_id=' . $det->produk_id . ' and kode= "' . $model->kode . '"');
+        MStok::deleteAll('cabang_id=' . $model->cabang_id . ' and produk_id=' . $det->produk_id . ' and kode= "' . $model->kode . '"');
         \app\models\KartuStok::deleteAll('cabang_id=' . $model->cabang_id . ' and produk_id=' . $det->produk_id . ' and kode= "' . $model->kode . '"');
 
         if ($model->delete()) {

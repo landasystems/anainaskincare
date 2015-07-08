@@ -20,6 +20,7 @@ class StokmasukController extends Controller {
                 'actions' => [
                     'index' => ['get'],
                     'view' => ['get'],
+                    'kode' => ['get'],
                     'excel' => ['get'],
                     'create' => ['post'],
                     'update' => ['post'],
@@ -79,6 +80,24 @@ class StokmasukController extends Controller {
         $this->setHeader(200);
 
         echo json_encode(array('status' => 1, 'data' => $models));
+    }
+    
+    public function actionKode() {
+        $query = new Query;
+        $query->from('stok_masuk')
+                ->select('kode')
+                ->orderBy('kode DESC')
+                ->limit(1);
+
+        $command = $query->createCommand();
+        $models = $command->query()->read();
+        $kode_mdl = (substr($models['kode'],-5) + 1);
+        $kode=substr('00000'.$kode_mdl,strlen($kode_mdl));
+
+        Yii::error($command->query());
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'kode' => $kode));
     }
 
     public function actionIndex() {

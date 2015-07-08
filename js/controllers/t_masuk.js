@@ -12,14 +12,14 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
         weekStart: 0
     }
 
-    $scope.detsmasuk = 
+    $scope.detsmasuk = [
         {
             stok_masuk_id: '',
             produk_id: '',
             jumlah: '',
             harga: '',
             sub_total: '0'
-        };
+        }];
         
     $scope.produk = {
         minimumInputLength: 3,
@@ -139,7 +139,9 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
         $scope.is_view = false;
         $scope.formtitle = "Form Persediaan Masuk";
         $scope.form = {};
-        $scope.detsmasuk = [{}];
+        Data.get('stokmasuk/kode').then(function(data) {
+            $scope.form.kode = 'MASUK/MLG/'+data.kode;
+        });
 
 
     };
