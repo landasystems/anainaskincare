@@ -27,7 +27,7 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
             param['filter'] = tableState.search.predicateObject;
         }
 
-        Data.get('pembelian', param).then(function (data) {
+        Data.get('returpembelian', param).then(function (data) {
             $scope.displayed = data.data;
             tableState.pagination.numberOfPages = Math.ceil(data.totalItems / limit);
         });
@@ -50,6 +50,7 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
         $scope.formtitle = "Edit Retur : " + form.kode;
         $scope.form = form;
         $scope.form.biaya_lain = 0;
+        $scope.selectedPembelian(form);
     };
     $scope.view = function (form) {
         $scope.is_edit = true;
@@ -58,13 +59,14 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
         $scope.formtitle = "Lihat Retur : " + form.kode;
         $scope.form = form;
         $scope.form.biaya_lain = 0;
+        $scope.selectedPembelian(form);
     };
     $scope.save = function (form, detail) {
         var data = {
             retur: form,
             returdet: detail,
         };
-        var url = 'returpembelian/create';
+        var url = (form.id > 0) ? 'returpembelian/update':'returpembelian/create';
         Data.post(url, data).then(function (result) {
             if (result.status == 0) {
                 toaster.pop('error', "Terjadi Kesalahan", result.errors);
@@ -98,11 +100,13 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
                 detail.jumlah_retur = (detail.jumlah_retur !== null) ? parseInt(detail.jumlah_retur) : 0;
                 detail.harga_retur = (detail.harga_retur !== null) ? parseInt(detail.harga_retur) : 0;
             });
-            $scope.subtotal();
+            
         });
+        $scope.subtotal();
     };
 
     $scope.subtotal = function () {
+//        alert('jancok');
         var total = 0;
         var sub_total = 0;
         var total_retur = 0;
@@ -111,6 +115,7 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
             var jml_retur = (detail.jumlah_retur.length) ? parseInt(detail.jumlah_retur) : 0;
             var harga_retur = (detail.harga_retur.length) ? parseInt(detail.harga_retur) : 0;
             var diskon = (detail.diskon != "") ? parseInt(detail.diskon) : 0;
+//            alert(jml_retur);
             total_retur += jml_retur * harga_retur;
             total_diskon += jml_retur * diskon;
             sub_total = (jml_retur * harga_retur) - (jml_retur * diskon);

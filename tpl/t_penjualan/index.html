@@ -1,6 +1,6 @@
 <div ng-controller="penjualanCtrl">
     <div class="bg-light lter b-b wrapper-md">
-        <h1 class="m-n font-thin h3">Data Master - Barang</h1>
+        <h1 class="m-n font-thin h3">Transaksi - Penjualan</h1>
     </div>
     <div class="wrapper-md" ng-show="!is_edit">
         <div class="panel panel-default" st-pipe="callServer" st-table="displayed">
@@ -131,7 +131,7 @@
                                 <label class="col-sm-3 control-label">Cabang</label>
                                 <div class="col-sm-9">
                                     <select class="form-control" ui-select2="" ui-jq="chosen" ng-change="" ng-model="form.cabang_id" ng-disabled="is_view" >
-                                        <option value="">-- Customer --</option>
+                                        <option value="">-- Cabang --</option>
                                         <option ng-repeat="cabang in sCabang" value="{{cabang.id}}">{{cabang.nama}}</option>
                                     </select>
                                 </div>
@@ -226,7 +226,7 @@
                                     <td>#</td>
                                 </tr>
                                 </thead>
-                                <tr ng-repeat="detail in detPenjualan">{{detPenjualan}}
+                                <tr ng-repeat="detail in detPenjualan">
                                     <td>
                                         <select ui-select2="" ng-change="getproduk(detail)" ng-model="detail.produk_id" ng-disabled="is_view" required style="width: 250px;">
                                             <option value="">-Pilih Produk-</option>

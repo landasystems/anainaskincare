@@ -173,7 +173,6 @@ class StokmasukController extends Controller {
 
                 $stok = new \app\models\MStok();
                 $update = $stok->process('in', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, 'initial');
-//                $updateStok = \app\models\MStok::
             }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
@@ -201,6 +200,8 @@ class StokmasukController extends Controller {
                 $det->save();
 
                 \app\models\MStok::deleteAll('cabang_id=' . $model->cabang_id . ' and produk_id=' . $det->produk_id . ' and kode= "' . $model->kode . '"');
+                \app\models\KartuStok::deleteAll('cabang_id=' . $model->cabang_id . ' and produk_id=' . $det->produk_id . ' and kode= "' . $model->kode . '"');
+                $stok = new \app\models\MStok();
                 $update = $stok->process('in', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, 'initial');
             }
             $this->setHeader(200);
@@ -214,6 +215,8 @@ class StokmasukController extends Controller {
     public function actionDelete($id) {
         $model = $this->findModel($id);
         $deleteDetail = StokMasukDet::deleteAll(['stok_masuk_id' => $id]);
+        \app\models\MStok::deleteAll('cabang_id=' . $model->cabang_id . ' and produk_id=' . $det->produk_id . ' and kode= "' . $model->kode . '"');
+        \app\models\KartuStok::deleteAll('cabang_id=' . $model->cabang_id . ' and produk_id=' . $det->produk_id . ' and kode= "' . $model->kode . '"');
 
         if ($model->delete()) {
             $this->setHeader(200);
