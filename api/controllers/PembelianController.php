@@ -261,12 +261,20 @@ class PembelianController extends Controller {
                 $credit->credit = $model->credit;
                 $credit->status = ($model->credit > 0) ? 'belum lunas' : 'lunas';
                 $credit->save();
+            } else if (empty($credit) && $model->credit != 0) {
+                $credit = new Hutang();
+                $credit->credit = $model->credit;
+                $credit->status = ($model->credit > 0) ? 'belum lunas' : 'lunas';
+                $credit->save();
             }
 
-            $deleteDetail = PembelianDet::deleteAll(['pembelian_id' => $model->id]);
             $pembelianDet = $params['pembeliandet'];
+            $deleteDetail = PembelianDet::deleteAll(['pembelian_id' => $model->id . ' AND id NOT IN(' . implode(',', $pembelianDet['id']) . ')']);
             foreach ($pembelianDet as $val) {
-                $det = new PembelianDet();
+                $det = PembelianDet::findOne($val['id']);
+                if (empty($det)) {
+                    $det = new PembelianDet();
+                }
                 $det->attributes = $val;
                 $det->pembelian_id = $model->id;
                 $det->save();
