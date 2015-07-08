@@ -86,6 +86,20 @@
                                         <td colspan="9"><b>{{list.title.produk}}</b></td>
                                         <td colspan="3" align="right"><b>{{list.title.kategori}}</b></td>
                                     </tr>
+                                    <tr>
+                                        <td>{{laporan.tanggal_saldo | date}}</td>
+                                        <td>Saldo Awal</td>
+                                        <td colspan="7"></td>
+                                        <td>
+                                            <p ng-repeat="saldoJml in list.saldo_awal.jumlah">{{saldoJml}} {{list.title.satuan}}</p>
+                                        </td>
+                                        <td>
+                                            <p ng-repeat="saldoHarga in list.saldo_awal.harga">{{saldoHarga | currency}} </p>
+                                        </td>
+                                        <td>
+                                            <p ng-repeat="saldoTotal in list.saldo_awal.sub_total">{{saldoTotal | currency}}</p>
+                                        </td>
+                                    </tr>
                                     <tr ng-repeat="detail in list.body">
                                         <td>{{detail.tanggal| date}}</td>
                                         <td>{{detail.keterangan}}</td>
