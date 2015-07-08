@@ -70,6 +70,7 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
 
     };
     $scope.save = function(form, detail) {
+        console.log(form);
         var data = {
             retur_penjualan: form,
             retur_penjualandet: detail,
