@@ -240,14 +240,28 @@ class LaporanController extends Controller {
                 ->join('JOIN', 'm_kategori as mk', 'mp.kategori_id = mk.id')
                 ->where("(date(ks.created_at) >= '" . $start . "' and date(ks.created_at) <= '" . $end . "') $criteria")
                 ->orderBy("ks.produk_id, ks.created_at ASC, ks.id ASC");
-//        $query->from(['m_produk', 'm_satuan', 'm_kategori', 'kartu_stok'])
-//                ->select("kartu_stok.*, m_produk.nama as produk, m_kategori.nama as kategori, m_satuan.nama as satuan")
-//                ->where("m_produk.kategori_id = m_kategori.id and m_produk.satuan_id = m_satuan.id and m_produk.id = kartu_stok.produk_id and (date(kartu_stok.created_at) >= '" . $start . "' and date(kartu_stok.created_at) <= '" . $end . "') $criteria")
-//                ->orderBy("kartu_stok.produk_id, kartu_stok.created_at ASC, kartu_stok.id ASC");
 
         $command = $query->createCommand();
         $kartu = $command->queryAll();
         $i = 0;
+
+        $a = 1;
+        if (!empty($saldoAwal)) {
+            foreach ($saldoAwal as $sAwal) {
+                $tmpSaldo['jumlah'][$a] = $sAwal['jumlah'];
+                $tmpSaldo['harga'][$a] = $sAwal['harga'];
+                $tmpSaldo['sub_total'][$a] = $sAwal['sub_total'];
+
+                $tmp[$a]['jumlah'] = $sAwal['jumlah'];
+                $tmp[$a]['harga'] = $sAwal['harga'];
+                $a++;
+            }
+        } else {
+            $tmpSaldo['jumlah'][$a] = 0;
+            $tmpSaldo['harga'][$a] = 0;
+            $tmpSaldo['sub_total'][$a] = 0;
+            $a++;
+        }
 
         if (empty($kartu)) {
             
@@ -257,7 +271,6 @@ class LaporanController extends Controller {
             $a = 1;
             foreach ($kartu as $val) {
                 if ($produk_id != $val['produk_id']) {
-                    $tmpSaldo = array('jumlah' => '', 'harga' => '', 'sub_total' => '');
                     $tmpKeluar = array('jumlah' => '', 'harga' => '', 'sub_total' => '');
                     $tmp[1]['jumlah'] = 0;
                     $tmp[1]['harga'] = 0;
@@ -270,22 +283,7 @@ class LaporanController extends Controller {
                     $totalHarga['keluar'] = 0;
 
                     //memasang saldo awal
-                    if (!empty($saldoAwal)) {
-                        foreach ($saldoAwal[$val['produk_id']] as $sAwal) {
-                            $tmpSaldo['jumlah'][$a] = $sAwal['jumlah'];
-                            $tmpSaldo['harga'][$a] = $sAwal['harga'];
-                            $tmpSaldo['sub_total'][$a] = $sAwal['sub_total'];
 
-                            $tmp[$a]['jumlah'] = $sAwal['jumlah'];
-                            $tmp[$a]['harga'] = $sAwal['harga'];
-                            $a++;
-                        }
-                    } else {
-                        $tmpSaldo['jumlah'][$a] = 0;
-                        $tmpSaldo['harga'][$a] = 0;
-                        $tmpSaldo['sub_total'][$a] = 0;
-                        $a++;
-                    }
                     $body[$val['produk_id']]['saldo_awal']['jumlah'] = $tmpSaldo['jumlah'];
                     $body[$val['produk_id']]['saldo_awal']['harga'] = $tmpSaldo['harga'];
                     $body[$val['produk_id']]['saldo_awal']['sub_total'] = $tmpSaldo['sub_total'];

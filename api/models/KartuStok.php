@@ -69,13 +69,13 @@ class KartuStok extends \yii\db\ActiveRecord {
         } elseif ($keterangan == "stok keluar") {
             $criteria .= ' and stok_keluar_id = ' . $trans_id;
         } elseif ($keterangan == "penjualan") {
-            $criteria .= ' and penjualan = ' . $trans_id;
+            $criteria .= ' and penjualan_id = ' . $trans_id;
         } elseif ($keterangan == "pembelian") {
-            $criteria .= ' and pembelian = ' . $trans_id;
+            $criteria .= ' and pembelian_id = ' . $trans_id;
         } elseif ($keterangan == "r_penjualan") {
-            $criteria .= ' and r_penjualan = ' . $trans_id;
+            $criteria .= ' and r_penjualan_id = ' . $trans_id;
         } elseif ($keterangan == "r_pembelian") {
-            $criteria .= ' and r_pembelian = ' . $trans_id;
+            $criteria .= ' and r_pembelian_id = ' . $trans_id;
         }
 
         KartuStok::deleteAll("keterangan = '" . $keterangan . "' $criteria");
@@ -118,18 +118,18 @@ class KartuStok extends \yii\db\ActiveRecord {
             $criteria .= ' and kartu_stok.cabang_id = ' . $cabang;
 
         if (!empty($kategori))
-            $criteria .= ' and m_produk.kategori_id = ' . $params['kategori_id'];
+            $criteria .= ' and m_produk.kategori_id = ' . $kategori;
 
         if ($type == 'balance') {
-            $criteria .= "date(kartu_stok.created_at) < '" . $date . "'";
+            $criteria .= " and date(kartu_stok.created_at) < '" . $date . "'";
         } else if ($type == 'today') {
-            $criteria .= "date(kartu_stok.created_at) <= '" . date("Y-m-d") . "'";
+            $criteria .= " and date(kartu_stok.created_at) <= '" . date("Y-m-d") . "'";
         }
 
         $query = new Query;
         $query->from(['m_produk', 'm_satuan', 'm_kategori', 'kartu_stok'])
                 ->select("kartu_stok.*, m_produk.nama as produk, m_kategori.nama as kategori, m_satuan.nama as satuan")
-                ->where("m_produk.kategori_id = m_kategori.id and m_produk.satuan_id = m_satuan.id and m_produk.id = kartu_stok.produk_id and $criteria")
+                ->where("m_produk.kategori_id = m_kategori.id and m_produk.satuan_id = m_satuan.id and m_produk.id = kartu_stok.produk_id $criteria")
                 ->orderBy("kartu_stok.produk_id, kartu_stok.created_at ASC, kartu_stok.id ASC");
 
         $command = $query->createCommand();

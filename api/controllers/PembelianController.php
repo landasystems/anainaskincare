@@ -6,6 +6,7 @@ use Yii;
 use app\models\Pembelian;
 use app\models\PembelianDet;
 use app\models\Hutang;
+use app\models\KartuStok;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -238,7 +239,11 @@ class PembelianController extends Controller {
                 $modelDet = new PembelianDet();
                 $modelDet->attributes = $val;
                 $modelDet->pembelian_id = $model->id;
-                $modelDet->save();
+                if ($modelDet->save()) {
+                    $keterangan = 'pembelian';
+                    $stok = new KartuStok();
+                    $update = $stok->process('in', $model->tanggal, $model->kode, $modelDet->produk_id, $modelDet->jumlah, $model->cabang_id, $modelDet->harga, $keterangan, $model->id);
+                }
             }
 
             $this->setHeader(200);
@@ -278,8 +283,12 @@ class PembelianController extends Controller {
                 }
                 $det->attributes = $val;
                 $det->pembelian_id = $id;
-                if($det->save()){
+                if ($det->save()) {
                     $id_det[] = $det->id;
+                    $keterangan = 'pembelian';
+                    $stok = new \app\models\KartuStok();
+                    $hapus = $stok->hapusKartu($keterangan, $model->id);
+                    $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
                 }
             }
             $deleteDetail = PembelianDet::deleteAll('id NOT IN (' . implode(',', $id_det) . ') AND pembelian_id=' . $model->id);
