@@ -121,15 +121,15 @@ class KartuStok extends \yii\db\ActiveRecord {
             $criteria .= ' and m_produk.kategori_id = ' . $kategori;
 
         if ($type == 'balance') {
-            $criteria .= "date(kartu_stok.created_at) < '" . $date . "'";
+            $criteria .= " and date(kartu_stok.created_at) < '" . $date . "'";
         } else if ($type == 'today') {
-            $criteria .= "date(kartu_stok.created_at) <= '" . date("Y-m-d") . "'";
+            $criteria .= " and date(kartu_stok.created_at) <= '" . date("Y-m-d") . "'";
         }
 
         $query = new Query;
         $query->from(['m_produk', 'm_satuan', 'm_kategori', 'kartu_stok'])
                 ->select("kartu_stok.*, m_produk.nama as produk, m_kategori.nama as kategori, m_satuan.nama as satuan")
-                ->where("m_produk.kategori_id = m_kategori.id and m_produk.satuan_id = m_satuan.id and m_produk.id = kartu_stok.produk_id and $criteria")
+                ->where("m_produk.kategori_id = m_kategori.id and m_produk.satuan_id = m_satuan.id and m_produk.id = kartu_stok.produk_id $criteria")
                 ->orderBy("kartu_stok.produk_id, kartu_stok.created_at ASC, kartu_stok.id ASC");
 
         $command = $query->createCommand();

@@ -239,12 +239,13 @@ class PembelianController extends Controller {
                 $modelDet = new PembelianDet();
                 $modelDet->attributes = $val;
                 $modelDet->pembelian_id = $model->id;
-                $modelDet->save();
-                $keterangan = 'pembelian';
-                $stok = new KartuStok();
-                $update = $stok->process('out', $model->tanggal, $model->kode, $data['produk_id'], $data['jumlah'], $model->cabang_id, $data['harga'], $keterangan, $model->id);
+                if ($modelDet->save()) {
+                    $keterangan = 'pembelian';
+                    $stok = new KartuStok();
+                    $update = $stok->process('in', $model->tanggal, $model->kode, $modelDet->produk_id, $modelDet->jumlah, $model->cabang_id, $modelDet->harga, $keterangan, $model->id);
+                }
             }
-            
+
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -282,8 +283,12 @@ class PembelianController extends Controller {
                 }
                 $det->attributes = $val;
                 $det->pembelian_id = $id;
-                if($det->save()){
+                if ($det->save()) {
                     $id_det[] = $det->id;
+                    $keterangan = 'pembelian';
+                    $stok = new \app\models\KartuStok();
+                    $hapus = $stok->hapusKartu($keterangan, $model->id);
+                    $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
                 }
             }
             $deleteDetail = PembelianDet::deleteAll('id NOT IN (' . implode(',', $id_det) . ') AND pembelian_id=' . $model->id);
