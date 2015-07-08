@@ -19,6 +19,7 @@ class PegawaiController extends Controller {
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'index' => ['get'],
+                    'excel' => ['get'],
                     'view' => ['get'],
                     'klinik' => ['get'],
                     'create' => ['post'],
@@ -118,7 +119,7 @@ class PegawaiController extends Controller {
                 ->from('m_pegawai as t1, m_cabang as t2')
                 ->where("t1.cabang_id = t2.id")
                 ->orderBy($sort)
-                ->select("t1.id as id,t1.kode as kode, t1.nama as nama, t1.jenis_kelamin as jenis_kelamin, t1.no_tlp as no_tlp, t1.email as email, t1.alamat as alamat, t1.jabatan as jabatan, t2.nama as office_place, t1.cabang_id as cabang_id, t1.is_deleted as is_deleted");
+                ->select("t1.id as id,t1.kode as kode, t1.nama as nama, t1.jenis_kelamin as jenis_kelamin, t1.no_tlp as no_tlp, t1.email as email, t1.alamat as alamat, t1.jabatan as jabatan, t2.nama as office_place, t1.cabang_id as cabang_id, t2.nama as cabang, t1.is_deleted as is_deleted");
 
         //filter
         if (isset($params['filter'])) {
@@ -127,6 +128,9 @@ class PegawaiController extends Controller {
                 $query->andFilterWhere(['like', 't1.' . $key, $val]);
             }
         }
+
+        session_start();
+        $_SESSION['query'] = $query;
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -218,7 +222,6 @@ class PegawaiController extends Controller {
 
         header($status_header);
         header('Content-type: ' . $content_type);
-        header('X-Powered-By: ' . "Nintriva <nintriva.com>");
     }
 
     private function _getStatusCodeMessage($status) {
@@ -233,6 +236,14 @@ class PegawaiController extends Controller {
             501 => 'Not Implemented',
         );
         return (isset($codes[$status])) ? $codes[$status] : '';
+    }
+
+    public function actionExcel() {
+        session_start();
+        $query = $_SESSION['query'];
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+        return $this->render("excel", ['models' => $models]);
     }
 
 }

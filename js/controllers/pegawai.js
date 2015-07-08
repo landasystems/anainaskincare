@@ -1,11 +1,12 @@
 app.controller('pegawaiCtrl', function ($scope, Data, toaster) {
     //init data
     var tableStateRef;
+    var paramRef;
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
     $scope.is_create = false;
-    Data.get('pegawai/klinik').then(function(data) {
+    Data.get('pegawai/klinik').then(function (data) {
         $scope.office_place = data.office_place;
     });
 
@@ -23,7 +24,7 @@ app.controller('pegawaiCtrl', function ($scope, Data, toaster) {
         if (tableState.search.predicateObject) {
             param['filter'] = tableState.search.predicateObject;
         }
-
+        paramRef = param;
         Data.get('pegawai', param).then(function (data) {
             $scope.displayed = data.data;
 //            console.log(data);
@@ -32,6 +33,12 @@ app.controller('pegawaiCtrl', function ($scope, Data, toaster) {
 
         $scope.isLoading = false;
     };
+
+    $scope.excel = function () {
+        Data.get('supplier', paramRef).then(function (data) {
+            window.location = 'api/web/pegawai/excel';
+        });
+    }
 
     $scope.create = function (form) {
         $scope.is_edit = true;
@@ -50,7 +57,7 @@ app.controller('pegawaiCtrl', function ($scope, Data, toaster) {
     $scope.view = function (form) {
         $scope.is_edit = true;
         $scope.is_view = true;
-        $scope.is_create= false;
+        $scope.is_create = false;
         $scope.formtitle = "Lihat Karyawan : " + form.name;
         $scope.form = form;
     };
@@ -67,7 +74,7 @@ app.controller('pegawaiCtrl', function ($scope, Data, toaster) {
         });
     };
     $scope.cancel = function () {
-        if (!$scope.is_view){ //hanya waktu edit cancel, di load table lagi
+        if (!$scope.is_view) { //hanya waktu edit cancel, di load table lagi
             $scope.callServer(tableStateRef);
         }
         $scope.is_edit = false;

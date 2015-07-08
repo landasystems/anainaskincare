@@ -61,4 +61,8 @@ class Pegawai extends \yii\db\ActiveRecord
             'is_deleted' => 'Is Deleted',
         ];
     }
+    public function getCabang()
+    {
+        return $this->hasMany(Cabang::className(), ['cabang_id' => 'id']);
+    }
 }

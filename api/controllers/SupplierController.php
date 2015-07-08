@@ -19,6 +19,7 @@ class SupplierController extends Controller {
                 'actions' => [
                     'index' => ['get'],
                     'view' => ['get'],
+                    'excel' => ['get'],
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
@@ -90,6 +91,10 @@ class SupplierController extends Controller {
                 $query->andFilterWhere(['like', $key, $val]);
             }
         }
+        
+        
+        session_start();
+        $_SESSION['query'] = $query;
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -168,7 +173,6 @@ class SupplierController extends Controller {
 
         header($status_header);
         header('Content-type: ' . $content_type);
-        header('X-Powered-By: ' . "Nintriva <nintriva.com>");
     }
 
     private function _getStatusCodeMessage($status) {
@@ -183,6 +187,15 @@ class SupplierController extends Controller {
             501 => 'Not Implemented',
         );
         return (isset($codes[$status])) ? $codes[$status] : '';
+    }
+    
+    //excel
+     public function actionExcel() {
+        session_start();
+        $query = $_SESSION['query'];
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+        return $this->render("excel", ['models'=>$models]);
     }
 
 }

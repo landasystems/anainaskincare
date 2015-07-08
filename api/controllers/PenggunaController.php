@@ -81,7 +81,7 @@ class PenggunaController extends Controller {
         $query->offset($offset)
                 ->limit($limit)
 //                ->select('m_user.id as id', 'm_roles.nama as roles')
-                ->from(['m_user','m_roles'])
+                ->from(['m_user', 'm_roles'])
                 ->where('m_user.roles_id = m_roles.id')
                 ->orderBy($sort)
                 ->select("m_user.id as id, m_roles.nama as roles, m_user.username as username, m_user.is_deleted as is_deleted, m_user.nama, m_user.password");
@@ -90,9 +90,11 @@ class PenggunaController extends Controller {
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
-                $query->andFilterWhere(['like', 'm_user.'.$key, $val]);
+                $query->andFilterWhere(['like', 'm_user.' . $key, $val]);
             }
         }
+
+        
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -185,7 +187,6 @@ class PenggunaController extends Controller {
 
         header($status_header);
         header('Content-type: ' . $content_type);
-        header('X-Powered-By: ' . "Nintriva <nintriva.com>");
     }
 
     private function _getStatusCodeMessage($status) {
@@ -201,6 +202,8 @@ class PenggunaController extends Controller {
         );
         return (isset($codes[$status])) ? $codes[$status] : '';
     }
+
+
 
 }
 
