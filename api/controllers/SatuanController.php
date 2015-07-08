@@ -168,7 +168,6 @@ class SatuanController extends Controller {
 
         header($status_header);
         header('Content-type: ' . $content_type);
-        header('X-Powered-By: ' . "Nintriva <nintriva.com>");
     }
 
     private function _getStatusCodeMessage($status) {
