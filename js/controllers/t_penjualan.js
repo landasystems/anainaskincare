@@ -40,6 +40,14 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         Data.post('penjualan/nm_customer/', wo).then(function(data) {
             $scope.retrive = data.customer;
             $scope.form.customer_id = wo;
+            $scope.form.credit = 0;
+
+        });
+    };
+    $scope.getkode_cabang = function(id) {
+        Data.get('penjualan/kode_cabang/'+ id).then(function(data) {
+            $scope.form.kode = data.kode;
+            $scope.form.cabang_id = id;
 
         });
     };

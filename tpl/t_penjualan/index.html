@@ -85,7 +85,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="col-md-6 col-sm-12">
-                            <p class="text-muted font-bold"></p>
+                            <p class="text-muted font-bold">Detail Customer</p>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Customer</label>
                                 <div class="col-sm-9">
@@ -125,11 +125,11 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Cabang</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control" ui-select2="" ui-jq="chosen" ng-change="" ng-model="form.cabang_id" ng-disabled="is_view" >
+                                    <select class="form-control" ui-select2="" ui-jq="chosen" ng-change="getkode_cabang(form.cabang_id)" ng-model="form.cabang_id" ng-disabled="is_view" >
                                         <option value="">-- Cabang --</option>
                                         <option ng-repeat="cabang in sCabang" value="{{cabang.id}}">{{cabang.nama}}</option>
                                     </select>
-                                </div>
+                                </div>35
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Tanggal</label>
@@ -153,36 +153,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-sm-12">
-                            <p class="text-muted font-bold">Detail Customer</p>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Customer</label>
-                                <div class="col-sm-9">
-                                    <select class="form-control" ui-select2="" ui-jq="chosen" ng-change="getcustomer(form.customer_id)" ng-model="form.customer_id" ng-disabled="is_view" >
-                                        <option value="">-- Customer --</option>
-                                        <option ng-repeat="customer in sCustomer" value="{{customer.id}}">{{customer.nama}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">No Telpon</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" ng-model="form.no_tlp" ng-disabled="true" >
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Email</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" ng-model="form.email" ng-disabled="true" >
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Alamat</label>
-                                <div class="col-sm-9">
-                                    <textarea class="form-control" rows="4" ng-model="form.alamat" ng-disabled="true" ></textarea>
-                                </div>
-                            </div>
-                        </div>
+                        
 
                         <div class="line line-dashed b-b line-lg pull-in"></div>
                         <h5 class="font-bold">- Detail Pesanan</h5> 

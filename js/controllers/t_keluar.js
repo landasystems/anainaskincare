@@ -151,9 +151,8 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         $scope.is_view = false;
         $scope.formtitle = "Form Persediaan Keluar";
         $scope.form = {};
+        $scope.form.tanggal= new Date();
        
-
-
     };
     $scope.update = function (id) {
         Data.get('stokkeluar/view/' + id).then(function (data) {
