@@ -15,14 +15,14 @@
                 <div class="form-horizontal">
                     <div class="form-group">
                         <div class="control-group">
-                            <label class="col-sm-2 control-label">Kode</label>
-                            <div class="col-sm-3">
+                            <label class="col-sm-3 control-label">Kode</label>
+                            <div class="col-sm-6">
                                 <input st-search="kode" class="form-control"/>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="col-sm-2 control-label">Nama</label>
-                            <div class="col-sm-3">
+                            <label class="col-sm-3 control-label">Nama</label>
+                            <div class="col-sm-6">
                                 <input st-search="nama" class="form-control"/>
 
                             </div>
@@ -30,8 +30,8 @@
                     </div>
                     <div class="form-group">
                         <div class="control-group">
-                            <label class="col-sm-2 control-label">Status</label>
-                            <div class="col-sm-3">
+                            <label class="col-sm-3 control-label">Status</label>
+                            <div class="col-sm-6">
                                 <select stInputEvent="change" st-search="is_deleted" class="form-control">
                                     <option value="0">Aktif</option>
                                     <option value="1">Terhapus</option>
@@ -96,47 +96,41 @@
                         <tr>
                             <td style="width:55%;">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">Kode</label>
-                                    <div class="col-sm-4">
+                                    <label class="col-sm-3 control-label">Kode</label>
+                                    <div class="col-sm-6">
                                         <input type="text" class="form-control" ng-model="form.kode" ng-disabled="is_view" ng-readonly="is_create == false" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">Nama Klinik</label>
-                                    <div class="col-sm-4">
+                                    <label class="col-sm-3 control-label">Nama Klinik</label>
+                                    <div class="col-sm-6">
                                         <input type="text" class="form-control" ng-model="form.nama" ng-disabled="is_view" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">Alamat</label>
-                                    <div class="col-sm-4">
-                                        <div class="btn-group m-r">
-                                            <textarea ng-model="form.alamat" ng-disabled="is_view"></textarea>
-                                        </div>
+                                    <label class="col-sm-3 control-label">Alamat</label>
+                                    <div class="col-sm-6">
+                                        <textarea class="form-control" ng-model="form.alamat" ng-disabled="is_view"></textarea>
                                     </div>
                                 </div>
 
                             </td>
                             <td style="vertical-align: top">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">No. Telepon</label>
-                                    <div class="col-sm-4">
-                                        <div class="btn-group m-r">
-                                            <input type="text" class="form-control" ng-model="form.no_tlp" ng-disabled="is_view" required>
-                                        </div>
+                                    <label class="col-sm-3 control-label">No. Telepon</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" ng-model="form.no_tlp" ng-disabled="is_view" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">Email</label>
-                                    <div class="col-sm-4">
-                                        <div class="btn-group m-r">
-                                            <input type="email" class="form-control" ng-model="form.email" ng-disabled="is_view" required>
-                                        </div>
+                                    <label class="col-sm-3 control-label">Email</label>
+                                    <div class="col-sm-6">
+                                        <input type="email" class="form-control" ng-model="form.email" ng-disabled="is_view">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">Status</label>
-                                    <div class="col-sm-4">
+                                    <label class="col-sm-3 control-label">Status</label>
+                                    <div class="col-sm-6">
                                         <div class="btn-group m-r">
                                             <label class="btn btn-default" ng-model="form.is_deleted" btn-radio="'0'" required>Aktif</label>
                                             <label class="btn btn-default" ng-model="form.is_deleted" btn-radio="'1'" required>Terhapus</label>
