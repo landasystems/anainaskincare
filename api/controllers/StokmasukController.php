@@ -95,7 +95,7 @@ class StokmasukController extends Controller {
         $code = $models['kode'];
         
         $query2 = new Query;
-        $query2->from('stok_keluar')
+        $query2->from('stok_masuk')
                 ->select('kode')
                 ->orderBy('kode DESC')
                 ->limit(1);
