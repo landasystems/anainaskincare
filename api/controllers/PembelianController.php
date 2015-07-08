@@ -269,7 +269,8 @@ class PembelianController extends Controller {
             }
 
             $pembelianDet = $params['pembeliandet'];
-            $deleteDetail = PembelianDet::deleteAll(['pembelian_id' => $model->id . ' AND id NOT IN(' . implode(',', $pembelianDet['id']) . ')']);
+            $id = array();
+            
             foreach ($pembelianDet as $val) {
                 $det = PembelianDet::findOne($val['id']);
                 if (empty($det)) {
@@ -278,7 +279,10 @@ class PembelianController extends Controller {
                 $det->attributes = $val;
                 $det->pembelian_id = $model->id;
                 $det->save();
+                $id[] = $val['id'];
             }
+//            Yii::error($pembelianDet);
+            $deleteDetail = PembelianDet::deleteAll(['pembelian_id' => $model->id . ' AND id NOT IN(' . implode(',',$id) . ')']);
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
