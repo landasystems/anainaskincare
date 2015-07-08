@@ -8,68 +8,14 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
     $scope.is_view = false;
     $scope.is_create = false;
     $scope.penjualan = []
+    $scope.detPenjualan = []
     $scope.datepickerOptions = {
         language: 'id',
         autoclose: true,
         weekStart: 0
     }
 
-    Data.get('returpenjualan/customer').then(function(data) {
-        $scope.sCustomer = data.customer;
-    });
-    Data.get('returpenjualan/cabang').then(function(data) {
-        $scope.sCabang = data.cabang;
-    });
-    Data.get('returpenjualan/kodepenjualan').then(function(data) {
-        $scope.listkodepenjualan = data.listkode;
-    });
 
-    $scope.cabang = {
-        minimumInputLength: 3,
-        allowClear: true,
-    }
-
-    Data.get('returpenjualan/produk').then(function(data) {
-        $scope.sProduk = data.produk;
-    });
-    $scope.getkodepenjualan = function(id) {
-        Data.get('returpenjualan/det_kodepenjualan/' + id).then(function(data) {
-            $scope.penjualan = data.penjualan;
-            $scope.form.penjualan_id = id;
-            $scope.detPenjualan = data.detail;
-            angular.forEach($scope.detPenjualan, function(detail) {
-                detail.jumlah_retur = 0;
-            })
-
-        });
-    };
-
-    $scope.total = function() {
-        var total = 0;
-        var total_retur = 0;
-        var diskon = 0;
-        var diskon_retur = 0;
-        angular.forEach($scope.detPenjualan, function(detail) {
-
-            diskon_retur += detail.jumlah_retur * detail.diskon;
-            total_retur += detail.jumlah_retur * detail.harga;
-            var sub_total = (total_retur) - (diskon_retur);
-            detail.sub_total = sub_total;
-        })
-        $scope.form.total = (total_retur - diskon_retur);
-        $scope.form.belanja = (total - diskon);
-        $scope.form.total_belanja = total_retur;
-        $scope.form.total_diskon = diskon_retur;
-
-    }
-    $scope.bayar = function() {
-        var total = parseInt($scope.form.total);
-        var cash = parseInt($scope.form.cash);
-        var diskon = parseInt($scope.form.total_diskon);
-        var credit = (total - diskon) - cash;
-        $scope.form.credit = (credit > 0) ? credit : 0;
-
-    }
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
         $scope.isLoading = true;
@@ -103,37 +49,33 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
 
 
     };
-    $scope.update = function(row) {
-        $scope.form = row;
-        Data.get('returpenjualan/view/' + row.id).then(function(data) {
-            $scope.form = data.data;
-            $scope.detPenjualan = data.detail;
-            $scope.penjualan = data.penjualan;
-            $scope.is_edit = true;
-            $scope.is_view = false;
-            $scope.is_create = true;
-            $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode;
+    $scope.update = function(form) {
+        $scope.form = form;
+        $scope.is_edit = true;
+        $scope.is_view = false;
+        $scope.is_create = true;
+        $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode;
 
-        })
+        $scope.getkodepenjualan(form);
+
     };
     $scope.view = function(form) {
-        Data.get('returpenjualan/view/' + row.id).then(function(data) {
-            $scope.form = data.data;
-            $scope.detPenjualan = data.detail;
-            $scope.penjualan = data.penjualan;
-            $scope.is_edit = true;
-            $scope.is_view = false;
-            $scope.is_create = true;
-            $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode;
+        $scope.form = form;
+        $scope.is_edit = true;
+        $scope.is_view = false;
+        $scope.is_create = true;
+        $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode;
 
-        })
+        $scope.getkodepenjualan(form);
+
     };
     $scope.save = function(form, detail) {
         var data = {
             retur_penjualan: form,
             retur_penjualandet: detail,
         };
-        var url = 'returpenjualan/create'
+//        var url = 'returpenjualan/create'
+        var url = (form.id > 0) ? 'returpenjualan/update' : 'returpenjualan/create';
         Data.post(url, data).then(function(result) {
             if (result.status == 0) {
                 toaster.pop('error', "Terjadi Kesalahan", result.errors);
@@ -159,6 +101,62 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
             });
         }
     };
+    Data.get('returpenjualan/customer').then(function(data) {
+        $scope.sCustomer = data.customer;
+    });
+    Data.get('returpenjualan/cabang').then(function(data) {
+        $scope.sCabang = data.cabang;
+    });
+    Data.get('returpenjualan/kodepenjualan').then(function(data) {
+        $scope.listkodepenjualan = data.listkode;
+    });
+
+    $scope.cabang = {
+        minimumInputLength: 3,
+        allowClear: true,
+    }
+
+    Data.get('returpenjualan/produk').then(function(data) {
+        $scope.sProduk = data.produk;
+    });
+    $scope.getkodepenjualan = function(form) {
+        Data.get('returpenjualan/det_kodepenjualan/' + form.penjualan_id).then(function(data) {
+            $scope.penjualan = data.penjualan;
+//            $scope.form.penjualan_id = form.penjualan_id;
+            $scope.detPenjualan = data.detail;
+            angular.forEach($scope.detPenjualan, function(detail) {
+                detail.jumlah_retur = (detail.jumlah_retur !== null) ? detail.jumlah_retur : 0;
+            })
+
+        });
+    };
+
+    $scope.total = function() {
+        var total = 0;
+        var total_retur = 0;
+        var diskon = 0;
+        var diskon_retur = 0;
+        angular.forEach($scope.detPenjualan, function(detail) {
+
+            diskon_retur += detail.jumlah_retur * detail.diskon;
+            total_retur += detail.jumlah_retur * detail.harga;
+            var sub_total = (total_retur) - (diskon_retur);
+            detail.sub_total = sub_total;
+        })
+        $scope.form.total = (total_retur - diskon_retur);
+        $scope.form.belanja = (total - diskon);
+        $scope.form.total_belanja = total_retur;
+        $scope.form.total_diskon = diskon_retur;
+
+    }
+    $scope.bayar = function() {
+        var total = parseInt($scope.form.total);
+        var cash = parseInt($scope.form.cash);
+        var diskon = parseInt($scope.form.total_diskon);
+        var credit = (total - diskon) - cash;
+        $scope.form.credit = (credit > 0) ? credit : 0;
+
+    }
 
 
 })
