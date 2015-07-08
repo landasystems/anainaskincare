@@ -203,7 +203,7 @@ class PenjualanController extends Controller {
                 $id_det[] = $val['id'];
                 
                 //stok
-                $keterangan = 'stok masuk';
+                $keterangan = 'penjualan';
                 $stok = new \app\models\KartuStok();
                 $hapus = $stok->hapusKartu($keterangan, $model->id);
                 $update = $stok->process('out', $model->tanggal, $model->kode, $val['produk_id'], $val['jumlah'], $model->cabang_id, $val['harga'], $keterangan, $model->id);
