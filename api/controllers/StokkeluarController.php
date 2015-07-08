@@ -209,7 +209,7 @@ class StokkeluarController extends Controller {
 
                 //isi kartu stok
                 $keterangan = 'stok keluar';
-                $stok = new \app\models\KartuStok();
+                $stok = new KartuStok();
                 $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
             }
             $this->setHeader(200);
@@ -239,7 +239,7 @@ class StokkeluarController extends Controller {
 
                 //perbarui kartu stok
                 $keterangan = 'stok keluar';
-                $stok = new \app\models\KartuStok();
+                $stok = new KartuStok();
                 $hapus = $stok->hapusKartu($keterangan, $model->id);
                 $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $id);
             }
@@ -259,7 +259,7 @@ class StokkeluarController extends Controller {
 
         //hapus kartu stok
         $keterangan = 'stok keluar';
-        $stok = new \app\models\KartuStok();
+        $stok = new KartuStok();
         $hapus = $stok->hapusKartu($keterangan, $id);
 
         if ($model->delete()) {

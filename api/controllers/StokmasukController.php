@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\StokMasuk;
+use app\models\KartuStok;
 use app\models\StokMasukDet;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -22,6 +23,7 @@ class StokmasukController extends Controller {
                     'view' => ['get'],
                     'kode' => ['get'],
                     'excel' => ['get'],
+                    'kode_cabang' => ['get'],
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
@@ -82,22 +84,28 @@ class StokmasukController extends Controller {
         echo json_encode(array('status' => 1, 'data' => $models));
     }
     
-    public function actionKode() {
+    public function actionKode_cabang($id) {
         $query = new Query;
-        $query->from('stok_masuk')
+
+        $query->from('m_cabang')
+                ->where('id="' . $id . '"')
+                ->select("*");
+        $command = $query->createCommand();
+        $models = $command->query()->read();
+        $code = $models['kode'];
+        
+        $query2 = new Query;
+        $query2->from('stok_keluar')
                 ->select('kode')
                 ->orderBy('kode DESC')
                 ->limit(1);
 
-        $command = $query->createCommand();
-        $models = $command->query()->read();
-        $kode_mdl = (substr($models['kode'],-5) + 1);
+        $command2 = $query2->createCommand();
+        $models2 = $command2->query()->read();
+        $kode_mdl = (substr($models2['kode'],-5) + 1);
         $kode=substr('00000'.$kode_mdl,strlen($kode_mdl));
-
-        Yii::error($command->query());
         $this->setHeader(200);
-
-        echo json_encode(array('status' => 1, 'kode' => $kode));
+        echo json_encode(array('status' => 1,'kode' => 'MASUK/'.$code.'/'.$kode));
     }
 
     public function actionIndex() {
@@ -192,7 +200,7 @@ class StokmasukController extends Controller {
 
                 //isi kartu stok
                 $keterangan = 'stok masuk';
-                $stok = new \app\models\KartuStok();
+                $stok = new KartuStok();
                 $update = $stok->process('in', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
             }
             $this->setHeader(200);
@@ -223,7 +231,7 @@ class StokmasukController extends Controller {
 
                 //perbarui kartu stok
                 $keterangan = 'stok masuk';
-                $stok = new \app\models\KartuStok();
+                $stok = new KartuStok();
                 $hapus = $stok->hapusKartu($keterangan, $model->id);
                 $update = $stok->process('in', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $id);
             }
@@ -243,7 +251,7 @@ class StokmasukController extends Controller {
 
         //hapus kartu stok
         $keterangan = 'stok masuk';
-        $stok = new \app\models\KartuStok();
+        $stok = new KartuStok();
         $hapus = $stok->hapusKartu($keterangan, $id);
 
         if ($model->delete()) {

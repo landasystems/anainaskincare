@@ -62,6 +62,14 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
         }
         $scope.detsmasuk.unshift(newDet);
     };
+    
+    $scope.getkode = function(id) {
+        Data.get('stokmasuk/kode_cabang/'+ id).then(function(data) {
+             $scope.form.kode = data.kode;
+            $scope.form.cabang_id = id;
+
+        });
+    };
 
     //subtotal
 
@@ -139,9 +147,7 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
         $scope.is_view = false;
         $scope.formtitle = "Form Persediaan Masuk";
         $scope.form = {};
-        Data.get('stokmasuk/kode').then(function(data) {
-            $scope.form.kode = 'MASUK/MLG/'+data.kode;
-        });
+      
 
 
     };
