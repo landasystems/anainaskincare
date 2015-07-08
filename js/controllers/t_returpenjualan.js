@@ -70,12 +70,12 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
 
     };
     $scope.save = function(form, detail) {
+        console.log(form);
         var data = {
             retur_penjualan: form,
             retur_penjualandet: detail,
         };
-//        var url = 'returpenjualan/create'
-        var url = (form.id > 0) ? 'returpenjualan/update' : 'returpenjualan/create';
+        var url = (form.id > 0) ? 'returpenjualan/update/' + form.id : 'returpenjualan/create';
         Data.post(url, data).then(function(result) {
             if (result.status == 0) {
                 toaster.pop('error', "Terjadi Kesalahan", result.errors);
@@ -138,10 +138,8 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
         var diskon_retur = 0;
         angular.forEach($scope.detPenjualan, function(detail) {
 
-            diskon_retur += detail.jumlah_retur * detail.diskon;
+            diskon_retur += detail.jumlah_retur * detail.diskon_awal;
             total_retur += detail.jumlah_retur * detail.harga;
-            var sub_total = (total_retur) - (diskon_retur);
-            detail.sub_total = sub_total;
         })
         $scope.form.total = (total_retur - diskon_retur);
         $scope.form.belanja = (total - diskon);

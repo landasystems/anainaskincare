@@ -90,11 +90,12 @@ class ReturpenjualanController extends Controller {
         $query = new Query;
         $query->offset($offset)
                 ->limit($limit)
-                ->from(['r_penjualan', 'penjualan', 'm_cabang', 'm_customer'])
-                ->where('r_penjualan.penjualan_id = penjualan.id and penjualan.cabang_id = m_cabang.id and penjualan.customer_id = m_customer.id')
+                ->from('r_penjualan')
+                ->join('JOIN', 'penjualan', 'penjualan.id = r_penjualan.penjualan_id')
+                ->join('JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
+                ->join('JOIN', 'm_cabang', 'penjualan.cabang_id= m_cabang.id')
                 ->orderBy($sort)
-                ->select("r_penjualan.id as id, r_penjualan.tanggal as tanggal_retur, r_penjualan.penjualan_id as penjualan_id, r_penjualan.total as total_retur, r_penjualan.keterangan as ketrangan_retur,"
-                        . " r_penjualan.kode as kode, penjualan.kode as kode_penjualan , penjualan.total as total_penjualan, m_cabang.nama as cabang, "
+                ->select("r_penjualan.*, penjualan.kode as kode_penjualan , penjualan.total as total_penjualan, m_cabang.nama as cabang, "
                         . "m_customer.nama as nama_customer, penjualan.customer_id as customer_id,penjualan.cabang_id as cabang_id");
 
         //filter
@@ -105,12 +106,12 @@ class ReturpenjualanController extends Controller {
                 if ($key == 'cabang_id') {
                     $query->andFilterWhere(['like', 'penjualan.' . $key, $val]);
                     Yii::error($query);
-                } elseif($key = 'kode_penjualan'){
-                     $query->andFilterWhere(['like', 'penjualan.kode', $val]);
-                } elseif($key = 'customer_id'){
-                     $query->andFilterWhere(['like', 'penjualan.'. $key, $val]);
+                } elseif ($key = 'kode_penjualan') {
+                    $query->andFilterWhere(['like', 'penjualan.kode', $val]);
+                } elseif ($key = 'customer_id') {
+                    $query->andFilterWhere(['like', 'penjualan.' . $key, $val]);
                 } else {
-                     $query->andFilterWhere(['like', 'r_penjualan.'.$key, $val]);
+                    $query->andFilterWhere(['like', 'r_penjualan.' . $key, $val]);
                 }
             }
         }
@@ -136,7 +137,7 @@ class ReturpenjualanController extends Controller {
         foreach ($det as $val) {
             $detail[] = $val->attributes;
         }
-         $query = new Query;
+        $query = new Query;
         $query->from('penjualan')
                 ->join('JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
                 ->join('JOIN', 'm_cabang', 'penjualan.cabang_id= m_cabang.id')
@@ -149,7 +150,7 @@ class ReturpenjualanController extends Controller {
 
 
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes), 'detail' => $detail,'penjualan'=>$models), JSON_PRETTY_PRINT);
+        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes), 'detail' => $detail, 'penjualan' => $models), JSON_PRETTY_PRINT);
     }
 
     public function actionCreate() {
@@ -161,18 +162,17 @@ class ReturpenjualanController extends Controller {
 
 
         if ($model->save()) {
-        foreach($params['retur_penjualandet'] as $data){
-            if(!empty($data['jumlah_retur']) || $data['jumlah_retur'] != 0){
-                $detail= new RPenjualanDet();
-                $detail->attributes = $data;
-                $detail->r_penjualan_id = $model->id;
-                $detail->penjualan_det_id = $data['id'];
-                $detail->sub_total = ($data['jumlah_retur'] * $data['harga']) - ($data['jumlah_retur'] * $data['diskon']);
-                $detail->save();
-                
-                
+            $deleteAll = RPenjualanDet::deleteAll('r_penjualan_id=' . $model->id);
+            foreach ($params['retur_penjualandet'] as $data) {
+                if (!empty($data['jumlah_retur']) || $data['jumlah_retur'] != 0) {
+                    $detail = new RPenjualanDet();
+                    $detail->attributes = $data;
+                    $detail->r_penjualan_id = $model->id;
+                    $detail->penjualan_det_id = $data['id'];
+                    $detail->sub_total = ($data['jumlah_retur'] * $data['harga']) - ($data['jumlah_retur'] * $data['diskon']);
+                    $detail->save();
+                }
             }
-        }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -188,14 +188,16 @@ class ReturpenjualanController extends Controller {
 
 
         if ($model->save()) {
+            $deleteAll = RPenjualanDet::deleteAll('r_penjualan_id=' . $model->id);
             foreach ($params['retur_penjualandet'] as $data) {
-                $pinjaman = RPenjualanDet::find()->where('r_penjualan_id=' . $model->id)->one();
-//                $det = new PenjualanDet();
-                $pinjaman->attributes = $data;
-//                $pinjaman->penjualan_id = $model->id;
-//                $pinjaman->sub_total = str_replace('.', '', $data['sub_total']);
-
-                $pinjaman->save();
+                if (!empty($data['jumlah_retur']) || $data['jumlah_retur'] != 0) {
+                $detail = new RPenjualanDet();
+                $detail->attributes = $data;
+                $detail->r_penjualan_id = $model->id;
+                $detail->penjualan_det_id = $data['id'];
+                $detail->sub_total = ($data['jumlah_retur'] * $data['harga']) - ($data['jumlah_retur'] * $data['diskon']);
+                $detail->save();
+                }
             }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
@@ -204,7 +206,6 @@ class ReturpenjualanController extends Controller {
             echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $model->errors), JSON_PRETTY_PRINT);
         }
     }
-    
 
     public function actionCustomer() {
         $query = new Query;
@@ -219,6 +220,7 @@ class ReturpenjualanController extends Controller {
 
         echo json_encode(array('status' => 1, 'customer' => $models));
     }
+
     public function actionKodepenjualan() {
         $query = new Query;
         $query->from('penjualan')
@@ -263,7 +265,7 @@ class ReturpenjualanController extends Controller {
     }
 
     public function actionDet_kodepenjualan($id) {
-             $query = new Query;
+        $query = new Query;
         $query->from('penjualan')
                 ->join('JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
                 ->join('JOIN', 'm_cabang', 'penjualan.cabang_id= m_cabang.id')
@@ -277,7 +279,7 @@ class ReturpenjualanController extends Controller {
         $query2->from('penjualan_det')
                 ->join('LEFT JOIN', 'm_produk', 'penjualan_det.produk_id = m_produk.id')
                 ->join('LEFt JOIN', 'r_penjualan_det as rp', 'rp.penjualan_det_id= penjualan_det.id')
-                ->where('penjualan_id="'.$id.'"')
+                ->where('penjualan_id="' . $id . '"')
                 ->select('penjualan_det.id as id, penjualan_det.type as type, penjualan_det.produk_id as produk_id,penjualan_det.jumlah as jumlah, penjualan_det.harga as harga_awal, penjualan_det.diskon as diskon_awal , m_produk.nama,
                         rp.harga as harga, rp.diskon as diskon, rp.jumlah_retur as jumlah_retur');
         $command2 = $query2->createCommand();
@@ -285,7 +287,6 @@ class ReturpenjualanController extends Controller {
         $this->setHeader(200);
 
         echo json_encode(array('penjualan' => $models, 'detail' => $detail));
-       
     }
 
     public function actionDet_produk($id) {
@@ -332,7 +333,6 @@ class ReturpenjualanController extends Controller {
 
         header($status_header);
         header('Content-type: ' . $content_type);
-        header('X-Powered-By: ' . "Nintriva <nintriva.com>");
     }
 
     private function _getStatusCodeMessage($status) {

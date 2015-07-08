@@ -92,6 +92,7 @@ class RolesController extends Controller {
             }
         }
 
+        //session query untuk excel
         session_start();
         $_SESSION['query'] = $query;
 
@@ -170,7 +171,6 @@ class RolesController extends Controller {
 
         header($status_header);
         header('Content-type: ' . $content_type);
-        header('X-Powered-By: ' . "Nintriva <nintriva.com>");
     }
 
     private function _getStatusCodeMessage($status) {
@@ -190,9 +190,11 @@ class RolesController extends Controller {
     public function actionExcel() {
         session_start();
         $query = $_SESSION['query'];
+        $query->offset("");
+        $query->limit("");
         $command = $query->createCommand();
         $models = $command->queryAll();
-        return $this->render("excel", ['models'=>$models]);
+        return $this->render("excel", ['models' => $models]);
     }
 
 }

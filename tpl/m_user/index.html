@@ -7,7 +7,6 @@
             <div class="panel-heading">
                 <button class="btn btn-default btn-xs" ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed">Pencarian & Export Data</button>
                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
-                    <button type="button" class="btn btn-default fa fa-file-excel-o" ng-show="!isCollapsed">&nbsp;Export Excel</button>
                     <button type="button" class="btn btn-primary fa fa-plus-square-o" ng-click="create();">&nbsp;Tambah Data</button>
                 </div> 
             </div>
@@ -19,14 +18,12 @@
                             <input st-search="nama" class="form-control"/>
 
                         </div>
-                        <label class="col-sm-2 control-label">Status</label>
+                        <label class="col-sm-2 control-label">Username</label>
                         <div class="col-sm-3">
-                            <select stInputEvent="change" st-search="is_deleted" class="form-control">
-                                <option value="0">Aktif</option>
-                                <option value="1">Terhapus</option>
-                            </select>
+                            <input st-search="username" class="form-control"/>
 
                         </div>
+
 
                     </div>
 
@@ -39,9 +36,12 @@
                             </select>
 
                         </div>
-                        <label class="col-sm-2 control-label">Username</label>
+                        <label class="col-sm-2 control-label">Status</label>
                         <div class="col-sm-3">
-                            <input st-search="username" class="form-control"/>
+                            <select stInputEvent="change" st-search="is_deleted" class="form-control">
+                                <option value="0">Aktif</option>
+                                <option value="1">Terhapus</option>
+                            </select>
 
                         </div>
 
@@ -64,7 +64,7 @@
                             <td>{{row.roles}}</td>
                             <td>{{row.username}}</td>
                             <td>
-                                  <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
+                                <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ng-show="row.is_deleted == 0"></button>
                                     <button type="button" class="btn btn-danger fa fa-trash-o" ng-click="trash(row);" ng-show="row.is_deleted == 0"></button>
                                     <button type="button" class="btn btn-info fa fa-recycle" ng-click="restore(row);" ng-show="row.is_deleted == 1"></button>

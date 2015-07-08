@@ -7,7 +7,7 @@
             <div class="panel-heading">
                 <button class="btn btn-default btn-xs" ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed">Pencarian & Export Data</button>
                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
-                    <button type="button" class="btn btn-default fa fa-file-excel-o" ng-show="!isCollapsed">&nbsp;Export Excel</button>
+                    <button type="button" class="btn btn-default fa fa-file-excel-o" ng-show="!isCollapsed" ng-click="excel();">&nbsp;Export Excel</button>
                     <button type="button" class="btn btn-primary fa fa-plus-square-o" ng-click="create();">&nbsp;Tambah Data</button>
                 </div> 
             </div>
@@ -35,7 +35,7 @@
                         <div class="control-group">
                             <label class="col-sm-2 control-label">Tanggal</label>
                             <div class="col-sm-3">
-                                <input class="form-control" st-search="tanggal" type="text" date-range-picker ng-model="tanggals">
+                                <input date-range-picker class="form-control" st-search="tanggal" type="text"  ng-model="tanggals">
                             </div>
                         </div>
                     </div>
@@ -142,18 +142,18 @@
                                     </select>
                                 </td>
                                 <td style="width:50px;">
-                                    <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.jumlah" " ng-disabled="is_view" ng-readonly="is_create == false" required>
+                                    <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-change="subtotal()"  ng-model="detail.jumlah" " ng-disabled="is_view" ng-readonly="is_create == false" required>
                                 </td>
                                 <td style="width:200px;">
                                     <div class="input-group m-b" style="margin:0px;">
                                         <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.harga"  ng-disabled="is_view" ng-readonly="is_create == false" required>
+                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-change="subtotal()"  ng-model="detail.harga"  ng-disabled="is_view" ng-readonly="is_create == false" required>
                                     </div>
                                 </td>
                                 <td style="width:200px;">
                                     <div class="input-group m-b" style="margin:0px;">
                                         <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" name="total" value="{{detail.jumlah * detail.harga| number}}" ng-readonly="true"  ng-disabled="is_view" required>
+                                        <input type="text" class="form-control" ng-model="detail.sub_total" ng-readonly="true"  ng-disabled="is_view">
                                     </div>
                                 </td>
                                 <td style="width:50px;text-align: center; margin:0px;">
