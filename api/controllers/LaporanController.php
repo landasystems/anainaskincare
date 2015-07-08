@@ -336,8 +336,10 @@ class LaporanController extends Controller {
                 $body[$val['produk_id']]['body'][$i]['saldo']['jumlah'] = $tmpSaldo['jumlah'];
                 $body[$val['produk_id']]['body'][$i]['saldo']['harga'] = $tmpSaldo['harga'];
                 $body[$val['produk_id']]['body'][$i]['saldo']['sub_total'] = $tmpSaldo['sub_total'];
-                $body[$val['produk_id']]['total']['saldo']['jumlah'] = $totalJml['saldo'];
-                $body[$val['produk_id']]['total']['saldo']['harga'] = $totalHarga['saldo'];
+//                $body[$val['produk_id']]['total']['saldo']['jumlah'] = $totalJml['saldo'];
+//                $body[$val['produk_id']]['total']['saldo']['harga'] = $totalHarga['saldo'];
+                $body[$val['produk_id']]['total']['saldo']['jumlah'] = 0;
+                $body[$val['produk_id']]['total']['saldo']['harga'] = 0;
                 $body[$val['produk_id']]['total']['masuk']['jumlah'] = $totalJml['masuk'];
                 $body[$val['produk_id']]['total']['masuk']['harga'] = $totalHarga['masuk'];
                 $body[$val['produk_id']]['total']['keluar']['jumlah'] = $totalJml['keluar'];
