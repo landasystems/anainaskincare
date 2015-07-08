@@ -154,11 +154,14 @@ class PenjualanController extends Controller {
                 $det->attributes = $data;
                 $det->penjualan_id = $model->id;
                 $det->sub_total = str_replace('.', '', $data['sub_total']);
-                $det->save();
-                // stock
-                $keterangan = 'penjualan';
+                
+                if($det->save()){
+                        $keterangan = 'penjualan';
                 $stok = new \app\models\KartuStok();
-                $update = $stok->process('out', $model->tanggal, $model->kode, $data['produk_id'], $data['jumlah'], $model->cabang_id, $data['harga'], $keterangan, $model->id);
+                $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
+            
+                }
+                // stock
             }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
@@ -200,9 +203,9 @@ class PenjualanController extends Controller {
                 }
                 $det->attributes = $val;
                 $det->penjualan_id = $model->id;
-                $det->save();
-                $id_det[] = $val['id'];
-                
+                if ($det->save()) {
+                    $id_det[] = $det->id;
+                }
                 //stok
                 $keterangan = 'penjualan';
                 $stok = new \app\models\KartuStok();
@@ -277,6 +280,7 @@ class PenjualanController extends Controller {
 
         echo json_encode(array('customer' => $model));
     }
+
     public function actionKode_cabang($id) {
         $query = new Query;
 
@@ -286,7 +290,7 @@ class PenjualanController extends Controller {
         $command = $query->createCommand();
         $models = $command->query()->read();
         $code = $models['kode'];
-        
+
         $query2 = new Query;
         $query2->from('penjualan')
                 ->select('kode')
@@ -295,10 +299,10 @@ class PenjualanController extends Controller {
 
         $command2 = $query2->createCommand();
         $models2 = $command2->query()->read();
-        $kode_mdl = (substr($models2['kode'],-5) + 1);
-        $kode=substr('00000'.$kode_mdl,strlen($kode_mdl));
+        $kode_mdl = (substr($models2['kode'], -5) + 1);
+        $kode = substr('00000' . $kode_mdl, strlen($kode_mdl));
         $this->setHeader(200);
-        echo json_encode(array('status' => 1,'kode' => 'JUAL/'.$code.'/'.$kode));
+        echo json_encode(array('status' => 1, 'kode' => 'JUAL/' . $code . '/' . $kode));
     }
 
     public function actionDet_produk($id) {
@@ -316,7 +320,7 @@ class PenjualanController extends Controller {
     public function actionDelete($id) {
         $model = $this->findModel($id);
         $deleteDetail = PenjualanDet::deleteAll(['penjualan_id' => $id]);
-        
+
         //hapus kartu stok
         $keterangan = 'penjualan';
         $stok = new \app\models\KartuStok();

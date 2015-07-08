@@ -171,12 +171,14 @@ class ReturpenjualanController extends Controller {
                     $detail->r_penjualan_id = $model->id;
                     $detail->penjualan_det_id = $data['id'];
                     $detail->sub_total = ($data['jumlah_retur'] * $data['harga']) - ($data['jumlah_retur'] * $data['diskon']);
-                    $detail->save();
+
+                    if ($detail->save()) {
+                        $pinjaman = Penjualan::findOne($model->penjualan_id);
+                        $keterangan = 'r_penjualan';
+                        $stok = new \app\models\KartuStok();
+                        $update = $stok->process('in', $model->tanggal, $model->kode, $detail->produk_id, $detail->jumlah_retur, $pinjaman->cabang_id, $detail->harga, $keterangan, $model->id);
+                    }
                     // stock
-                    $pinjaman = Pinjaman::find()->where('id=' . $model->penjualan_id)->one();
-                    $keterangan = 'r_penjualan';
-                    $stok = new \app\models\KartuStok();
-                    $update = $stok->process('in', $model->tanggal, $model->kode, $data['produk_id'], $data['jumlah_retur'], $pinjaman->cabang_id, $data['harga'], $keterangan, $model->id);
                 }
             }
             $this->setHeader(200);
@@ -203,12 +205,13 @@ class ReturpenjualanController extends Controller {
                     $detail->penjualan_det_id = $data['id'];
                     $detail->sub_total = ($data['jumlah_retur'] * $data['harga']) - ($data['jumlah_retur'] * $data['diskon']);
                     $detail->save();
-
-                    $pinjaman = Pinjaman::find()->where('id=' . $model->penjualan_id)->one();
-                    $keterangan = 'r_penjualan';
-                    $stok = new \app\models\KartuStok();
-                    $hapus = $stok->hapusKartu($keterangan, $id);
-                    $update = $stok->process('in', $model->tanggal, $model->kode, $data['produk_id'], $data['jumlah_retur'], $pinjaman->cabang_id, $data['harga'], $keterangan, $model->id);
+                    if ($detail->save()) {
+                        $pinjaman = Penjualan::findOne($model->penjualan_id);
+                        $keterangan = 'r_penjualan';
+                        $stok = new \app\models\KartuStok();
+                        $hapus = $stok->hapusKartu($keterangan, $id);
+                        $update = $stok->process('in', $model->tanggal, $model->kode, $detail->produk_id, $detail->jumlah_retur, $pinjaman->cabang_id, $detail->harga, $keterangan, $model->id);
+                    }
                 }
             }
             $this->setHeader(200);
@@ -283,7 +286,7 @@ class ReturpenjualanController extends Controller {
                 ->join('JOIN', 'm_cabang', 'penjualan.cabang_id= m_cabang.id')
                 ->where('penjualan.id="' . $id . '"')
                 ->select("m_customer.no_tlp as no_tlp, m_customer.email as email, m_customer.alamat as alamat, 
-                        m_cabang.nama as klinik");
+                        m_cabang.nama as klinik,m_cabang.id as cabang_id");
         $command = $query->createCommand();
         $models = $command->queryOne();
 
@@ -296,9 +299,30 @@ class ReturpenjualanController extends Controller {
                         rp.harga as harga, rp.diskon as diskon, rp.jumlah_retur as jumlah_retur');
         $command2 = $query2->createCommand();
         $detail = $command2->queryAll();
+
+        // kode
+        $query3 = new Query;
+        $query3->from('m_cabang')
+                ->where('id="' . $models['cabang_id'] . '"')
+                ->select("*");
+        $command3 = $query3->createCommand();
+        $models3 = $command3->query()->read();
+        $code = $models3['kode'];
+
+        $query4 = new Query;
+        $query4->from('r_penjualan')
+                ->select('kode')
+                ->orderBy('kode DESC')
+                ->limit(1);
+
+        $command4 = $query4->createCommand();
+        $models4 = $command4->query()->read();
+        $kode_mdl = (substr($models4['kode'], -5) + 1);
+        $kode = substr('00000' . $kode_mdl, strlen($kode_mdl));
+
         $this->setHeader(200);
 
-        echo json_encode(array('penjualan' => $models, 'detail' => $detail));
+        echo json_encode(array('penjualan' => $models, 'detail' => $detail, 'kode' => 'RJUAL/' . $code . '/' . $kode));
     }
 
     public function actionDet_produk($id) {
@@ -312,6 +336,7 @@ class ReturpenjualanController extends Controller {
 
         echo json_encode(array('produk' => $models));
     }
+
     public function actionKode_cabang($id) {
         $query = new Query;
 
@@ -321,7 +346,7 @@ class ReturpenjualanController extends Controller {
         $command = $query->createCommand();
         $models = $command->query()->read();
         $code = $models['kode'];
-        
+
         $query2 = new Query;
         $query2->from('penjualan')
                 ->select('kode')
@@ -330,10 +355,10 @@ class ReturpenjualanController extends Controller {
 
         $command2 = $query2->createCommand();
         $models2 = $command2->query()->read();
-        $kode_mdl = (substr($models2['kode'],-5) + 1);
-        $kode=substr('00000'.$kode_mdl,strlen($kode_mdl));
+        $kode_mdl = (substr($models2['kode'], -5) + 1);
+        $kode = substr('00000' . $kode_mdl, strlen($kode_mdl));
         $this->setHeader(200);
-        echo json_encode(array('status' => 1,'kode' => 'JUAL/'.$code.'/'.$kode));
+        echo json_encode(array('status' => 1, 'kode' => 'JUAL/' . $code . '/' . $kode));
     }
 
     public function actionDelete($id) {

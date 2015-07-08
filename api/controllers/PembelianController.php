@@ -6,6 +6,7 @@ use Yii;
 use app\models\Pembelian;
 use app\models\PembelianDet;
 use app\models\Hutang;
+use app\models\KartuStok;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -239,8 +240,11 @@ class PembelianController extends Controller {
                 $modelDet->attributes = $val;
                 $modelDet->pembelian_id = $model->id;
                 $modelDet->save();
+                $keterangan = 'pembelian';
+                $stok = new KartuStok();
+                $update = $stok->process('out', $model->tanggal, $model->kode, $data['produk_id'], $data['jumlah'], $model->cabang_id, $data['harga'], $keterangan, $model->id);
             }
-
+            
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
