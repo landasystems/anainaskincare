@@ -118,7 +118,7 @@ class KartuStok extends \yii\db\ActiveRecord {
             $criteria .= ' and kartu_stok.cabang_id = ' . $cabang;
 
         if (!empty($kategori))
-            $criteria .= ' and m_produk.kategori_id = ' . $params['kategori_id'];
+            $criteria .= ' and m_produk.kategori_id = ' . $kategori;
 
         if ($type == 'balance') {
             $criteria .= "date(kartu_stok.created_at) < '" . $date . "'";
