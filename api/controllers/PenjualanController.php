@@ -154,12 +154,11 @@ class PenjualanController extends Controller {
                 $det->attributes = $data;
                 $det->penjualan_id = $model->id;
                 $det->sub_total = str_replace('.', '', $data['sub_total']);
-                
-                if($det->save()){
-                        $keterangan = 'penjualan';
-                $stok = new \app\models\KartuStok();
-                $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
-            
+
+                if ($det->save()) {
+                    $keterangan = 'penjualan';
+                    $stok = new \app\models\KartuStok();
+                    $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
                 }
                 // stock
             }
@@ -205,13 +204,14 @@ class PenjualanController extends Controller {
                 $det->penjualan_id = $model->id;
                 if ($det->save()) {
                     $id_det[] = $det->id;
-                }
-                //stok
-                $keterangan = 'penjualan';
+                          $keterangan = 'penjualan';
                 $stok = new \app\models\KartuStok();
                 $hapus = $stok->hapusKartu($keterangan, $model->id);
-                $update = $stok->process('out', $model->tanggal, $model->kode, $val['produk_id'], $val['jumlah'], $model->cabang_id, $val['harga'], $keterangan, $model->id);
-            }
+                $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
+           
+                }
+                //stok
+           }
             $deleteDetail = PenjualanDet::deleteAll('id NOT IN (' . implode(',', $id_det) . ') AND penjualan_id=' . $model->id);
 
             $this->setHeader(200);
