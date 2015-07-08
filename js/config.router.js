@@ -6,7 +6,7 @@ angular.module('app')
                         $rootScope.$stateParams = $stateParams;
                         //pengecekan login
                         $rootScope.$on("$stateChangeStart", function (event, toState) {
-                            var globalmenu = ['app.dashboard'];
+                            var globalmenu = ['app.dashboard', 'access.signin', 'transaksi.coba'];
                             Data.get('site/session').then(function (results) {
                                 if (typeof results.data.user != "undefined") {
                                     $rootScope.user = results.data.user;
@@ -216,6 +216,20 @@ angular.module('app')
                                             }]
                                     }
                                 })
+                                .state('transaksi.coba', {
+                                    url: '/coba',
+                                    templateUrl: 'tpl/t_coba/index.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load(['ui.select2', 'ng-bootstrap-datepicker', 'daterangepicker']).then(
+                                                        function () {
+                                                            return $ocLazyLoad.load('js/controllers/t_coba.js');
+                                                        }
+                                                );
+                                            }]
+                                    }
+                                })
                                 .state('transaksi.bayarhutang', {
                                     url: '/bayarhutang',
                                     templateUrl: 'tpl/t_bayarhutang/index.html',
@@ -250,7 +264,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select2','ng-bootstrap-datepicker']).then(
+                                                return $ocLazyLoad.load(['ui.select2', 'ng-bootstrap-datepicker']).then(
                                                         function () {
                                                             return $ocLazyLoad.load('js/controllers/t_pembelian.js');
                                                         }
@@ -278,7 +292,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ng-bootstrap-datepicker','ui.select2']).then(
+                                                return $ocLazyLoad.load(['ng-bootstrap-datepicker', 'ui.select2']).then(
                                                         function () {
                                                             return $ocLazyLoad.load('js/controllers/t_bayarpiutang.js');
                                                         }
