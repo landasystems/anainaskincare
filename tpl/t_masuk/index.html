@@ -95,13 +95,13 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Kode</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" ng-model="form.kode" ng-disabled="is_view" ng-readonly="is_create == false" required>
+                            <input type="text" class="form-control" ng-model="form.kode" ng-disabled="true" ng-readonly="is_create == false" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Cabang</label>
                         <div class="col-sm-6">
-                            <select ui-select2="selectcabang" ng-model="form.cabang_id" ng-disabled="is_view" required style="width: 48%;">
+                            <select ui-select2="selectcabang" ui-jq="chosen" ng-change="getkode(form.cabang_id)" ng-model="form.cabang_id" ng-disabled="is_view" required style="width: 48%;">
                                 <option value="">-Pilih Cabang-</option>
                                 <option ng-repeat="cabang in listcabang" value="{{cabang.id}}">{{cabang.nama}}</option>
                             </select>
