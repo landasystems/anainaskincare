@@ -247,7 +247,7 @@ class LaporanController extends Controller {
 
         $a = 1;
         if (!empty($saldoAwal)) {
-            foreach ($saldoAwal[$val['produk_id']] as $sAwal) {
+            foreach ($saldoAwal as $sAwal) {
                 $tmpSaldo['jumlah'][$a] = $sAwal['jumlah'];
                 $tmpSaldo['harga'][$a] = $sAwal['harga'];
                 $tmpSaldo['sub_total'][$a] = $sAwal['sub_total'];

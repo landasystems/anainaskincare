@@ -154,11 +154,14 @@ class PenjualanController extends Controller {
                 $det->attributes = $data;
                 $det->penjualan_id = $model->id;
                 $det->sub_total = str_replace('.', '', $data['sub_total']);
-                $det->save();
-                // stock
-                $keterangan = 'penjualan';
+                
+                if($det->save()){
+                        $keterangan = 'penjualan';
                 $stok = new \app\models\KartuStok();
-                $update = $stok->process('out', $model->tanggal, $model->kode, $data['produk_id'], $data['jumlah'], $model->cabang_id, $data['harga'], $keterangan, $model->id);
+                $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
+            
+                }
+                // stock
             }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
