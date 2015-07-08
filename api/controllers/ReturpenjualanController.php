@@ -90,11 +90,12 @@ class ReturpenjualanController extends Controller {
         $query = new Query;
         $query->offset($offset)
                 ->limit($limit)
-                ->from(['r_penjualan', 'penjualan', 'm_cabang', 'm_customer'])
-                ->where('r_penjualan.penjualan_id = penjualan.id and penjualan.cabang_id = m_cabang.id and penjualan.customer_id = m_customer.id')
+                ->from('r_penjualan')
+                ->join('JOIN', 'penjualan', 'penjualan.id = r_penjualan.penjualan_id')
+                ->join('JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
+                ->join('JOIN', 'm_cabang', 'penjualan.cabang_id= m_cabang.id')
                 ->orderBy($sort)
-                ->select("r_penjualan.id as id, r_penjualan.tanggal as tanggal_retur, r_penjualan.penjualan_id as penjualan_id, r_penjualan.total as total_retur, r_penjualan.keterangan as ketrangan_retur,"
-                        . " r_penjualan.kode as kode, penjualan.kode as kode_penjualan , penjualan.total as total_penjualan, m_cabang.nama as cabang, "
+                ->select("r_penjualan.*, penjualan.kode as kode_penjualan , penjualan.total as total_penjualan, m_cabang.nama as cabang, "
                         . "m_customer.nama as nama_customer, penjualan.customer_id as customer_id,penjualan.cabang_id as cabang_id");
 
         //filter
@@ -188,15 +189,11 @@ class ReturpenjualanController extends Controller {
 
 
         if ($model->save()) {
-            foreach ($params['retur_penjualandet'] as $data) {
-                $pinjaman = RPenjualanDet::find()->where('r_penjualan_id=' . $model->id)->one();
-//                $det = new PenjualanDet();
-                $pinjaman->attributes = $data;
-//                $pinjaman->penjualan_id = $model->id;
-//                $pinjaman->sub_total = str_replace('.', '', $data['sub_total']);
-
-                $pinjaman->save();
-            }
+//            foreach ($params['retur_penjualandet'] as $data) {
+//                $pinjaman = RPenjualanDet::find()->where('r_penjualan_id=' . $model->id)->one();
+//                $pinjaman->attributes = $data;
+//                $pinjaman->save();
+//            }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {

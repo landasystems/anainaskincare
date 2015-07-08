@@ -194,7 +194,7 @@ class PenjualanController extends Controller {
                 $pinjaman->save();
                 $id[]=$data['id'];
             }
-            $deleteDetail = PenjualanDet::deleteAll(['penjualan_id' => $model->id . ' AND id NOT IN(' . implode(',', $id) . ')']);
+            $deleteDetail = PenjualanDet::deleteAll('id NOT IN ('.implode(',',$id).') AND penjualan_id='.$model->id);
             
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
