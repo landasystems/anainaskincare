@@ -27,7 +27,7 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
             param['filter'] = tableState.search.predicateObject;
         }
 
-        Data.get('pembelian', param).then(function (data) {
+        Data.get('returpembelian', param).then(function (data) {
             $scope.displayed = data.data;
             tableState.pagination.numberOfPages = Math.ceil(data.totalItems / limit);
         });
@@ -50,6 +50,7 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
         $scope.formtitle = "Edit Retur : " + form.kode;
         $scope.form = form;
         $scope.form.biaya_lain = 0;
+        $scope.selectedPembelian(form);
     };
     $scope.view = function (form) {
         $scope.is_edit = true;
@@ -58,13 +59,14 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
         $scope.formtitle = "Lihat Retur : " + form.kode;
         $scope.form = form;
         $scope.form.biaya_lain = 0;
+        $scope.selectedPembelian(form);
     };
     $scope.save = function (form, detail) {
         var data = {
             retur: form,
             returdet: detail,
         };
-        var url = 'returpembelian/create';
+        var url = (form.id > 0) ? 'returpembelian/update':'returpembelian/create';
         Data.post(url, data).then(function (result) {
             if (result.status == 0) {
                 toaster.pop('error', "Terjadi Kesalahan", result.errors);

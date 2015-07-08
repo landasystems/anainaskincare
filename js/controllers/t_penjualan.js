@@ -63,19 +63,11 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
             pegawai_terapis_id: '',
             pegawai_dokter_id: '',
         }
+ $scope.total();
         $scope.detPenjualan.unshift(newDet);
-    };
-    $scope.removeRow = function(paramindex) {
-        var comArr = eval($scope.detPenjualan);
-        if (comArr.length > 1) {
-            $scope.detPenjualan.splice(paramindex, 1);
-            $scope.total();
-        } else {
-            alert("Something gone wrong");
-        }
         
     };
-    $scope.total = function() {
+      $scope.total = function() {
         var total = 0;
         var diskon = 0;
         angular.forEach($scope.detPenjualan, function(detail) {
@@ -90,6 +82,18 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         $scope.bayar();
 
     }
+    $scope.removeRow = function(paramindex) {
+        var comArr = eval($scope.detPenjualan);
+         $scope.total();
+        if (comArr.length > 1) {
+            $scope.detPenjualan.splice(paramindex, 1);
+            $scope.total();
+        } else {
+            alert("Something gone wrong");
+        }
+        
+    };
+  
     $scope.bayar = function() {
         var total = parseInt($scope.form.total);
         var cash = parseInt($scope.form.cash);

@@ -30,22 +30,22 @@
                     <thead>
                         <tr>
                             <th st-sort="kode">Kode</th>
+                            <th st-sort="kode">Kode Pembelian</th>
                             <th st-sort="tanggal">Tanggal</th>
                             <th st-sort="nama_supplier">Supplier</th>
                             <th st-sort="klinik">Klinik</th>
-                            <th st-sort="total">Total</th>
-                            <th st-sort="status">Status</th>
+                            <th st-sort="total">Total (Rp)</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody ng-show="!isLoading">
                         <tr ng-repeat="row in displayed" ng-dblclick="view(row)">
                             <td>{{row.kode}}</td>
+                            <td>{{row.kode_pembelian}}</td>
                             <td>{{row.tanggal}}</td>
                             <td>{{row.nama_supplier}}</td>
                             <td>{{row.klinik}}</td>
-                            <td>{{row.total}}</td>
-                            <td>{{row.status}}</td>
+                            <td>{{row.total | currency}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)"></button>
@@ -247,7 +247,7 @@
                         <div class="col-sm-8">
                             <div class="input-group m-b">
                                 <span class="input-group-addon">Rp.</span>
-                                <input type="text" ng-pattern="/^[0-9]+$/" class="form-control" ng-model="form.biaya_lain" ng-disabled="is_view">
+                                <input type="text" ng-pattern="/^[0-9]+$/" class="form-control" ng-change="total()" ng-model="form.biaya_lain" ng-disabled="is_view">
                             </div>
                         </div>
                     </div>
