@@ -185,7 +185,9 @@ class PenjualanController extends Controller {
                     $pinjaman->save();
                 }
             }
-
+             $penjualanDet = $params['penjualandet'];
+            $deleteDetail = PenjualanDet::deleteAll(['penjualan_id' => $model->id . ' AND id NOT IN(' . implode(',', $penjualanDet['id']) . ')']);
+            
             foreach ($params['penjualandet'] as $data) {
 //                $deleteDetail = PenjualanDet::deleteAll(['pembelian_id' => $model->id,'id NOT IN ('.$data['id'].')']);
                 $pinjaman = PenjualanDet::find()->where('penjualan_id=' . $model->id)->one();
