@@ -269,20 +269,20 @@ class PembelianController extends Controller {
             }
 
             $pembelianDet = $params['pembeliandet'];
-            $id = array();
-            
+            $id_det = array();
+//            Yii::error($pembelianDet);
             foreach ($pembelianDet as $val) {
                 $det = PembelianDet::findOne($val['id']);
                 if (empty($det)) {
                     $det = new PembelianDet();
                 }
                 $det->attributes = $val;
-                $det->pembelian_id = $model->id;
-                $det->save();
-                $id[] = $val['id'];
+                $det->pembelian_id = $id;
+                if($det->save()){
+                    $id_det[] = $det->id;
+                }
             }
-//            Yii::error($pembelianDet);
-            $deleteDetail = PembelianDet::deleteAll('id NOT IN ('.implode(',',$id).') AND pembelian_id='.$model->id);
+            $deleteDetail = PembelianDet::deleteAll('id NOT IN (' . implode(',', $id_det) . ') AND pembelian_id=' . $model->id);
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -322,7 +322,6 @@ class PembelianController extends Controller {
 
         header($status_header);
         header('Content-type: ' . $content_type);
-        header('X-Powered-By: ' . "Nintriva <nintriva.com>");
     }
 
     private function _getStatusCodeMessage($status) {

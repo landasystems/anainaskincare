@@ -25,6 +25,7 @@ class BarangController extends Controller {
                     'delete' => ['delete'],
                     'kategori' => ['get'],
                     'satuan' => ['get'],
+                    'cari' => ['get'],
                 ],
             ]
         ];
@@ -196,6 +197,20 @@ class BarangController extends Controller {
             exit;
         }
     }
+    
+    public function actionCari() {
+        $query = new Query;
+        $query->from('m_produk')
+                ->select("id,nama")
+                ->where("is_deleted = '0'");
+
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'data' => $models));
+    }
 
     private function setHeader($status) {
 
@@ -204,7 +219,6 @@ class BarangController extends Controller {
 
         header($status_header);
         header('Content-type: ' . $content_type);
-        header('X-Powered-By: ' . "Nintriva <nintriva.com>");
     }
 
     private function _getStatusCodeMessage($status) {

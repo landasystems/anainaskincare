@@ -165,6 +165,7 @@ class PenjualanController extends Controller {
     }
 
     public function actionUpdate($id) {
+        $id_det = array();
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
         $model->attributes = $params['penjualan'];
@@ -186,15 +187,16 @@ class PenjualanController extends Controller {
                 }
             }
              $penjualanDet = $params['penjualandet'];
-            $id = array();
-            foreach ($params['penjualandet'] as $data) { $pinjaman = PenjualanDet::find()->where('penjualan_id=' . $model->id)->one();
+            
+            foreach ($params['penjualandet'] as $data) {
+                $pinjaman = PenjualanDet::find()->where('penjualan_id=' . $model->id)->one();
                 $pinjaman->attributes = $data;
                 $pinjaman->penjualan_id = $model->id;
                 $pinjaman->sub_total = str_replace('.', '', $data['sub_total']);
                 $pinjaman->save();
-                $id[]=$data['id'];
+                $id_det[]=$pinjaman->id;
             }
-            $deleteDetail = PenjualanDet::deleteAll('id NOT IN ('.implode(',',$id).') AND penjualan_id='.$model->id);
+            $deleteDetail = PenjualanDet::deleteAll('id NOT IN ('.implode(',',$id_det).') AND penjualan_id='.$model->id);
             
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
@@ -307,7 +309,6 @@ class PenjualanController extends Controller {
 
         header($status_header);
         header('Content-type: ' . $content_type);
-        header('X-Powered-By: ' . "Nintriva <nintriva.com>");
     }
 
     private function _getStatusCodeMessage($status) {

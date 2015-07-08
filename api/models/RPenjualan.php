@@ -36,7 +36,7 @@ class RPenjualan extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['penjualan_id', 'total', 'created_at', 'created_by', 'modified_at', 'modified_by'], 'integer'],
+            [['penjualan_id', 'total','total_belanja','total_diskon','biaya_lain', 'created_at', 'created_by', 'modified_at', 'modified_by'], 'integer'],
             [['tanggal'], 'safe'],
             [['keterangan'], 'string'],
             [['kode'], 'string', 'max' => 25]
