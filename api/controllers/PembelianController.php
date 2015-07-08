@@ -261,16 +261,28 @@ class PembelianController extends Controller {
                 $credit->credit = $model->credit;
                 $credit->status = ($model->credit > 0) ? 'belum lunas' : 'lunas';
                 $credit->save();
+            } else if (empty($credit) && $model->credit != 0) {
+                $credit = new Hutang();
+                $credit->credit = $model->credit;
+                $credit->status = ($model->credit > 0) ? 'belum lunas' : 'lunas';
+                $credit->save();
             }
 
-            $deleteDetail = PembelianDet::deleteAll(['pembelian_id' => $model->id]);
             $pembelianDet = $params['pembeliandet'];
+            $id = array();
+            
             foreach ($pembelianDet as $val) {
-                $det = new PembelianDet();
+                $det = PembelianDet::findOne($val['id']);
+                if (empty($det)) {
+                    $det = new PembelianDet();
+                }
                 $det->attributes = $val;
                 $det->pembelian_id = $model->id;
                 $det->save();
+                $id[] = $val['id'];
             }
+//            Yii::error($pembelianDet);
+            $deleteDetail = PembelianDet::deleteAll(['pembelian_id' => $model->id . ' AND id NOT IN(' . implode(',',$id) . ')']);
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {

@@ -100,11 +100,13 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
                 detail.jumlah_retur = (detail.jumlah_retur !== null) ? parseInt(detail.jumlah_retur) : 0;
                 detail.harga_retur = (detail.harga_retur !== null) ? parseInt(detail.harga_retur) : 0;
             });
-            $scope.subtotal();
+            
         });
+        $scope.subtotal();
     };
 
     $scope.subtotal = function () {
+//        alert('jancok');
         var total = 0;
         var sub_total = 0;
         var total_retur = 0;
@@ -113,6 +115,7 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
             var jml_retur = (detail.jumlah_retur.length) ? parseInt(detail.jumlah_retur) : 0;
             var harga_retur = (detail.harga_retur.length) ? parseInt(detail.harga_retur) : 0;
             var diskon = (detail.diskon != "") ? parseInt(detail.diskon) : 0;
+//            alert(jml_retur);
             total_retur += jml_retur * harga_retur;
             total_diskon += jml_retur * diskon;
             sub_total = (jml_retur * harga_retur) - (jml_retur * diskon);
