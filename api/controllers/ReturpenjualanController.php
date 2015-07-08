@@ -93,8 +93,8 @@ class ReturpenjualanController extends Controller {
                 ->from(['r_penjualan', 'penjualan', 'm_cabang', 'm_customer'])
                 ->where('r_penjualan.penjualan_id = penjualan.id and penjualan.cabang_id = m_cabang.id and penjualan.customer_id = m_customer.id')
                 ->orderBy($sort)
-                ->select("r_penjualan.id as id, r_penjualan.tanggal as tanggal_retur, r_penjualan.total as total_retur, r_penjualan.keterangan as ketrangan_retur,"
-                        . " r_penjualan.kode as kode_retur, penjualan.kode as kode_penjualan , penjualan.total as total_penjualan, m_cabang.nama as cabang, "
+                ->select("r_penjualan.id as id, r_penjualan.tanggal as tanggal_retur, r_penjualan.penjualan_id as penjualan_id, r_penjualan.total as total_retur, r_penjualan.keterangan as ketrangan_retur,"
+                        . " r_penjualan.kode as kode, penjualan.kode as kode_penjualan , penjualan.total as total_penjualan, m_cabang.nama as cabang, "
                         . "m_customer.nama as nama_customer, penjualan.customer_id as customer_id,penjualan.cabang_id as cabang_id");
 
         //filter
@@ -184,24 +184,18 @@ class ReturpenjualanController extends Controller {
     public function actionUpdate($id) {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
-        $model->attributes = $params['penjualan'];
+        $model->attributes = $params['retur_penjualan'];
 
 
         if ($model->save()) {
-            if ($model->credit > 0) {
-                $pinjaman = Pinjaman::find()->where('penjualan_id=' . $model->id)->one();
-                $pinjaman->credit = $model->credit;
-                $pinjaman->status = ($model->credit > 0) ? 'belum lunas' : 'lunas';
+            foreach ($params['retur_penjualandet'] as $data) {
+                $pinjaman = RPenjualanDet::find()->where('r_penjualan_id=' . $model->id)->one();
+//                $det = new PenjualanDet();
+                $pinjaman->attributes = $data;
+//                $pinjaman->penjualan_id = $model->id;
+//                $pinjaman->sub_total = str_replace('.', '', $data['sub_total']);
+
                 $pinjaman->save();
-            }
-
-            foreach ($params['penjualandet'] as $data) {
-                $det = new PenjualanDet();
-                $det->attributes = $data;
-                $det->penjualan_id = $model->id;
-                $det->sub_total = str_replace('.', '', $data['sub_total']);
-
-                $det->save();
             }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
@@ -281,9 +275,11 @@ class ReturpenjualanController extends Controller {
 
         $query2 = new Query;
         $query2->from('penjualan_det')
-                ->join('JOIN', 'm_produk', 'penjualan_det.produk_id = m_produk.id')
+                ->join('LEFT JOIN', 'm_produk', 'penjualan_det.produk_id = m_produk.id')
+                ->join('LEFt JOIN', 'r_penjualan_det as rp', 'rp.penjualan_det_id= penjualan_det.id')
                 ->where('penjualan_id="'.$id.'"')
-                ->select('penjualan_det.id as id, penjualan_det.type as type, penjualan_det.produk_id as produk_id,penjualan_det.jumlah as jumlah, penjualan_det.harga as harga, penjualan_det.diskon as diskon , m_produk.nama');
+                ->select('penjualan_det.id as id, penjualan_det.type as type, penjualan_det.produk_id as produk_id,penjualan_det.jumlah as jumlah, penjualan_det.harga as harga_awal, penjualan_det.diskon as diskon_awal , m_produk.nama,
+                        rp.harga as harga, rp.diskon as diskon, rp.jumlah_retur as jumlah_retur');
         $command2 = $query2->createCommand();
         $detail = $command2->queryAll();
         $this->setHeader(200);
