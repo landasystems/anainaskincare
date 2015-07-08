@@ -24,6 +24,7 @@ class BarangController extends Controller {
                     'delete' => ['delete'],
                     'kategori' => ['get'],
                     'satuan' => ['get'],
+                    'cari' => ['get'],
                 ],
             ]
         ];
@@ -191,6 +192,20 @@ class BarangController extends Controller {
             echo json_encode(array('status' => 0, 'error_code' => 400, 'message' => 'Bad request'), JSON_PRETTY_PRINT);
             exit;
         }
+    }
+    
+    public function actionCari() {
+        $query = new Query;
+        $query->from('m_produk')
+                ->select("id,nama")
+                ->where("is_deleted = '0'");
+
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'data' => $models));
     }
 
     private function setHeader($status) {

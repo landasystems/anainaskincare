@@ -136,19 +136,15 @@
                             <tbody>
                                 <tr ng-repeat="detail in detsmasuk" style="margin:0px;padding:0px;">
                                     <td>
-
+                                        {{produk_id}}
                                         <input type="text" 
                                                ui-select2="produk"
                                                ng-model="produk_id"
                                                ng-change="form.produk_id = produk_id.id"
                                                data-placeholder="-Pilih Model-" required style="width: 100%;">
-                                        <!--{{form.produk_id.id}}-->
+                                        
                                         <input type="hidden" ng-model="form.produk_id">
 
-                                        <!--                                        <select ui-select2="selectcabang" ng-model="detail.produk_id" ng-disabled="is_view" required style="width: 100%;">
-                                                                                    <option value="">-Pilih Produk-</option>
-                                                                                    <option ng-repeat="produk in list_produk" value="{{produk.id}}">{{produk.nama}}</option>
-                                                                                </select>-->
                                     </td>
                                     <td style="width:50px">
                                         <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.jumlah" " ng-disabled="is_view" ng-readonly="is_create == false" required>

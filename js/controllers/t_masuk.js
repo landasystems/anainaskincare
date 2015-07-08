@@ -21,9 +21,9 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
         
     $scope.produk = {
         minimumInputLength: 3,
-        allowClear: false,
+        allowClear: true,
         ajax: {
-            url: "api/web/stokmasuk/product/",
+            url: "api/web/barang/cari/",
             dataType: 'json',
             data: function(term) {
                 return {
@@ -42,9 +42,9 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
         formatSelection: function(object) {
             return object.nama;
         },
-        id: function(data) {
-            return data.id
-        },
+//        id: function(data) {
+//            return data.id
+//        },
         initSelection : function(element, callback) {
             var obj = {id: 1, text: 'whatever value'};
 //            callback(obj);
