@@ -31,6 +31,7 @@ class Supplier extends \yii\db\ActiveRecord {
         return [
             [['kode'], 'unique'],
             [['alamat'], 'string'],
+            [['contact_person'], 'safe'],
             [['is_deleted'], 'integer'],
             [['kode', 'no_tlp'], 'string', 'max' => 25],
             [['nama', 'email'], 'string', 'max' => 45]

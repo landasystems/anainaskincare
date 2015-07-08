@@ -1,6 +1,7 @@
 app.controller('customerCtrl', function ($scope, Data, toaster) {
     //init data
     var tableStateRef;
+    var paramRef;
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
@@ -23,7 +24,7 @@ app.controller('customerCtrl', function ($scope, Data, toaster) {
         if (tableState.search.predicateObject) {
             param['filter'] = tableState.search.predicateObject;
         }
-
+        paramRef = param;
         Data.get('customer', param).then(function (data) {
             $scope.displayed = data.data;
             tableState.pagination.numberOfPages = Math.ceil(data.totalItems / limit);
@@ -31,6 +32,12 @@ app.controller('customerCtrl', function ($scope, Data, toaster) {
 
         $scope.isLoading = false;
     };
+    
+    $scope.excel = function () {
+        Data.get('customer', paramRef).then(function (data) {
+            window.location = 'api/web/customer/excel';
+        });
+    }
 
     $scope.create = function (form) {
         $scope.is_edit = true;
