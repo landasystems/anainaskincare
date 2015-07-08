@@ -20,39 +20,39 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
             harga: '',
             sub_total: '0'
         }];
-        
+
     $scope.produk = {
         minimumInputLength: 3,
         allowClear: true,
         ajax: {
             url: "api/web/barang/cari/",
             dataType: 'json',
-            data: function(term) {
+            data: function (term) {
                 return {
                     kata: term,
                 };
             },
-            results: function(data, page) {
+            results: function (data, page) {
                 return {
                     results: data.data
                 };
             }
         },
-        formatResult: function(object) {
+        formatResult: function (object) {
             return object.nama;
         },
-        formatSelection: function(object) {
+        formatSelection: function (object) {
             return object.nama;
         },
 //        id: function(data) {
 //            return data.id
 //        },
-        initSelection : function(element, callback) {
+        initSelection: function (element, callback) {
             var obj = {id: 1, text: 'whatever value'};
 //            callback(obj);
         },
     };
-        
+
     $scope.addDetail = function () {
         var newDet = {
             stok_masuk_id: '',
@@ -62,10 +62,10 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
         }
         $scope.detsmasuk.unshift(newDet);
     };
-    
-    $scope.getkode = function(id) {
-        Data.get('stokmasuk/kode_cabang/'+ id).then(function(data) {
-             $scope.form.kode = data.kode;
+
+    $scope.getkode = function (id) {
+        Data.get('stokmasuk/kode_cabang/' + id).then(function (data) {
+            $scope.form.kode = data.kode;
             $scope.form.cabang_id = id;
 
         });
@@ -108,7 +108,7 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
     Data.get('stokmasuk/cabang').then(function (data) {
         $scope.listcabang = data.data;
     });
-    
+
     Data.get('stokmasuk/product').then(function (data) {
         $scope.list_produk = data.data;
     });
@@ -135,7 +135,7 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
 
         $scope.isLoading = false;
     };
-    
+
     $scope.excel = function () {
         Data.get('stokmasuk', paramRef).then(function (data) {
             window.location = 'api/web/stokmasuk/excel';
@@ -147,37 +147,32 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
         $scope.is_view = false;
         $scope.formtitle = "Form Persediaan Masuk";
         $scope.form = {};
-      
+        $scope.form.tanggal= new Date();
+
 
 
     };
-    $scope.update = function (id) {
-        Data.get('stokmasuk/view/' + id).then(function (data) {
-            $scope.form = data.data;
-            $scope.detsmasuk = data.detail;
-            $scope.is_edit = true;
-            $scope.is_view = false;
-            $scope.formtitle = "Edit Persediaan Masuk : " + $scope.form.kode + " - " + $scope.form.nama;
-
-        })
+    $scope.update = function (form) {
+        $scope.is_edit = true;
+        $scope.is_view = false;
+        $scope.form = form;
+        $scope.formtitle = "Edit Persediaan Masuk : " + $scope.form.kode + " - " + $scope.form.nama;
+        $scope.selected(form.id);
     };
-    $scope.view = function (id) {
-        Data.get('stokmasuk/view/' + id).then(function (data) {
-            $scope.form = data.data;
-            $scope.detsmasuk = data.detail;
+    $scope.view = function (form) {
+        $scope.is_edit = true;
+        $scope.is_view = false;
+        $scope.form = form;
+        $scope.formtitle = "Edit Persediaan Masuk : " + $scope.form.kode + " - " + $scope.form.nama;
+        $scope.selected(form.id);
 
-            $scope.is_edit = true;
-            $scope.is_view = false;
-            $scope.formtitle = "Edit Persediaan Masuk : " + $scope.form.kode + " - " + $scope.form.nama;
-
-        })
     };
     $scope.save = function (form, detail) {
         var data = {
             stokmasuk: form,
             detailsmasuk: detail,
         };
-        
+
         var url = (form.id > 0) ? 'stokmasuk/update/' + form.id : 'stokmasuk/create';
         Data.post(url, data).then(function (result) {
             if (result.status == 0) {
@@ -221,6 +216,14 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
             });
         }
     };
+    $scope.selected = function (id) {
+        Data.get('stokmasuk/view/' + id).then(function (data) {
+            $scope.form = data.data;
+            $scope.detsmasuk = data.detail;
+
+        });
+        $scope.subtotal();
+    }
 
 });
 

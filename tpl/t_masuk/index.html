@@ -62,7 +62,7 @@
                             <td>{{row.total| currency}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
-                                    <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row.id)" ></button>
+                                    <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ></button>
                                     <button type="button" class="btn btn-danger fa fa-minus-circle" ng-click="delete(row);"></button>
                                 </div> 
                             </td>
@@ -146,12 +146,12 @@
 
                                     </td>
                                     <td style="width:50px">
-                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="subtotal()"  ng-model="detail.jumlah" " ng-disabled="is_view" ng-readonly="is_create == false" required>
+                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-change="subtotal()"  ng-model="detail.jumlah" " ng-disabled="is_view" ng-readonly="is_create == false" required>
                                     </td>
                                     <td style="width:200px">
                                         <div class="input-group m-b" style="margin:0px;">
                                             <span class="input-group-addon">Rp</span>
-                                            <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="subtotal()"  ng-model="detail.harga"  ng-disabled="is_view" ng-readonly="is_create == false" required>
+                                            <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-change="subtotal()"  ng-model="detail.harga"  ng-disabled="is_view" ng-readonly="is_create == false" required>
                                         </div>
                                     </td>
                                     <td style="width:200px">
