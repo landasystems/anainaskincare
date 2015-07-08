@@ -211,7 +211,7 @@ class LaporanController extends Controller {
         if (!empty($params['cabang_id'])) {
             $cbg = \app\models\Cabang::findOne(['id' => $params['cabang_id']]);
             $data['cabang'] = strtoupper($cbg->nama);
-            $criteria .= ' and kartu_stok.cabang_id = ' . $params['cabang_id'];
+            $criteria .= ' and ks.cabang_id = ' . $params['cabang_id'];
             $cabang = $params['cabang_id'];
         } else {
             $data['cabang'] = 'SEMUA CABANG';
@@ -221,7 +221,7 @@ class LaporanController extends Controller {
         if (!empty($params['kategori_id'])) {
             $cbg = \app\models\Kategori::findOne(['id' => $params['kategori_id']]);
             $data['kategori'] = strtoupper($cbg->nama);
-            $criteria .= ' and m_produk.kategori_id = ' . $params['kategori_id'];
+            $criteria .= ' and mp.kategori_id = ' . $params['kategori_id'];
             $kategori = $params['kategori_id'];
         } else {
             $data['kategori'] = 'SEMUA KATEGORI';
@@ -233,10 +233,17 @@ class LaporanController extends Controller {
         $saldoAwal = $tes->saldo('balance', $cabang, $kategori, $start);
 
         $query = new Query;
-        $query->from(['m_produk', 'm_satuan', 'm_kategori', 'kartu_stok'])
-                ->select("kartu_stok.*, m_produk.nama as produk, m_kategori.nama as kategori, m_satuan.nama as satuan")
-                ->where("m_produk.kategori_id = m_kategori.id and m_produk.satuan_id = m_satuan.id and m_produk.id = kartu_stok.produk_id and (date(kartu_stok.created_at) >= '" . $start . "' and date(kartu_stok.created_at) <= '" . $end . "') $criteria")
-                ->orderBy("kartu_stok.produk_id, kartu_stok.created_at ASC, kartu_stok.id ASC");
+        $query->select("ks.*, mp.nama as produk, mk.nama as kategori, ms.nama as satuan")
+                ->from('kartu_stok as ks')
+                ->join('JOIN', 'm_produk as mp', 'ks.produk_id = mp.id')
+                ->join('JOIN', 'm_satuan as ms', 'mp.satuan_id = ms.id')
+                ->join('JOIN', 'm_kategori as mk', 'mp.kategori_id = mk.id')
+                ->where("(date(ks.created_at) >= '" . $start . "' and date(ks.created_at) <= '" . $end . "') $criteria")
+                ->orderBy("ks.produk_id, ks.created_at ASC, ks.id ASC");
+//        $query->from(['m_produk', 'm_satuan', 'm_kategori', 'kartu_stok'])
+//                ->select("kartu_stok.*, m_produk.nama as produk, m_kategori.nama as kategori, m_satuan.nama as satuan")
+//                ->where("m_produk.kategori_id = m_kategori.id and m_produk.satuan_id = m_satuan.id and m_produk.id = kartu_stok.produk_id and (date(kartu_stok.created_at) >= '" . $start . "' and date(kartu_stok.created_at) <= '" . $end . "') $criteria")
+//                ->orderBy("kartu_stok.produk_id, kartu_stok.created_at ASC, kartu_stok.id ASC");
 
         $command = $query->createCommand();
         $kartu = $command->queryAll();
