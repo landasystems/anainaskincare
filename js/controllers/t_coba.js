@@ -1,7 +1,11 @@
 app.controller('t_cobaCtrl', function ($scope, Data, toaster) {
+    
 
-    $scope.datepickerOptions = {
+    $scope.open1 = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.opened1 = true;
+    };
 
-    }
 });
 

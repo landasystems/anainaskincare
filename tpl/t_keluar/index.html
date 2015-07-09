@@ -30,12 +30,17 @@
                             </div>
                         </div>
                     </div>
-                   
+
                     <div class="form-group">
                         <div class="control-group">
                             <label class="col-sm-2 control-label">Tanggal</label>
                             <div class="col-sm-3">
-                                <input date-range-picker class="form-control" st-search="tanggal" type="text"  ng-model="tanggals">
+                                <div class="input-group">
+                                    <input type="text" datepicker-popup="dd-MM-yyyy" st-search="'lastName'" ng-model="tanggal_dari" is-open="opened_dari" ng-click="openDari($event2)"/>
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar-o"></i>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -111,7 +116,13 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Tanggal</label>
                         <div class="col-sm-3">
-                            <input type="text" data-ng-datepicker data-ng-options="datepickerOptions" data-ng-model="form.tanggal">
+                            <div class="input-group">
+                                <input type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="form.tanggal" is-open="opened1" ng-click="open1($event)"/>
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar-o"></i>
+                                </span>
+                            </div>
+
                         </div>
                     </div>
                     <div class="form-group">

@@ -6,12 +6,22 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
     $scope.is_edit = false;
     $scope.is_view = false;
 
-    $scope.datepickerOptions = {
-        language: 'id',
-        autoclose: true,
-        weekStart: 0
-    }
-
+    $scope.open1 = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.opened1 = true;
+    };
+    $scope.openDari = function ($event2) {
+//        $event.preventDefault();
+//        $event.stopPropagation();
+        $scope.opened_dari = true;
+    };
+    $scope.openKe = function ($event3) {
+//        $event.preventDefault();
+//        $event.stopPropagation();
+        $scope.opened_ke = true;
+    };
+    
     $scope.detskeluar = [
         {
             stok_keluar_id: '',
@@ -65,7 +75,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
             detail.sub_total = sub_total;
             total += sub_total;
         })
-        $scope.form.total = total;
+//        $scope.form.total = 0;
     }
 
 

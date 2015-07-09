@@ -208,7 +208,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select2', 'ng-bootstrap-datepicker', 'daterangepicker']).then(
+                                                return $ocLazyLoad.load(['ui.select2']).then(
                                                         function () {
                                                             return $ocLazyLoad.load('js/controllers/t_keluar.js');
                                                         }
@@ -222,7 +222,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select2', 'ng-bootstrap-datepicker', 'daterangepicker']).then(
+                                                return $ocLazyLoad.load([]).then(
                                                         function () {
                                                             return $ocLazyLoad.load('js/controllers/t_coba.js');
                                                         }
