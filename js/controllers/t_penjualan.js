@@ -19,6 +19,8 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
             diskon: '',
             pegawai_terapis_id: '',
             pegawai_dokter_id: '',
+            fee_terapis: '',
+            fee_dokter: '',
         }
     ];
     $scope.datepickerOptions = {
@@ -35,6 +37,12 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
     });
     Data.get('penjualan/produk').then(function(data) {
         $scope.sProduk = data.produk;
+    });
+    Data.post('penjualan/dokter').then(function(data) {
+        $scope.list_dokter = data.dokter;
+    });
+    Data.post('penjualan/terapis').then(function(data) {
+        $scope.list_terapis = data.terapis;
     });
     $scope.getcustomer = function(wo) {
         Data.post('penjualan/nm_customer/', wo).then(function(data) {
@@ -57,6 +65,9 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
             $scope.detail.type = data.produk.type;
             $scope.detail.harga = data.produk.harga_jual;
             $scope.detail.diskon = data.produk.diskon;
+            $scope.detail.fee_terapis = data.produk.fee_terapis;
+            $scope.detail.fee_dokter = data.produk.fee_dokter;
+            $scope.form.credit = 0;
 //            alert(data.produk.type);
         });
     };
@@ -65,6 +76,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
 
     $scope.addDetail = function() {
         var newDet = {
+            id: '',
             type: '',
             jumlah: '',
             diskon: '',
