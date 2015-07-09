@@ -55,13 +55,6 @@ angular.module('app')
                             ]
                         },
                         {
-                            name: 'ng-bootstrap-datepicker',
-                            files: [
-                                'vendor/modules/angular-bootstrap-datepicker/bootstrap-datepicker.js',
-                                'vendor/modules/angular-bootstrap-datepicker/bootstrap-datepicker.min.css',
-                            ]
-                        },
-                        {
                             name: 'ui.select2',
                             files: [
                                 'vendor/modules/angular-ui-select/select.min.js',
