@@ -21,38 +21,6 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
             sub_total: '0'
         }];
 
-//    $scope.produk = {
-//        minimumInputLength: 3,
-//        allowClear: false,
-//        ajax: {
-//            url: "api/web/stokkeluar/product/",
-//            dataType: 'json',
-//            data: function(term) {
-//                return {
-//                    kata: term,
-//                };
-//            },
-//            results: function(data, page) {
-//                return {
-//                    results: data.produk
-//                };
-//            }
-//        },
-//        formatResult: function(object) {
-//            return object.produk;
-//        },
-//        formatSelection: function(object) {
-//            return object.produk;
-//        },
-//        id: function(data) {
-//            return data.produk
-//        },
-//        initSelection : function(element, callback) {
-//            var obj = {id: 1, text: 'whatever value'};
-//            callback(obj);
-//        },
-//    };
-
 
     //subtotal
     $scope.subtotal = function () {
