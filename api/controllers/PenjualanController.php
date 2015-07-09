@@ -30,6 +30,8 @@ class PenjualanController extends Controller {
                     'nm_customer' => ['post'],
                     'det_produk' => ['get'],
                     'kode_cabang' => ['get'],
+                    'dokter' => ['post'],
+                    'terapis' => ['post'],
                 ],
             ]
         ];
@@ -263,6 +265,32 @@ class PenjualanController extends Controller {
 
         echo json_encode(array('status' => 1, 'produk' => $models));
     }
+    public function actionDokter() {
+        $query = new Query;
+        $query->from('m_pegawai')
+                ->select('*')
+                ->where("is_deleted = '0' and jabatan = 'dokter'");
+
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'dokter' => $models));
+    }
+    public function actionTerapis() {
+        $query = new Query;
+        $query->from('m_pegawai')
+                ->select('*')
+                ->where("is_deleted = '0' and jabatan = 'terapis'");
+
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'terapis' => $models));
+    }
 
     public function actionNm_customer() {
         $params = json_decode(file_get_contents("php://input"), true);
@@ -312,6 +340,7 @@ class PenjualanController extends Controller {
                 ->select("*");
         $command = $query->createCommand();
         $models = $command->queryOne();
+        
         $this->setHeader(200);
 
         echo json_encode(array('produk' => $models));
