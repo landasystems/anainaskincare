@@ -11,16 +11,6 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         $event.stopPropagation();
         $scope.opened1 = true;
     };
-    $scope.openDari = function ($event2) {
-//        $event.preventDefault();
-//        $event.stopPropagation();
-        $scope.opened_dari = true;
-    };
-    $scope.openKe = function ($event3) {
-//        $event.preventDefault();
-//        $event.stopPropagation();
-        $scope.opened_ke = true;
-    };
     
     $scope.detskeluar = [
         {

@@ -260,15 +260,16 @@ ng.module('smart-table')
 
         // view -> table state
         element.bind('change', function (evt) {
-          evt = evt.originalEvent || evt;
-          if (promise !== null) {
-            $timeout.cancel(promise);
-          }
-
-          promise = $timeout(function () {
-            tableCtrl.search(evt.target.value, attr.stSearch || '');
-            promise = null;
-          }, throttle);
+            console.log("Aa");
+//          evt = evt.originalEvent || evt;
+//          if (promise !== null) {
+//            $timeout.cancel(promise);
+//          }
+//
+//          promise = $timeout(function () {
+//            tableCtrl.search(evt.target.value, attr.stSearch || '');
+//            promise = null;
+//          }, throttle);
         });
       }
     };
