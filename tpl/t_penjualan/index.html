@@ -160,12 +160,12 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <td>Barang</td>
-                                    <td>Jumlah</td>
-                                    <td>Tipe</td>
-                                    <td>Harga</td>
-                                    <td>Diskon</td>
-                                    <td>Sub total</td>
+                                    <td align="center">Barang</td>
+                                    <td align="center">Jumlah</td>
+                                    <td align="center">Tipe</td>
+                                    <td align="center">Harga // Fee</td>
+                                    <td align="center">Diskon</td>
+                                    <td align="center">Sub total</td>
                                     <td>#</td>
                                 </tr>
                             </thead>
@@ -202,6 +202,20 @@
                                         <span class="input-group-addon">Rp</span>
                                         <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.harga"  ng-disabled="is_view"  required>
                                     </div>
+                                    <table style="margin-top: 4px" ng-show="detail.type =='jasa'">
+                                        <tr>
+                                            <td>
+                                                <div class="input-group m-b" style="margin-top: 1px;">
+                                                    <span class="input-group-addon">Rp</span>
+                                                    <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/"   ng-model="detail.fee_dokter"  ng-readonly="true">
+                                                </div>
+                                                <div class="input-group m-b" style="margin-top: 1px;">
+                                                    <span class="input-group-addon">Rp</span>
+                                                    <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/"  ng-model="detail.fee_terapis"  ng-readonly="true">
+                                                </div> 
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
                                 <td width="18%">
                                     <div class="input-group m-b" style="margin:0px;">

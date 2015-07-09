@@ -19,6 +19,8 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
             diskon: '',
             pegawai_terapis_id: '',
             pegawai_dokter_id: '',
+            fee_terapis: '',
+            fee_dokter: '',
         }
     ];
     $scope.datepickerOptions = {
@@ -63,6 +65,8 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
             $scope.detail.type = data.produk.type;
             $scope.detail.harga = data.produk.harga_jual;
             $scope.detail.diskon = data.produk.diskon;
+            $scope.detail.fee_terapis = data.produk.fee_terapis;
+            $scope.detail.fee_dokter = data.produk.fee_dokter;
             $scope.form.credit = 0;
 //            alert(data.produk.type);
         });
