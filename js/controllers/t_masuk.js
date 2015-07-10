@@ -5,6 +5,16 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
+    $scope.form = {};
+
+    $scope.cariProduk = function ($query) {
+        if ($query.length >= 3) {
+            Data.get('barang/cari', {nama: $query}).then(function (data) {
+                $scope.results = data.data;
+            });
+        }
+    }
+    
 
     $scope.datepickerOptions = {
         language: 'id',
@@ -15,7 +25,7 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
     $scope.detsmasuk = [
         {
             stok_masuk_id: '',
-            produk_id: '',
+            produk: '',
             jumlah: '',
             harga: '',
             sub_total: '0'
@@ -56,7 +66,7 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
     $scope.addDetail = function () {
         var newDet = {
             stok_masuk_id: '',
-            produk_id: '',
+            produk: '',
             jumlah: '',
             harga: '',
         }
@@ -147,7 +157,7 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
         $scope.is_view = false;
         $scope.formtitle = "Form Persediaan Masuk";
         $scope.form = {};
-        $scope.form.tanggal= new Date();
+        $scope.form.tanggal = new Date();
 
 
 
