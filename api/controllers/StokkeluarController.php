@@ -309,6 +309,8 @@ class StokkeluarController extends Controller {
     public function actionExcel() {
         session_start();
         $query = $_SESSION['query'];
+        $query->offset("");
+        $query->limit("");
         $command = $query->createCommand();
         $models = $command->queryAll();
         return $this->render("excel", ['models'=>$models]);
