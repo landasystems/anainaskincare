@@ -7,6 +7,7 @@ use app\models\RPembelian;
 use app\models\RPembelianDet;
 use app\models\PembelianDet;
 use app\models\Hutang;
+use app\models\KartuStok;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
