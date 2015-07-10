@@ -40,7 +40,7 @@ angular.module('app')
         }
         )
         // oclazyload config
-        .config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
+        .config(['$ocLazyLoadProvider', function ($ocLazyLoadProvider) {
                 // We configure ocLazyLoad to use the lib script.js as the async loader
                 $ocLazyLoadProvider.config({
                     debug: false,
@@ -52,6 +52,13 @@ angular.module('app')
                                 'vendor/modules/angular-daterangepicker/angular-daterangepicker.min.js',
                                 'vendor/modules/angular-daterangepicker/daterangepicker.min.js',
                                 'vendor/modules/angular-daterangepicker/daterangepicker.min.css',
+                            ]
+                        },
+                        {
+                            name: 'ui.select',
+                            files: [
+                                'vendor/modules/angular-ui-select/select.min.js',
+                                'vendor/modules/angular-ui-select/select.min.css'
                             ]
                         },
                         {
