@@ -49,26 +49,9 @@ angular.module('app')
                         {
                             name: 'daterangepicker',
                             files: [
-                                'vendor/modules/angular-daterangepicker/moment.min.js',
                                 'vendor/modules/angular-daterangepicker/angular-daterangepicker.min.js',
                                 'vendor/modules/angular-daterangepicker/daterangepicker.min.js',
                                 'vendor/modules/angular-daterangepicker/daterangepicker.min.css',
-                            ]
-                        },
-                        {
-                            name: 'ng-bootstrap-datepicker',
-                            files: [
-                                'vendor/modules/angular-bootstrap-datepicker/bootstrap.min.js',
-                                'vendor/modules/angular-bootstrap-datepicker/bootstrap-datepicker.js',
-                                'vendor/modules/angular-bootstrap-datepicker/bootstrap-datepicker.min.css',
-                            ]
-                        },
-                        {
-                            name: 'ngGrid',
-                            files: [
-                                'vendor/modules/ng-grid/ng-grid.min.js',
-                                'vendor/modules/ng-grid/ng-grid.min.css',
-                                'vendor/modules/ng-grid/theme.css'
                             ]
                         },
                         {
@@ -102,13 +85,6 @@ angular.module('app')
                             files: [
                                 'vendor/modules/angular-bootstrap-nav-tree/abn_tree_directive.js',
                                 'vendor/modules/angular-bootstrap-nav-tree/abn_tree.css'
-                            ]
-                        },
-                        {
-                            name: 'toaster',
-                            files: [
-                                'vendor/modules/angularjs-toaster/toaster.js',
-                                'vendor/modules/angularjs-toaster/toaster.css'
                             ]
                         },
                         {

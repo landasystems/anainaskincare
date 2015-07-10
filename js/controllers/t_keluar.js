@@ -6,12 +6,12 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
     $scope.is_edit = false;
     $scope.is_view = false;
 
-    $scope.datepickerOptions = {
-        language: 'id',
-        autoclose: true,
-        weekStart: 0
-    }
-
+    $scope.open1 = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.opened1 = true;
+    };
+    
     $scope.detskeluar = [
         {
             stok_keluar_id: '',
@@ -20,38 +20,6 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
             harga: '',
             sub_total: '0'
         }];
-
-//    $scope.produk = {
-//        minimumInputLength: 3,
-//        allowClear: false,
-//        ajax: {
-//            url: "api/web/stokkeluar/product/",
-//            dataType: 'json',
-//            data: function(term) {
-//                return {
-//                    kata: term,
-//                };
-//            },
-//            results: function(data, page) {
-//                return {
-//                    results: data.produk
-//                };
-//            }
-//        },
-//        formatResult: function(object) {
-//            return object.produk;
-//        },
-//        formatSelection: function(object) {
-//            return object.produk;
-//        },
-//        id: function(data) {
-//            return data.produk
-//        },
-//        initSelection : function(element, callback) {
-//            var obj = {id: 1, text: 'whatever value'};
-//            callback(obj);
-//        },
-//    };
 
 
     //subtotal
@@ -65,7 +33,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
             detail.sub_total = sub_total;
             total += sub_total;
         })
-        $scope.form.total = total;
+//        $scope.form.total = 0;
     }
 
 

@@ -30,6 +30,8 @@ class PenjualanController extends Controller {
                     'nm_customer' => ['post'],
                     'det_produk' => ['get'],
                     'kode_cabang' => ['get'],
+                    'dokter' => ['post'],
+                    'terapis' => ['post'],
                 ],
             ]
         ];
@@ -154,12 +156,11 @@ class PenjualanController extends Controller {
                 $det->attributes = $data;
                 $det->penjualan_id = $model->id;
                 $det->sub_total = str_replace('.', '', $data['sub_total']);
-                
-                if($det->save()){
-                        $keterangan = 'penjualan';
-                $stok = new \app\models\KartuStok();
-                $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
-            
+
+                if ($det->save()) {
+                    $keterangan = 'penjualan';
+                    $stok = new \app\models\KartuStok();
+                    $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
                 }
                 // stock
             }
@@ -205,13 +206,14 @@ class PenjualanController extends Controller {
                 $det->penjualan_id = $model->id;
                 if ($det->save()) {
                     $id_det[] = $det->id;
-                }
-                //stok
-                $keterangan = 'penjualan';
+                          $keterangan = 'penjualan';
                 $stok = new \app\models\KartuStok();
                 $hapus = $stok->hapusKartu($keterangan, $model->id);
-                $update = $stok->process('out', $model->tanggal, $model->kode, $val['produk_id'], $val['jumlah'], $model->cabang_id, $val['harga'], $keterangan, $model->id);
-            }
+                $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
+           
+                }
+                //stok
+           }
             $deleteDetail = PenjualanDet::deleteAll('id NOT IN (' . implode(',', $id_det) . ') AND penjualan_id=' . $model->id);
 
             $this->setHeader(200);
@@ -263,6 +265,32 @@ class PenjualanController extends Controller {
 
         echo json_encode(array('status' => 1, 'produk' => $models));
     }
+    public function actionDokter() {
+        $query = new Query;
+        $query->from('m_pegawai')
+                ->select('*')
+                ->where("is_deleted = '0' and jabatan = 'dokter'");
+
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'dokter' => $models));
+    }
+    public function actionTerapis() {
+        $query = new Query;
+        $query->from('m_pegawai')
+                ->select('*')
+                ->where("is_deleted = '0' and jabatan = 'terapis'");
+
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'terapis' => $models));
+    }
 
     public function actionNm_customer() {
         $params = json_decode(file_get_contents("php://input"), true);
@@ -312,6 +340,7 @@ class PenjualanController extends Controller {
                 ->select("*");
         $command = $query->createCommand();
         $models = $command->queryOne();
+        
         $this->setHeader(200);
 
         echo json_encode(array('produk' => $models));

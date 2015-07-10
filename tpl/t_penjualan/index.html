@@ -129,7 +129,7 @@
                                         <option value="">-- Cabang --</option>
                                         <option ng-repeat="cabang in sCabang" value="{{cabang.id}}">{{cabang.nama}}</option>
                                     </select>
-                                </div>35
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Tanggal</label>
@@ -153,28 +153,43 @@
                                 </div>
                             </div>
                         </div>
-                        
+
 
                         <div class="line line-dashed b-b line-lg pull-in"></div>
                         <h5 class="font-bold">- Detail Pesanan</h5> 
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <td>Barang</td>
-                                    <td>Jumlah</td>
-                                    <td>Tipe</td>
-                                    <td>Harga</td>
-                                    <td>Diskon</td>
-                                    <td>Sub total</td>
+                                    <td align="center">Barang</td>
+                                    <td align="center">Jumlah</td>
+                                    <td align="center">Tipe</td>
+                                    <td align="center">Harga // Fee</td>
+                                    <td align="center">Diskon</td>
+                                    <td align="center">Sub total</td>
                                     <td>#</td>
                                 </tr>
                             </thead>
                             <tr ng-repeat="detail in detPenjualan">
                                 <td>
-                                    <select ui-select2="" ng-change="getproduk(detail)" ng-model="detail.produk_id" ng-disabled="is_view" required style="width: 250px;">
+                                    <select ui-select2="" ng-change="getproduk(detail)" ng-model="detail.produk_id" ng-disabled="is_view"  style="width: 250px;">
                                         <option value="">-Pilih Produk-</option>
                                         <option ng-repeat="produk in sProduk" value="{{produk.id}}">{{produk.nama}}</option>
-                                    </select> 
+                                    </select>
+                                    <table style="margin-top: 4px" ng-show="detail.type =='jasa'">
+                                        <tr>
+                                            <td>
+                                                <select  ui-select2=""  ng-model="detail.pegawai_dokter_id" ng-disabled="is_view"  style="width: 250px; margin-top: 2px">
+                                                    <option value="">-Pilih Dokter-</option>
+                                                    <option ng-repeat="dokter in list_dokter" value="{{dokter.id}}">{{dokter.nama}}</option>
+                                                </select>
+                                                <select ui-select2=""  ng-model="detail.pegawai_terapis_id" ng-disabled="is_view"  style="width: 250px; margin-top: 2px">
+                                                    <option value="">-Pilih Terapis-</option>
+                                                    <option ng-repeat="terapis in list_terapis" value="{{terapis.id}}">{{terapis.nama}}</option>
+                                                </select> 
+                                            </td>
+                                        </tr>
+                                    </table>
+
                                 </td>
                                 <td width="6%">
                                     <input type="text" class="form-control" ng-maxlength="4" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.jumlah" ng-disabled="is_view" ng-readonly="is_create == false" required>
@@ -187,6 +202,20 @@
                                         <span class="input-group-addon">Rp</span>
                                         <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.harga"  ng-disabled="is_view"  required>
                                     </div>
+                                    <table style="margin-top: 4px" ng-show="detail.type =='jasa'">
+                                        <tr>
+                                            <td>
+                                                <div class="input-group m-b" style="margin-top: 1px;">
+                                                    <span class="input-group-addon">Rp</span>
+                                                    <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/"   ng-model="detail.fee_dokter"  ng-readonly="true">
+                                                </div>
+                                                <div class="input-group m-b" style="margin-top: 1px;">
+                                                    <span class="input-group-addon">Rp</span>
+                                                    <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/"  ng-model="detail.fee_terapis"  ng-readonly="true">
+                                                </div> 
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
                                 <td width="18%">
                                     <div class="input-group m-b" style="margin:0px;">

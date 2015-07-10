@@ -337,29 +337,7 @@ class ReturpenjualanController extends Controller {
         echo json_encode(array('produk' => $models));
     }
 
-    public function actionKode_cabang($id) {
-        $query = new Query;
-
-        $query->from('m_cabang')
-                ->where('id="' . $id . '"')
-                ->select("*");
-        $command = $query->createCommand();
-        $models = $command->query()->read();
-        $code = $models['kode'];
-
-        $query2 = new Query;
-        $query2->from('penjualan')
-                ->select('kode')
-                ->orderBy('kode DESC')
-                ->limit(1);
-
-        $command2 = $query2->createCommand();
-        $models2 = $command2->query()->read();
-        $kode_mdl = (substr($models2['kode'], -5) + 1);
-        $kode = substr('00000' . $kode_mdl, strlen($kode_mdl));
-        $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'kode' => 'JUAL/' . $code . '/' . $kode));
-    }
+    
 
     public function actionDelete($id) {
         $model = $this->findModel($id);
