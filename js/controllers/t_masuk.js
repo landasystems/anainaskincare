@@ -14,13 +14,6 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
             });
         }
     }
-    $scope.someFunction = function (item, model) {
-        console.log(item);
-        console.log(model);
-//        $scope.counter++;
-//        $scope.eventResult = {item: item, model: model};
-    };
-
     
 
     $scope.datepickerOptions = {
