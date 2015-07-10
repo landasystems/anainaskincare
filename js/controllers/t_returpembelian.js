@@ -11,6 +11,11 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
         $scope.listPembelian = data.listPembelian;
 
     });
+     $scope.open1 = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.opened1 = true;
+    };
 
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
@@ -68,7 +73,7 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
             retur: form,
             returdet: detail,
         };
-        var url = (form.id > 0) ? 'returpembelian/update' : 'returpembelian/create';
+        var url = (form.id > 0) ? 'returpembelian/update/'+form.id : 'returpembelian/create';
         Data.post(url, data).then(function (result) {
             if (result.status == 0) {
                 toaster.pop('error', "Terjadi Kesalahan", result.errors);

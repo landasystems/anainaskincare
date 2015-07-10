@@ -6,6 +6,7 @@ use Yii;
 use app\models\RPembelian;
 use app\models\RPembelianDet;
 use app\models\PembelianDet;
+use app\models\Pembelian;
 use app\models\Hutang;
 use app\models\KartuStok;
 use yii\data\ActiveDataProvider;
@@ -150,10 +151,10 @@ class ReturpembelianController extends Controller {
                     $det->jumlah = $data['jumlah_retur'];
                     $det->sub_total = $data['sub_total_retur'];
                     if ($det->save()) {
-                        $hutang = Hutang::find()->where('pembelian_id=' . $model->pembelian_id)->one();
+                        $pembelian = Pembelian::findOne($model->pembelian_id);
                         $keterangan = 'r_pembelian';
                         $stok = new KartuStok();
-                        $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $hutang->cabang_id, $det->harga, $keterangan, $model->id);
+                        $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $pembelian->cabang_id, $det->harga, $keterangan, $model->id);
                     }
                 }
             }
@@ -185,11 +186,11 @@ class ReturpembelianController extends Controller {
                     $det->jumlah = $data['jumlah_retur'];
                     $det->sub_total = $data['sub_total_retur'];
                     if ($det->save()) {
-                        $hutang = Hutang::find()->where('penjualan_id=' . $model->penjualan_id)->one();
+                        $pembelian = Pembelian::findOne($model->pembelian_id);
                         $keterangan = 'r_pembelian';
                         $stok = new KartuStok();
                         $hapus = $stok->hapusKartu($keterangan, $id);
-                        $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $hutang->cabang_id, $det->harga, $keterangan, $model->id);
+                        $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $pembelian->cabang_id, $det->harga, $keterangan, $model->id);
                     }
                 }
             }
