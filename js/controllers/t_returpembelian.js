@@ -6,11 +6,16 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
     $scope.is_view = false;
     $scope.is_create = false;
     $scope.det = [];
-    $scope.detail = [];
+    $scope.details = [];
     Data.get('returpembelian/pembelianlist').then(function (data) {
         $scope.listPembelian = data.listPembelian;
 
     });
+     $scope.open1 = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.opened1 = true;
+    };
 
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
@@ -42,6 +47,8 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
         $scope.formtitle = "Form Retur Pembelian";
         $scope.form = {};
         $scope.form.biaya_lain = 0;
+        $scope.det = {};
+        $scope.details = {};
     };
     $scope.update = function (form) {
         $scope.is_edit = true;
@@ -66,7 +73,7 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
             retur: form,
             returdet: detail,
         };
-        var url = (form.id > 0) ? 'returpembelian/update':'returpembelian/create';
+        var url = (form.id > 0) ? 'returpembelian/update/'+form.id : 'returpembelian/create';
         Data.post(url, data).then(function (result) {
             if (result.status == 0) {
                 toaster.pop('error', "Terjadi Kesalahan", result.errors);
@@ -100,7 +107,7 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
                 detail.jumlah_retur = (detail.jumlah_retur !== null) ? parseInt(detail.jumlah_retur) : 0;
                 detail.harga_retur = (detail.harga_retur !== null) ? parseInt(detail.harga_retur) : 0;
             });
-            
+
         });
         $scope.subtotal();
     };
@@ -129,11 +136,11 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
         $scope.form.total_diskon = total_diskon;
         $scope.total();
     };
-    $scope.total = function(){
+    $scope.total = function () {
         var total_retur = parseInt($scope.form.total_retur);
         var total_diskon = parseInt($scope.form.total_diskon);
         var biaya_lain = ($scope.form.biaya_lain.length !== null) ? parseInt($scope.form.biaya_lain) : 0;
-        
+
         $scope.form.total = total_retur - total_diskon + biaya_lain;
     }
 })
