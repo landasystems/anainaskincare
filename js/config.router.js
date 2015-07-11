@@ -222,7 +222,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select']).then(
+                                                return $ocLazyLoad.load(['angularFileUpload']).then(
                                                         function () {
                                                             return $ocLazyLoad.load('js/controllers/t_coba.js');
                                                         }
