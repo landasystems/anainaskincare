@@ -62,15 +62,6 @@ angular.module('app')
                             ]
                         },
                         {
-                            name: 'ui.select2',
-                            files: [
-                                'vendor/modules/angular-ui-select/select.min.js',
-                                'vendor/jquery/select2/select2.css',
-                                'vendor/jquery/select2/select2-bootstrap.css',
-                                'vendor/jquery/select2/select2.min.js',
-                            ]
-                        },
-                        {
                             name: 'angularFileUpload',
                             files: [
                                 'vendor/modules/angular-file-upload/angular-file-upload.min.js'
