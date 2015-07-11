@@ -171,15 +171,19 @@ class StokmasukController extends Controller {
 
         $model = $this->findModel($id);
         $det = StokMasukDet::find()
+                ->with('barang')
+                ->orderBy('id')
                 ->where(['stok_masuk_id' => $model['id']])
                 ->all();
 
-        $detail = array();
-
-        foreach ($det as $val) {
-            $detail[] = $val->attributes;
+        foreach ($det as $key => $val) {
+            $detail[$key] = $val->attributes;
+            
+            //menambahkan json detail, select2
+            $namaBarang = (isset($val->barang->nama)) ? $val->barang->nama : '';
+            $hargaBarang = (isset($val->barang->harga_beli_terakhir)) ? $val->barang->harga_beli_terakhir : '';
+            $detail[$key]['produk'] =  ['id'=>$val->produk_id,'nama'=>$namaBarang,'harga_beli_terakhir'=>$hargaBarang];
         }
-
 
         $this->setHeader(200);
         echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes), 'detail' => $detail), JSON_PRETTY_PRINT);
@@ -195,6 +199,7 @@ class StokmasukController extends Controller {
             foreach ($detailsmasuk as $val) {
                 $det = new StokMasukDet();
                 $det->attributes = $val;
+                $det->produk_id = $val['produk']['id'];
                 $det->stok_masuk_id = $model->id;
                 $det->save();
 
@@ -223,7 +228,7 @@ class StokmasukController extends Controller {
             foreach ($detailSmasuk as $val) {
                 $det = new StokMasukDet();
                 $det->attributes = $val;
-                $det->produk_id = $val['produk_id'];
+                $det->produk_id = $val['produk']['id'];
                 $det->jumlah = str_replace('.', '', $det->jumlah);
                 $det->harga = str_replace('.', '', $det->harga);
                 $det->stok_masuk_id = $model->id;

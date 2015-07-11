@@ -57,4 +57,8 @@ class StokMasukDet extends \yii\db\ActiveRecord
     {
         return $this->hasOne(StokMasuk::className(), ['id' => 'stok_masuk_id']);
     }
+    public function getBarang()
+    {
+        return $this->hasOne(Barang::className(), ['id' => 'produk_id']);
+    }
 }
