@@ -199,16 +199,15 @@ class BarangController extends Controller {
     }
     
     public function actionCari() {
+        $params = $_REQUEST;
         $query = new Query;
         $query->from('m_produk')
-                ->select("id,nama")
-                ->where("is_deleted = '0'");
-
+                ->select("id,nama,harga_beli_terakhir")
+                ->where(['is_deleted'=>0])
+                ->andWhere(['like', 'nama', $params['nama']]);
         $command = $query->createCommand();
         $models = $command->queryAll();
-
         $this->setHeader(200);
-
         echo json_encode(array('status' => 1, 'data' => $models));
     }
 
