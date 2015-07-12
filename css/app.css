@@ -1,3 +1,8 @@
+/*----print*/
+#printArea {
+    display: none;
+}
+
 /*----table*/
 .st-sort-ascent:before{
     content: '\25B2' !important;
