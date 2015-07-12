@@ -14,7 +14,7 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
             });
         }
     }
-    
+
 
     $scope.datepickerOptions = {
         language: 'id',
@@ -54,12 +54,8 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
         formatSelection: function (object) {
             return object.nama;
         },
-//        id: function(data) {
-//            return data.id
-//        },
         initSelection: function (element, callback) {
             var obj = {id: 1, text: 'whatever value'};
-//            callback(obj);
         },
     };
 
@@ -146,6 +142,12 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
         $scope.isLoading = false;
     };
 
+    $scope.open1 = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.opened1 = true;
+    };
+
     $scope.excel = function () {
         Data.get('stokmasuk', paramRef).then(function (data) {
             window.location = 'api/web/stokmasuk/excel';
@@ -157,10 +159,7 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
         $scope.is_view = false;
         $scope.formtitle = "Form Persediaan Masuk";
         $scope.form = {};
-        $scope.form.tanggal = new Date();
-
-
-
+        $scope.form.tanggal = moment().format('DD-MM-YYYY');
     };
     $scope.update = function (form) {
         $scope.is_edit = true;

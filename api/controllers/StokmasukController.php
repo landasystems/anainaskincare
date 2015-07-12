@@ -229,8 +229,6 @@ class StokmasukController extends Controller {
                 $det = new StokMasukDet();
                 $det->attributes = $val;
                 $det->produk_id = $val['produk']['id'];
-                $det->jumlah = str_replace('.', '', $det->jumlah);
-                $det->harga = str_replace('.', '', $det->harga);
                 $det->stok_masuk_id = $model->id;
                 $det->save();
 

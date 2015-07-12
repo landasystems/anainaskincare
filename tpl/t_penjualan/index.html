@@ -134,7 +134,13 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Tanggal</label>
                                 <div class="col-sm-9">
-                                    <input type="text" data-ng-datepicker data-ng-options="datepickerOptions" data-ng-model="form.tanggal">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="form.tanggal" is-open="opened1" ng-click="open1($event)"/>
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar-o"></i>
+                                        </span>
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="form-group">
@@ -171,13 +177,31 @@
                             </thead>
                             <tr ng-repeat="detail in detPenjualan">
                                 <td>
-                                    <select ui-select2="" ng-change="getproduk(detail)" ng-model="detail.produk_id" ng-disabled="is_view"  style="width: 250px;">
-                                        <option value="">-Pilih Produk-</option>
-                                        <option ng-repeat="produk in sProduk" value="{{produk.id}}">{{produk.nama}}</option>
-                                    </select>
-                                    <table style="margin-top: 4px" ng-show="detail.type =='jasa'">
+
+                                    <div class="input-group">
+                                        <ui-select on-select="pilih(detail, $item)" ng-model="detail.produk" theme="bootstrap">
+                                            <ui-select-match>{{$select.selected.nama}}</ui-select-match>
+                                            <ui-select-choices refresh="cariProduk($select.search)" repeat="val in results">
+                                                {{val.nama}}
+                                            </ui-select-choices>
+                                        </ui-select>
+                                        <span class="input-group-btn">
+                                            <button ng-click="detail.produk = undefined" class="btn btn-default">
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    
+                                    <table style="margin-top: 4px" ng-show="detail.type == 'Jasa'">
                                         <tr>
                                             <td>
+<!--                                        <ui-select ng-model="detail.pegawai_dokter_id" theme="bootstrap">
+                                            <ui-select-match placeholder="Select or search a person in the list...">{{$select.selected.name}}</ui-select-match>
+                                            <ui-select-choices group-by="'group'" repeat="item in people | filter: $select.search">
+                                                <span ng-bind-html="item.name | highlight: $select.search"></span>
+                                            </ui-select-choices>
+                                        </ui-select>-->
+                                                
                                                 <select  ui-select2=""  ng-model="detail.pegawai_dokter_id" ng-disabled="is_view"  style="width: 250px; margin-top: 2px">
                                                     <option value="">-Pilih Dokter-</option>
                                                     <option ng-repeat="dokter in list_dokter" value="{{dokter.id}}">{{dokter.nama}}</option>
@@ -202,7 +226,7 @@
                                         <span class="input-group-addon">Rp</span>
                                         <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.harga"  ng-disabled="is_view"  required>
                                     </div>
-                                    <table style="margin-top: 4px" ng-show="detail.type =='jasa'">
+                                    <table style="margin-top: 4px" ng-show="detail.type == 'Jasa'">
                                         <tr>
                                             <td>
                                                 <div class="input-group m-b" style="margin-top: 1px;">
@@ -266,7 +290,7 @@
                                 <td colspan="2">
                                     <div class="input-group">
                                         <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-readonly="true" ng-disabled="is_view" value="{{((form.cash*1 + form.credit*1)-form.total) | number}}">
+                                        <input type="text" class="form-control" ng-readonly="true" ng-disabled="is_view" value="{{((form.cash * 1 + form.credit * 1) - form.total) | number}}">
                                     </div> 
                                 </td>
                             </tr>

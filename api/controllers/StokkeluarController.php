@@ -84,9 +84,7 @@ class StokkeluarController extends Controller {
 
         echo json_encode(array('status' => 1, 'data' => $models));
     }
-    
-    
-    
+
     public function actionKode_cabang($id) {
         $query = new Query;
 
@@ -96,7 +94,7 @@ class StokkeluarController extends Controller {
         $command = $query->createCommand();
         $models = $command->query()->read();
         $code = $models['kode'];
-        
+
         $query2 = new Query;
         $query2->from('stok_keluar')
                 ->select('kode')
@@ -105,10 +103,10 @@ class StokkeluarController extends Controller {
 
         $command2 = $query2->createCommand();
         $models2 = $command2->query()->read();
-        $kode_mdl = (substr($models2['kode'],-5) + 1);
-        $kode=substr('00000'.$kode_mdl,strlen($kode_mdl));
+        $kode_mdl = (substr($models2['kode'], -5) + 1);
+        $kode = substr('00000' . $kode_mdl, strlen($kode_mdl));
         $this->setHeader(200);
-        echo json_encode(array('status' => 1,'kode' => 'KELUAR/'.$code.'/'.$kode));
+        echo json_encode(array('status' => 1, 'kode' => 'KELUAR/' . $code . '/' . $kode));
     }
 
     public function actionIndex() {
@@ -143,7 +141,7 @@ class StokkeluarController extends Controller {
                 ->select("stok_keluar.id, stok_keluar.kode, stok_keluar.tanggal, m_cabang.nama as cabang, stok_keluar.keterangan, stok_keluar.total")
                 ->where('m_cabang.id = stok_keluar.cabang_id');
 
-        
+
         //filter
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
@@ -159,7 +157,7 @@ class StokkeluarController extends Controller {
                 }
             }
         }
-        
+
         session_start();
         $_SESSION['query'] = $query;
 
@@ -184,6 +182,9 @@ class StokkeluarController extends Controller {
 
         foreach ($det as $val) {
             $detail[] = $val->attributes;
+            $namaBarang = (isset($val->barang->nama)) ? $val->barang->nama : '';
+            $hargaBarang = (isset($val->barang->harga_beli_terakhir)) ? $val->barang->harga_beli_terakhir : '';
+            $detail[$key]['produk'] = ['id' => $val->produk_id, 'nama' => $namaBarang, 'harga_beli_terakhir' => $hargaBarang];
         }
         $data = array();
         $data = $model->attributes;
@@ -204,6 +205,7 @@ class StokkeluarController extends Controller {
             foreach ($detailskeluar as $val) {
                 $det = new StokKeluarDet();
                 $det->attributes = $val;
+                $det->produk_id = $val['produk']['id'];
                 $det->stok_keluar_id = $model->id;
                 $det->save();
 
@@ -232,8 +234,7 @@ class StokkeluarController extends Controller {
             foreach ($detailSkeluar as $val) {
                 $det = new StokKeluarDet();
                 $det->attributes = $val;
-                $det->jumlah = str_replace('.', '', $det->jumlah);
-                $det->harga = str_replace('.', '', $det->harga);
+                $det->produk_id = $val['produk']['id'];
                 $det->stok_keluar_id = $model->id;
                 $det->save();
 
@@ -305,7 +306,7 @@ class StokkeluarController extends Controller {
         );
         return (isset($codes[$status])) ? $codes[$status] : '';
     }
-    
+
     public function actionExcel() {
         session_start();
         $query = $_SESSION['query'];
@@ -313,7 +314,7 @@ class StokkeluarController extends Controller {
         $query->limit("");
         $command = $query->createCommand();
         $models = $command->queryAll();
-        return $this->render("excel", ['models'=>$models]);
+        return $this->render("excel", ['models' => $models]);
     }
 
 }
