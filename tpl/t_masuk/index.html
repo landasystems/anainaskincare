@@ -23,7 +23,7 @@
                         <div class="control-group">
                             <label class="col-sm-2 control-label">Cabang</label>
                             <div class="col-sm-3">
-                                <select ui-select2="selectcabang" st-search="cabang_id" ng-model="cabang" ng-disabled="is_view" style="width: 250px;">
+                                <select st-search="cabang_id" ng-model="cabang" ng-disabled="is_view" style="width: 250px;">
                                     <option value="">-Pilih Cabang-</option>
                                     <option ng-repeat="cabang in listcabang" value="{{cabang.id}}">{{cabang.nama}}</option>
                                 </select>
@@ -59,7 +59,7 @@
                             <td>{{row.tanggal| date}}</td>
                             <td>{{row.cabang}}</td>
                             <td>{{row.keterangan}}</td>
-                            <td>{{row.total| currency}}</td>
+                            <td>{{row.total| currency:undefined:0}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ></button>
@@ -89,6 +89,9 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 {{formtitle}} 
+                <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
+                    <button type="button" class="btn btn-primary fa fa-print" ng-print print-element-id="printArea">&nbsp;Print</button>
+                </div> 
             </div>
             <div class="panel-body">
                 <form name="landaform" class="form-horizontal form-validation ">
@@ -101,7 +104,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Cabang</label>
                         <div class="col-sm-6">
-                            <select  stInputEvent="change" class="form-control" ui-jq="chosen" ng-change="getkode(form.cabang_id)" ng-model="form.cabang_id" ng-disabled="is_view" required style="width:48%;">
+                            <select class="form-control" ng-change="getkode(form.cabang_id)" ng-model="form.cabang_id" ng-disabled="is_view" required style="width:48%;">
                                 <option value="">-Pilih Cabang-</option>
                                 <option ng-repeat="cabang in listcabang" value="{{cabang.id}}">{{cabang.nama}}</option>
                             </select>
@@ -201,7 +204,24 @@
         </div>
     </div>
 
-    <div id="printArea" ng-show="is_view" style="display: block !important">
+    <!--PRINT-->
+    
+    <div id="printArea" ng-show="is_view">
+        <center>
+            <b>PERSEDIAAN BARANG MASUK</b>
+        </center>
+        <div class="kiri">
+            <img ng-src="img/logo.png" align="left" style="margin-right: 8px"/>
+            Jln P.ROON No.15 Sawotratap<br/>
+            Telp. 031-853 2117<br/>
+            www.anainaskincare.com
+        </div>
+        <div class="kanan">
+            <span class="label">Kode</span>: {{form.kode}}<br/>
+            <span class="label">Cabang</span>: {{form.cabang}}<br/>
+            <span class="label">Tanggal</span>: {{form.tanggal| date}}<br/>
+        </div>
+        <br/>
         <table>
             <thead>
                 <tr>
@@ -220,10 +240,10 @@
                         {{detail.jumlah}}
                     </td>
                     <td style="text-align: right">
-                        {{detail.harga| currency}}
+                        {{detail.harga| currency:undefined:0}}
                     </td>
                     <td style="text-align: right">
-                        {{detail.sub_total| currency}}
+                        {{detail.sub_total| currency:undefined:0}}
                     </td>
                 </tr>
             </tbody>
@@ -231,7 +251,7 @@
                 <tr>
                     <th colspan="3" style="text-align: right;">Total :&nbsp;</th>
                     <td style="text-align: right;">
-                        {{form.total| currency}}
+                        {{form.total| currency:undefined:0}}
                     </td>
                 </tr>
             </tfoot>
@@ -239,4 +259,4 @@
     </div>
 </div>
 
-<button class="btn btn-primary" ng-print print-element-id="printArea"><i class="fa fa-print"></i> Print</button>
+

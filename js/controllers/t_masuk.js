@@ -168,14 +168,14 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
         $scope.is_edit = true;
         $scope.is_view = false;
         $scope.form = form;
-        $scope.formtitle = "Edit Persediaan Masuk : " + $scope.form.kode + " - " + $scope.form.nama;
+        $scope.formtitle = "Edit Persediaan Masuk : " + $scope.form.kode;
         $scope.selected(form.id);
     };
     $scope.view = function (form) {
         $scope.is_edit = true;
-        $scope.is_view = false;
+        $scope.is_view = true;
         $scope.form = form;
-        $scope.formtitle = "Edit Persediaan Masuk : " + $scope.form.kode + " - " + $scope.form.nama;
+        $scope.formtitle = "Persediaan Masuk : " + $scope.form.kode;
         $scope.selected(form.id);
 
     };
