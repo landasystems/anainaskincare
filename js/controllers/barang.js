@@ -105,7 +105,25 @@ app.controller('barangCtrl', function ($scope, Data, toaster, FileUploader) {
         $scope.is_edit = false;
         $scope.is_view = false;
     };
+    
+    $scope.trash = function (row) {
+        if (confirm("Apa anda yakin akan MENGHAPUS item ini ?")) {
+            row.is_deleted = 1;
+            Data.post('barang/update/' + row.id, row).then(function (result) {
+                $scope.displayed.splice($scope.displayed.indexOf(row), 1);
+            });
+        }
+    };
+    $scope.restore = function (row) {
+        if (confirm("Apa anda yakin akan MERESTORE item ini ?")) {
+            row.is_deleted = 0;
+            Data.post('barang/update/' + row.id, row).then(function (result) {
+                $scope.displayed.splice($scope.displayed.indexOf(row), 1);
+            });
+        }
+    };
     $scope.delete = function (row) {
+        console.log("Aa");
         if (confirm("Apa anda yakin akan MENGHAPUS PERMANENT item ini ?")) {
             Data.delete('barang/delete/' + row.id).then(function (result) {
                 $scope.displayed.splice($scope.displayed.indexOf(row), 1);
