@@ -154,20 +154,8 @@ angular.module('ui.validate', []).directive('uiValidate', function () {
     };
 });
 
-
+/*directive print*/
 function printDirective() {
-//    $scope.printDiv = function (divName) {
-//        var printContents = document.getElementById(divName).innerHTML;
-//       
-//    }
-
-//    var printSection = document.getElementById('printSection');
-//    // if there is no printing section, create one
-//    if (!printSection) {
-//        printSection = document.createElement('div');
-//        printSection.id = 'printSection';
-//        document.body.appendChild(printSection);
-//    }
     function link(scope, element, attrs) {
         element.on('click', function () {
             var elemToPrint = document.getElementById(attrs.printElementId);
@@ -177,16 +165,9 @@ function printDirective() {
         });
     }
     function printElement(elem) {
-//        // clean the print section before adding new content
-//        printSection.innerHTML = '';
-//        // clones the element you want to print
-        var domClone = elem.cloneNode(true);
-//        printSection.appendChild(domClone);
-//        window.print();
-        
-         var popupWin = window.open('', '_blank', 'width=1000,height=500');
+         var popupWin = window.open('', '_blank', 'width=1000,height=700');
         popupWin.document.open()
-        popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="css/print.css" /></head><body onload="window.print()">' + domClone + '</html>');
+        popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="css/print.css" /></head><body onload="window.print()">' + elem.innerHTML + '</html>');
         popupWin.document.close();
     }
     return {

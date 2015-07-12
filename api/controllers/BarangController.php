@@ -204,7 +204,8 @@ class BarangController extends Controller {
         $query->from('m_produk')
                 ->select("m_produk.*")
                 ->where(['is_deleted'=>0])
-                ->andWhere(['like', 'nama', $params['nama']]);
+                ->andWhere(['like', 'nama', $params['nama']])
+                ->andWhere(['like', 'kode', $params['nama']]);
         $command = $query->createCommand();
         $models = $command->queryAll();
         $this->setHeader(200);
