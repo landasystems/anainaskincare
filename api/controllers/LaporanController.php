@@ -49,11 +49,20 @@ class LaporanController extends Controller {
 
     public function actionBonus() {
         $params = json_decode(file_get_contents("php://input"), true);
+
+        session_start();
+        $_SESSION['param'] = $params;
+
+        if (isseT($_GET['is_excel'])) {
+            $params = $_SESSION['param'];
+        } else {
+            $params = $params;
+        }
+
         $detail = array();
         $s = strtotime(date("Y-m-d", strtotime($params['tanggal']['startDate'])));
-        $e = strtotime(date("Y-m-d", strtotime($params['tanggal']['endDate'])));
         $start = date("Y-m-d", strtotime('+1 day', $s));
-        $end = date("Y-m-d", strtotime($e));
+        $end = date("Y-m-d", strtotime($params['tanggal']['endDate']));
 
         $detail['start'] = $start;
         $detail['end'] = $end;
@@ -134,7 +143,11 @@ class LaporanController extends Controller {
         $detail['total'] = $totalA;
         $this->setHeader(200);
 
-        echo json_encode(array('status' => 1, 'data' => $body, 'detail' => $detail), JSON_PRETTY_PRINT);
+        if (!isset($_GET['is_excel'])) {
+            echo json_encode(array('status' => 1, 'data' => $body, 'detail' => $detail), JSON_PRETTY_PRINT);
+        } else {
+            return $this->render("/laporan/excelBonus", ['data' => $detail, 'detail' => $body]);
+        }
     }
 
     public function actionLabarugi() {
@@ -233,15 +246,15 @@ class LaporanController extends Controller {
         $saldoAwal = $tes->saldo('balance', $cabang, $kategori, $start);
 
         //mencari semua produk per kategori
-        $ktg_id = !empty($params['kategori_id']) ? 'kategori_id = ' . $params['kategori_id'] : '1';
-        $produk = \app\models\Barang::find()->with(['kategori','satuan'])->where($ktg_id)->all();
+        $ktg_id = !empty($params['kategori_id']) ? 'and kategori_id = ' . $params['kategori_id'] : '';
+        $produk = \app\models\Barang::find()->with(['kategori', 'satuan'])->where("is_deleted = 0 and type='Barang' $ktg_id")->all();
 
         //mencari data transaksi di table kartu stok
         $query = new Query;
         $query->select("ks.*")
                 ->from('kartu_stok as ks')
                 ->join('JOIN', 'm_produk as mp', 'ks.produk_id = mp.id')
-                ->where("(date(ks.created_at) >= '" . $start . "' and date(ks.created_at) <= '" . $end . "') $criteria")
+                ->where("mp.is_deleted = 0 and mp.type = 'Barang' and (date(ks.created_at) >= '" . $start . "' and date(ks.created_at) <= '" . $end . "') $criteria")
                 ->orderBy("ks.produk_id, ks.created_at ASC, ks.id ASC");
 
         $command = $query->createCommand();
@@ -273,7 +286,9 @@ class LaporanController extends Controller {
             $body[$pro->id]['saldo_awal']['jumlah'] = $tmpSaldo['jumlah'];
             $body[$pro->id]['saldo_awal']['harga'] = $tmpSaldo['harga'];
             $body[$pro->id]['saldo_awal']['sub_total'] = $tmpSaldo['sub_total'];
-            
+            $body[$pro->id]['total']['saldo']['jumlah'] = array_sum($tmpSaldo['jumlah']);
+            $body[$pro->id]['total']['saldo']['harga'] = array_sum($tmpSaldo['sub_total']);
+
             unset($tmpSaldo);
         }
 
@@ -411,10 +426,10 @@ class LaporanController extends Controller {
 
         $grandJml = 0;
         $grandHarga = 0;
-//        foreach ($body as $val) {
-//            $grandJml += $val['total']['saldo']['jumlah'];
-//            $grandHarga += $val['total']['saldo']['harga'];
-//        }
+        foreach ($body as $val) {
+            $grandJml += $val['total']['saldo']['jumlah'];
+            $grandHarga += $val['total']['saldo']['harga'];
+        }
         $data['grandJml'] = $grandJml;
         $data['grandHarga'] = $grandHarga;
         echo json_encode(array('status' => 1, 'data' => $data, 'detail' => $body), JSON_PRETTY_PRINT);
