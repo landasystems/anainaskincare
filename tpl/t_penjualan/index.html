@@ -61,12 +61,12 @@
                     </tbody>
                     <tbody ng-show="isLoading">
                         <tr>
-                            <td colspan="4" class="text-center">Loading ... </td>
+                            <td colspan="8" class="text-center">Loading ... </td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="2" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html">
+                            <td colspan="8" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html">
                             </td>
                         </tr>
                 </table>		
@@ -119,7 +119,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Kode</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" ng-model="form.kode" ng-disabled="is_view" required>
+                                    <input type="text" class="form-control" ng-model="form.kode" ng-readonly="true" ng-disabled="is_view" required>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -180,7 +180,7 @@
 
                                     <div class="input-group">
                                         <ui-select on-select="pilih(detail, $item)" ng-model="detail.produk" theme="bootstrap">
-                                            <ui-select-match>{{$select.selected.nama}}</ui-select-match>
+                                            <ui-select-match placeholder="Pilih atau Cari nama produk">{{$select.selected.nama}}</ui-select-match>
                                             <ui-select-choices refresh="cariProduk($select.search)" repeat="val in results">
                                                 {{val.nama}}
                                             </ui-select-choices>
@@ -191,109 +191,114 @@
                                             </button>
                                         </span>
                                     </div>
-                                    
-                                    <table style="margin-top: 4px" ng-show="detail.type == 'Jasa'">
-                                        <tr>
-                                            <td>
-<!--                                        <ui-select ng-model="detail.pegawai_dokter_id" theme="bootstrap">
-                                            <ui-select-match placeholder="Select or search a person in the list...">{{$select.selected.name}}</ui-select-match>
-                                            <ui-select-choices group-by="'group'" repeat="item in people | filter: $select.search">
-                                                <span ng-bind-html="item.name | highlight: $select.search"></span>
-                                            </ui-select-choices>
-                                        </ui-select>-->
-                                                
-                                                <select  ui-select2=""  ng-model="detail.pegawai_dokter_id" ng-disabled="is_view"  style="width: 250px; margin-top: 2px">
-                                                    <option value="">-Pilih Dokter-</option>
-                                                    <option ng-repeat="dokter in list_dokter" value="{{dokter.id}}">{{dokter.nama}}</option>
-                                                </select>
-                                                <select ui-select2=""  ng-model="detail.pegawai_terapis_id" ng-disabled="is_view"  style="width: 250px; margin-top: 2px">
-                                                    <option value="">-Pilih Terapis-</option>
-                                                    <option ng-repeat="terapis in list_terapis" value="{{terapis.id}}">{{terapis.nama}}</option>
-                                                </select> 
-                                            </td>
-                                        </tr>
-                                    </table>
 
-                                </td>
-                                <td width="6%">
-                                    <input type="text" class="form-control" ng-maxlength="4" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.jumlah" ng-disabled="is_view" ng-readonly="is_create == false" required>
-                                </td>
-                                <td width="8%">
-                                    <input type="text" class="form-control" ng-maxlength="8"  ng-model="detail.type"  ng-disabled="true" ng-readonly="is_create == false" required>
-                                </td>
-                                <td width="18%">
-                                    <div class="input-group m-b" style="margin:0px;">
-                                        <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.harga"  ng-disabled="is_view"  required>
-                                    </div>
-                                    <table style="margin-top: 4px" ng-show="detail.type == 'Jasa'">
+                                    <table style="margin-top: 4px;" ng-show="detail.type == 'Jasa'">
                                         <tr>
-                                            <td>
-                                                <div class="input-group m-b" style="margin-top: 1px;">
-                                                    <span class="input-group-addon">Rp</span>
-                                                    <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/"   ng-model="detail.fee_dokter"  ng-readonly="true">
-                                                </div>
-                                                <div class="input-group m-b" style="margin-top: 1px;">
-                                                    <span class="input-group-addon">Rp</span>
-                                                    <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/"  ng-model="detail.fee_terapis"  ng-readonly="true">
-                                                </div> 
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td width="18%">
-                                    <div class="input-group m-b" style="margin:0px;">
-                                        <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.diskon"  ng-disabled="is_view" ng-readonly="is_create == false" required>
-                                    </div>
-                                </td>
-                                <td width="18%">
-                                    <div class="input-group m-b" style="margin:0px;">
-                                        <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" name="total" value="{{(detail.jumlah * detail.harga) - (detail.jumlah * detail.diskon) | number}}" ng-readonly="true"  ng-disabled="is_view" required>
-                                    </div>
-                                </td>
-                                <td >
-                                    <button ng-click="addDetail()" class="btn btn-success" ng-show="$index == 0" ng-disabled="is_view"><i class="fa fa-plus"></i></button>
-                                    <button ng-click="removeRow($index)" class="btn btn-danger" ng-show="$index > 0" ng-disabled="is_view"><i class="fa fa-trash-o"></i></button>
+                                            <td>                                       
+                                        <ui-select  ng-model="detail.dokter" theme="bootstrap" style="width: 350px; margin-top: 2px; margin-bottom: 1px;">
+                                            <ui-select-match placeholder="Cari nama atau nip Dokter">{{$select.selected.nama}}</ui-select-match>
+                                            <ui-select-choices group-by="'group'" repeat="dokter in list_dokter | filter: $select.search">
+                                                <div ng-bind-html="dokter.nama | highlight: $select.search"></div>
+                                                <small>
+                                                    Nip : <span ng-bind-html="dokter.kode | highlight: $select.search"></span>
+                                                </small>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                        <!--{{//detail.dokter}}-->
+
+                                        <ui-select ng-model="detail.terapis" theme="bootstrap" style="width: 350px; margin-top: 4px;">
+                                            <ui-select-match placeholder="Cari nama atau nip Terapis">{{$select.selected.nama}}</ui-select-match>
+                                            <ui-select-choices group-by="'group'" repeat="terapis in list_terapis | filter: $select.search">
+                                                <div ng-bind-html="terapis.nama | highlight: $select.search"></div>
+                                                <small>
+                                                    Nip : <span ng-bind-html="terapis.kode | highlight: $select.search"></span>
+                                                </small>
+                                            </ui-select-choices>
+                                        </ui-select>
                                 </td>
                             </tr>
-                            <tr>
-                                <th colspan="5" style="text-align: right;">Total :&nbsp;</th>
-                                <td colspan="2">
-                                    <div class="input-group m-b" style="margin:0px;">
-                                        <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-disabled="is_view"  ng-readonly="true" ng-model="form.total">
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th colspan="5" style="text-align: right;">Cash :&nbsp;</th>
-                                <td colspan="2">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.cash" ng-disabled="is_view" required>
-                                    </div>  
-                                </td>
-                            </tr>
-                            <tr>
-                                <th colspan="5" style="text-align: right;">Credit :&nbsp;</th>
-                                <td colspan="2">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.credit" ng-disabled="is_view" required>
-                                    </div> 
-                                </td>
-                            </tr>
-                            <tr>
-                                <th colspan="5" style="text-align: right;">Kembalian :&nbsp;</th>
-                                <td colspan="2">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-readonly="true" ng-disabled="is_view" value="{{((form.cash * 1 + form.credit * 1) - form.total) | number}}">
-                                    </div> 
-                                </td>
-                            </tr>
+                        </table>
+
+                        </td>
+                        <td width="6%">
+                            <input type="text" class="form-control" ng-maxlength="4" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.jumlah" ng-disabled="is_view" ng-readonly="is_create == false" required>
+                        </td>
+                        <td width="8%">
+                            <input type="text" class="form-control" ng-maxlength="8"  ng-model="detail.type"  ng-disabled="true" ng-readonly="is_create == false" required>
+                        </td>
+                        <td width="18%">
+                            <div class="input-group m-b" style="margin:0px;">
+                                <span class="input-group-addon">Rp</span>
+                                <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.harga"  ng-disabled="is_view"  required>
+                            </div>
+                            <table style="margin-top: 4px" ng-show="detail.type == 'Jasa'">
+                                <tr>
+                                    <td>
+                                        <div class="input-group m-b" style="margin-bottom: 4px;margin-top: 2px;">
+                                            <span class="input-group-addon">Rp</span>
+                                            <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/"   ng-model="detail.fee_dokter"  ng-readonly="true">
+                                        </div>
+                                        <div class="input-group m-b" style="margin-bottom: 1px;margin-top: 2px;">
+                                            <span class="input-group-addon">Rp</span>
+                                            <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/"  ng-model="detail.fee_terapis"  ng-readonly="true">
+                                        </div> 
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td width="18%">
+                            <div class="input-group m-b" style="margin:0px;">
+                                <span class="input-group-addon">Rp</span>
+                                <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.diskon"  ng-disabled="is_view" ng-readonly="is_create == false" required>
+                            </div>
+                        </td>
+                        <td width="18%">
+                            <div class="input-group m-b" style="margin:0px;">
+                                <span class="input-group-addon">Rp</span>
+                                <input type="text" class="form-control" name="total" value="{{(detail.jumlah * detail.harga) - (detail.jumlah * detail.diskon) | number}}" ng-readonly="true"  ng-disabled="is_view" required>
+                            </div>
+                        </td>
+                        <td >
+                            <button ng-click="addDetail()" class="btn btn-success" ng-show="$index == 0" ng-disabled="is_view"><i class="fa fa-plus"></i></button>
+                            <button ng-click="removeRow($index)" class="btn btn-danger" ng-show="$index > 0" ng-disabled="is_view"><i class="fa fa-trash-o"></i></button>
+                        </td>
+                        </tr>
+                        <tr>
+                            <th colspan="5" style="text-align: right;">Total :&nbsp;</th>
+                            <td colspan="2">
+                                <div class="input-group m-b" style="margin:0px;">
+                                    <span class="input-group-addon">Rp</span>
+                                    <input type="text" class="form-control" ng-disabled="is_view"  ng-readonly="true" ng-model="form.total">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="5" style="text-align: right;">Cash :&nbsp;</th>
+                            <td colspan="2">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Rp</span>
+                                    <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.cash" ng-disabled="is_view" required>
+                                </div>  
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="5" style="text-align: right;">Credit :&nbsp;</th>
+                            <td colspan="2">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Rp</span>
+                                    <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.credit" ng-disabled="is_view" required>
+                                </div> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="5" style="text-align: right;">Kembalian :&nbsp;</th>
+                            <td colspan="2">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Rp</span>
+                                    <input type="text" class="form-control" ng-readonly="true" ng-disabled="is_view" value="{{((form.cash * 1 + form.credit * 1) - form.total) | number}}">
+                                </div> 
+                            </td>
+                        </tr>
 
                         </table>
                         <div class="line line-dashed b-b line-lg pull-in"></div>

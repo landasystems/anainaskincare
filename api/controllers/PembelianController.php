@@ -144,22 +144,6 @@ class PembelianController extends Controller {
         echo json_encode(array('status' => 1, 'selected' => $models), JSON_PRETTY_PRINT);
     }
 
-    public function actionSelectedproduk($id) {
-        $query = new Query;
-        $query->select("*")
-                ->from('m_produk')
-                ->where('id=' . $id);
-
-        //filter
-
-        $command = $query->createCommand();
-        $models = $command->queryOne();
-
-        $this->setHeader(200);
-
-        echo json_encode(array('status' => 1, 'selected' => $models), JSON_PRETTY_PRINT);
-    }
-
     public function actionIndex() {
         //init variable
         $params = $_REQUEST;

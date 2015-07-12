@@ -175,13 +175,15 @@ class StokkeluarController extends Controller {
 
         $model = $this->findModel($id);
         $det = StokKeluarDet::find()
+                ->with('barang')
+                ->orderBy('id')
                 ->where(['stok_keluar_id' => $model['id']])
                 ->all();
 
         $detail = array();
 
-        foreach ($det as $val) {
-            $detail[] = $val->attributes;
+        foreach ($det as $key => $val) {
+            $detail[$key] = $val->attributes;
             $namaBarang = (isset($val->barang->nama)) ? $val->barang->nama : '';
             $hargaBarang = (isset($val->barang->harga_beli_terakhir)) ? $val->barang->harga_beli_terakhir : '';
             $detail[$key]['produk'] = ['id' => $val->produk_id, 'nama' => $namaBarang, 'harga_beli_terakhir' => $hargaBarang];

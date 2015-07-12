@@ -94,8 +94,8 @@ class PenjualanController extends Controller {
                 ->orderBy($sort)
                 ->select("m_cabang.nama as cabang, m_customer.nama as customer, penjualan.kode as kode, penjualan.tanggal as tanggal,
                     penjualan.keterangan as keterangan, penjualan.total as total, penjualan.cash as cash, penjualan.credit as credit, penjualan.status as status,
-                    penjualan.kode as kode, penjualan.id as id, penjualan.total_diskon as total_diskon, penjualan.customer_id as customer_id, penjualan.cabang_id as cabang_id,
-                    penjualan.total_belanja as total_belanja, m_customer.no_tlp as no_tlp, m_customer.email as email, m_customer.alamat as alamat");
+                    penjualan.kode as kode, penjualan.id as id,  penjualan.customer_id as customer_id, penjualan.cabang_id as cabang_id,
+                    m_customer.no_tlp as no_tlp, m_customer.email as email, m_customer.alamat as alamat");
 
         //filter
         if (isset($params['filter'])) {
@@ -155,6 +155,9 @@ class PenjualanController extends Controller {
                 $det = new PenjualanDet();
                 $det->attributes = $data;
                 $det->penjualan_id = $model->id;
+                $det->produk_id = $data['produk']['id'];
+                $det->pegawai_terapis_id = $data['terapis']['id'];
+                $det->pegawai_dokter_id = $data['dokter']['id'];
                 $det->sub_total = str_replace('.', '', $data['sub_total']);
 
                 if ($det->save()) {
@@ -203,6 +206,9 @@ class PenjualanController extends Controller {
                     $det = new PenjualanDet();
                 }
                 $det->attributes = $val;
+                $det->produk_id = $val['produk']['id'];
+                $det->pegawai_terapis_id = $val['terapis']['id'];
+                $det->pegawai_dokter_id = $val['dokter']['id'];
                 $det->penjualan_id = $model->id;
                 if ($det->save()) {
                     $id_det[] = $det->id;
