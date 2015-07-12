@@ -264,7 +264,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select2', 'ng-bootstrap-datepicker']).then(
+                                                return $ocLazyLoad.load(['ui.select']).then(
                                                         function () {
                                                             return $ocLazyLoad.load('js/controllers/t_pembelian.js');
                                                         }
