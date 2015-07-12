@@ -233,15 +233,15 @@ class LaporanController extends Controller {
         $saldoAwal = $tes->saldo('balance', $cabang, $kategori, $start);
 
         //mencari semua produk per kategori
-        $ktg_id = !empty($params['kategori_id']) ? 'kategori_id = ' . $params['kategori_id'] : '1';
-        $produk = \app\models\Barang::find()->with(['kategori', 'satuan'])->where($ktg_id)->all();
+        $ktg_id = !empty($params['kategori_id']) ? 'and kategori_id = ' . $params['kategori_id'] : '';
+        $produk = \app\models\Barang::find()->with(['kategori', 'satuan'])->where("is_deleted = 0 and type='Barang' $ktg_id")->all();
 
         //mencari data transaksi di table kartu stok
         $query = new Query;
         $query->select("ks.*")
                 ->from('kartu_stok as ks')
                 ->join('JOIN', 'm_produk as mp', 'ks.produk_id = mp.id')
-                ->where("(date(ks.created_at) >= '" . $start . "' and date(ks.created_at) <= '" . $end . "') $criteria")
+                ->where("mp.is_deleted = 0 and mp.type = 'Barang' and (date(ks.created_at) >= '" . $start . "' and date(ks.created_at) <= '" . $end . "') $criteria")
                 ->orderBy("ks.produk_id, ks.created_at ASC, ks.id ASC");
 
         $command = $query->createCommand();

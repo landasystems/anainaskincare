@@ -110,15 +110,20 @@ class KartuStok extends \yii\db\ActiveRecord {
         $sv->save();
     }
 
-    public function saldo($type, $cabang, $kategori, $date) {
+    public function saldo($type, $cabang, $kategori, $date, $id_produk = '') {
         $criteria = '';
         $body = array();
 
         if (!empty($cabang))
             $criteria .= ' and kartu_stok.cabang_id = ' . $cabang;
 
-        if (!empty($kategori))
-            $criteria .= ' and m_produk.kategori_id = ' . $kategori;
+        if (empty($id_produk)) {
+            if (!empty($kategori))
+                $criteria .= ' and m_produk.kategori_id = ' . $kategori;
+        }else {
+            if (!empty($id_produk))
+                $criteria .= ' and m_produk.id = ' . $id_produk;
+        }
 
         if ($type == 'balance') {
             $criteria .= " and date(kartu_stok.created_at) < '" . $date . "'";
@@ -129,7 +134,7 @@ class KartuStok extends \yii\db\ActiveRecord {
         $query = new Query;
         $query->from(['m_produk', 'kartu_stok'])
                 ->select("kartu_stok.*")
-                ->where("m_produk.id = kartu_stok.produk_id $criteria")
+                ->where("m_produk.is_deleted = 0 and m_produk.type = 'Barang' and m_produk.id = kartu_stok.produk_id $criteria")
                 ->orderBy("kartu_stok.produk_id, kartu_stok.created_at ASC, kartu_stok.id ASC");
 
         $command = $query->createCommand();

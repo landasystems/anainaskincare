@@ -26,6 +26,7 @@ class BarangController extends Controller {
                     'kategori' => ['get'],
                     'satuan' => ['get'],
                     'cari' => ['get'],
+                    'getstok' => ['get'],
                 ],
             ]
         ];
@@ -84,7 +85,7 @@ class BarangController extends Controller {
         $query->offset($offset)
                 ->limit($limit)
 //                ->select('m_user.id as id', 'm_roles.nama as roles')
-                ->from(['m_produk','m_kategori','m_satuan'])
+                ->from(['m_produk', 'm_kategori', 'm_satuan'])
                 ->where('m_produk.kategori_id = m_kategori.id and m_produk.satuan_id = m_satuan.id')
                 ->orderBy($sort)
                 ->select("m_produk.id, m_produk.nama as nama, m_kategori.nama as kategori, m_satuan.nama as satuan, m_produk.is_deleted as is_deleted,
@@ -95,10 +96,10 @@ class BarangController extends Controller {
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
-                $query->andFilterWhere(['like', 'm_produk.'.$key, $val]);
+                $query->andFilterWhere(['like', 'm_produk.' . $key, $val]);
             }
         }
-        
+
         session_start();
         $_SESSION['query'] = $query;
 
@@ -109,6 +110,11 @@ class BarangController extends Controller {
         $this->setHeader(200);
 
         echo json_encode(array('status' => 1, 'data' => $models, 'totalItems' => $totalItems), JSON_PRETTY_PRINT);
+    }
+
+    public function actionGetstok($id) {
+        $model = $this->findModel($id);
+        echo json_encode(array('stok' => $model->stok));
     }
 
     public function actionView($id) {
@@ -125,6 +131,17 @@ class BarangController extends Controller {
         $model->attributes = $params;
 
         if ($model->save()) {
+
+            $kartu = new \app\models\KartuStok();
+            $kartu->kode = $model->kode;
+            $kartu->produk_id = $model->id;
+            $kartu->cabang_id = '';
+            $kartu->keterangan = 'Stok Awal';
+            $kartu->jumlah_masuk = $params['stok'];
+            $kartu->harga_masuk = $model->harga_beli_terakhir;
+            $kartu->created_at = date("Y-m-d H:i:s");
+            $kartu->save();
+
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -146,6 +163,7 @@ class BarangController extends Controller {
 
         echo json_encode(array('status' => 1, 'kategori' => $models));
     }
+
     public function actionSatuan() {
         $query = new Query;
         $query->from('m_satuan')
@@ -176,7 +194,7 @@ class BarangController extends Controller {
 
     public function actionDelete($id) {
         $model = $this->findModel($id);
-
+        $delKartu = \app\models\KartuStok::deleteAll('produk_id = ' . $id . ' and kode = "' . $model->kode . '"');
         if ($model->delete()) {
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
@@ -197,13 +215,13 @@ class BarangController extends Controller {
             exit;
         }
     }
-    
+
     public function actionCari() {
         $params = $_REQUEST;
         $query = new Query;
         $query->from('m_produk')
                 ->select("m_produk.*")
-                ->where(['is_deleted'=>0])
+                ->where(['is_deleted' => 0])
                 ->andWhere(['like', 'nama', $params['nama']]);
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -233,8 +251,8 @@ class BarangController extends Controller {
         );
         return (isset($codes[$status])) ? $codes[$status] : '';
     }
-    
-     public function actionExcel() {
+
+    public function actionExcel() {
         session_start();
         $query = $_SESSION['query'];
         $query->offset("");

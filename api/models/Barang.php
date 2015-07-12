@@ -50,6 +50,18 @@ class Barang extends \yii\db\ActiveRecord {
         ];
     }
 
+    public function getStok() {
+        $ks = new KartuStok();
+        $stok = $ks->saldo('today', '', $this->kategori_id, '', $this->id);
+        $s = 0;
+        if (isset($stok[$this->id])) {
+            foreach ($stok[$this->id] as $val) {
+                $s += $val['jumlah'];
+            }
+        }
+        return $s;
+    }
+
     public function getCoba() {
         return "aa";
     }
