@@ -18,7 +18,7 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
         autoclose: true,
         weekStart: 0
     }
-    
+
     $scope.is_edit = false;
     $scope.is_view = false;
     $scope.is_create = false;
@@ -29,9 +29,17 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
     Data.get('pembelian/kliniklist').then(function (data) {
         $scope.listKlinik = data.listKlinik;
     });
-    Data.get('pembelian/produklist').then(function (data) {
-        $scope.listProduk = data.listProduct;
-    });
+    $scope.cariProduk = function ($query) {
+        if ($query.length >= 3) {
+            Data.get('barang/cari', {nama: $query}).then(function (data) {
+                $scope.listProduk = data.data;
+            });
+        }
+    };
+    $scope.pilih = function (detail, $item){
+        detail.harga = $item.harga_beli_terakhir;
+        detail.diskon = $item.diskon;
+    };
 
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
@@ -80,10 +88,7 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
         $scope.formtitle = "Edit Pembelian : " + form.kode;
         $scope.form = form;
         $scope.det = {};
-        Data.get('pembelian/detail/' + form.id).then(function (data) {
-           $scope.pembeliandet = data.detail;
-           $scope.calculate();
-        });
+        $scope.getDetail(form.id);
     };
     $scope.view = function (form) {
         $scope.is_edit = true;
@@ -92,11 +97,14 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
         $scope.formtitle = "Lihat Pembelian : " + $scope.form.kode;
         $scope.form = form;
         $scope.det = {};
-        Data.get('pembelian/detail/' + form.id).then(function (data) {
+        $scope.getDetail(form.id);
+    };
+    $scope.getDetail = function(id){
+        Data.get('pembelian/detail/' + id).then(function (data) {
             $scope.pembeliandet = data.detail;
             $scope.calculate();
         });
-    };
+    }
     $scope.save = function (form, detail) {
         var data = {
             pembelian: form,
@@ -135,13 +143,13 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
             $scope.form.alamat = result.selected.alamat;
         });
     };
-    $scope.selectedProduk = function (detail) {
-        $scope.detail = detail;
-        Data.get('pembelian/selectedproduk/' + detail.produk_id).then(function (result) {
-            $scope.detail.diskon = parseInt(result.selected.diskon);
-            $scope.detail.harga = parseInt(result.selected.harga_beli_terakhir);
-        });
-    };
+//    $scope.selectedProduk = function (detail) {
+//        $scope.detail = detail;
+//        Data.get('pembelian/selectedproduk/' + detail.produk_id).then(function (result) {
+//            $scope.detail.diskon = parseInt(result.selected.diskon);
+//            $scope.detail.harga = parseInt(result.selected.harga_beli_terakhir);
+//        });
+//    };
     $scope.addrow = function () {
         $scope.pembeliandet.unshift({
             id: '',
@@ -180,10 +188,11 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
         $scope.form.total_belanja = total_belanja;
         $scope.form.diskon = total_diskon;
     };
-    $scope.bayar = function(){
-        var cash = parseInt($scope.form.cash);
-        var total = parseInt($scope.form.total);
-        var credit = total - cash;
-        $scope.form.credit = (credit > 0) ? credit : 0;
+    $scope.bayar = function () {
+        var cash = (parseInt($scope.form.cash) !== null) ? parseInt($scope.form.cash) : 0;
+        var total = (parseInt($scope.form.total) !== null) ? parseInt($scope.form.total) : 0;
+        var credit = (parseInt($scope.form.credit) !== null) ? parseInt($scope.form.credit) : 0;
+        var kembalian = cash - total + credit;
+        $scope.form.kembalian = (kembalian> 0) ? kembalian : 0;
     }
 })

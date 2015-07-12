@@ -202,7 +202,7 @@ class BarangController extends Controller {
         $params = $_REQUEST;
         $query = new Query;
         $query->from('m_produk')
-                ->select("id,nama,harga_beli_terakhir, harga_jual")
+                ->select("id,nama,harga_beli_terakhir,diskon, harga_jual")
                 ->where(['is_deleted'=>0])
                 ->andWhere(['like', 'nama', $params['nama']]);
         $command = $query->createCommand();

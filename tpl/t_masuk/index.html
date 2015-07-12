@@ -170,15 +170,15 @@
                                         <button ng-click="removeRow($index)" title="Hapus Data" class="btn btn-danger" ng-show="$index > 0" ng-disabled="is_view"><i class="fa fa-trash-o"></i></button>
                                     </td>
                                 </tr>
-
-                            <th colspan="3" style="text-align: right;">Total :&nbsp;</th>
-                            <td colspan="2">
-                                <div class="input-group m-b" style="margin:0px;">
-                                    <span class="input-group-addon">Rp</span>
-                                    <input type="text" class="form-control" ng-disabled="is_view"  ng-readonly="true" ng-model="form.total" style="width:200px;">
-                                </div>
-                            </td>
-                            </tr>
+                                <tr>
+                                    <th colspan="3" style="text-align: right;">Total :&nbsp;</th>
+                                    <td colspan="2">
+                                        <div class="input-group m-b" style="margin:0px;">
+                                            <span class="input-group-addon">Rp</span>
+                                            <input type="text" class="form-control" ng-disabled="is_view"  ng-readonly="true" ng-model="form.total" style="width:200px;">
+                                        </div>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
