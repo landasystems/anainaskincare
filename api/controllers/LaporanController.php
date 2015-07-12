@@ -234,7 +234,7 @@ class LaporanController extends Controller {
 
         //mencari semua produk per kategori
         $ktg_id = !empty($params['kategori_id']) ? 'kategori_id = ' . $params['kategori_id'] : '1';
-        $produk = \app\models\Barang::find()->with(['kategori','satuan'])->where($ktg_id)->all();
+        $produk = \app\models\Barang::find()->with(['kategori', 'satuan'])->where($ktg_id)->all();
 
         //mencari data transaksi di table kartu stok
         $query = new Query;
@@ -273,7 +273,9 @@ class LaporanController extends Controller {
             $body[$pro->id]['saldo_awal']['jumlah'] = $tmpSaldo['jumlah'];
             $body[$pro->id]['saldo_awal']['harga'] = $tmpSaldo['harga'];
             $body[$pro->id]['saldo_awal']['sub_total'] = $tmpSaldo['sub_total'];
-            
+            $body[$pro->id]['total']['saldo']['jumlah'] = array_sum($tmpSaldo['jumlah']);
+            $body[$pro->id]['total']['saldo']['harga'] = array_sum($tmpSaldo['sub_total']);
+
             unset($tmpSaldo);
         }
 
@@ -411,10 +413,10 @@ class LaporanController extends Controller {
 
         $grandJml = 0;
         $grandHarga = 0;
-//        foreach ($body as $val) {
-//            $grandJml += $val['total']['saldo']['jumlah'];
-//            $grandHarga += $val['total']['saldo']['harga'];
-//        }
+        foreach ($body as $val) {
+            $grandJml += $val['total']['saldo']['jumlah'];
+            $grandHarga += $val['total']['saldo']['harga'];
+        }
         $data['grandJml'] = $grandJml;
         $data['grandHarga'] = $grandHarga;
         echo json_encode(array('status' => 1, 'data' => $data, 'detail' => $body), JSON_PRETTY_PRINT);
