@@ -49,11 +49,20 @@ class LaporanController extends Controller {
 
     public function actionBonus() {
         $params = json_decode(file_get_contents("php://input"), true);
+
+        session_start();
+        $_SESSION['param'] = $params;
+
+        if (isseT($_GET['is_excel'])) {
+            $params = $_SESSION['param'];
+        } else {
+            $params = $params;
+        }
+
         $detail = array();
         $s = strtotime(date("Y-m-d", strtotime($params['tanggal']['startDate'])));
-        $e = strtotime(date("Y-m-d", strtotime($params['tanggal']['endDate'])));
         $start = date("Y-m-d", strtotime('+1 day', $s));
-        $end = date("Y-m-d", strtotime($e));
+        $end = date("Y-m-d", strtotime($params['tanggal']['endDate']));
 
         $detail['start'] = $start;
         $detail['end'] = $end;
@@ -134,7 +143,11 @@ class LaporanController extends Controller {
         $detail['total'] = $totalA;
         $this->setHeader(200);
 
-        echo json_encode(array('status' => 1, 'data' => $body, 'detail' => $detail), JSON_PRETTY_PRINT);
+        if (!isset($_GET['is_excel'])) {
+            echo json_encode(array('status' => 1, 'data' => $body, 'detail' => $detail), JSON_PRETTY_PRINT);
+        } else {
+            return $this->render("/laporan/excelBonus", ['data' => $detail, 'detail' => $body]);
+        }
     }
 
     public function actionLabarugi() {
