@@ -1,11 +1,196 @@
+<style>
+    @media screen {
+        #printSection {
+            display: none;
+        }
+    }
+    @media print {
+        body * {
+            visibility:hidden;
+        }
+        #printSection, #printSection * {
+            visibility:visible;
+        }
+        #printSection {
+            position:absolute;
+            left:0;
+            top:0;
+        }
+    }
+</style>
 <div ng-controller="t_cobaCtrl">
-    <form name="myForm">
-        <input type="file" ngf-select ng-model="picFile" name="file" accept="image/*" required>
-        <img ng-show="picFile[0] != null" ngf-src="picFile[0]" class="thumb">
-        <span class="progress" ng-show="picFile[0].progress >= 0">
-            <div style="width:{{picFile[0].progress}}%" ng-bind="picFile[0].progress + '%'"></div>
-        </span>
-        <span ng-show="picFile[0].result">Upload Successful</span>
-        <button ng-disabled="!myForm.$valid" ng-click="uploadPic(picFile)">Submit</button>
-    </form>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaa<br/>
+    <div id="printArea">
+        bbbbbbbbbbbbb
+    </div>
+    <button class="btn btn-primary" ng-print print-element-id="printArea"><i class="fa fa-print"></i> Print</button>
 </div>

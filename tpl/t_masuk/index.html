@@ -1,4 +1,24 @@
-<div ng-controller="t_masukCtrl">
+<style>
+    @media screen {
+        #printSection {
+            display: none;
+        }
+    }
+    @media print {
+        body * {
+            visibility:hidden;
+        }
+        #printSection, #printSection * {
+            visibility:visible;
+        }
+        #printSection {
+            position:absolute;
+            left:0;
+            top:0;
+        }
+    }
+</style>
+<div ng-controller="t_masukCtrl" id="printArea">
     <div class="bg-light lter b-b wrapper-md">
         <h1 class="m-n font-thin h3">Transaksi Persediaan Masuk</h1>
     </div>
@@ -201,3 +221,5 @@
         </div>
     </div>
 </div>
+
+<button class="btn btn-primary" ng-print print-element-id="printArea"><i class="fa fa-print"></i> Print</button>
