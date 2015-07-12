@@ -51,6 +51,10 @@ class Barang extends \yii\db\ActiveRecord
             [['foto'], 'string', 'max' => 255]
         ];
     }
+    
+    public function getCoba(){
+        return "aa";
+    }
 
     /**
      * @inheritdoc
