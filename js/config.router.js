@@ -194,7 +194,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select','daterangepicker']).then(
+                                                return $ocLazyLoad.load(['ui.select', 'daterangepicker']).then(
                                                         function () {
                                                             return $ocLazyLoad.load('js/controllers/t_masuk.js');
                                                         }
@@ -208,7 +208,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select2', 'daterangepicker']).then(
+                                                return $ocLazyLoad.load(['ui.select', 'daterangepicker']).then(
                                                         function () {
                                                             return $ocLazyLoad.load('js/controllers/t_keluar.js');
                                                         }
@@ -236,7 +236,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select2',  'daterangepicker']).then(
+                                                return $ocLazyLoad.load(['ui.select', 'daterangepicker']).then(
                                                         function () {
                                                             return $ocLazyLoad.load('js/controllers/t_bayarhutang.js');
                                                         }
@@ -250,7 +250,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select2',  'daterangepicker']).then(
+                                                return $ocLazyLoad.load(['ui.select', 'daterangepicker']).then(
                                                         function () {
                                                             return $ocLazyLoad.load('js/controllers/t_returpembelian.js');
                                                         }
@@ -264,7 +264,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select2', 'ng-bootstrap-datepicker']).then(
+                                                return $ocLazyLoad.load(['ui.select']).then(
                                                         function () {
                                                             return $ocLazyLoad.load('js/controllers/t_pembelian.js');
                                                         }
@@ -278,7 +278,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select2', 'ng-bootstrap-datepicker']).then(
+                                                return $ocLazyLoad.load(['ui.select']).then(
                                                         function () {
                                                             return $ocLazyLoad.load('js/controllers/t_penjualan.js');
                                                         }
@@ -292,7 +292,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load([ 'ui.select2']).then(
+                                                return $ocLazyLoad.load(['ui.select']).then(
                                                         function () {
                                                             return $ocLazyLoad.load('js/controllers/t_bayarpiutang.js');
                                                         }
@@ -306,7 +306,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select2','ng-bootstrap-datepicker']).then(
+                                                return $ocLazyLoad.load(['ui.select2', 'ng-bootstrap-datepicker']).then(
                                                         function () {
                                                             return $ocLazyLoad.load('js/controllers/t_returpenjualan.js');
                                                         }

@@ -249,6 +249,18 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
+                                        <th colspan="6" style="text-align: right">Sub Total</th>
+                                        <th style="text-align: center">{{form.sub_totals| currency}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="6" style="text-align: right">Total Diskon</th>
+                                        <th style="text-align: center">{{form.sub_totals| currency}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="6" style="text-align: right">Biaya Lain</th>
+                                        <th style="text-align: center">{{form.biaya_lain| currency}}</th>
+                                    </tr>
+                                    <tr>
                                         <th colspan="6" style="text-align: right">Total</th>
                                         <th style="text-align: center">{{form.sub_totals| currency}}</th>
                                     </tr>

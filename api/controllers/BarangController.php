@@ -202,7 +202,7 @@ class BarangController extends Controller {
         $params = $_REQUEST;
         $query = new Query;
         $query->from('m_produk')
-                ->select("id,nama,harga_beli_terakhir, harga_jual")
+                ->select("m_produk.*")
                 ->where(['is_deleted'=>0])
                 ->andWhere(['like', 'nama', $params['nama']]);
         $command = $query->createCommand();
@@ -237,6 +237,8 @@ class BarangController extends Controller {
      public function actionExcel() {
         session_start();
         $query = $_SESSION['query'];
+        $query->offset("");
+        $query->limit("");
         $command = $query->createCommand();
         $models = $command->queryAll();
         return $this->render("excel", ['models' => $models]);

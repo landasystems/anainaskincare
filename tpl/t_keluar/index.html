@@ -102,7 +102,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Cabang</label>
                         <div class="col-sm-6">
-                            <select ui-select2="selectcabang" ui-jq="chosen" ng-change="getkode(form.cabang_id)" ng-model="form.cabang_id" ng-disabled="is_view" required style="width:48%;">
+                            <select  stInputEvent="change" class="form-control" ui-jq="chosen" ng-change="getkode(form.cabang_id)" ng-model="form.cabang_id" ng-disabled="is_view" required style="width:48%;">
                                 <option value="">-Pilih Cabang-</option>
                                 <option ng-repeat="cabang in listcabang" value="{{cabang.id}}">{{cabang.nama}}</option>
                             </select>
@@ -142,10 +142,19 @@
                         <tbody>
                             <tr ng-repeat="detail in detskeluar" >
                                 <td style="margin:0px; ">
-                                    <select ui-select2="selectcabang" ng-model="detail.produk_id" ng-disabled="is_view" required style="width: 100%;">
-                                        <option value="">-Pilih Produk-</option>
-                                        <option ng-repeat="produk in list_produk" value="{{produk.id}}">{{produk.nama}}</option>
-                                    </select>
+                                    <div class="input-group">
+                                        <ui-select on-select="detail.harga = $item.harga_jual" ng-model="detail.produk" theme="bootstrap">
+                                            <ui-select-match>{{$select.selected.nama}}</ui-select-match>
+                                            <ui-select-choices refresh="cariProduk($select.search)" repeat="val in results">
+                                                {{val.nama}}
+                                            </ui-select-choices>
+                                        </ui-select>
+                                        <span class="input-group-btn">
+                                            <button ng-click="detail.produk = undefined" class="btn btn-default">
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </td>
                                 <td style="width:50px;">
                                     <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-change="subtotal()"  ng-model="detail.jumlah" " ng-disabled="is_view" ng-readonly="is_create == false" required>
