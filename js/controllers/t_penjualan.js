@@ -18,6 +18,8 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         $event.stopPropagation();
         $scope.opened1 = true;
     };
+    
+  
 
     $scope.detPenjualan = [
         {
@@ -191,10 +193,18 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
                 diskon: '',
             }];
         $scope.form.tanggal = moment().format('DD-MM-YYYY');
-
+        
+        $scope.retrive = [{
+                retrive:'',
+                email:'',
+                alamat:''
+                
+        }];
     };
+    
+    
+    
     $scope.update = function (row) {
-        console.log(row);
         $scope.form = row;
         Data.get('penjualan/view/' + row.id).then(function (data) {
 //            $scope.form = data.data;
@@ -206,12 +216,14 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
 
         })
     };
+    
     $scope.view = function (form) {
         $scope.is_edit = true;
         $scope.is_view = true;
         $scope.formtitle = "Lihat Data : " + form.nama;
         $scope.form = form;
     };
+    
     $scope.save = function (form, detail) {
         var data = {
             penjualan: form,
@@ -228,6 +240,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             }
         });
     };
+    
     $scope.cancel = function () {
         if (!$scope.is_view) { //hanya waktu edit cancel, di load table lagi
             $scope.callServer(tableStateRef);
@@ -236,6 +249,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         $scope.is_edit = false;
         $scope.is_view = false;
     };
+    
     $scope.delete = function (row) {
         if (confirm("Apa anda yakin akan MENGHAPUS PERMANENT item ini ?")) {
             Data.delete('penjualan/delete/' + row.id).then(function (result) {

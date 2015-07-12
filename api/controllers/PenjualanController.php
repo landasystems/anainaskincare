@@ -118,13 +118,25 @@ class PenjualanController extends Controller {
 
         $model = $this->findModel($id);
         $det = PenjualanDet::find()
+                ->with(['barang'])
+                ->orderBy('id')
                 ->where(['penjualan_id' => $model['id']])
                 ->all();
 
         $detail = array();
 
-        foreach ($det as $val) {
-            $detail[] = $val->attributes;
+        foreach ($det as $key => $val) {
+            $detail[$key] = $val->attributes;
+
+            $namaBarang = (isset($val->barang->nama)) ? $val->barang->nama : '';
+            $hargaBarang = (isset($val->barang->harga_beli_terakhir)) ? $val->barang->harga_beli_terakhir : '';
+            $jualBarang = (isset($val->barang->harga_jual)) ? $val->barang->harga_jual : '';
+            $dokter = (isset($val->dokter->nama)) ? $val->dokter->nama : '';
+            $terapis= (isset($val->terapis->nama)) ? $val->terapis->nama : '';
+            $detail[$key]['produk'] = ['id' => $val->produk_id, 'nama' => $namaBarang, 'harga_beli_terakhir' => $hargaBarang, 'harga_jual' => $jualBarang];
+            $detail[$key]['terapis'] = ['id' => $val->pegawai_terapis_id, 'nama'=> $terapis];
+            $detail[$key]['dokter'] = ['id' => $val->pegawai_dokter_id, 'nama'=> $dokter];
+            
         }
 
 
@@ -156,9 +168,9 @@ class PenjualanController extends Controller {
                 $det->attributes = $data;
                 $det->penjualan_id = $model->id;
                 $det->produk_id = $data['produk']['id'];
-                $det->pegawai_terapis_id = $data['terapis']['id'];
-                $det->pegawai_dokter_id = $data['dokter']['id'];
-                $det->sub_total = str_replace('.', '', $data['sub_total']);
+                $det->pegawai_terapis_id = isset($data['terapis']['id']) ? $data['terapis']['id'] : '';
+                $det->pegawai_dokter_id = isset($data['dokter']['id']) ? $data['terapis']['id'] : '';
+//                $det->sub_total = str_replace('.', '', $data['sub_total']);
 
                 if ($det->save()) {
                     $keterangan = 'penjualan';
@@ -212,14 +224,13 @@ class PenjualanController extends Controller {
                 $det->penjualan_id = $model->id;
                 if ($det->save()) {
                     $id_det[] = $det->id;
-                          $keterangan = 'penjualan';
-                $stok = new \app\models\KartuStok();
-                $hapus = $stok->hapusKartu($keterangan, $model->id);
-                $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
-           
+                    $keterangan = 'penjualan';
+                    $stok = new \app\models\KartuStok();
+                    $hapus = $stok->hapusKartu($keterangan, $model->id);
+                    $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
                 }
                 //stok
-           }
+            }
             $deleteDetail = PenjualanDet::deleteAll('id NOT IN (' . implode(',', $id_det) . ') AND penjualan_id=' . $model->id);
 
             $this->setHeader(200);
@@ -271,6 +282,7 @@ class PenjualanController extends Controller {
 
         echo json_encode(array('status' => 1, 'produk' => $models));
     }
+
     public function actionDokter() {
         $query = new Query;
         $query->from('m_pegawai')
@@ -284,6 +296,7 @@ class PenjualanController extends Controller {
 
         echo json_encode(array('status' => 1, 'dokter' => $models));
     }
+
     public function actionTerapis() {
         $query = new Query;
         $query->from('m_pegawai')
@@ -346,7 +359,7 @@ class PenjualanController extends Controller {
                 ->select("*");
         $command = $query->createCommand();
         $models = $command->queryOne();
-        
+
         $this->setHeader(200);
 
         echo json_encode(array('produk' => $models));
