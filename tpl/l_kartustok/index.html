@@ -5,7 +5,7 @@
     <div class="wrapper-md">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Laporan Bonus Karyawan 
+                Laporan Kartu Stok
             </div>
             <div class="panel-body">
                 <form name="landaform" class="form-horizontal form-validation ">
@@ -13,7 +13,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Cabang</label>
                             <div class="col-sm-9">
-                                <select ui-select2="" ng-model="form.cabang_id" style="width: 270px;">
+                                <select class="form-control" ng-model="form.cabang_id" style="width: 270px;">
                                     <option value="">-Semua Cabang-</option>
                                     <option ng-repeat="cabang in listcabang" value="{{cabang.id}}">{{cabang.nama}}</option>
                                 </select>
@@ -22,7 +22,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Kategori</label>
                             <div class="col-sm-9">
-                                <select ui-select2="" ng-model="form.kategori_id" style="width: 270px;">
+                                <select class="form-control" ng-model="form.kategori_id" style="width: 270px;">
                                     <option value="">-Semua Kategori-</option>
                                     <option ng-repeat="kategori in listkategori" value="{{kategori.id}}">{{kategori.nama}}</option>
                                 </select>
@@ -87,17 +87,17 @@
                                         <td colspan="3" align="right"><b>{{list.title.kategori}}</b></td>
                                     </tr>
                                     <tr>
-                                        <td>{{laporan.tanggal_saldo | date}}</td>
+                                        <td>{{laporan.tanggal_saldo| date}}</td>
                                         <td>Saldo Awal</td>
                                         <td colspan="7"></td>
                                         <td>
                                             <p ng-repeat="saldoJml in list.saldo_awal.jumlah">{{saldoJml}} {{list.title.satuan}}</p>
                                         </td>
                                         <td>
-                                            <p ng-repeat="saldoHarga in list.saldo_awal.harga">{{saldoHarga | currency}} </p>
+                                            <p ng-repeat="saldoHarga in list.saldo_awal.harga">{{saldoHarga| currency}} </p>
                                         </td>
                                         <td>
-                                            <p ng-repeat="saldoTotal in list.saldo_awal.sub_total">{{saldoTotal | currency}}</p>
+                                            <p ng-repeat="saldoTotal in list.saldo_awal.sub_total">{{saldoTotal| currency}}</p>
                                         </td>
                                     </tr>
                                     <tr ng-repeat="detail in list.body">

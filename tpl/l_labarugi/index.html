@@ -13,7 +13,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Cabang</label>
                             <div class="col-sm-9">
-                                <select ui-select2="" ng-model="form.cabang_id" style="width: 270px;" ng-change="ubah_pegawai(form.cabang_id)">
+                                <select class="form-control" ng-model="form.cabang_id" style="width: 270px;" ng-change="ubah_pegawai(form.cabang_id)">
                                     <option value="">-Semua Cabang-</option>
                                     <option ng-repeat="cabang in listcabang" value="{{cabang.id}}">{{cabang.nama}}</option>
                                 </select>
