@@ -232,35 +232,49 @@ class LaporanController extends Controller {
         $tes = new \app\models\KartuStok();
         $saldoAwal = $tes->saldo('balance', $cabang, $kategori, $start);
 
+        //mencari semua produk per kategori
+        $ktg_id = !empty($params['kategori_id']) ? 'kategori_id = ' . $params['kategori_id'] : '1';
+        $produk = \app\models\Barang::find()->with(['kategori','satuan'])->where($ktg_id)->all();
+
+        //mencari data transaksi di table kartu stok
         $query = new Query;
-        $query->select("ks.*, mp.nama as produk, mk.nama as kategori, ms.nama as satuan")
+        $query->select("ks.*")
                 ->from('kartu_stok as ks')
                 ->join('JOIN', 'm_produk as mp', 'ks.produk_id = mp.id')
-                ->join('JOIN', 'm_satuan as ms', 'mp.satuan_id = ms.id')
-                ->join('JOIN', 'm_kategori as mk', 'mp.kategori_id = mk.id')
                 ->where("(date(ks.created_at) >= '" . $start . "' and date(ks.created_at) <= '" . $end . "') $criteria")
                 ->orderBy("ks.produk_id, ks.created_at ASC, ks.id ASC");
 
         $command = $query->createCommand();
         $kartu = $command->queryAll();
         $i = 0;
-
         $a = 1;
-        if (!empty($saldoAwal)) {
-            foreach ($saldoAwal as $sAwal) {
-                $tmpSaldo['jumlah'][$a] = $sAwal['jumlah'];
-                $tmpSaldo['harga'][$a] = $sAwal['harga'];
-                $tmpSaldo['sub_total'][$a] = $sAwal['sub_total'];
 
-                $tmp[$a]['jumlah'] = $sAwal['jumlah'];
-                $tmp[$a]['harga'] = $sAwal['harga'];
+        foreach ($produk as $pro) {
+            if (!empty($saldoAwal[$pro->id])) {
+                foreach ($saldoAwal[$pro->id] as $sAwal) {
+                    $tmpSaldo['jumlah'][$a] = $sAwal['jumlah'];
+                    $tmpSaldo['harga'][$a] = $sAwal['harga'];
+                    $tmpSaldo['sub_total'][$a] = $sAwal['sub_total'];
+
+                    $tmp[$a]['jumlah'] = $sAwal['jumlah'];
+                    $tmp[$a]['harga'] = $sAwal['harga'];
+                    $a++;
+                }
+            } else {
+                $tmpSaldo['jumlah'][$a] = 0;
+                $tmpSaldo['harga'][$a] = 0;
+                $tmpSaldo['sub_total'][$a] = 0;
                 $a++;
             }
-        } else {
-            $tmpSaldo['jumlah'][$a] = 0;
-            $tmpSaldo['harga'][$a] = 0;
-            $tmpSaldo['sub_total'][$a] = 0;
-            $a++;
+
+            $body[$pro->id]['title']['produk'] = $pro->nama;
+            $body[$pro->id]['title']['kategori'] = $pro->kategori->nama;
+            $body[$pro->id]['title']['satuan'] = $pro->satuan->nama;
+            $body[$pro->id]['saldo_awal']['jumlah'] = $tmpSaldo['jumlah'];
+            $body[$pro->id]['saldo_awal']['harga'] = $tmpSaldo['harga'];
+            $body[$pro->id]['saldo_awal']['sub_total'] = $tmpSaldo['sub_total'];
+            
+            unset($tmpSaldo);
         }
 
         if (empty($kartu)) {
@@ -268,7 +282,6 @@ class LaporanController extends Controller {
         } else {
             $produk_id = 0;
             $created = '';
-            $a = 1;
             foreach ($kartu as $val) {
                 if ($produk_id != $val['produk_id']) {
                     $tmpKeluar = array('jumlah' => '', 'harga' => '', 'sub_total' => '');
@@ -283,10 +296,6 @@ class LaporanController extends Controller {
                     $totalHarga['keluar'] = 0;
 
                     //memasang saldo awal
-
-                    $body[$val['produk_id']]['saldo_awal']['jumlah'] = $tmpSaldo['jumlah'];
-                    $body[$val['produk_id']]['saldo_awal']['harga'] = $tmpSaldo['harga'];
-                    $body[$val['produk_id']]['saldo_awal']['sub_total'] = $tmpSaldo['sub_total'];
                     $tmpSaldo = array('jumlah' => '', 'harga' => '', 'sub_total' => '');
                 }
 
@@ -375,9 +384,6 @@ class LaporanController extends Controller {
                     }
                 }
 
-                $body[$val['produk_id']]['title']['produk'] = $val['produk'];
-                $body[$val['produk_id']]['title']['kategori'] = $val['kategori'];
-                $body[$val['produk_id']]['title']['satuan'] = $val['satuan'];
                 $body[$val['produk_id']]['body'][$i]['tanggal'] = date("Y-m-d", strtotime($val['created_at']));
                 $body[$val['produk_id']]['body'][$i]['kode'] = $val['kode'];
                 $body[$val['produk_id']]['body'][$i]['keterangan'] = $val['keterangan'];
@@ -402,12 +408,13 @@ class LaporanController extends Controller {
                 $produk_id = $val['produk_id'];
             }
         }
+
         $grandJml = 0;
         $grandHarga = 0;
-        foreach ($body as $val) {
-            $grandJml += $val['total']['saldo']['jumlah'];
-            $grandHarga += $val['total']['saldo']['harga'];
-        }
+//        foreach ($body as $val) {
+//            $grandJml += $val['total']['saldo']['jumlah'];
+//            $grandHarga += $val['total']['saldo']['harga'];
+//        }
         $data['grandJml'] = $grandJml;
         $data['grandHarga'] = $grandHarga;
         echo json_encode(array('status' => 1, 'data' => $data, 'detail' => $body), JSON_PRETTY_PRINT);

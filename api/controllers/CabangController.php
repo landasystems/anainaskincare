@@ -108,7 +108,7 @@ class CabangController extends Controller {
                 $query->andFilterWhere(['like', $key, $val]);
             }
         }
-        
+
         session_start();
         $_SESSION['query'] = $query;
 
@@ -203,14 +203,16 @@ class CabangController extends Controller {
         );
         return (isset($codes[$status])) ? $codes[$status] : '';
     }
-    
+
     //excel
-     public function actionExcel() {
+    public function actionExcel() {
         session_start();
         $query = $_SESSION['query'];
+        $query->offset("");
+        $query->limit("");
         $command = $query->createCommand();
         $models = $command->queryAll();
-        return $this->render("excel", ['models'=>$models]);
+        return $this->render("excel", ['models' => $models]);
     }
 
 }

@@ -11,7 +11,13 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         $event.stopPropagation();
         $scope.opened1 = true;
     };
-    
+    $scope.cariProduk = function ($query) {
+        if ($query.length >= 3) {
+            Data.get('barang/cari', {nama: $query}).then(function (data) {
+                $scope.results = data.data;
+            });
+        }
+    }
     $scope.detskeluar = [
         {
             stok_keluar_id: '',
@@ -33,7 +39,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
             detail.sub_total = sub_total;
             total += sub_total;
         })
-//        $scope.form.total = 0;
+        $scope.form.total = total;
     }
 
 
@@ -48,6 +54,8 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
 
         $scope.detskeluar.unshift(newDet);
     };
+
+
 
     $scope.removeRow = function (paramindex) {
         var comArr = eval($scope.detskeluar);
@@ -74,12 +82,12 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
     Data.get('stokkeluar/product').then(function (data) {
         $scope.list_produk = data.data;
     });
-    
+
 //    $scope.code_cabang = null;
-    
-    $scope.getkode = function(id) {
-        Data.get('stokkeluar/kode_cabang/'+ id).then(function(data) {
-             $scope.form.kode = data.kode;
+
+    $scope.getkode = function (id) {
+        Data.get('stokkeluar/kode_cabang/' + id).then(function (data) {
+            $scope.form.kode = data.kode;
             $scope.form.cabang_id = id;
 
         });
@@ -119,9 +127,9 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         $scope.is_view = false;
         $scope.formtitle = "Form Persediaan Keluar";
         $scope.form = {};
-        $scope.form.tanggal= new Date();
-       
+        $scope.form.tanggal = moment().format('DD-MM-YYYY');
     };
+
     $scope.update = function (id) {
         Data.get('stokkeluar/view/' + id).then(function (data) {
             $scope.form = data.data;
@@ -192,6 +200,16 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
             });
         }
     };
+
+
+    $scope.selected = function (id) {
+        Data.get('stokkeluar/view/' + id).then(function (data) {
+            $scope.form = data.data;
+            $scope.detsmasuk = data.detail;
+
+        });
+        $scope.subtotal();
+    }
 
 });
 

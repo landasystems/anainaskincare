@@ -13,7 +13,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Cabang</label>
                             <div class="col-sm-9">
-                                <select ui-select2="" ng-model="form.cabang_id" style="width: 270px;" ng-change="ubah_pegawai(form.cabang_id)">
+                                <select class="form-control" ng-model="form.cabang_id" style="width: 270px;" ng-change="ubah_pegawai(form.cabang_id)">
                                     <option value="">-Semua Cabang-</option>
                                     <option ng-repeat="cabang in listcabang" value="{{cabang.id}}">{{cabang.nama}}</option>
                                 </select>
@@ -22,7 +22,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Pegawai</label>
                             <div class="col-sm-9">
-                                <select ui-select2="" ng-model="form.pegawai_id" style="width: 270px;">
+                                <select class="form-control" ng-model="form.pegawai_id" style="width: 270px;">
                                     <option value="">-Semua Pegawai-</option>
                                     <option ng-repeat="pegawai in listpegawai" value="{{pegawai.id}}">{{pegawai.nama}}</option>
                                 </select>
@@ -49,7 +49,7 @@
                     <center>
                         <h4>LAPORAN BONUS KARYAWAN ANAINA SKIN CARE</h4>
                         <h5>CABANG : {{detail.cabang}}</h5>
-                        <h5>PERIODE : {{detail.start | date}} s/d {{detail.end | date}} </h5>
+                        <h5>PERIODE : {{detail.start| date}} s/d {{detail.end| date}} </h5>
                     </center>
                     <div class="line line-dashed b-b line-lg pull-in"></div>
                     <table class="table table-bordered ">
