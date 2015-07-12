@@ -27,21 +27,19 @@ use Yii;
  * @property string $modified_at
  * @property integer $modified_by
  */
-class Barang extends \yii\db\ActiveRecord
-{
+class Barang extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'm_produk';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['kategori_id', 'satuan_id', 'harga_beli_terakhir', 'harga_jual', 'diskon', 'minimum_stok', 'fee_terapis', 'fee_dokter', 'is_deleted', 'created_by', 'modified_by'], 'integer'],
             [['keterangan'], 'string'],
@@ -51,16 +49,23 @@ class Barang extends \yii\db\ActiveRecord
             [['foto'], 'string', 'max' => 255]
         ];
     }
-    
-    public function getCoba(){
+
+    public function getCoba() {
         return "aa";
+    }
+
+    public function getKategori() {
+        return $this->hasOne(Kategori::className(), ['id' => 'kategori_id']);
+    }
+
+    public function getSatuan() {
+        return $this->hasOne(MSatuan::className(), ['id' => 'satuan_id']);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'kode' => 'Kode',
@@ -83,4 +88,5 @@ class Barang extends \yii\db\ActiveRecord
             'modified_by' => 'Modified By',
         ];
     }
+
 }
