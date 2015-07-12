@@ -24,8 +24,6 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             type: '',
             jumlah: '',
             diskon: '',
-            pegawai_terapis_id: '',
-            pegawai_dokter_id: '',
             fee_terapis: '',
             fee_dokter: '',
         }
@@ -41,9 +39,6 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
     });
     Data.get('penjualan/cabang').then(function (data) {
         $scope.sCabang = data.cabang;
-    });
-    Data.get('penjualan/produk').then(function (data) {
-        $scope.sProduk = data.produk;
     });
     Data.post('penjualan/dokter').then(function (data) {
         $scope.list_dokter = data.dokter;
@@ -79,6 +74,9 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
     $scope.pilih = function (detail, $item) {
         detail.harga = $item.harga_jual;
         detail.type = $item.type;
+        detail.diskon = $item.diskon;
+        detail.fee_dokter = $item.fee_dokter;
+        detail.fee_terapis = $item.fee_terapis;
 
     }
     
@@ -111,8 +109,6 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             type: '',
             jumlah: '',
             diskon: '',
-            pegawai_terapis_id: '',
-            pegawai_dokter_id: '',
         }
         $scope.total();
         $scope.detPenjualan.unshift(newDet);
@@ -127,9 +123,9 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         });
         $scope.form.total = (total - diskon);
         $scope.form.belanja = (total - diskon);
-        $scope.form.total_belanja = total;
+//        $scope.form.total_belanja = total;
         $scope.detail.sub_total = (total - diskon);
-        $scope.form.total_diskon = diskon;
+//        $scope.form.total_diskon = diskon;
 //        $scope.bayar();
 
     }
@@ -193,8 +189,6 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
                 type: '',
                 jumlah: '',
                 diskon: '',
-                pegawai_terapis_id: '',
-                pegawai_dokter_id: '',
             }];
         $scope.form.tanggal = moment().format('DD-MM-YYYY');
 
