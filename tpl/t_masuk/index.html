@@ -54,7 +54,7 @@
                         </tr>
                     </thead>
                     <tbody ng-show="!isLoading">
-                        <tr ng-repeat="row in displayed" ng-dblclick="view(row.id)">
+                        <tr ng-repeat="row in displayed" ng-dblclick="view(row)">
                             <td>{{row.kode}}</td>
                             <td>{{row.tanggal| date}}</td>
                             <td>{{row.cabang}}</td>
@@ -101,7 +101,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Cabang</label>
                         <div class="col-sm-6">
-                            <select ui-select2="selectcabang" ui-jq="chosen" ng-change="getkode(form.cabang_id)" ng-model="form.cabang_id" ng-disabled="is_view" required style="width: 48%;">
+                            <select  stInputEvent="change" class="form-control" ui-jq="chosen" ng-change="getkode(form.cabang_id)" ng-model="form.cabang_id" ng-disabled="is_view" required style="width:48%;">
                                 <option value="">-Pilih Cabang-</option>
                                 <option ng-repeat="cabang in listcabang" value="{{cabang.id}}">{{cabang.nama}}</option>
                             </select>
@@ -110,7 +110,13 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Tanggal</label>
                         <div class="col-sm-3">
-                            <input type="text" data-ng-datepicker data-ng-options="datepickerOptions" data-ng-model="form.tanggal">
+                            <div class="input-group">
+                                <input type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="form.tanggal" is-open="opened1" ng-click="open1($event)"/>
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar-o"></i>
+                                </span>
+                            </div>
+
                         </div>
                     </div>
                     <div class="form-group">
@@ -194,4 +200,43 @@
             </div>
         </div>
     </div>
+
+    <div id="printArea" ng-show="is_view" style="display: block !important">
+        <table>
+            <thead>
+                <tr>
+                    <th>Barang</th>
+                    <th style="width:50px;">Jumlah</th>
+                    <th style="width:200px;">Harga</th>
+                    <th style="width:200px;">Sub Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="detail in detsmasuk">
+                    <td>
+                        {{detail.produk.nama}}
+                    </td>
+                    <td style="text-align: right">
+                        {{detail.jumlah}}
+                    </td>
+                    <td style="text-align: right">
+                        {{detail.harga| currency}}
+                    </td>
+                    <td style="text-align: right">
+                        {{detail.sub_total| currency}}
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="3" style="text-align: right;">Total :&nbsp;</th>
+                    <td style="text-align: right;">
+                        {{form.total| currency}}
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
 </div>
+
+<button class="btn btn-primary" ng-print print-element-id="printArea"><i class="fa fa-print"></i> Print</button>

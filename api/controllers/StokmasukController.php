@@ -230,8 +230,6 @@ class StokmasukController extends Controller {
                 $det = new StokMasukDet();
                 $det->attributes = $val;
                 $det->produk_id = $val['produk']['id'];
-                $det->jumlah = str_replace('.', '', $det->jumlah);
-                $det->harga = str_replace('.', '', $det->harga);
                 $det->stok_masuk_id = $model->id;
                 $det->save();
 
@@ -307,6 +305,8 @@ class StokmasukController extends Controller {
     public function actionExcel() {
         session_start();
         $query = $_SESSION['query'];
+        $query->offset("");
+        $query->limit("");
         $command = $query->createCommand();
         $models = $command->queryAll();
         return $this->render("excel", ['models' => $models]);
