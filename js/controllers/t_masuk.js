@@ -14,7 +14,10 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
             });
         }
     }
-
+    
+    $scope.pilih = function (detail, $item){
+        detail.harga = $item.harga_beli_terakhir;
+    }
 
     $scope.datepickerOptions = {
         language: 'id',

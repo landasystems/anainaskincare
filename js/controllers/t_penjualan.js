@@ -59,8 +59,8 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
 
         });
     };
-    $scope.getkode_cabang = function (id) {
-        Data.get('penjualan/kode_cabang/' + id).then(function (data) {
+    $scope.getkode_cabang = function(id) {
+        Data.get('penjualan/kode_cabang/' + id).then(function(data) {
             $scope.form.kode = data.kode;
             $scope.form.cabang_id = id;
 
@@ -118,7 +118,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         $scope.detPenjualan.unshift(newDet);
 
     };
-    $scope.total = function () {
+    $scope.total = function() {
         var total = 0;
         var diskon = 0;
         angular.forEach($scope.detPenjualan, function (detail) {
@@ -145,7 +145,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
 
     };
 
-    $scope.bayar = function () {
+    $scope.bayar = function() {
         var total = parseInt($scope.form.total);
         var cash = parseInt($scope.form.cash);
 //        alert(cash);

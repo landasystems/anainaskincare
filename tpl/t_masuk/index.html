@@ -143,7 +143,7 @@
                                 <tr ng-repeat="detail in detsmasuk" style="margin:0px;padding:0px;">
                                     <td>
                                         <div class="input-group">
-                                            <ui-select on-select="detail.harga = $item.harga_beli_terakhir" ng-model="detail.produk" theme="bootstrap">
+                                            <ui-select on-select="pilih(detail,$item)" ng-model="detail.produk" theme="bootstrap">
                                                 <ui-select-match>{{$select.selected.nama}}</ui-select-match>
                                                 <ui-select-choices refresh="cariProduk($select.search)" repeat="val in results">
                                                     {{val.nama}}

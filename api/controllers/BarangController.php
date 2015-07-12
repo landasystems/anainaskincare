@@ -87,7 +87,7 @@ class BarangController extends Controller {
                 ->from(['m_produk','m_kategori','m_satuan'])
                 ->where('m_produk.kategori_id = m_kategori.id and m_produk.satuan_id = m_satuan.id')
                 ->orderBy($sort)
-                ->select("m_produk.nama as nama, m_kategori.nama as kategori, m_satuan.nama as satuan, m_produk.is_deleted as is_deleted,
+                ->select("m_produk.id, m_produk.nama as nama, m_kategori.nama as kategori, m_satuan.nama as satuan, m_produk.is_deleted as is_deleted,
                     m_produk.kode, m_produk.type, m_produk.kategori_id, m_produk.satuan_id, m_produk.keterangan,m_produk.harga_beli_terakhir,m_produk.harga_jual,
                     m_produk.diskon, m_produk.minimum_stok, m_produk.fee_terapis, m_produk.fee_dokter, m_produk.foto");
 

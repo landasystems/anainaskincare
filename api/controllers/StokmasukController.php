@@ -182,7 +182,8 @@ class StokmasukController extends Controller {
             //menambahkan json detail, select2
             $namaBarang = (isset($val->barang->nama)) ? $val->barang->nama : '';
             $hargaBarang = (isset($val->barang->harga_beli_terakhir)) ? $val->barang->harga_beli_terakhir : '';
-            $detail[$key]['produk'] =  ['id'=>$val->produk_id,'nama'=>$namaBarang,'harga_beli_terakhir'=>$hargaBarang];
+            $jualBarang = (isset($val->barang->harga_jual)) ? $val->barang->harga_jual : '';
+            $detail[$key]['produk'] =  ['id'=>$val->produk_id,'nama'=>$namaBarang,'harga_beli_terakhir'=>$hargaBarang, 'harga_jual'=>$jualBarang];
         }
 
         $this->setHeader(200);

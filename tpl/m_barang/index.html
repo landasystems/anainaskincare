@@ -44,7 +44,7 @@
                         <div class="col-sm-3">
                             <select class="form-control m-b" st-search="roles_id">
                                 <optionk value="">-- Pilih Roles --</option>
-                                <option ng-repeat="kategori in sKategori" value="{{kategori.id}}">{{kategori.nama}}</option>
+                                    <option ng-repeat="kategori in sKategori" value="{{kategori.id}}">{{kategori.nama}}</option>
                             </select>
 
                         </div>
@@ -74,8 +74,8 @@
                             <td>{{row.type}}</td>
                             <td>{{row.kategori}}</td>
                             <td>{{row.satuan}}</td>
-                            <td>{{row.harga_beli_terakhir | currency}}</td>
-                            <td>{{row.harga_jual | currency}}</td>
+                            <td>{{row.harga_beli_terakhir| currency}}</td>
+                            <td>{{row.harga_jual| currency}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ng-show="row.is_deleted == 0"></button>
@@ -193,7 +193,7 @@
 
                             </div>
                         </div>
-                        <div class="form-group" ng-show="form.type =='jasa'">
+                        <div class="form-group" ng-show="form.type == 'Jasa'">
                             <label class="col-sm-5 control-label">Fee Terapis</label>
                             <div class="col-sm-5">
                                 <div class="input-group">
@@ -202,7 +202,7 @@
                                 </div>  
                             </div>
                         </div>
-                        <div class="form-group" ng-show="form.type=='jasa'">
+                        <div class="form-group" ng-show="form.type == 'Jasa'">
                             <label class="col-sm-5 control-label">Fee Dokter</label>
                             <div class="col-sm-5">
                                 <div class="input-group">
@@ -214,16 +214,8 @@
 
                     </div>
                     <div class="col-md-4 col-sm-12">
-
-                        <div nv-file-drop="" uploader="uploader" filters="imageFilter">
-                            <div class="col-md-12 bg-auto">    
-                                <div ng-show="uploader.isHTML5" class="m-b-md">
-                                    <img ng-src="js/controllers/uploads/barang/{{form.foto}}" ng-hide="is_create == true" style="width:400px;height: 400px" class="img-thumbnail">
-                                    <img src="img/noimage.jpg" class="img-thumbnail" ng-show="is_create == true">
-                                    <input type="file" nv-file-select="" uploader="uploader" />
-                                </div>
-                            </div>
-                        </div>
+                        <img ng-src="img/{{(form.foto) ? 'barang/'+form.foto : 'noimage.jpg'}}" class="img-thumbnail">
+                        <input type="file" nv-file-select="" uploader="uploader" />
                     </div>
                     <div class="line line-dashed b-b line-lg pull-in"></div>
                     <div align="center">
