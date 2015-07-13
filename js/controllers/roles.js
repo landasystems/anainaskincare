@@ -40,30 +40,8 @@ app.controller('rolesCtrl', function ($scope, Data, toaster, $state) {
         $scope.is_edit = true;
         $scope.is_view = false;
         $scope.formtitle = "Form Tambah Data";
-        $scope.form = {"akses": {
-                "master_cabang": false,
-                "master_customer": false,
-                "master_supplier": false,
-                "master_pegawai": false,
-                "master_satuan": false,
-                "master_kategori": false,
-                "master_barang": false,
-                "master_user": false,
-                "master_roles": false,
-                "transaksi_stokmasuk": false,
-                "transaksi_stokkeluar": false,
-                "transaksi_pembelian": false,
-                "transaksi_bayarhutang": false,
-                "transaksi_returpembelian": false,
-                "transaksi_penjualan": false,
-                "transaksi_bayarpiutang": false,
-                "transaksi_returpenjualan": false,
-                "laporan_kartustok": false,
-                "laporan_bonuskaryawan": false,
-                "laporan_labarugi": false,
-            }};
-
-        console.log($scope.form);
+        $scope.form = {};
+        $scope.form.akses = {};
     };
     $scope.update = function (form) {
         $scope.is_edit = true;
@@ -126,7 +104,30 @@ app.controller('rolesCtrl', function ($scope, Data, toaster, $state) {
     };
 
     $scope.checkAll = function (module, valueCheck) {
-        angular.forEach($scope.form.akses, function ($value, $key) {
+        var akses = {
+            "master_cabang": false,
+            "master_customer": false,
+            "master_supplier": false,
+            "master_pegawai": false,
+            "master_satuan": false,
+            "master_kategori": false,
+            "master_barang": false,
+            "master_user": false,
+            "master_roles": false,
+            "transaksi_stokmasuk": false,
+            "transaksi_stokkeluar": false,
+            "transaksi_pembelian": false,
+            "transaksi_bayarhutang": false,
+            "transaksi_returpembelian": false,
+            "transaksi_penjualan": false,
+            "transaksi_bayarpiutang": false,
+            "transaksi_returpenjualan": false,
+            "laporan_kartustok": false,
+            "laporan_bonuskaryawan": false,
+            "laporan_labarugi": false,
+        }
+        
+        angular.forEach(akses, function ($value, $key) {
             if ($key.indexOf(module) >= 0)
                 $scope.form.akses[$key] = valueCheck;
         });
