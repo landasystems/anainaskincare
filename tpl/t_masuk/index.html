@@ -23,7 +23,7 @@
                         <div class="control-group">
                             <label class="col-sm-2 control-label">Cabang</label>
                             <div class="col-sm-3">
-                                <select st-search="cabang_id" ng-model="cabang" ng-disabled="is_view" style="width: 250px;">
+                                <select class="form-control m-b" st-search="cabang_id">
                                     <option value="">-Pilih Cabang-</option>
                                     <option ng-repeat="cabang in listcabang" value="{{cabang.id}}">{{cabang.nama}}</option>
                                 </select>
@@ -139,7 +139,7 @@
                                     <th style="text-align: center;">Jumlah</th>
                                     <th style="text-align: center;">Harga</th>
                                     <th style="text-align: center;">Sub Total</th>
-                                    <th style="text-align: center;">#</th>
+                                    <th style="text-align: center;" ng-hide="is_view == true">#</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -174,7 +174,7 @@
                                             <input type="text" class="form-control" ng-model="detail.sub_total" ng-readonly="true"  ng-disabled="is_view">
                                         </div>
                                     </td>
-                                    <td style="width:50px;text-align: center; margin:0px;">
+                                    <td style="width:50px;text-align: center; margin:0px;" ng-hide="is_view == true">
                                         <button ng-click="addDetail()" title="Tambah Data" class="btn btn-success" ng-show="$index == 0" ng-disabled="is_view"><i class="fa fa-plus"></i></button>
                                         <button ng-click="removeRow($index)" title="Hapus Data" class="btn btn-danger" ng-show="$index > 0" ng-disabled="is_view"><i class="fa fa-trash-o"></i></button>
                                     </td>
@@ -184,7 +184,7 @@
                                     <td colspan="2">
                                         <div class="input-group m-b" style="margin:0px;">
                                             <span class="input-group-addon">Rp</span>
-                                            <input type="text" class="form-control" ng-disabled="is_view"  ng-readonly="true" ng-model="form.total" style="width:200px;">
+                                            <input type="text" class="form-control" ng-disabled="is_view"  ng-readonly="true" ng-model="form.total" style="width:140px;">
                                         </div>
                                     </td>
                                 </tr>
@@ -205,7 +205,7 @@
     </div>
 
     <!--PRINT-->
-    
+
     <div id="printArea" ng-show="is_view">
         <center>
             <b>PERSEDIAAN BARANG MASUK</b>

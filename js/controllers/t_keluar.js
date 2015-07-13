@@ -132,21 +132,20 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
 
     $scope.update = function (id) {
         Data.get('stokkeluar/view/' + id).then(function (data) {
-            $scope.form = data.data;
-            $scope.detskeluar = data.detail;
             $scope.is_edit = true;
             $scope.is_view = false;
+            $scope.form = data.data;
+            $scope.detskeluar = data.detail;
             $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode + " - " + $scope.form.nama;
 
         })
     };
     $scope.view = function (id) {
         Data.get('stokkeluar/view/' + id).then(function (data) {
+            $scope.is_edit = true;
+            $scope.is_view = true;
             $scope.form = data.data;
             $scope.detskeluar = data.detail;
-
-            $scope.is_edit = true;
-            $scope.is_view = false;
             $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode + " - " + $scope.form.nama;
 
         })
@@ -205,7 +204,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
     $scope.selected = function (id) {
         Data.get('stokkeluar/view/' + id).then(function (data) {
             $scope.form = data.data;
-            $scope.detsmasuk = data.detail;
+            $scope.detskeluar = data.detail;
 
         });
         $scope.subtotal();

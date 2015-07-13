@@ -89,7 +89,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Customer</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control" ui-select2="" ui-jq="chosen" ng-change="getcustomer(form.customer_id)" ng-model="form.customer_id" ng-disabled="is_view" >
+                                    <select class="form-control"  ng-change="getcustomer(form.customer_id)" ng-model="form.customer_id" ng-disabled="is_view" >
                                         <option value="">-- Customer --</option>
                                         <option ng-repeat="customer in sCustomer" value="{{customer.id}}">{{customer.nama}}</option>
                                     </select>
@@ -98,19 +98,19 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">No Telpon</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" ng-model="retrive.no_tlp" ng-disabled="true" >
+                                    <input type="text" class="form-control" ng-model="form.no_tlp" ng-disabled="true" >
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Email</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" ng-model="retrive.email" ng-disabled="true" >
+                                    <input type="text" class="form-control" ng-model="form.email" ng-disabled="true" >
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Alamat</label>
                                 <div class="col-sm-9">
-                                    <textarea class="form-control" rows="4" ng-model="retrive.alamat" ng-disabled="true" ></textarea>
+                                    <textarea class="form-control" rows="4" ng-model="form.alamat" ng-disabled="true" ></textarea>
                                 </div>
                             </div>
                         </div>
@@ -204,7 +204,6 @@
                                                 </small>
                                             </ui-select-choices>
                                         </ui-select>
-                                        <!--{{//detail.dokter}}-->
 
                                         <ui-select ng-model="detail.terapis" theme="bootstrap" style="width: 350px; margin-top: 4px;">
                                             <ui-select-match placeholder="Cari nama atau nip Terapis">{{$select.selected.nama}}</ui-select-match>

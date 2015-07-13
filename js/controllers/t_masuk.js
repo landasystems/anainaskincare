@@ -34,33 +34,6 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
             sub_total: '0'
         }];
 
-    $scope.produk = {
-        minimumInputLength: 3,
-        allowClear: true,
-        ajax: {
-            url: "api/web/barang/cari/",
-            dataType: 'json',
-            data: function (term) {
-                return {
-                    kata: term,
-                };
-            },
-            results: function (data, page) {
-                return {
-                    results: data.data
-                };
-            }
-        },
-        formatResult: function (object) {
-            return object.nama;
-        },
-        formatSelection: function (object) {
-            return object.nama;
-        },
-        initSelection: function (element, callback) {
-            var obj = {id: 1, text: 'whatever value'};
-        },
-    };
 
     $scope.addDetail = function () {
         var newDet = {
@@ -231,6 +204,8 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
     $scope.selected = function (id) {
         Data.get('stokmasuk/view/' + id).then(function (data) {
             $scope.form = data.data;
+            $scope.form.cabang_nama = 'vuuu';
+            console.log(form.cabang_nama);
             $scope.detsmasuk = data.detail;
 
         });

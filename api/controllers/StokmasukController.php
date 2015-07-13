@@ -137,7 +137,7 @@ class StokmasukController extends Controller {
                 ->limit($limit)
                 ->from(['stok_masuk', 'm_cabang'])
                 ->orderBy($sort)
-                ->select("stok_masuk.id, stok_masuk.kode, stok_masuk.tanggal, m_cabang.nama as cabang, stok_masuk.keterangan, stok_masuk.total")
+                ->select("stok_masuk.*,  m_cabang.nama as cabang")
                 ->where('m_cabang.id = stok_masuk.cabang_id');
 
         //filter

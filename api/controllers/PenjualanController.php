@@ -27,7 +27,7 @@ class PenjualanController extends Controller {
                     'cabang' => ['get'],
                     'customer' => ['get'],
                     'produk' => ['get'],
-                    'nm_customer' => ['post'],
+                    'nm_customer' => ['get'],
                     'det_produk' => ['get'],
                     'kode_cabang' => ['get'],
                     'dokter' => ['post'],
@@ -67,7 +67,6 @@ class PenjualanController extends Controller {
         $sort = "penjualan.id ASC";
         $offset = 0;
         $limit = 10;
-        //        Yii::error($params);
         //limit & offset pagination
         if (isset($params['limit']))
             $limit = $params['limit'];
@@ -147,8 +146,6 @@ class PenjualanController extends Controller {
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = new Penjualan();
-//        print_r($params['penjualandet']);
-
         $model->attributes = $params['penjualan'];
         $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
 
@@ -311,21 +308,16 @@ class PenjualanController extends Controller {
         echo json_encode(array('status' => 1, 'terapis' => $models));
     }
 
-    public function actionNm_customer() {
-        $params = json_decode(file_get_contents("php://input"), true);
+    public function actionNm_customer($id) {
         $query = new Query;
 
         $query->from('m_customer')
-                ->where('id="' . $params . '"')
+                ->where('id="' . $id . '"')
                 ->select("*");
         $command = $query->createCommand();
         $models = $command->query()->read();
         $this->setHeader(200);
-        $model['no_tlp'] = $models['no_tlp'];
-        $model['alamat'] = $models['alamat'];
-        $model['email'] = $models['email'];
-
-        echo json_encode(array('customer' => $model));
+        echo json_encode(array('status' => 1, 'data' => $models), JSON_PRETTY_PRINT);
     }
 
     public function actionKode_cabang($id) {
