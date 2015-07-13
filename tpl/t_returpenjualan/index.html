@@ -119,7 +119,12 @@
                                 <div class="form-group">
                                 <label class="col-sm-3 control-label">Tanggal</label>
                                 <div class="col-sm-9">
-                                     <input type="text" data-ng-datepicker data-ng-options="datepickerOptions" data-ng-model="form.tanggal">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="form.tanggal" is-open="opened1" ng-click="open1($event)"/>
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar-o"></i>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             </div>
@@ -130,10 +135,20 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Kode Penjualan</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control" ui-select2="" ui-jq="chosen" ng-change="getkodepenjualan(form)" ng-model="form.penjualan_id" >
+                                    <ui-select  ng-model="form.penjualan_id" ng-change="getkodepenjualan(form)" theme="bootstrap" style="width: 250px; margin-top: 2px; margin-bottom: 1px;">
+                                            <ui-select-match placeholder="Cari nama atau nip Dokter">{{$select.selected.kode}}</ui-select-match>
+                                            <ui-select-choices group-by="'group'" repeat="dokter in list_dokter | filter: $select.search">
+                                                <div ng-bind-html="produk.nama | highlight: $select.search"></div>
+                                                <small>
+                                                    Nip : <span ng-bind-html="produk.kode | highlight: $select.search"></span>
+                                                </small>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    <!--==============-->
+<!--                                    <select class="form-control" ui-select2="" ui-jq="chosen" ng-change="getkodepenjualan(form)" ng-model="form.penjualan_id" >
                                         <option value="">-- Kode Penjualan --</option>
                                         <option ng-repeat="kodepenjualan in listkodepenjualan" value="{{kodepenjualan.id}}">{{kodepenjualan.kode}} - {{kodepenjualan.cabang}} - {{kodepenjualan.customer}}</option>
-                                    </select>
+                                    </select>-->
                                 </div>
                             </div>
                             <div class="form-group">

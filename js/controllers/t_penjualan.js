@@ -33,6 +33,19 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         autoclose: true,
         weekStart: 0
     }
+    $scope.cariCustomer = function($query) {
+        if ($query.length >= 3) {
+            Data.get('customer/cari', {nama: $query}).then(function(data) {
+                $scope.results = data.data;
+            });
+        }
+    }
+     $scope.pilihCustomer = function (form, $item) {
+        form.no_tlp = $item.no_tlp;
+        form.email = $item.email;
+        form.alamat = $item.alamat;
+
+    }
 
     Data.get('penjualan/customer').then(function (data) {
         $scope.sCustomer = data.customer;
@@ -193,24 +206,25 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         $scope.form.tanggal = moment().format('DD-MM-YYYY');
 
     };
-    $scope.update = function (row) {
-        console.log(row);
-        $scope.form = row;
-        Data.get('penjualan/view/' + row.id).then(function (data) {
+    $scope.update = function (form) {
+        $scope.form = form;
+//        Data.get('penjualan/view/' + row.id).then(function (data) {
 //            $scope.form = data.data;
-            $scope.detPenjualan = data.detail;
+//            $scope.detPenjualan = data.detail;
             $scope.is_edit = true;
             $scope.is_view = false;
             $scope.is_create = true;
             $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode;
+            $scope.selected(form.id);
 
-        })
+//        })
     };
     $scope.view = function (form) {
         $scope.is_edit = true;
         $scope.is_view = true;
         $scope.formtitle = "Lihat Data : " + form.nama;
         $scope.form = form;
+        $scope.selected(form.id);
     };
     $scope.save = function (form, detail) {
         var data = {
@@ -243,6 +257,18 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             });
         }
     };
+     $scope.selected = function(id) {
+        Data.get('penjualan/view/' + id).then(function(data) {
+            $scope.form = data.data;
+            $scope.form.no_tlp = data.data.customer.no_tlp;
+            $scope.form.email = data.data.customer.email;
+            $scope.form.alamat = data.data.customer.alamat;
+            $scope.form.nama = data.data.customer.nama;
+            $scope.detPenjualan = data.detail;
+            
+
+        });
+    }
 
 
 })

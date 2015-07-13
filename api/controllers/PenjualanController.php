@@ -117,6 +117,23 @@ class PenjualanController extends Controller {
     public function actionView($id) {
 
         $model = $this->findModel($id);
+        $query = new Query;
+        $query->from('m_customer')
+                ->select("*")
+                ->andWhere(['like', 'id', $model['customer_id']]);
+
+        $command = $query->createCommand();
+        $models = $command->query()->read();
+        foreach ($models as  $val) {
+            $nama = (isset($val['nama'])) ? $val['nama'] : '';
+            $no_tlp= (isset($val['no_tlp'])) ? $val['no_tlp'] : '';
+            $email= (isset($val['email'])) ? $val['email'] : '';
+            $alamat = (isset($val['alamat'])) ? $val['alamat'] : '';
+
+
+            $model['customer'] = ['nama' => $nama,'no_tlp'=>$no_tlp,'email'=>$email,'alamat'=>$alamat];
+        }
+        
         $det = PenjualanDet::find()
                 ->where(['penjualan_id' => $model['id']])
                 ->all();
