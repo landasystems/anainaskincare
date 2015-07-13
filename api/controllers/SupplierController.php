@@ -19,6 +19,7 @@ class SupplierController extends Controller {
                 'actions' => [
                     'index' => ['get'],
                     'view' => ['get'],
+                    'cari' => ['get'],
                     'excel' => ['get'],
                     'create' => ['post'],
                     'update' => ['post'],
@@ -91,8 +92,8 @@ class SupplierController extends Controller {
                 $query->andFilterWhere(['like', $key, $val]);
             }
         }
-        
-        
+
+
         session_start();
         $_SESSION['query'] = $query;
 
@@ -104,7 +105,6 @@ class SupplierController extends Controller {
 
         echo json_encode(array('status' => 1, 'data' => $models, 'totalItems' => $totalItems), JSON_PRETTY_PRINT);
     }
-    
 
     public function actionView($id) {
 
@@ -188,18 +188,30 @@ class SupplierController extends Controller {
         );
         return (isset($codes[$status])) ? $codes[$status] : '';
     }
-    
+
     //excel
-     public function actionExcel() {
+    public function actionExcel() {
         session_start();
         $query = $_SESSION['query'];
         $query->offset("");
         $query->limit("");
         $command = $query->createCommand();
         $models = $command->queryAll();
-        return $this->render("excel", ['models'=>$models]);
+        return $this->render("excel", ['models' => $models]);
+    }
+
+    public function actionCari() {
+        $params = $_REQUEST;
+        $query = new Query;
+        $query->from('m_supplier')
+                ->select("m_supplier.*")
+                ->where(['is_deleted' => 0])
+                ->andWhere(['like', 'nama', $params['nama']])
+                ->orWhere(['like', 'kode', $params['nama']]);
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+        $this->setHeader(200);
+        echo json_encode(array('status' => 1, 'data' => $models));
     }
 
 }
-
-?>

@@ -23,9 +23,13 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
     $scope.is_view = false;
     $scope.is_create = false;
 
-    Data.get('pembelian/supplierlist').then(function (data) {
-        $scope.listSupplier = data.listSupplier;
-    });
+    $scope.cariSupplier = function ($query) {
+        if ($query.length >= 3) {
+            Data.get('supplier/cari', {nama: $query}).then(function (data) {
+                $scope.listSupplier = data.data;
+            });
+        }
+    };
     Data.get('pembelian/kliniklist').then(function (data) {
         $scope.listKlinik = data.listKlinik;
     });
@@ -36,9 +40,19 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
             });
         }
     };
+    $scope.open1 = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.opened1 = true;
+    };
     $scope.pilih = function (detail, $item){
         detail.harga = $item.harga_beli_terakhir;
         detail.diskon = $item.diskon;
+    };
+    $scope.pilihSupplier = function (form, $item){
+        form.no_tlp = $item.no_tlp;
+        form.email = $item.email;
+        form.alamat = $item.alamat;
     };
 
     $scope.callServer = function callServer(tableState) {
@@ -136,13 +150,13 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
             });
         }
     };
-    $scope.selectedSupplier = function (sup_id) {
-        Data.get('pembelian/selectedsupplier/' + sup_id).then(function (result) {
-            $scope.form.no_tlp = result.selected.no_tlp;
-            $scope.form.email = result.selected.email;
-            $scope.form.alamat = result.selected.alamat;
-        });
-    };
+//    $scope.selectedSupplier = function (sup_id) {
+//        Data.get('pembelian/selectedsupplier/' + sup_id).then(function (result) {
+//            $scope.form.no_tlp = result.selected.no_tlp;
+//            $scope.form.email = result.selected.email;
+//            $scope.form.alamat = result.selected.alamat;
+//        });
+//    };
 //    $scope.selectedProduk = function (detail) {
 //        $scope.detail = detail;
 //        Data.get('pembelian/selectedproduk/' + detail.produk_id).then(function (result) {
@@ -183,7 +197,7 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
             total += sub_total;
             total_belanja += harga * jml;
             total_diskon += diskon * jml;
-        })
+        });
         $scope.form.total = total;
         $scope.form.total_belanja = total_belanja;
         $scope.form.diskon = total_diskon;

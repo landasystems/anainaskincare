@@ -6,6 +6,7 @@ use Yii;
 use app\models\Pembelian;
 use app\models\PembelianDet;
 use app\models\Hutang;
+use app\models\Cabang;
 use app\models\KartuStok;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -75,75 +76,7 @@ class PembelianController extends Controller {
 
         echo json_encode(array('status' => 1, 'detail' => $models), JSON_PRETTY_PRINT);
     }
-
-    public function actionKliniklist() {
-        //create query
-        $query = new Query;
-        $query->select("*")
-                ->from('m_cabang')
-                ->where('is_deleted=0');
-
-        //filter
-
-        $command = $query->createCommand();
-        $models = $command->queryAll();
-
-        $this->setHeader(200);
-
-        echo json_encode(array('status' => 1, 'listKlinik' => $models), JSON_PRETTY_PRINT);
-    }
-
-    public function actionSupplierlist() {
-        //create query
-        $query = new Query;
-        $query->select("*")
-                ->from('m_supplier')
-                ->where('is_deleted=0');
-
-        //filter
-
-        $command = $query->createCommand();
-        $models = $command->queryAll();
-
-        $this->setHeader(200);
-
-        echo json_encode(array('status' => 1, 'listSupplier' => $models), JSON_PRETTY_PRINT);
-    }
-
-    public function actionProduklist() {
-        //create query
-        $query = new Query;
-        $query->select("*")
-                ->from('m_produk as p')
-//                ->join('JOIN')
-                ->where('is_deleted=0 AND type="Barang"');
-
-        //filter
-
-        $command = $query->createCommand();
-        $models = $command->queryAll();
-
-        $this->setHeader(200);
-
-        echo json_encode(array('status' => 1, 'listProduct' => $models), JSON_PRETTY_PRINT);
-    }
-
-    public function actionSelectedsupplier($id) {
-        $query = new Query;
-        $query->select("*")
-                ->from('m_supplier')
-                ->where('id=' . $id);
-
-        //filter
-
-        $command = $query->createCommand();
-        $models = $command->queryOne();
-
-        $this->setHeader(200);
-
-        echo json_encode(array('status' => 1, 'selected' => $models), JSON_PRETTY_PRINT);
-    }
-
+    
     public function actionIndex() {
         //init variable
         $params = $_REQUEST;
@@ -203,11 +136,34 @@ class PembelianController extends Controller {
         $this->setHeader(200);
         echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
     }
+    public function actionKliniklist() {
+        //create query
+        $query = new Query;
+        $query->select("*")
+                ->from('m_cabang')
+                ->where('is_deleted=0');
+
+        //filter
+
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'listKlinik' => $models), JSON_PRETTY_PRINT);
+    }
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = new Pembelian();
+//        Yii::error($params);
+        
+        $klinik = Cabang::findOne($params['pembelian']['cabang_id']);
         $model->attributes = $params['pembelian'];
+        $model->supplier_id = $params['pembelian']['supplier_id']['id'];
+        $lastNumber = Pembelian::find()->orderBy("id DESC")->one();
+        $number = (empty($lastNumber))? 1 : $lastNumber->id + 1;
+        $model->kode = 'BELI/'.$klinik->kode.'/'.  substr("00000".$number, -5);
         $model->tanggal = date("Y-m-d", strtotime($params['pembelian']['tanggal']));
 
 
@@ -222,6 +178,7 @@ class PembelianController extends Controller {
             foreach ($params['pembeliandet'] as $val) {
                 $modelDet = new PembelianDet();
                 $modelDet->attributes = $val;
+                $modelDet->produk_id = $val['produk_id']['id'];
                 $modelDet->pembelian_id = $model->id;
                 if ($modelDet->save()) {
                     $keterangan = 'pembelian';
