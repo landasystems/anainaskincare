@@ -23,7 +23,7 @@
                         <div class="control-group">
                             <label class="col-sm-2 control-label">Cabang</label>
                             <div class="col-sm-3">
-                                <select ui-select2="selectcabang" st-search="cabang_id" ng-model="cabang" ng-disabled="is_view" required style="width: 250px;">
+                                <select class="form-control m-b" st-search="cabang_id">
                                     <option value="">-Pilih Cabang-</option>
                                     <option ng-repeat="cabang in listcabang" value="{{cabang.id}}">{{cabang.nama}}</option>
                                 </select>
@@ -90,7 +90,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 {{formtitle}} 
-                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
+                <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                     <button type="button" class="btn btn-primary fa fa-print" ng-print print-element-id="printArea">&nbsp;Print</button>
                 </div> 
             </div>
@@ -202,8 +202,8 @@
             </div>
         </div>
     </div>
-    
-      <!--PRINT-->
+
+    <!--PRINT-->
 
     <div id="printArea" ng-show="is_view">
         <center>
