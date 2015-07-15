@@ -296,7 +296,7 @@ class ReturpenjualanController extends Controller {
                 ->join('LEFt JOIN', 'r_penjualan_det as rp', 'rp.penjualan_det_id= penjualan_det.id')
                 ->where('penjualan_id="' . $id . '"')
                 ->select('penjualan_det.id as id, penjualan_det.type as type, penjualan_det.produk_id as produk_id,penjualan_det.jumlah as jumlah, penjualan_det.harga as harga_awal, penjualan_det.diskon as diskon_awal , m_produk.nama,
-                        rp.harga as harga, rp.diskon as diskon, rp.jumlah_retur as jumlah_retur');
+                        rp.harga as harga, rp.jumlah_retur as jumlah_retur');
         $command2 = $query2->createCommand();
         $detail = $command2->queryAll();
 

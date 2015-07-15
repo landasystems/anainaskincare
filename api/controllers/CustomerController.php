@@ -23,6 +23,7 @@ class CustomerController extends Controller {
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
+                    'cari' => ['get'],
                 ],
             ]
         ];
@@ -49,6 +50,19 @@ class CustomerController extends Controller {
         }
 
         return true;
+    }
+    
+    public function actionCari() {
+        $params = $_REQUEST;
+        $query = new Query;
+        $query->from('m_customer')
+                ->select("*")
+                ->andWhere(['like', 'nama', $params['nama']]);
+
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+        $this->setHeader(200);
+        echo json_encode(array('status' => 1, 'data' => $models));
     }
 
     public function actionIndex() {
