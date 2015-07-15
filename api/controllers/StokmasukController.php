@@ -170,10 +170,25 @@ class StokmasukController extends Controller {
     public function actionView($id) {
 
         $model = $this->findModel($id);
+        $models = $model->attributes;
+//        $query = new Query;
+//
+//        $query->from(['stok_masuk','m_cabang'])
+//               ->where('stok_masuk.id="' . $id . '" and m_cabang.id = stok_masuk.cabang_id ')
+//                ->select("stok_masuk.*,  m_cabang.nama as namacabang");
+//        
+//        $command = $query->createCommand();
+//        $models = $command->query()->read();
+//        $model = $models->attributes;
+        
+        $cab = \app\models\Cabang::find()
+                ->where(['id' => $model['cabang_id']])
+                ->all();
+        
         $det = StokMasukDet::find()
                 ->with('barang')
                 ->orderBy('id')
-                ->where(['stok_masuk_id' => $model['id']])
+                ->where(['stok_masuk_id' => $id])
                 ->all();
 
         foreach ($det as $key => $val) {
@@ -187,7 +202,7 @@ class StokmasukController extends Controller {
         }
 
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes), 'detail' => $detail), JSON_PRETTY_PRINT);
+        echo json_encode(array('status' => 1,'data' => $models, 'detail' => $detail), JSON_PRETTY_PRINT);
     }
 
     public function actionCreate() {
