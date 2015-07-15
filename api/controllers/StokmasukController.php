@@ -169,21 +169,19 @@ class StokmasukController extends Controller {
 
     public function actionView($id) {
 
-        $model = $this->findModel($id);
-        $models = $model->attributes;
-//        $query = new Query;
-//
-//        $query->from(['stok_masuk','m_cabang'])
-//               ->where('stok_masuk.id="' . $id . '" and m_cabang.id = stok_masuk.cabang_id ')
-//                ->select("stok_masuk.*,  m_cabang.nama as namacabang");
-//        
-//        $command = $query->createCommand();
-//        $models = $command->query()->read();
+//        $model = $this->findModel($id);
+//        $models = $model->attributes;
+        $query = new Query;
+
+        $query->from(['stok_masuk','m_cabang'])
+               ->where('stok_masuk.id="' . $id . '" and m_cabang.id = stok_masuk.cabang_id ')
+                ->select("stok_masuk.*,  m_cabang.nama as namacabang");
+        
+        $command = $query->createCommand();
+        $models = $command->query()->read();
 //        $model = $models->attributes;
         
-        $cab = \app\models\Cabang::find()
-                ->where(['id' => $model['cabang_id']])
-                ->all();
+        
         
         $det = StokMasukDet::find()
                 ->with('barang')

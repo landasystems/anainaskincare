@@ -204,7 +204,8 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
     $scope.selected = function (id) {
         Data.get('stokmasuk/view/' + id).then(function (data) {
             $scope.form = data.data;
-            $scope.form.namacabang = data.cabang;
+//            console.log(data.data.namacabang);
+            $scope.form.namacabang = data.data.namacabang;
             $scope.detsmasuk = data.detail;
 
         });
