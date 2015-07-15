@@ -84,7 +84,7 @@ class PenggunaController extends Controller {
                 ->from(['m_user', 'm_roles'])
                 ->where('m_user.roles_id = m_roles.id')
                 ->orderBy($sort)
-                ->select("m_user.id as id, m_roles.nama as roles, m_user.username as username, m_user.is_deleted as is_deleted, m_user.nama, m_user.password");
+                ->select("m_user.id as id, m_user.roles_id as roles_id, m_roles.nama as roles, m_user.username as username, m_user.is_deleted as is_deleted, m_user.nama, m_user.password");
 
         //filter
         if (isset($params['filter'])) {
@@ -117,7 +117,10 @@ class PenggunaController extends Controller {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = new Pengguna();
         $model->attributes = $params;
-        $model->password = sha1($model->password);
+        
+        if(isset($model->password)) {
+            sha1($model->password);
+        }
 
         if ($model->save()) {
             $this->setHeader(200);
@@ -145,7 +148,9 @@ class PenggunaController extends Controller {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
         $model->attributes = $params;
-        $model->password = sha1($model->password);
+        if(!empty($model['password'])) {
+            $model->password=sha1($model['password']);
+        }
 
         if ($model->save()) {
             $this->setHeader(200);

@@ -204,6 +204,16 @@
                                                 </small>
                                             </ui-select-choices>
                                         </ui-select>
+
+                                        <ui-select ng-model="detail.terapis" theme="bootstrap" style="width: 350px; margin-top: 4px;">
+                                            <ui-select-match placeholder="Cari nama atau nip Terapis">{{$select.selected.nama}}</ui-select-match>
+                                            <ui-select-choices group-by="'group'" repeat="terapis in list_terapis | filter: $select.search">
+                                                <div ng-bind-html="terapis.nama | highlight: $select.search"></div>
+                                                <small>
+                                                    Nip : <span ng-bind-html="terapis.kode | highlight: $select.search"></span>
+                                                </small>
+                                            </ui-select-choices>
+                                        </ui-select>
                                 </td>
                                 <td>
                                     <div class="input-group m-b" style="margin-bottom: 4px;margin-top: 2px;">

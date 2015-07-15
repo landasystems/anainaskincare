@@ -68,13 +68,16 @@ class PenjualanDet extends \yii\db\ActiveRecord {
     public function getPenjualan() {
         return $this->hasOne(Penjualan::className(), ['id' => 'penjualan_id']);
     }
-    public function getBarang() {
+    public function getBarang()
+    {
         return $this->hasOne(Barang::className(), ['id' => 'produk_id']);
     }
-    public function getDokter() {
+    public function getDokter()
+    {
         return $this->hasOne(Pegawai::className(), ['id' => 'pegawai_dokter_id']);
     }
-    public function getTerapis() {
+    public function getTerapis()
+    {
         return $this->hasOne(Pegawai::className(), ['id' => 'pegawai_terapis_id']);
     }
 
