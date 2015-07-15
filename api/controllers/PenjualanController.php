@@ -27,7 +27,7 @@ class PenjualanController extends Controller {
                     'cabang' => ['get'],
                     'customer' => ['get'],
                     'produk' => ['get'],
-                    'nm_customer' => ['post'],
+                    'nm_customer' => ['get'],
                     'det_produk' => ['get'],
                     'kode_cabang' => ['get'],
                     'dokter' => ['post'],
@@ -67,7 +67,6 @@ class PenjualanController extends Controller {
         $sort = "penjualan.id ASC";
         $offset = 0;
         $limit = 10;
-        //        Yii::error($params);
         //limit & offset pagination
         if (isset($params['limit']))
             $limit = $params['limit'];
@@ -117,31 +116,26 @@ class PenjualanController extends Controller {
     public function actionView($id) {
 
         $model = $this->findModel($id);
-        $query = new Query;
-        $query->from('m_customer')
-                ->select("*")
-                ->andWhere(['like', 'id', $model['customer_id']]);
-
-        $command = $query->createCommand();
-        $models = $command->query()->read();
-        foreach ($models as  $val) {
-            $nama = (isset($val['nama'])) ? $val['nama'] : '';
-            $no_tlp= (isset($val['no_tlp'])) ? $val['no_tlp'] : '';
-            $email= (isset($val['email'])) ? $val['email'] : '';
-            $alamat = (isset($val['alamat'])) ? $val['alamat'] : '';
-
-
-            $model['customer'] = ['nama' => $nama,'no_tlp'=>$no_tlp,'email'=>$email,'alamat'=>$alamat];
-        }
-        
         $det = PenjualanDet::find()
+                ->with(['barang'])
+                ->orderBy('id')
                 ->where(['penjualan_id' => $model['id']])
                 ->all();
 
         $detail = array();
 
-        foreach ($det as $val) {
-            $detail[] = $val->attributes;
+        foreach ($det as $key => $val) {
+            $detail[$key] = $val->attributes;
+
+            $namaBarang = (isset($val->barang->nama)) ? $val->barang->nama : '';
+            $hargaBarang = (isset($val->barang->harga_beli_terakhir)) ? $val->barang->harga_beli_terakhir : '';
+            $jualBarang = (isset($val->barang->harga_jual)) ? $val->barang->harga_jual : '';
+            $dokter = (isset($val->dokter->nama)) ? $val->dokter->nama : '';
+            $terapis= (isset($val->terapis->nama)) ? $val->terapis->nama : '';
+            $detail[$key]['produk'] = ['id' => $val->produk_id, 'nama' => $namaBarang, 'harga_beli_terakhir' => $hargaBarang, 'harga_jual' => $jualBarang];
+            $detail[$key]['terapis'] = ['id' => $val->pegawai_terapis_id, 'nama'=> $terapis];
+            $detail[$key]['dokter'] = ['id' => $val->pegawai_dokter_id, 'nama'=> $dokter];
+            
         }
 
 
@@ -152,8 +146,6 @@ class PenjualanController extends Controller {
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = new Penjualan();
-//        print_r($params['penjualandet']);
-
         $model->attributes = $params['penjualan'];
         $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
 
@@ -173,9 +165,9 @@ class PenjualanController extends Controller {
                 $det->attributes = $data;
                 $det->penjualan_id = $model->id;
                 $det->produk_id = $data['produk']['id'];
-                $det->pegawai_terapis_id = $data['terapis']['id'];
-                $det->pegawai_dokter_id = $data['dokter']['id'];
-                $det->sub_total = str_replace('.', '', $data['sub_total']);
+                $det->pegawai_terapis_id = isset($data['terapis']['id']) ? $data['terapis']['id'] : '';
+                $det->pegawai_dokter_id = isset($data['dokter']['id']) ? $data['terapis']['id'] : '';
+//                $det->sub_total = str_replace('.', '', $data['sub_total']);
 
                 if ($det->save()) {
                     $keterangan = 'penjualan';
@@ -229,14 +221,13 @@ class PenjualanController extends Controller {
                 $det->penjualan_id = $model->id;
                 if ($det->save()) {
                     $id_det[] = $det->id;
-                          $keterangan = 'penjualan';
-                $stok = new \app\models\KartuStok();
-                $hapus = $stok->hapusKartu($keterangan, $model->id);
-                $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
-           
+                    $keterangan = 'penjualan';
+                    $stok = new \app\models\KartuStok();
+                    $hapus = $stok->hapusKartu($keterangan, $model->id);
+                    $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
                 }
                 //stok
-           }
+            }
             $deleteDetail = PenjualanDet::deleteAll('id NOT IN (' . implode(',', $id_det) . ') AND penjualan_id=' . $model->id);
 
             $this->setHeader(200);
@@ -288,6 +279,7 @@ class PenjualanController extends Controller {
 
         echo json_encode(array('status' => 1, 'produk' => $models));
     }
+
     public function actionDokter() {
         $query = new Query;
         $query->from('m_pegawai')
@@ -301,6 +293,7 @@ class PenjualanController extends Controller {
 
         echo json_encode(array('status' => 1, 'dokter' => $models));
     }
+
     public function actionTerapis() {
         $query = new Query;
         $query->from('m_pegawai')
@@ -315,21 +308,16 @@ class PenjualanController extends Controller {
         echo json_encode(array('status' => 1, 'terapis' => $models));
     }
 
-    public function actionNm_customer() {
-        $params = json_decode(file_get_contents("php://input"), true);
+    public function actionNm_customer($id) {
         $query = new Query;
 
         $query->from('m_customer')
-                ->where('id="' . $params . '"')
+                ->where('id="' . $id . '"')
                 ->select("*");
         $command = $query->createCommand();
         $models = $command->query()->read();
         $this->setHeader(200);
-        $model['no_tlp'] = $models['no_tlp'];
-        $model['alamat'] = $models['alamat'];
-        $model['email'] = $models['email'];
-
-        echo json_encode(array('customer' => $model));
+        echo json_encode(array('status' => 1, 'data' => $models), JSON_PRETTY_PRINT);
     }
 
     public function actionKode_cabang($id) {
@@ -363,7 +351,7 @@ class PenjualanController extends Controller {
                 ->select("*");
         $command = $query->createCommand();
         $models = $command->queryOne();
-        
+
         $this->setHeader(200);
 
         echo json_encode(array('produk' => $models));
