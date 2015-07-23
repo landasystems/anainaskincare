@@ -76,7 +76,7 @@ class PembelianController extends Controller {
 
         echo json_encode(array('status' => 1, 'detail' => $models), JSON_PRETTY_PRINT);
     }
-    
+
     public function actionIndex() {
         //init variable
         $params = $_REQUEST;
@@ -132,10 +132,36 @@ class PembelianController extends Controller {
     public function actionView($id) {
 
         $model = $this->findModel($id);
+        $querySup = new Query;
+        $querySup->select("*")
+                ->from('m_supplier')
+                ->where('id=' . $model->supplier_id);
+
+        $commandSup = $querySup->createCommand();
+        $supplier = $commandSup->queryOne();
+        $queryDet = new Query;
+        $queryDet->select("*")
+                ->from("pembelian_det")
+                ->where("pembelian_id=" . $id);
+
+        $commandDet = $queryDet->createCommand();
+        $detail = $commandDet->queryAll();
+
+        foreach ($detail as $key => $val) {
+            $queryBrg = new Query;
+            $queryBrg->select("*")
+                    ->from("m_produk")
+                    ->where("id=" . $val['produk_id']);
+
+            $commandBrg = $queryBrg->createCommand();
+            $barang = $commandBrg->queryOne();
+            $detail[$key]['barang'] = $barang;
+        }
 
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
+        echo json_encode(array('status' => 1, 'supplier' => $supplier, 'detail' => $detail), JSON_PRETTY_PRINT);
     }
+
     public function actionKliniklist() {
         //create query
         $query = new Query;
@@ -157,13 +183,13 @@ class PembelianController extends Controller {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = new Pembelian();
 //        Yii::error($params);
-        
+
         $klinik = Cabang::findOne($params['pembelian']['cabang_id']);
         $model->attributes = $params['pembelian'];
-        $model->supplier_id = $params['pembelian']['supplier_id']['id'];
+        $model->supplier_id = $params['pembelian']['supplier']['id'];
         $lastNumber = Pembelian::find()->orderBy("id DESC")->one();
-        $number = (empty($lastNumber))? 1 : $lastNumber->id + 1;
-        $model->kode = 'BELI/'.$klinik->kode.'/'.  substr("00000".$number, -5);
+        $number = (empty($lastNumber)) ? 1 : $lastNumber->id + 1;
+        $model->kode = 'BELI/' . $klinik->kode . '/' . substr("00000" . $number, -5);
         $model->tanggal = date("Y-m-d", strtotime($params['pembelian']['tanggal']));
 
 
@@ -173,12 +199,13 @@ class PembelianController extends Controller {
                 $credit->pembelian_id = $model->id;
                 $credit->credit = $model->credit;
                 $credit->status = 'belum lunas';
+                $credit->tanggal_transaksi = $model->tanggal;
                 $credit->save();
             }
             foreach ($params['pembeliandet'] as $val) {
                 $modelDet = new PembelianDet();
                 $modelDet->attributes = $val;
-                $modelDet->produk_id = $val['produk_id']['id'];
+                $modelDet->produk_id = $val['barang']['id'];
                 $modelDet->pembelian_id = $model->id;
                 if ($modelDet->save()) {
                     $keterangan = 'pembelian';
@@ -206,6 +233,7 @@ class PembelianController extends Controller {
             if (!empty($credit)) {
                 $credit->credit = $model->credit;
                 $credit->status = ($model->credit > 0) ? 'belum lunas' : 'lunas';
+                $credit->tanggal_transaksi = $model->tanggal;
                 $credit->save();
             } else if (empty($credit) && $model->credit != 0) {
                 $credit = new Hutang();
@@ -222,12 +250,16 @@ class PembelianController extends Controller {
                 if (empty($det)) {
                     $det = new PembelianDet();
                 }
+//                $det->attributes = $val;
+//                $det->pembelian_id = $id;
                 $det->attributes = $val;
-                $det->pembelian_id = $id;
+                $det->produk_id = $val['barang']['id'];
+                $det->pembelian_id = $model->id;
+                
                 if ($det->save()) {
                     $id_det[] = $det->id;
                     $keterangan = 'pembelian';
-                    $stok = new \app\models\KartuStok();
+                    $stok = new KartuStok();
                     $hapus = $stok->hapusKartu($keterangan, $model->id);
                     $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
                 }

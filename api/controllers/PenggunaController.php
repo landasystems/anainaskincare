@@ -23,6 +23,7 @@ class PenggunaController extends Controller {
                     'update' => ['post'],
                     'delete' => ['delete'],
                     'roles' => ['get'],
+                    'profile' => ['get'],
                 ],
             ]
         ];
@@ -94,7 +95,7 @@ class PenggunaController extends Controller {
             }
         }
 
-        
+
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -108,19 +109,27 @@ class PenggunaController extends Controller {
     public function actionView($id) {
 
         $model = $this->findModel($id);
-
+        unset($model->password);
+        
         $this->setHeader(200);
         echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
     }
+    public function actionProfile() {
+        session_start();
+        $id = $_SESSION['user']['id'];
+        $model = $this->findModel($id);
+        unset($model->password);
+        
+        $this->setHeader(200);
+        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
+    }
+    
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = new Pengguna();
         $model->attributes = $params;
-        
-        if(isset($model->password)) {
-            sha1($model->password);
-        }
+        $model->password = sha1($model->password);
 
         if ($model->save()) {
             $this->setHeader(200);
@@ -148,8 +157,14 @@ class PenggunaController extends Controller {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
         $model->attributes = $params;
-        if(!empty($model['password'])) {
-            $model->password=sha1($model['password']);
+        if (!empty($params['password'])) {
+            $model->password = sha1($model['password']);
+        }else{
+            unset($model->password);
+        }
+        
+        if (isset($params['settings'])) {
+            $model->settings = json_encode($params['settings']);
         }
 
         if ($model->save()) {
@@ -207,8 +222,6 @@ class PenggunaController extends Controller {
         );
         return (isset($codes[$status])) ? $codes[$status] : '';
     }
-
-
 
 }
 

@@ -79,11 +79,7 @@
                 <div class="panel-body">
                     <div class="col-md-10">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Kode Retur</label>
-                            <div class="col-sm-3">
-                                <input type="text" class="form-control" ng-model="form.kode" ng-disabled="is_view">
-                            </div>
-                            <label class="col-sm-1 control-label">Tanggal</label>
+                            <label class="col-sm-2 control-label">Tanggal</label>
                             <div class="col-sm-3">
                                 <div class="input-group">
                                     <input type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="form.tanggal" is-open="opened1" ng-click="open1($event)"/>
@@ -96,104 +92,69 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Kode Pembelian</label>
                             <div class="col-sm-3">
-                                <select stInputEvent="change" class="form-control" ng-change="selectedPembelian(form)" ng-model="form.pembelian_id" ui-select2>
-                                    <option value="">-Pilih Kode Pembelian-</option>
-                                    <option ng-repeat="beli in listPembelian" value="{{beli.id}}">{{beli.kode}}</option>
-                                </select>
+                                <div class="input-group">
+                                    <ui-select on-select="pilihSupplier(form,$item)" ng-model="form.pembelian" theme="bootstrap">
+                                        <ui-select-match>{{$select.selected.nama}}</ui-select-match>
+                                        <ui-select-choices refresh="cariSupplier($select.search,form)" repeat="supp in listSupplier">
+                                            {{supp.nama}}
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-btn">
+                                        <button ng-click="form.pembelian = undefined" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </button>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" style="font-weight: bold">Detail Supplier</label>
+                    <div class="col-md-6">
+                        <div class="panel-heading text-muted font-bold">
+                            Detail Supplier
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-5 control-label">Supplier</label>
-                            <div class="col-sm-7">
+                            <label class="col-sm-3 control-label">Supplier</label>
+                            <div class="col-sm-9">
                                 <input type="text" class="form-control" ng-model="det.nama" ng-disabled="is_view" ng-readonly="true">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-5 control-label">No Telepon</label>
-                            <div class="col-sm-7">
+                            <label class="col-sm-3 control-label">No Telepon</label>
+                            <div class="col-sm-9">
                                 <input type="tel" class="form-control" ng-model="det.no_tlp" ng-disabled="is_view" ng-readonly="true">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-5 control-label">Email</label>
-                            <div class="col-sm-7">
+                            <label class="col-sm-3 control-label">Email</label>
+                            <div class="col-sm-9">
                                 <input type="email" class="form-control" ng-model="det.email" ng-disabled="is_view" ng-readonly="true">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-5 control-label">Alamat</label>
-                            <div class="col-sm-7">
+                            <label class="col-sm-3 control-label">Alamat</label>
+                            <div class="col-sm-9">
                                 <textarea  class="form-control" ng-model="det.alamat" ng-disabled="is_view" ng-readonly="true"></textarea>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="col-sm-5 control-label" style="font-weight: bold">Detail Klinik</label>
+                    <div class="col-md-6">
+                        <div class="panel-heading text-muted font-bold">
+                            Detail Klinik
                         </div>
-
                         <div class="form-group">
-                            <label class="col-sm-5 control-label">Klinik</label>
-                            <div class="col-sm-7">
+                            <label class="col-sm-3 control-label">Klinik</label>
+                            <div class="col-sm-9">
                                 <input type="text" class="form-control" ng-model="det.klinik" ng-disabled="is_view" ng-readonly="true">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-5 control-label">Keterangan</label>
-                            <div class="col-sm-7">
+                            <label class="col-sm-3 control-label">Keterangan</label>
+                            <div class="col-sm-9">
                                 <textarea class="form-control" ng-model="form.keterangan" ng-disabled="is_view"></textarea>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 img-thumbnail">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" style="font-weight: bold">Pembayaran</label>
-                        </div>
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Total Retur</label>
-                                <div class="col-sm-8">
-                                    <div class="input-group m-b">
-                                        <span class="input-group-addon">Rp.</span>
-                                        <input type="text" ng-pattern="/^[0-9]+$/" class="form-control" ng-model="form.total_retur" ng-disabled="true">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Total Diskon</label>
-                                <div class="col-sm-8">
-                                    <div class="input-group m-b">
-                                        <span class="input-group-addon">Rp.</span>
-                                        <input type="text" ng-pattern="/^[0-9]+$/" class="form-control" ng-model="form.total_diskon" ng-disabled="true">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Biaya Lain</label>
-                                <div class="col-sm-8">
-                                    <div class="input-group m-b">
-                                        <span class="input-group-addon">Rp.</span>
-                                        <input type="text" ng-pattern="/^[0-9]+$/" class="form-control" ng-change="total()" ng-model="form.biaya_lain" ng-disabled="is_view">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label" style="font-weight: bold">Total (Rp)</label>
-                                <div class="col-sm-12">
-                                    <div class="input-group m-b">
-                                        <span class="input-group-addon">Rp.</span>
-                                        <input type="text" ng-pattern="/^[0-9]+$/" class="form-control" ng-model="form.total" ng-disabled="true">
-                                    </div>
-                                </div>
-                            </div>
 
-                        </div>
-                    </div>
                     <div class="line line-dashed b-b line-lg pull-in"></div>
                     <div class="form-group">
                         <div class="col-sm-2">
@@ -211,7 +172,7 @@
                                         <th style="text-align: center">Harga Awal</th>
                                         <th style="text-align: center">Harga Retur</th>
                                         <th style="text-align: center">Diskon</th>
-                                        <th style="text-align: center">Sub Total</th>
+                                        <th style="text-align: center;width:15%">Sub Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -249,20 +210,23 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th colspan="6" style="text-align: right">Sub Total</th>
-                                        <th style="text-align: center">{{form.sub_totals| currency}}</th>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="6" style="text-align: right">Total Diskon</th>
+                                        <th colspan="4"></th>
+                                        <th style="text-align: center">{{form.total_retur| currency}}</th>
+                                        <th style="text-align: center">{{form.total_diskon| currency}}</th>
                                         <th style="text-align: center">{{form.sub_totals| currency}}</th>
                                     </tr>
                                     <tr>
                                         <th colspan="6" style="text-align: right">Biaya Lain</th>
-                                        <th style="text-align: center">{{form.biaya_lain| currency}}</th>
+                                        <td style="text-align: center">
+                                            <div class="input-group m-b">
+                                                <span class="input-group-addon">Rp.</span>
+                                                <input type="text" ng-pattern="/^[0-9]+$/" class="form-control" ng-change="total()" ng-model="form.biaya_lain" ng-disabled="is_view">
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <th colspan="6" style="text-align: right">Total</th>
-                                        <th style="text-align: center">{{form.sub_totals| currency}}</th>
+                                        <th colspan="6" style="text-align: right">Total Biaya</th>
+                                        <th style="text-align: center">{{form.total_biaya| currency}}</th>
                                     </tr>
                                 </tfoot>
                             </table>

@@ -35,7 +35,7 @@ class User extends \yii\db\ActiveRecord
     {
         return [
             [['roles_id', 'is_deleted', 'created_by', 'modified_by'], 'integer'],
-            [['created_at', 'modified_at'], 'safe'],
+            [['created_at', 'modified_at', 'settings'], 'safe'],
             [['nama', 'username', 'password'], 'string', 'max' => 255]
         ];
     }
