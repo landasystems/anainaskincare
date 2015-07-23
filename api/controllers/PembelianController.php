@@ -200,6 +200,7 @@ class PembelianController extends Controller {
                 $credit->pembelian_id = $model->id;
                 $credit->credit = $model->credit;
                 $credit->status = 'belum lunas';
+                $credit->tanggal_transaksi = $model->tanggal;
                 $credit->save();
             }
             foreach ($params['pembeliandet'] as $val) {
@@ -233,6 +234,7 @@ class PembelianController extends Controller {
             if (!empty($credit)) {
                 $credit->credit = $model->credit;
                 $credit->status = ($model->credit > 0) ? 'belum lunas' : 'lunas';
+                $credit->tanggal_transaksi = $model->tanggal;
                 $credit->save();
             } else if (empty($credit) && $model->credit != 0) {
                 $credit = new Hutang();
