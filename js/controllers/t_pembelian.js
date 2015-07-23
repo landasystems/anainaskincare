@@ -103,6 +103,7 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
         $scope.form = form;
         $scope.det = {};
         $scope.getDetail(form.id);
+        $scope.bayar();
     };
     $scope.view = function (form) {
         $scope.is_edit = true;
@@ -175,11 +176,15 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
             diskon: '',
             sub_total: '',
         });
+        $scope.calculate();
+        $scope.bayar();
     };
     $scope.removeRow = function (paramindex) {
         var comArr = eval($scope.pembeliandet);
         if (comArr.length > 1) {
             $scope.pembeliandet.splice(paramindex, 1);
+            $scope.calculate();
+            $scope.bayar();
         } else {
             alert("Something gone wrong");
         }

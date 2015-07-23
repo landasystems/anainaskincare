@@ -146,6 +146,7 @@ class PembelianController extends Controller {
 
         $commandDet = $queryDet->createCommand();
         $detail = $commandDet->queryAll();
+        Yii::error($detail);
 
         foreach ($detail as $key => $val) {
             $queryBrg = new Query;
@@ -157,7 +158,6 @@ class PembelianController extends Controller {
             $barang = $commandBrg->queryOne();
             $detail[$key]['barang'] = $barang;
         }
-
 
         $this->setHeader(200);
         echo json_encode(array('status' => 1, 'supplier' => $supplier, 'detail' => $detail), JSON_PRETTY_PRINT);
@@ -187,7 +187,7 @@ class PembelianController extends Controller {
 
         $klinik = Cabang::findOne($params['pembelian']['cabang_id']);
         $model->attributes = $params['pembelian'];
-        $model->supplier_id = $params['pembelian']['supplier_id']['id'];
+        $model->supplier_id = $params['pembelian']['supplier']['id'];
         $lastNumber = Pembelian::find()->orderBy("id DESC")->one();
         $number = (empty($lastNumber)) ? 1 : $lastNumber->id + 1;
         $model->kode = 'BELI/' . $klinik->kode . '/' . substr("00000" . $number, -5);
@@ -205,7 +205,7 @@ class PembelianController extends Controller {
             foreach ($params['pembeliandet'] as $val) {
                 $modelDet = new PembelianDet();
                 $modelDet->attributes = $val;
-                $modelDet->produk_id = $val['produk_id']['id'];
+                $modelDet->produk_id = $val['barang']['id'];
                 $modelDet->pembelian_id = $model->id;
                 if ($modelDet->save()) {
                     $keterangan = 'pembelian';
@@ -249,12 +249,16 @@ class PembelianController extends Controller {
                 if (empty($det)) {
                     $det = new PembelianDet();
                 }
+//                $det->attributes = $val;
+//                $det->pembelian_id = $id;
                 $det->attributes = $val;
-                $det->pembelian_id = $id;
+                $det->produk_id = $val['barang']['id'];
+                $det->pembelian_id = $model->id;
+                
                 if ($det->save()) {
                     $id_det[] = $det->id;
                     $keterangan = 'pembelian';
-                    $stok = new \app\models\KartuStok();
+                    $stok = new KartuStok();
                     $hapus = $stok->hapusKartu($keterangan, $model->id);
                     $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
                 }
