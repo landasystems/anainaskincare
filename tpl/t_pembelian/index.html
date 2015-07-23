@@ -85,14 +85,14 @@
                             <label class="col-sm-4 control-label">Supplier</label>
                             <div class="col-sm-7">
                                 <div class="input-group">
-                                    <ui-select on-select="pilihSupplier(form,$item)" ng-model="form.supplier_id" theme="bootstrap">
+                                    <ui-select on-select="pilihSupplier(form,$item)" ng-model="form.supplier" theme="bootstrap">
                                         <ui-select-match>{{$select.selected.nama}}</ui-select-match>
                                         <ui-select-choices refresh="cariSupplier($select.search,form)" repeat="supp in listSupplier">
                                             {{supp.nama}}
                                         </ui-select-choices>
                                     </ui-select>
                                     <span class="input-group-btn">
-                                        <button ng-click="form.supplier_id = undefined" class="btn btn-default">
+                                        <button ng-click="form.supplier = undefined" class="btn btn-default">
                                             <span class="glyphicon glyphicon-trash"></span>
                                         </button>
                                     </span>
@@ -181,14 +181,14 @@
                                     <tr ng-repeat="detail in pembeliandet">
                                         <td>
                                             <div class="input-group">
-                                                <ui-select on-select="pilih(detail,$item)" ng-model="detail.produk_id" theme="bootstrap">
+                                                <ui-select on-select="pilih(detail,$item)" ng-model="detail.barang" theme="bootstrap">
                                                     <ui-select-match>{{$select.selected.nama}}</ui-select-match>
                                                     <ui-select-choices refresh="cariProduk($select.search,detail)" repeat="produk in listProduk">
                                                         {{produk.nama}}
                                                     </ui-select-choices>
                                                 </ui-select>
                                                 <span class="input-group-btn">
-                                                    <button ng-click="detail.produk_id = undefined" class="btn btn-default">
+                                                    <button ng-click="detail.barang = undefined" class="btn btn-default">
                                                         <span class="glyphicon glyphicon-trash"></span>
                                                     </button>
                                                 </span>
