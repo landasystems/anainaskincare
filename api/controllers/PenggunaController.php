@@ -150,6 +150,8 @@ class PenggunaController extends Controller {
         $model->attributes = $params;
         if(!empty($model['password'])) {
             $model->password=sha1($model['password']);
+        }else{
+            $model->password = $model->password;
         }
 
         if ($model->save()) {
