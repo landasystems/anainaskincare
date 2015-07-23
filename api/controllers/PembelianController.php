@@ -146,7 +146,6 @@ class PembelianController extends Controller {
 
         $commandDet = $queryDet->createCommand();
         $detail = $commandDet->queryAll();
-        Yii::error($detail);
 
         foreach ($detail as $key => $val) {
             $queryBrg = new Query;

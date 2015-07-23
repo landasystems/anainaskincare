@@ -91,7 +91,7 @@ class ReturpembelianController extends Controller {
                 ->join('LEFT JOIN', 'm_supplier as su', 'pe.supplier_id = su.id')
                 ->join('LEFT JOIN', 'm_cabang as ca', 'pe.cabang_id = ca.id')
                 ->orderBy($sort)
-                ->select("rp.*,pe.kode as kode_pembelian,su.nama as nama_supplier,ca.nama as klinik");
+                ->select("rp.*,pe.kode as kode_pembelian,su.nama as nama_supplier,ca.nama as klinik,ca.id as cabang_id");
 
         //filter
         if (isset($params['filter'])) {
@@ -118,7 +118,6 @@ class ReturpembelianController extends Controller {
                 ->all();
 
         $detail = array();
-
         foreach ($det as $val) {
             $detail[] = $val->attributes;
         }
@@ -132,8 +131,12 @@ class ReturpembelianController extends Controller {
         $params = json_decode(file_get_contents("php://input"), true);
         Yii::error($params);
         $model = new RPembelian();
-
+        
+        $klinik = Cabang::findOne($params['retur']['cabang_id']);
         $model->attributes = $params['retur'];
+        $lastNumber = Pembelian::find()->orderBy("id DESC")->one();
+        $number = (empty($lastNumber)) ? 1 : $lastNumber->id + 1;
+        $model->kode = 'BELI/' . $klinik->kode . '/' . substr("00000" . $number, -5);
         $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
 
 
@@ -141,10 +144,10 @@ class ReturpembelianController extends Controller {
             $deleteAll = RPembelianDet::deleteAll('r_pembelian_id=' . $model->id);
             foreach ($params['returdet'] as $data) {
                 if ($data['jumlah_retur'] != 0 || $data['jumlah_retur'] != "") {
-//                    $det = RPembelianDet::findOne($data['rp_id']);
-//                    if(empty($det)){
-                    $det = new RPembelianDet();
-//                    }
+                    $det = RPembelianDet::findOne($data['rp_id']);
+                    if (empty($det)) {
+                        $det = new RPembelianDet();
+                    }
                     $det->attributes = $data;
                     $det->r_pembelian_id = $model->id;
                     $det->pembelian_det_id = $data['id'];
@@ -217,7 +220,7 @@ class ReturpembelianController extends Controller {
 
     public function actionSelected($id) {
         $query = new Query;
-        $query->select('p.*,c.nama as klinik,s.*')
+        $query->select('p.*,c.nama as klinik,c.id as cabang_id,s.*')
                 ->from('pembelian as p')
                 ->join('LEFT JOIN', 'm_supplier as s', 'p.supplier_id = s.id')
                 ->join('LEFT JOIN', 'm_cabang as c', 'p.cabang_id = c.id')
@@ -256,7 +259,6 @@ class ReturpembelianController extends Controller {
         if (($model = RPembelian::findOne($id)) !== null) {
             return $model;
         } else {
-
             $this->setHeader(400);
             echo json_encode(array('status' => 0, 'error_code' => 400, 'message' => 'Bad request'), JSON_PRETTY_PRINT);
             exit;
@@ -287,5 +289,3 @@ class ReturpembelianController extends Controller {
     }
 
 }
-
-?>
