@@ -61,7 +61,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="2" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html">
+                            <td colspan="7" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html">
                             </td>
                         </tr>
                 </table>		
@@ -92,11 +92,12 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Kode Pembelian</label>
                             <div class="col-sm-3">
+                                {{form.pembelian}}
                                 <div class="input-group">
-                                    <ui-select on-select="pilihSupplier(form,$item)" ng-model="form.pembelian" theme="bootstrap">
-                                        <ui-select-match>{{$select.selected.nama}}</ui-select-match>
-                                        <ui-select-choices refresh="cariSupplier($select.search,form)" repeat="supp in listSupplier">
-                                            {{supp.nama}}
+                                    <ui-select on-select="pilihPembelian(form,$item)" ng-model="form.pembelian" theme="bootstrap">
+                                        <ui-select-match>{{$select.selected.kode}}</ui-select-match>
+                                        <ui-select-choices refresh="cariPembelian($select.search,form)" repeat="supp in listPembelian">
+                                            {{supp.kode}}
                                         </ui-select-choices>
                                     </ui-select>
                                     <span class="input-group-btn">
@@ -115,25 +116,25 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Supplier</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" ng-model="det.nama" ng-disabled="is_view" ng-readonly="true">
+                                <input type="text" class="form-control" ng-model="form.nama_supplier" ng-disabled="is_view" ng-readonly="true">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">No Telepon</label>
                             <div class="col-sm-9">
-                                <input type="tel" class="form-control" ng-model="det.no_tlp" ng-disabled="is_view" ng-readonly="true">
+                                <input type="tel" class="form-control" ng-model="form.no_tlp" ng-disabled="is_view" ng-readonly="true">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Email</label>
                             <div class="col-sm-9">
-                                <input type="email" class="form-control" ng-model="det.email" ng-disabled="is_view" ng-readonly="true">
+                                <input type="email" class="form-control" ng-model="form.email" ng-disabled="is_view" ng-readonly="true">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Alamat</label>
                             <div class="col-sm-9">
-                                <textarea  class="form-control" ng-model="det.alamat" ng-disabled="is_view" ng-readonly="true"></textarea>
+                                <textarea  class="form-control" ng-model="form.alamat" ng-disabled="is_view" ng-readonly="true"></textarea>
                             </div>
                         </div>
                     </div>
@@ -144,7 +145,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Klinik</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" ng-model="det.klinik" ng-disabled="is_view" ng-readonly="true">
+                                <input type="text" class="form-control" ng-model="form.klinik" ng-disabled="is_view" ng-readonly="true">
                             </div>
                         </div>
                         <div class="form-group">

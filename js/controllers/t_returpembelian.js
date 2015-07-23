@@ -7,16 +7,20 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
     $scope.is_create = false;
     $scope.det = [];
     $scope.details = [];
-    Data.get('returpembelian/pembelianlist').then(function (data) {
-        $scope.listPembelian = data.listPembelian;
-
-    });
-    $scope.cariSupplier = function ($query) {
+    $scope.cariPembelian = function ($query) {
         if ($query.length >= 3) {
-            Data.get('supplier/cari', {nama: $query}).then(function (data) {
-                $scope.listSupplier = data.data;
+            Data.get('pembelian/cari', {kode: $query}).then(function (data) {
+                $scope.listPembelian = data.data;
             });
         }
+    };
+    $scope.pilihPembelian = function (form, $item){
+        form.nama_supplier = $item.nama_supplier;
+        form.no_tlp = $item.no_tlp;
+        form.email = $item.email;
+        form.alamat = $item.alamat;
+        form.klinik = $item.klinik;
+        $scope.selectedPembelian($item);
     };
      $scope.open1 = function ($event) {
         $event.preventDefault();
@@ -103,7 +107,11 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
         }
     };
     $scope.selectedPembelian = function (form) {
-        Data.get('returpembelian/selected/' + form.pembelian_id).then(function (result) {
+        var data = {
+          form : form,
+          ket : ''
+        };
+        Data.get('returpembelian/selected/', form).then(function (result) {
             $scope.det = result.pembelian;
             $scope.details = result.details;
             angular.forEach($scope.details, function (detail) {

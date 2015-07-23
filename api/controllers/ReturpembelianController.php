@@ -218,7 +218,9 @@ class ReturpembelianController extends Controller {
         echo json_encode(array('status' => 1, 'listPembelian' => $models));
     }
 
-    public function actionSelected($id) {
+    public function actionSelected() {
+        $params = $_REQUEST;
+        Yii::error($params['id']);
         $query = new Query;
         $query->select('p.*,c.nama as klinik,c.id as cabang_id,s.*')
                 ->from('pembelian as p')
