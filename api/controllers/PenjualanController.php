@@ -30,6 +30,7 @@ class PenjualanController extends Controller {
                     'nm_customer' => ['get'],
                     'det_produk' => ['get'],
                     'kode_cabang' => ['get'],
+                    'cari' => ['get'],
                     'dokter' => ['post'],
                     'terapis' => ['post'],
                 ],
@@ -237,7 +238,18 @@ class PenjualanController extends Controller {
             echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $model->errors), JSON_PRETTY_PRINT);
         }
     }
-
+    
+    public function actionCari() {
+        $params = $_REQUEST;
+        $query = new Query;
+        $query->from('penjualan')
+                ->select("penjualan.*")
+                ->andWhere(['like', 'kode', $params['nama']]);
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+        $this->setHeader(200);
+        echo json_encode(array('status' => 1, 'data' => $models));
+    }
     public function actionCustomer() {
         $query = new Query;
         $query->from('m_customer')

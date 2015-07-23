@@ -54,10 +54,10 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
         $scope.form = form;
         $scope.is_edit = true;
         $scope.is_view = false;
-        $scope.is_create = true;
+        $scope.is_create = false;
         $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode;
-
-        $scope.getkodepenjualan(form);
+//        console.log(form);
+        $scope.selected(form);
 
     };
     $scope.view = function(form) {
@@ -67,7 +67,7 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
         $scope.is_create = true;
         $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode;
 
-        $scope.getkodepenjualan(form);
+        $scope.selected(form);
 
     };
     $scope.save = function(form, detail) {
@@ -120,29 +120,52 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
     Data.get('returpenjualan/produk').then(function(data) {
         $scope.sProduk = data.produk;
     });
-    $scope.getkodepenjualan = function(form) {
-        Data.get('returpenjualan/det_kodepenjualan/' + form.penjualan_id).then(function(data) {
+    //select2 product
+    $scope.cariKode = function ($query) {
+        if ($query.length >= 3) {
+            Data.get('penjualan/cari', {nama: $query}).then(function (data) {
+                $scope.results = data.data;
+            });
+        }
+    }
+    $scope.getkodepenjualan = function(wo) {
+        Data.post('returpenjualan/det_kodepenjualan/' , wo).then(function(data) {
             $scope.penjualan = data.penjualan;
             $scope.detPenjualan = data.detail;
             $scope.form.kode = data.kode;
+//            console.log(data.detail);
             angular.forEach($scope.detPenjualan, function(detail) {
                 detail.jumlah_retur = (detail.jumlah_retur !== null) ? detail.jumlah_retur : 0;
             })
 
         });
     };
+    $scope.selected = function(form) {
+           Data.get('returpenjualan/view/' + form.id).then(function(data) {
+            $scope.form = data.data;
+            $scope.form.penjualan = data.penjualan.penjualan[0];
+            $scope.penjualan = data.penjualan;
+            $scope.detPenjualan = data.detail;
+            console.log(data.penjualan);
+            angular.forEach($scope.detPenjualan, function(detail) {
+                detail.jumlah_retur = (detail.jumlah_retur !== null) ? detail.jumlah_retur : 0;
+            })
+
+        });
+    }
 
     $scope.total = function() {
         var total = 0;
         var total_retur = 0;
         var diskon = 0;
         var diskon_retur = 0;
+        var lain = parseInt($scope.form.biaya_lain);
         angular.forEach($scope.detPenjualan, function(detail) {
 
             diskon_retur += detail.jumlah_retur * detail.diskon_awal;
             total_retur += detail.jumlah_retur * detail.harga;
         })
-        $scope.form.total = (total_retur - diskon_retur);
+        $scope.form.total = (total_retur - diskon_retur) + lain;
         $scope.form.belanja = (total - diskon);
         $scope.form.total_belanja = total_retur;
         $scope.form.total_diskon = diskon_retur;
