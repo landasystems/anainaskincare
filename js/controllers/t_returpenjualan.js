@@ -9,11 +9,11 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
     $scope.is_create = false;
     $scope.penjualan = []
     $scope.detPenjualan = []
-    $scope.datepickerOptions = {
-        language: 'id',
-        autoclose: true,
-        weekStart: 0
-    }
+     $scope.open1 = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.opened1 = true;
+    };
 
 
     $scope.callServer = function callServer(tableState) {
@@ -46,6 +46,7 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
         $scope.is_view = false;
         $scope.formtitle = "Form Tambah Data";
         $scope.form = {};
+        $scope.form.tanggal = moment().format('DD-MM-YYYY');
 
 
     };
