@@ -87,7 +87,7 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
         $scope.pembeliandet = [
             {
                 id: '',
-                produk_id: '',
+                barang: [],
                 jumlah: '',
                 harga: '',
                 diskon: '',
@@ -114,8 +114,9 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
         $scope.getDetail(form.id);
     };
     $scope.getDetail = function(id){
-        Data.get('pembelian/detail/' + id).then(function (data) {
+        Data.get('pembelian/view/' + id).then(function (data) {
             $scope.pembeliandet = data.detail;
+            $scope.form.supplier = data.supplier;
             $scope.calculate();
         });
     }
@@ -168,7 +169,7 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
         $scope.pembeliandet.unshift({
             id: '',
 //            pembelian_id: ($scope.form.id != '') ? $scope.form.id : '',
-            produk_id: '',
+            barang: [],
             jumlah: '',
             harga: '',
             diskon: '',
