@@ -6,7 +6,7 @@ app.controller('penggunaCtrl', function($scope, Data, toaster) {
     $scope.is_view = false;
 
     Data.get('pengguna/roles').then(function(data) {
-        $scope.roles_id = data.roles;
+        $scope.roleslist = data.roles;
     });
 
     $scope.callServer = function callServer(tableState) {
@@ -43,12 +43,15 @@ app.controller('penggunaCtrl', function($scope, Data, toaster) {
         $scope.is_view = false;
         $scope.formtitle = "Edit Data : " + form.nama;
         $scope.form = form;
+        $scope.form.password = '';
     };
     $scope.view = function(form) {
+      
         $scope.is_edit = true;
         $scope.is_view = true;
         $scope.formtitle = "Lihat Data : " + form.nama;
         $scope.form = form;
+        $scope.form.password = '';
     };
     $scope.save = function(form) {
         var url = (form.id > 0) ? 'pengguna/update/' + form.id : 'pengguna/create';

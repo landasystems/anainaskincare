@@ -173,11 +173,21 @@ class StokkeluarController extends Controller {
 
     public function actionView($id) {
 
-        $model = $this->findModel($id);
+//        $model = $this->findModel($id);
+        
+         $query = new Query;
+
+        $query->from(['stok_keluar','m_cabang'])
+               ->where('stok_keluar.id="' . $id . '" and m_cabang.id = stok_keluar.cabang_id ')
+                ->select("stok_keluar.*,  m_cabang.nama as namacabang");
+        
+        $command = $query->createCommand();
+        $models = $command->query()->read();
+        
         $det = StokKeluarDet::find()
                 ->with('barang')
                 ->orderBy('id')
-                ->where(['stok_keluar_id' => $model['id']])
+                ->where(['stok_keluar_id' => $id])
                 ->all();
 
         $detail = array();
@@ -188,12 +198,12 @@ class StokkeluarController extends Controller {
             $hargaBarang = (isset($val->barang->harga_beli_terakhir)) ? $val->barang->harga_beli_terakhir : '';
             $detail[$key]['produk'] = ['id' => $val->produk_id, 'nama' => $namaBarang, 'harga_beli_terakhir' => $hargaBarang];
         }
-        $data = array();
-        $data = $model->attributes;
-        $data['tanggal'] = date("d-m-Y", strtotime($model['tanggal']));
+//        $data = array();
+//        $data = $model->attributes;
+//        $data['tanggal'] = date("d-m-Y", strtotime($models['tanggal']));
 
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'data' => array_filter($data), 'detail' => $detail), JSON_PRETTY_PRINT);
+        echo json_encode(array('status' => 1, 'data' => $models, 'detail' => $detail), JSON_PRETTY_PRINT);
     }
 
     public function actionCreate() {
