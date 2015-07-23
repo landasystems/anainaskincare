@@ -18,7 +18,7 @@
 <!-- navbar collapse -->
 <div class="collapse pos-rlt navbar-collapse box-shadow {{app.settings.navbarCollapseColor}}">
     <!-- link and dropdown -->
-    <ul class="nav navbar-nav hidden-sm">
+    <ul class="nav navbar-nav">
         <li class="dropdown pos-stc" dropdown>
             <a href class="dropdown-toggle" dropdown-toggle>
                 <span>Data Master</span> 
@@ -171,7 +171,7 @@
     <!-- / link and dropdown -->
 
     <!-- search form -->
-    <form class="navbar-form navbar-form-sm navbar-left shift" ui-shift="prependTo" target=".navbar-collapse" role="search">
+    <form class="navbar-form navbar-form-sm navbar-left shift hidden-sm" ui-shift="prependTo" target=".navbar-collapse" role="search">
         <div class="form-group">
             <div class="input-group">
                 <input type="text" ng-model="selected" typeahead="state for state in states | filter:$viewValue | limitTo:8" class="form-control input-sm bg-light no-border rounded padder" placeholder="Pencarian ...">
