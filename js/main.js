@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('app')
-        .controller('AppCtrl', ['$scope', '$window','Data','$state',
+        .controller('AppCtrl', ['$scope', '$window', 'Data', '$state',
             function ($scope, $window, Data, $state) {
                 // add 'ie' classes to html
                 var isIE = !!navigator.userAgent.match(/MSIE/i);
@@ -25,13 +25,21 @@ angular.module('app')
                         dark: '#3a3f51',
                         black: '#1c2b36'
                     },
-                    settings: {
-                        themeID: 7,
-                        navbarHeaderColor: 'bg-info dker',
-                        navbarCollapseColor: 'bg-info dk',
-                        asideColor: 'bg-black',
-                    }
                 }
+                
+                //cek warna di session
+                Data.get('site/session').then(function (data) {
+                    if (typeof data.data.settings != "undefined") {
+                        $scope.app.settings = data.data.settings;
+                    } else { //default warna jika tidak ada setingan
+                        $scope.app.settings = {
+                            themeID: 11,
+                            navbarHeaderColor: 'bg-primary',
+                            navbarCollapseColor: 'bg-primary',
+                            asideColor: 'bg-dark',
+                        };
+                    }
+                });
 
                 function isSmartDevice($window)
                 {

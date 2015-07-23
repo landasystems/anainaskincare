@@ -7,7 +7,16 @@ app.controller('hutangCtrl', function ($scope, Data, toaster) {
     $scope.is_edit = false;
     $scope.is_view = false;
     $scope.is_create = false;
-
+    $scope.openedDet = -1;
+    
+    $scope.openDet = function ($event, $index) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.openedDet = $index;
+    };
+    $scope.setStatus = function () {
+        $scope.openedDet = -1;
+    };
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
         $scope.isLoading = true;
@@ -42,41 +51,34 @@ app.controller('hutangCtrl', function ($scope, Data, toaster) {
                 id: '',
                 tanggal_transaksi: '',
                 status: '',
-                debet: '',
-                credit: ''
+                debet: 0,
+                credit: 0
             }
         ];
 
     };
     $scope.update = function (row) {
         $scope.form = row;
-        $scope.selected(row);
         $scope.is_edit = true;
         $scope.is_view = false;
         $scope.is_create = false;
-        $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode;
-
-//        })
+        $scope.formtitle = "Pembayaran Hutang : " + $scope.form.kode + ' - ' + $scope.form.nama;
+        $scope.detail(row);
     };
-    $scope.view = function (form) {
+    $scope.view = function (row) {
         $scope.is_edit = true;
         $scope.is_view = true;
-        $scope.formtitle = "Lihat Data : " + form.nama;
-        $scope.form = form;
-        $scope.selected(form);
-        $scope.is_edit = true;
-        $scope.is_view = true;
+        $scope.formtitle = "Lihat History Pembayaran Hutang : " + row.kode + ' - ' + row.nama;
+        $scope.form = row;
+        $scope.detail(row);
         $scope.is_create = false;
-        $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode;
-
-//        })
     };
     $scope.save = function (form, detail) {
         var data = {
             form: form,
             detail: detail
         };
-        var url = 'hutang/create';
+        var url = 'hutang/update';
         Data.post(url, data).then(function (result) {
             if (result.status == 0) {
                 toaster.pop('error', "Terjadi Kesalahan", result.errors);
@@ -102,20 +104,19 @@ app.controller('hutangCtrl', function ($scope, Data, toaster) {
             });
         }
     };
-    $scope.selected = function (form) {
-        Data.get('hutang/selected/' + form.pembelian_id).then(function (result) {
-            $scope.detail = result.selected;
-            $scope.history = result.history;
+    $scope.detail = function (form) {
+        Data.get('hutang/view/' + form.pembelian_id).then(function (result) {
+//            $scope.detail = result.data;
+            $scope.history = result.data;
         });
     };
     $scope.addrow = function () {
         $scope.history.unshift({
-            id: '',
-//            pembelian_id: ($scope.form.id != '') ? $scope.form.id : '',
-            tanggal_transaksi: '',
-            status: '',
-            debet: '',
-            credit: '',
+            id : 0,
+            debet : 0,
+            credit : 0,
+            status : '',
+            tanggal_transaksi : '',
         });
     };
     $scope.removeRow = function (paramindex) {
