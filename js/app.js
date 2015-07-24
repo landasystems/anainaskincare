@@ -14,5 +14,6 @@ angular.module('app', [
     'smart-table',
     'toaster',
     'ui.select',
+    'angular-loading-bar',
 ]);
 
