@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Barang;
+use app\models\KartuStok;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -114,8 +115,31 @@ class BarangController extends Controller {
     }
 
     public function actionGetstok($id) {
-        $model = $this->findModel($id);
-        echo json_encode(array('stok' => $model->stok));
+        $listStok = array();
+        $cabang = \app\models\Cabang::find()->where(['is_deleted' => 0])->all();
+        $n = 1;
+        $total = 0;
+        foreach ($cabang as $vals) {
+
+            //mencari stok 
+            $ks = new KartuStok();
+            $stok = $ks->saldo('today', $vals->id, '', '', $id);
+            $s = 0;
+            if (isset($stok[$id])) {
+                foreach ($stok[$id] as $val) {
+                    $s += $val['jumlah'];
+                }
+            }
+
+            $listStok[$n]['no'] = $n;
+            $listStok[$n]['id'] = isset($vals->id) ? $vals->id : '-';
+            $listStok[$n]['nama'] = isset($vals->nama) ? $vals->nama : '-';
+            $listStok[$n]['stok'] = $s;
+            $total += $s;
+            $n++;
+        }
+
+        echo json_encode(array('status' => 1, 'data' => $listStok, 'total' => $total), JSON_PRETTY_PRINT);
     }
 
     public function actionView($id) {
@@ -129,25 +153,32 @@ class BarangController extends Controller {
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = new Barang();
-        $model->attributes = $params;
+        $model->attributes = $params['form'];
 
         if ($model->save()) {
 
-            $kartu = new \app\models\KartuStok();
-            $kartu->kode = $model->kode;
-            $kartu->produk_id = $model->id;
-            $kartu->cabang_id = '';
-            $kartu->keterangan = 'Stok Awal';
-            $kartu->jumlah_masuk = $params['stok'];
-            $kartu->harga_masuk = $model->harga_beli_terakhir;
-            $kartu->created_at = date("Y-m-d H:i:s");
-            $kartu->save();
+            if ($model->type == 'Barang') {
+                $sMasuk = $params['stok'];
+                foreach ($sMasuk as $vMasuk) {
+                    if ($vMasuk['iStok'] > 0) {
+                        $kartu = new \app\models\KartuStok();
+                        $kartu->kode = $model->kode;
+                        $kartu->produk_id = $model->id;
+                        $kartu->cabang_id = $vMasuk['id'];
+                        $kartu->keterangan = 'Stok Awal';
+                        $kartu->jumlah_masuk = $vMasuk['iStok'];
+                        $kartu->harga_masuk = $model->harga_beli_terakhir;
+                        $kartu->created_at = date("Y-m-d H:i:s");
+                        $kartu->save();
+                    }
+                }
+            }
 
             $this->setHeader(200);
-            echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
+//            echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
             $this->setHeader(400);
-            echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $model->errors), JSON_PRETTY_PRINT);
+//            echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $model->errors), JSON_PRETTY_PRINT);
         }
     }
 
@@ -222,7 +253,7 @@ class BarangController extends Controller {
         $query = new Query;
         $query->from('m_produk')
                 ->select("m_produk.*")
-                ->where(['is_deleted'=>0])
+                ->where(['is_deleted' => 0])
                 ->andWhere(['like', 'nama', $params['nama']])
                 ->orWhere(['like', 'kode', $params['nama']]);
         $command = $query->createCommand();
@@ -230,12 +261,13 @@ class BarangController extends Controller {
         $this->setHeader(200);
         echo json_encode(array('status' => 1, 'data' => $models));
     }
+
     public function actionCarilagi() {
         $params = $_REQUEST;
         $query = new Query;
         $query->from('m_produk')
                 ->select("m_produk.*")
-                ->where(['is_deleted'=>0,'type'=>'Barang'])
+                ->where(['is_deleted' => 0, 'type' => 'Barang'])
                 ->andWhere(['like', 'nama', $params['nama']]);
         $command = $query->createCommand();
         $models = $command->queryAll();
