@@ -92,10 +92,20 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Customer</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control"  ng-change="getcustomer(form.customer_id)" ng-model="form.customer_id" ng-disabled="is_view" >
-                                        <option value="">-- Customer --</option>
-                                        <option ng-repeat="customer in sCustomer" value="{{customer.id}}">{{customer.nama}}</option>
-                                    </select>
+                                    <div class="input-group">
+                                        <ui-select on-select="pilihCustomer(form, $item)" ng-model="form.customers" theme="bootstrap">
+                                            {{$select.selected.nama}}
+                                            <ui-select-match placeholder="Pilih atau Cari nama Customer">{{$select.selected.nama}}</ui-select-match>
+                                            <ui-select-choices refresh="cariCustomer($select.search)" repeat="val in results">
+                                                {{val.nama}}
+                                            </ui-select-choices>
+                                        </ui-select>
+                                        <span class="input-group-btn">
+                                            <button ng-click="detail.customer_id = undefined" class="btn btn-default">
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -208,15 +218,15 @@
                                             </ui-select-choices>
                                         </ui-select>
 
-<!--                                        <ui-select ng-model="detail.terapis" theme="bootstrap" style="width: 350px; margin-top: 4px;">
-                                            <ui-select-match placeholder="Cari nama atau nip Terapis">{{$select.selected.nama}}</ui-select-match>
-                                            <ui-select-choices group-by="'group'" repeat="terapis in list_terapis | filter: $select.search">
-                                                <div ng-bind-html="terapis.nama | highlight: $select.search"></div>
-                                                <small>
-                                                    Nip : <span ng-bind-html="terapis.kode | highlight: $select.search"></span>
-                                                </small>
-                                            </ui-select-choices>
-                                        </ui-select>-->
+                                        <!--                                        <ui-select ng-model="detail.terapis" theme="bootstrap" style="width: 350px; margin-top: 4px;">
+                                                                                    <ui-select-match placeholder="Cari nama atau nip Terapis">{{$select.selected.nama}}</ui-select-match>
+                                                                                    <ui-select-choices group-by="'group'" repeat="terapis in list_terapis | filter: $select.search">
+                                                                                        <div ng-bind-html="terapis.nama | highlight: $select.search"></div>
+                                                                                        <small>
+                                                                                            Nip : <span ng-bind-html="terapis.kode | highlight: $select.search"></span>
+                                                                                        </small>
+                                                                                    </ui-select-choices>
+                                                                                </ui-select>-->
                                 </td>
                                 <td>
                                     <div class="input-group m-b" style="margin-bottom: 4px;margin-top: 2px;">
@@ -360,12 +370,12 @@
                     <table ng-show="detail.type == 'Jasa'" border="0">
                         <tr>
                             <td>
-                              Dokter: {{detail.dokter.nama}} - {{detail.fee_dokter| currency:undefined:0}}
+                                Dokter: {{detail.dokter.nama}} - {{detail.fee_dokter| currency:undefined:0}}
                             </td>
                         </tr>
                         <tr>
                             <td>
-                              Terapis: {{detail.terapis.nama}} - {{detail.fee_terapis| currency:undefined:0}}
+                                Terapis: {{detail.terapis.nama}} - {{detail.fee_terapis| currency:undefined:0}}
                             </td>
                         </tr>
                     </table>
@@ -387,7 +397,7 @@
         <tfoot>
             <tr>
                 <td colspan="3" rowspan="4"> <b>Ket:</b> Barang - barang yang sudah di beli tidak dapat ditukar / dikembalikan kecuali ada perjanjian, Hormat kami <br>
-                Dicetak Oleh: {{user.nama}} 
+                    Dicetak Oleh: {{user.nama}} 
                 </td>
                 <th  style="text-align: right;border-bottom: none">Total :&nbsp;</th>
                 <td style="text-align: right;">
@@ -406,7 +416,7 @@
                     {{form.credit| currency:undefined:0}}
                 </td>
             </tr>
-            
+
             <tr>
                 <th  style="text-align: right;">Kembali :&nbsp;</th>
                 <td style="text-align: right;">

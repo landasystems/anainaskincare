@@ -6,6 +6,7 @@ use Yii;
 use app\models\Penjualan;
 use app\models\PenjualanDet;
 use app\models\Pinjaman;
+use app\models\Customer;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -117,11 +118,31 @@ class PenjualanController extends Controller {
     public function actionView($id) {
 
         $model = $this->findModel($id);
+
+        $data = $model->attributes;
+        $cus = \app\models\Customer::find()
+                ->where(['id' => $model['customer_id']])
+                ->One();
+        $idcus = (isset($cus->id)) ? $cus->id : '';
+        $cus_nama = (isset($cus->nama)) ? $cus->nama : '';
+        $no_tlp = (isset($cus->no_tlp)) ? $cus->no_tlp : '';
+        $email = (isset($cus->email)) ? $cus->email : '';
+        $alamat = (isset($cus->alamat)) ? $cus->alamat : '';
+        
+        $data['customers'] = [
+            'id' => $idcus,
+            'nama' => $cus_nama,
+            'no_tlp'=>$no_tlp,
+            'email'=>$email,
+            'alamat'=>$alamat
+                ];
+
         $det = PenjualanDet::find()
                 ->with(['barang'])
                 ->orderBy('id')
                 ->where(['penjualan_id' => $model['id']])
                 ->all();
+
 
         $detail = array();
 
@@ -132,16 +153,15 @@ class PenjualanController extends Controller {
             $hargaBarang = (isset($val->barang->harga_beli_terakhir)) ? $val->barang->harga_beli_terakhir : '';
             $jualBarang = (isset($val->barang->harga_jual)) ? $val->barang->harga_jual : '';
             $dokter = (isset($val->dokter->nama)) ? $val->dokter->nama : '';
-            $terapis= (isset($val->terapis->nama)) ? $val->terapis->nama : '';
+            $terapis = (isset($val->terapis->nama)) ? $val->terapis->nama : '';
             $detail[$key]['produk'] = ['id' => $val->produk_id, 'nama' => $namaBarang, 'harga_beli_terakhir' => $hargaBarang, 'harga_jual' => $jualBarang];
-            $detail[$key]['terapis'] = ['id' => $val->pegawai_terapis_id, 'nama'=> $terapis];
-            $detail[$key]['dokter'] = ['id' => $val->pegawai_dokter_id, 'nama'=> $dokter];
-            
+            $detail[$key]['terapis'] = ['id' => $val->pegawai_terapis_id, 'nama' => $terapis];
+            $detail[$key]['dokter'] = ['id' => $val->pegawai_dokter_id, 'nama' => $dokter];
         }
 
 
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes), 'detail' => $detail), JSON_PRETTY_PRINT);
+        echo json_encode(array('status' => 1, 'data' => $data, 'detail' => $detail), JSON_PRETTY_PRINT);
     }
 
     public function actionCreate() {
@@ -149,6 +169,7 @@ class PenjualanController extends Controller {
         $model = new Penjualan();
         $model->attributes = $params['penjualan'];
         $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
+        $model->customer_id = $params['penjualan']['customers']['id'];
 
 
         if ($model->save()) {
@@ -157,6 +178,7 @@ class PenjualanController extends Controller {
                     $pinjaman = new Pinjaman();
                     $pinjaman->penjualan_id = $model->id;
                     $pinjaman->debet = $model->credit;
+                    $credit->tanggal_transaksi = $model->tanggal;
                     $pinjaman->status = 'Belum Lunas';
                     $pinjaman->save();
                 }
@@ -190,7 +212,8 @@ class PenjualanController extends Controller {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
         $model->attributes = $params['penjualan'];
-
+        $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
+        $model->customer_id = $params['penjualan']['customers']['id'];
 
         if ($model->save()) {
             if ($model->status == 'Selesai') {
@@ -238,7 +261,7 @@ class PenjualanController extends Controller {
             echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $model->errors), JSON_PRETTY_PRINT);
         }
     }
-    
+
     public function actionCari() {
         $params = $_REQUEST;
         $query = new Query;
@@ -250,6 +273,7 @@ class PenjualanController extends Controller {
         $this->setHeader(200);
         echo json_encode(array('status' => 1, 'data' => $models));
     }
+
     public function actionCustomer() {
         $query = new Query;
         $query->from('m_customer')
