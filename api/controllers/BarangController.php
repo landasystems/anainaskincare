@@ -26,6 +26,7 @@ class BarangController extends Controller {
                     'kategori' => ['get'],
                     'satuan' => ['get'],
                     'cari' => ['get'],
+                    'carilagi' => ['get'],
                     'getstok' => ['get'],
                 ],
             ]
@@ -224,6 +225,18 @@ class BarangController extends Controller {
                 ->where(['is_deleted'=>0])
                 ->andWhere(['like', 'nama', $params['nama']])
                 ->orWhere(['like', 'kode', $params['nama']]);
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+        $this->setHeader(200);
+        echo json_encode(array('status' => 1, 'data' => $models));
+    }
+    public function actionCarilagi() {
+        $params = $_REQUEST;
+        $query = new Query;
+        $query->from('m_produk')
+                ->select("m_produk.*")
+                ->where(['is_deleted'=>0,'type'=>'Barang'])
+                ->andWhere(['like', 'nama', $params['nama']]);
         $command = $query->createCommand();
         $models = $command->queryAll();
         $this->setHeader(200);
