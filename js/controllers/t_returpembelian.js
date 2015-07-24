@@ -15,6 +15,7 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
         }
     };
     $scope.pilihPembelian = function (form, $item){
+//        console.log(is_create);
         form.nama_supplier = $item.nama_supplier;
         form.no_tlp = $item.no_tlp;
         form.email = $item.email;
@@ -67,6 +68,8 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
         $scope.is_create = false;
         $scope.formtitle = "Edit Retur : " + form.kode;
         $scope.form = form;
+        $scope.pilihPembelian(form,form.pembelian);
+        
     };
     $scope.view = function (form) {
         $scope.is_edit = true;
@@ -74,6 +77,7 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
         $scope.is_create = false;
         $scope.formtitle = "Lihat Retur : " + form.kode;
         $scope.form = form;
+        $scope.pilihPembelian(form,form.pembelian);
     };
     $scope.save = function (form, detail) {
         var data = {
@@ -101,18 +105,19 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
 
     $scope.delete = function (row) {
         if (confirm("Apa anda yakin akan MENGHAPUS PERMANENT item ini ?")) {
-            Data.delete('pembelian/delete/' + row.id).then(function (result) {
+            Data.delete('returpembelian/delete/' + row.id).then(function (result) {
                 $scope.displayed.splice($scope.displayed.indexOf(row), 1);
             });
         }
     };
     $scope.selectedPembelian = function (form) {
+        var id = ($scope.form.id !== undefined) ? $scope.form.id : 0;
         var data = {
           form : form,
-          ket : ''
+          id : id
         };
-        Data.get('returpembelian/selected/', form).then(function (result) {
-            $scope.det = result.pembelian;
+        Data.get('returpembelian/view/', data).then(function (result) {
+//            $scope.det = result.pembelian;
             $scope.details = result.details;
             angular.forEach($scope.details, function (detail) {
                 detail.jumlah_retur = (detail.jumlah_retur !== null) ? parseInt(detail.jumlah_retur) : 0;
@@ -129,9 +134,9 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
         var total_retur = 0;
         var total_diskon = 0;
         angular.forEach($scope.details, function (detail) {
-            var jml_retur = (detail.jumlah_retur.length) ? parseInt(detail.jumlah_retur) : 0;
-            var harga_retur = (detail.harga_retur.length) ? parseInt(detail.harga_retur) : 0;
-            var diskon = (detail.diskon !== "") ? parseInt(detail.diskon) : 0;
+            var jml_retur = (detail.jumlah_retur !== undefined) ? parseInt(detail.jumlah_retur) : 0;
+            var harga_retur = (detail.harga_retur !== undefined) ? parseInt(detail.harga_retur) : 0;
+            var diskon = (detail.diskon !== undefined) ? parseInt(detail.diskon) : 0;
             total_retur += jml_retur * harga_retur;
             total_diskon += jml_retur * diskon;
             sub_total = (jml_retur * harga_retur) - (jml_retur * diskon);

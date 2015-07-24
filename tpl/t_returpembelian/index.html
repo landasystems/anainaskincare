@@ -92,7 +92,6 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Kode Pembelian</label>
                             <div class="col-sm-3">
-                                {{form.pembelian}}
                                 <div class="input-group">
                                     <ui-select on-select="pilihPembelian(form,$item)" ng-model="form.pembelian" theme="bootstrap">
                                         <ui-select-match>{{$select.selected.kode}}</ui-select-match>
