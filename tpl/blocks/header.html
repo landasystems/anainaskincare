@@ -1,6 +1,6 @@
 <!-- navbar header -->
 <div class="navbar-header {{app.settings.navbarHeaderColor}}">
-    <a href="#/" class="navbar-brand text-lt">
+    <a ui-sref="app.dashboard" class="navbar-brand text-lt">
         <img src="img/logo.png" alt="." style="display: inline">
         <span class="hidden-folded m-l-xs">{{app.name}}</span>
     </a>
@@ -169,7 +169,7 @@
     <form class="navbar-form navbar-form-sm navbar-left shift hidden-sm" id="pencarian">
         <div class="form-group">
             <div class="input-group">
-                <ui-select on-select="pencarianDet($item)" ng-model="detail.produk">
+                <ui-select on-select="pencarianDet($item)" ng-model="cari">
                     <ui-select-match placeholder="Pencarian barang...">{{$select.selected.nama}}</ui-select-match>
                     <ui-select-choices refresh="pencarian($select.search)" repeat="val in results">
                         {{val.nama}}
