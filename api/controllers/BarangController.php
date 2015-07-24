@@ -213,7 +213,11 @@ class BarangController extends Controller {
     public function actionUpdate($id) {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
+        $ft = $model->foto;
         $model->attributes = $params;
+        if (empty($model->foto)) {
+            $model->foto = $ft;
+        }
 
         if ($model->save()) {
             $this->setHeader(200);
