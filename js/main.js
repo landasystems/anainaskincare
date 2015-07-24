@@ -24,9 +24,8 @@ angular.module('app')
                         light: '#e8eff0',
                         dark: '#3a3f51',
                         black: '#1c2b36'
-                    },
+                    },                    
                 }
-
                 //cek warna di session
                 Data.get('site/session').then(function (data) {
                     if (typeof data.data.settings != "undefined") {
@@ -41,6 +40,14 @@ angular.module('app')
                     }
                 });
 
+                function isSmartDevice($window)
+                {
+                    // Adapted from http://www.detectmobilebrowsers.com
+                    var ua = $window['navigator']['userAgent'] || $window['navigator']['vendor'] || $window['opera'];
+                    // Checks for iOs, Android, Blackberry, Opera Mini, and Windows mobile devices
+                    return (/iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/).test(ua);
+                }
+
                 $scope.pencarian = function ($query) {
                     if ($query.length >= 3) {
                         Data.get('barang/cari', {nama: $query}).then(function (data) {
@@ -49,15 +56,7 @@ angular.module('app')
                     }
                 }
                 $scope.pencarianDet = function ($query) {
-                    $state.go('master.barang',{form:$query});
-                }
-
-                function isSmartDevice($window)
-                {
-                    // Adapted from http://www.detectmobilebrowsers.com
-                    var ua = $window['navigator']['userAgent'] || $window['navigator']['vendor'] || $window['opera'];
-                    // Checks for iOs, Android, Blackberry, Opera Mini, and Windows mobile devices
-                    return (/iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/).test(ua);
+                    $state.go('master.barang', {form: $query});
                 }
 
                 $scope.logout = function () {
@@ -67,5 +66,6 @@ angular.module('app')
                 }
 
             }]);
+
 
         
