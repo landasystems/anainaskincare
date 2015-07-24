@@ -13,5 +13,6 @@ angular.module('app', [
     'oc.lazyLoad',
     'smart-table',
     'toaster',
+    'ui.select',
 ]);
 

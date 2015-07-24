@@ -26,7 +26,7 @@ angular.module('app')
                         black: '#1c2b36'
                     },
                 }
-                
+
                 //cek warna di session
                 Data.get('site/session').then(function (data) {
                     if (typeof data.data.settings != "undefined") {
@@ -40,6 +40,17 @@ angular.module('app')
                         };
                     }
                 });
+
+                $scope.pencarian = function ($query) {
+                    if ($query.length >= 3) {
+                        Data.get('barang/cari', {nama: $query}).then(function (data) {
+                            $scope.results = data.data;
+                        });
+                    }
+                }
+                $scope.pencarianDet = function ($query) {
+                    $state.go('master.barang',{form:$query});
+                }
 
                 function isSmartDevice($window)
                 {
