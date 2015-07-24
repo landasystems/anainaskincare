@@ -7,6 +7,7 @@ use app\models\RPembelian;
 use app\models\RPembelianDet;
 use app\models\PembelianDet;
 use app\models\Pembelian;
+use app\models\Cabang;
 use app\models\Hutang;
 use app\models\KartuStok;
 use yii\data\ActiveDataProvider;
@@ -27,7 +28,7 @@ class ReturpembelianController extends Controller {
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
-                    'pembelianlist' => ['get'],
+//                    'pembelianlist' => ['get'],
                     'selected' => ['get'],
                 ],
             ]
@@ -105,49 +106,80 @@ class ReturpembelianController extends Controller {
         $models = $command->queryAll();
         $totalItems = $query->count();
 
+        foreach ($models as $keys => $valu) {
+            $query = new Query;
+            $query->select("pe.*,su.kode as kode_supplier, su.nama as nama_supplier,su.no_tlp as no_tlp, su.email as email, su.alamat as alamat,ca.nama as klinik")
+                    ->from('pembelian as pe')
+                    ->join("LEFT JOIN", 'm_supplier as su', 'pe.supplier_id = su.id')
+                    ->join("LEFT JOIN", 'm_cabang as ca', 'pe.cabang_id = ca.id')
+                    ->where(['like', 'pe.id', $valu['pembelian_id']]);
+            $command = $query->createCommand();
+            $pembelian = $command->queryOne();
+            $models[$keys]['pembelian'] = $pembelian;
+        }
+        Yii::error($models);
+
         $this->setHeader(200);
 
         echo json_encode(array('status' => 1, 'data' => $models, 'totalItems' => $totalItems), JSON_PRETTY_PRINT);
     }
 
-    public function actionView($id) {
-
-        $model = $this->findModel($id);
-        $det = RPenjualanDet::find()
-                ->where(['r_penjualan_id' => $model['id']])
-                ->all();
-
-        $detail = array();
-        foreach ($det as $val) {
-            $detail[] = $val->attributes;
+    public function actionView() {
+        $params = $_REQUEST;
+//        Yii::error($params);
+        $decode = json_decode($params['form']);
+        $isi = array();
+        $details = array();
+        foreach ($decode as $key => $a) {
+            $isi[$key] = $a;
         }
-
-
+        $detPenj = PembelianDet::find()
+                ->with('produk')
+                ->where('pembelian_id=' . $isi['id'])
+                ->all();
+        if (!empty($detPenj)) {
+            foreach ($detPenj as $key => $val) {
+                $details[$key] = $val->attributes;
+                $details[$key]['nama_produk'] = $val->produk->nama;
+                if (!empty($params['id']) || $params['id'] != 0) {
+                    $rDet = RPembelianDet::find()
+                            ->where('r_pembelian_id=' . $params['id'] . ' AND pembelian_det_id=' . $val->id)
+                            ->one();
+                    if (!empty($rDet)) {
+                        $details[$key]['jumlah_retur'] = $rDet->jumlah;
+                        $details[$key]['harga_retur'] = $rDet->harga;
+                    }
+                } else {
+                    $details[$key]['jumlah_retur'] = 0;
+                    $details[$key]['harga_retur'] = 0;
+                }
+            }
+        }
+//        Yii::error($details);
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes), 'detail' => $detail), JSON_PRETTY_PRINT);
+        echo json_encode(array('status' => 1, 'details' => $details), JSON_PRETTY_PRINT);
     }
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
-        Yii::error($params);
+//        Yii::error($params);
         $model = new RPembelian();
-        
-        $klinik = Cabang::findOne($params['retur']['cabang_id']);
-        $model->attributes = $params['retur'];
-        $lastNumber = Pembelian::find()->orderBy("id DESC")->one();
-        $number = (empty($lastNumber)) ? 1 : $lastNumber->id + 1;
-        $model->kode = 'BELI/' . $klinik->kode . '/' . substr("00000" . $number, -5);
-        $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
 
+        $klinik = Cabang::findOne($params['retur']['pembelian']['cabang_id']);
+        $model->attributes = $params['retur'];
+        $lastNumber = RPembelian::find()->orderBy("id DESC")->one();
+        $number = (empty($lastNumber)) ? 1 : $lastNumber->id + 1;
+        $model->kode = 'RBELI/' . $klinik->kode . '/' . substr("00000" . $number, -5);
+        $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
+        $model->pembelian_id = $params['retur']['pembelian']['id'];
+        $model->total = $params['retur']['sub_totals'];
+        $model->biaya_lain = $params['retur']['total_biaya'] - $params['retur']['sub_totals'];
 
         if ($model->save()) {
             $deleteAll = RPembelianDet::deleteAll('r_pembelian_id=' . $model->id);
             foreach ($params['returdet'] as $data) {
                 if ($data['jumlah_retur'] != 0 || $data['jumlah_retur'] != "") {
-                    $det = RPembelianDet::findOne($data['rp_id']);
-                    if (empty($det)) {
-                        $det = new RPembelianDet();
-                    }
+                    $det = new RPembelianDet();
                     $det->attributes = $data;
                     $det->r_pembelian_id = $model->id;
                     $det->pembelian_det_id = $data['id'];
@@ -174,15 +206,15 @@ class ReturpembelianController extends Controller {
         $model = $this->findModel($id);
         $model->attributes = $params['retur'];
         $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
+        $model->pembelian_id = $params['retur']['pembelian']['id'];
+        $model->total = $params['retur']['sub_totals'];
+        $model->biaya_lain = $params['retur']['total_biaya'] - $params['retur']['sub_totals'];
 
         if ($model->save()) {
             $deleteAll = RPembelianDet::deleteAll('r_pembelian_id=' . $model->id);
             foreach ($params['returdet'] as $data) {
                 if ($data['jumlah_retur'] != 0 || $data['jumlah_retur'] != "") {
-//                    $det = RPembelianDet::findOne($data['rp_id']);
-//                    if(empty($det)){
                     $det = new RPembelianDet();
-//                    }
                     $det->attributes = $data;
                     $det->r_pembelian_id = $model->id;
                     $det->pembelian_det_id = $data['id'];
@@ -205,45 +237,9 @@ class ReturpembelianController extends Controller {
         }
     }
 
-    public function actionPembelianlist() {
-        $query = new Query;
-        $query->from('pembelian')
-                ->select('*');
-
-        $command = $query->createCommand();
-        $models = $command->queryAll();
-
-        $this->setHeader(200);
-
-        echo json_encode(array('status' => 1, 'listPembelian' => $models));
-    }
-
-    public function actionSelected($id) {
-        $query = new Query;
-        $query->select('p.*,c.nama as klinik,c.id as cabang_id,s.*')
-                ->from('pembelian as p')
-                ->join('LEFT JOIN', 'm_supplier as s', 'p.supplier_id = s.id')
-                ->join('LEFT JOIN', 'm_cabang as c', 'p.cabang_id = c.id')
-                ->where('p.id=' . $id);
-
-        $command = $query->createCommand();
-        $models = $command->queryOne();
-        $query2 = new Query;
-        $query2->select('pb.*,pr.nama as nama_produk,rp.id as rp_id,rp.jumlah as jumlah_retur,rp.harga as harga_retur')
-                ->from('pembelian_det as pb')
-                ->join('LEFT JOIN', 'm_produk as pr', 'pb.produk_id = pr.id')
-                ->join('LEFT JOIN', 'r_pembelian_det as rp', 'rp.pembelian_det_id = pb.id')
-                ->where('pb.pembelian_id=' . $id);
-        $command2 = $query2->createCommand();
-        $details = $command2->queryAll();
-        $this->setHeader(200);
-
-        echo json_encode(array('status' => 1, 'pembelian' => $models, 'details' => $details));
-    }
-
     public function actionDelete($id) {
         $model = $this->findModel($id);
-        $deleteDetail = PenjualanDet::deleteAll(['penjualan_id' => $id]);
+        $deleteDetail = RPembelianDet::deleteAll(['r_penjualan_id' => $id]);
 
         if ($model->delete()) {
             $this->setHeader(200);

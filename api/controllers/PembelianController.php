@@ -24,11 +24,8 @@ class PembelianController extends Controller {
                     'index' => ['get'],
                     'detail' => ['get'],
                     'view' => ['get'],
-                    'selectedsupplier' => ['get'],
-                    'selectedproduk' => ['get'],
-                    'supplierlist' => ['get'],
+                    'cari' => ['get'],
                     'kliniklist' => ['get'],
-                    'produklist' => ['get'],
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
@@ -255,7 +252,7 @@ class PembelianController extends Controller {
                 $det->attributes = $val;
                 $det->produk_id = $val['barang']['id'];
                 $det->pembelian_id = $model->id;
-                
+
                 if ($det->save()) {
                     $id_det[] = $det->id;
                     $keterangan = 'pembelian';
@@ -320,6 +317,19 @@ class PembelianController extends Controller {
         return (isset($codes[$status])) ? $codes[$status] : '';
     }
 
-}
+    public function actionCari() {
+        $params = $_REQUEST;
+        $query = new Query;
+        $query->select("pe.*,su.kode as kode_supplier, su.nama as nama_supplier,su.no_tlp as no_tlp, su.email as email, su.alamat as alamat,ca.nama as klinik")
+                ->from('pembelian as pe')
+                ->join("LEFT JOIN",'m_supplier as su','pe.supplier_id = su.id')
+                ->join("LEFT JOIN",'m_cabang as ca','pe.cabang_id = ca.id')
+                ->where(['like', 'pe.kode', $params['kode']])
+                ->limit(10);
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+        $this->setHeader(200);
+        echo json_encode(array('status' => 1, 'data' => $models));
+    }
 
-?>
+}

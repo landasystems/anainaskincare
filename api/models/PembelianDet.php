@@ -61,4 +61,8 @@ class PembelianDet extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Pembelian::className(), ['id' => 'pembelian_id']);
     }
+    public function getProduk()
+    {
+        return $this->hasOne(Barang::className(), ['id' => 'produk_id']);
+    }
 }
