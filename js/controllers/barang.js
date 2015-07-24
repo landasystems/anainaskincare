@@ -1,4 +1,7 @@
-app.controller('barangCtrl', function($scope, Data, toaster, FileUploader) {
+app.controller('barangCtrl', function($scope, Data, toaster, FileUploader, $stateParams) {
+    console.log($stateParams);
+    console.log($stateParams.form);
+    
     var kode_unik = new Date().getUTCMilliseconds() + "" + (Math.floor(Math.random() * (20 - 10 + 1)) + 10);
     var uploader = $scope.uploader = new FileUploader({
         url: 'img/upload.php?folder=barang&kode=' + kode_unik,
