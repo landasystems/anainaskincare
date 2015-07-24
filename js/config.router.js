@@ -180,6 +180,7 @@ angular.module('app')
                                 })
                                 .state('master.barang', {
                                     url: '/barang',
+                                    params: {'form': null},
                                     templateUrl: 'tpl/m_barang/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
@@ -204,7 +205,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select', 'daterangepicker']).then(
+                                                return $ocLazyLoad.load(['daterangepicker']).then(
                                                         function () {
                                                             return $ocLazyLoad.load('js/controllers/t_masuk.js');
                                                         }
@@ -218,7 +219,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select', 'daterangepicker']).then(
+                                                return $ocLazyLoad.load([ 'daterangepicker']).then(
                                                         function () {
                                                             return $ocLazyLoad.load('js/controllers/t_keluar.js');
                                                         }
@@ -246,7 +247,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select', 'daterangepicker']).then(
+                                                return $ocLazyLoad.load([ 'daterangepicker']).then(
                                                         function () {
                                                             return $ocLazyLoad.load('js/controllers/t_bayarhutang.js');
                                                         }
@@ -260,7 +261,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select', 'daterangepicker']).then(
+                                                return $ocLazyLoad.load([ 'daterangepicker']).then(
                                                         function () {
                                                             return $ocLazyLoad.load('js/controllers/t_returpembelian.js');
                                                         }
@@ -274,7 +275,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select']).then(
+                                                return $ocLazyLoad.load([]).then(
                                                         function () {
                                                             return $ocLazyLoad.load('js/controllers/t_pembelian.js');
                                                         }
@@ -288,7 +289,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select']).then(
+                                                return $ocLazyLoad.load([]).then(
                                                         function () {
                                                             return $ocLazyLoad.load('js/controllers/t_penjualan.js');
                                                         }
@@ -302,7 +303,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select']).then(
+                                                return $ocLazyLoad.load([]).then(
                                                         function () {
                                                             return $ocLazyLoad.load('js/controllers/t_bayarpiutang.js');
                                                         }
@@ -316,7 +317,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select']).then(
+                                                return $ocLazyLoad.load([]).then(
                                                         function () {
                                                             return $ocLazyLoad.load('js/controllers/t_returpenjualan.js');
                                                         }
@@ -337,7 +338,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['daterangepicker', 'ui.select']).then(
+                                                return $ocLazyLoad.load(['daterangepicker', ]).then(
                                                         function () {
                                                             return $ocLazyLoad.load('js/controllers/l_kartustok.js');
                                                         }
@@ -351,7 +352,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['daterangepicker', 'ui.select']).then(
+                                                return $ocLazyLoad.load(['daterangepicker', ]).then(
                                                         function () {
                                                             return $ocLazyLoad.load('js/controllers/l_bonuskaryawan.js');
                                                         }
@@ -365,7 +366,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['daterangepicker', 'ui.select']).then(
+                                                return $ocLazyLoad.load(['daterangepicker', ]).then(
                                                         function () {
                                                             return $ocLazyLoad.load('js/controllers/l_labarugi.js');
                                                         }
