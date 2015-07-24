@@ -9,7 +9,7 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
 
     $scope.cariProduk = function ($query) {
         if ($query.length >= 3) {
-            Data.get('barang/cari', {nama: $query}).then(function (data) {
+            Data.get('barang/carilagi', {nama: $query}).then(function (data) {
                 $scope.results = data.data;
             });
         }
