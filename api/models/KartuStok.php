@@ -117,13 +117,13 @@ class KartuStok extends \yii\db\ActiveRecord {
         if (!empty($cabang))
             $criteria .= ' and kartu_stok.cabang_id = ' . $cabang;
 
-        if (empty($id_produk)) {
-            if (!empty($kategori))
-                $criteria .= ' and m_produk.kategori_id = ' . $kategori;
-        }else {
-            if (!empty($id_produk))
-                $criteria .= ' and m_produk.id = ' . $id_produk;
-        }
+//        if (empty($id_produk)) {
+        if (!empty($kategori))
+            $criteria .= ' and m_produk.kategori_id = ' . $kategori;
+//        }else {
+        if (!empty($id_produk))
+            $criteria .= ' and m_produk.id = ' . $id_produk;
+//        }
 
         if ($type == 'balance') {
             $criteria .= " and date(kartu_stok.created_at) < '" . $date . "'";

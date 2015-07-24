@@ -60,10 +60,16 @@ class CabangController extends Controller {
 
         $command = $query->createCommand();
         $models = $command->queryAll();
+        $no = 1;
+        foreach ($models as $key => $val) {
+            $model[$key] = $val;
+            $model[($no - 1)]['no'] = $no;
+            $no++;
+        }
 
         $this->setHeader(200);
 
-        echo json_encode(array('status' => 1, 'data' => $models));
+        echo json_encode(array('status' => 1, 'data' => $model));
     }
 
     public function actionIndex() {
