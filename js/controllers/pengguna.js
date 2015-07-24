@@ -3,6 +3,7 @@ app.controller('penggunaCtrl', function($scope, Data, toaster) {
     var tableStateRef;
     $scope.displayed = [];
     $scope.is_edit = false;
+    $scope.is_crate = false;
     $scope.is_view = false;
 
     Data.get('pengguna/roles').then(function(data) {
@@ -34,19 +35,22 @@ app.controller('penggunaCtrl', function($scope, Data, toaster) {
 
     $scope.create = function(form) {
         $scope.is_edit = true;
+        $scope.is_create = true;
         $scope.is_view = false;
         $scope.formtitle = "Form Tambah Data";
         $scope.form = {};
     };
     $scope.update = function(form) {
         $scope.is_edit = true;
+        $scope.is_create = false;
         $scope.is_view = false;
         $scope.formtitle = "Edit Data : " + form.nama;
         $scope.form = form;
         $scope.form.password = '';
     };
     $scope.view = function(form) {
-      
+        
+        $scope.is_create = false;
         $scope.is_edit = true;
         $scope.is_view = true;
         $scope.formtitle = "Lihat Data : " + form.nama;

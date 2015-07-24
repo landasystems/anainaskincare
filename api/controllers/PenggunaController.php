@@ -143,8 +143,8 @@ class PenggunaController extends Controller {
     public function actionRoles() {
         $query = new Query;
         $query->from('m_roles')
-                ->select('*');
-
+                ->select('*')
+                ->where(['is_deleted'=>0]);
         $command = $query->createCommand();
         $models = $command->queryAll();
 
