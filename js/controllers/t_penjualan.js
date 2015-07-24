@@ -1,4 +1,4 @@
-app.controller('penjualanCtrl', function ($scope, Data, toaster) {
+app.controller('penjualanCtrl', function($scope, Data, toaster) {
 
 
     //init data;
@@ -13,7 +13,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         }
     ];
 
-    $scope.open1 = function ($event) {
+    $scope.open1 = function($event) {
         $event.preventDefault();
         $event.stopPropagation();
         $scope.opened1 = true;
@@ -36,20 +36,20 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         weekStart: 0
     }
 
-    Data.get('penjualan/customer').then(function (data) {
+    Data.get('penjualan/customer').then(function(data) {
         $scope.sCustomer = data.customer;
     });
-    Data.get('penjualan/cabang').then(function (data) {
+    Data.get('penjualan/cabang').then(function(data) {
         $scope.sCabang = data.cabang;
     });
-    Data.post('penjualan/dokter').then(function (data) {
+    Data.post('penjualan/dokter').then(function(data) {
         $scope.list_dokter = data.dokter;
     });
-    Data.post('penjualan/terapis').then(function (data) {
+    Data.post('penjualan/terapis').then(function(data) {
         $scope.list_terapis = data.terapis;
     });
-    $scope.getcustomer = function (wo) {
-        Data.get('penjualan/nm_customer/' + wo).then(function (data) {
+    $scope.getcustomer = function(wo) {
+        Data.get('penjualan/nm_customer/' + wo).then(function(data) {
             $scope.retrive.no_tlp = data.data.no_tlp;
             $scope.retrive.email = data.data.email;
             $scope.retrive.alamat = data.data.alamat;
@@ -58,8 +58,8 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
 
         });
     };
-    $scope.getkode_cabang = function (id) {
-        Data.get('penjualan/kode_cabang/' + id).then(function (data) {
+    $scope.getkode_cabang = function(id) {
+        Data.get('penjualan/kode_cabang/' + id).then(function(data) {
             $scope.form.kode = data.kode;
             $scope.form.cabang_id = id;
 
@@ -67,15 +67,29 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
     };
 
     //select2 product
-    $scope.cariProduk = function ($query) {
+    $scope.cariProduk = function($query) {
         if ($query.length >= 3) {
-            Data.get('barang/cari', {nama: $query}).then(function (data) {
+            Data.get('barang/cari', {nama: $query}).then(function(data) {
                 $scope.results = data.data;
             });
         }
     }
+    $scope.cariCustomer = function($query) {
+        if ($query.length >= 3) {
+            Data.get('customer/cari', {nama: $query}).then(function(data) {
+                $scope.results = data.data;
+                console.log(data.data);
+            });
+        }
+    }
     //retrive lebih dari 1 tabel
-    $scope.pilih = function (detail, $item) {
+    $scope.pilihCustomer = function(form, $item) {
+
+        form.no_tlp = $item.no_tlp;
+        form.email = $item.email;
+        form.alamat = $item.alamat;
+    }
+    $scope.pilih = function(detail, $item) {
         detail.harga = $item.harga_jual;
         detail.type = $item.type;
         detail.diskon = $item.diskon;
@@ -84,9 +98,9 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
 
     }
 
-    $scope.getproduk = function (detail) {
+    $scope.getproduk = function(detail) {
         $scope.detail = detail;
-        Data.get('penjualan/det_produk/' + detail.produk_id).then(function (data) {
+        Data.get('penjualan/det_produk/' + detail.produk_id).then(function(data) {
             $scope.detail.type = data.produk.type;
             $scope.detail.harga = data.produk.harga_jual;
             $scope.detail.diskon = data.produk.diskon;
@@ -98,16 +112,19 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
     };
 
     //selected
-    $scope.selected = function (id) {
-        Data.get('penjualan/view/' + id).then(function (data) {
+    $scope.selected = function(id) {
+        Data.get('penjualan/view/' + id).then(function(data) {
             $scope.form = data.data;
+            $scope.form.no_tlp = data.data.customers.no_tlp;
+            $scope.form.email = data.data.customers.email;
+            $scope.form.alamat = data.data.customers.alamat;
             $scope.detPenjualan = data.detail;
 
         });
         $scope.total();
     }
 
-    $scope.addDetail = function () {
+    $scope.addDetail = function() {
         var newDet = {
             id: '',
             type: '',
@@ -118,10 +135,10 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         $scope.detPenjualan.unshift(newDet);
 
     };
-    $scope.total = function () {
+    $scope.total = function() {
         var total = 0;
         var diskon = 0;
-        angular.forEach($scope.detPenjualan, function (detail) {
+        angular.forEach($scope.detPenjualan, function(detail) {
             diskon += detail.jumlah * detail.diskon;
             total += detail.jumlah * detail.harga;
         });
@@ -133,7 +150,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
 //        $scope.bayar();
 
     }
-    $scope.removeRow = function (paramindex) {
+    $scope.removeRow = function(paramindex) {
         var comArr = eval($scope.detPenjualan);
         $scope.total();
         if (comArr.length > 1) {
@@ -145,7 +162,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
 
     };
 
-    $scope.bayar = function () {
+    $scope.bayar = function() {
         var total = parseInt($scope.form.total);
         var cash = parseInt($scope.form.cash);
 //        alert(cash);
@@ -173,7 +190,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             param['filter'] = tableState.search.predicateObject;
         }
 
-        Data.get('penjualan/', param).then(function (data) {
+        Data.get('penjualan/', param).then(function(data) {
             $scope.displayed = data.data;
 //            console.log($scope.displayed);
             tableState.pagination.numberOfPages = Math.ceil(data.totalItems / limit);
@@ -182,7 +199,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         $scope.isLoading = false;
     };
 
-    $scope.create = function (form) {
+    $scope.create = function(form) {
         $scope.is_create = true;
         $scope.is_edit = true;
         $scope.is_view = false;
@@ -201,31 +218,28 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
 
 
 
-    $scope.update = function (row) {
-        $scope.form = row;
-        Data.get('penjualan/view/' + row.id).then(function (data) {
-//            $scope.form = data.data;
-            $scope.detPenjualan = data.detail;
-            $scope.is_edit = true;
-            $scope.is_view = false;
-            $scope.is_create = true;
-            $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode;
+    $scope.update = function(row) {
 
-        })
+        $scope.is_edit = true;
+        $scope.is_view = false;
+        $scope.is_create = true;
+        $scope.formtitle = "Edit Persediaan Keluar : " + row.id;
+        $scope.selected(row.id);
+
     };
-    $scope.view = function (form) {
+    $scope.view = function(row) {
         $scope.is_edit = true;
         $scope.is_view = true;
-        $scope.formtitle = "Lihat Data : " + form.nama;
-        $scope.form = form;
+        $scope.formtitle = "Lihat Data : " + row.id;
+        $scope.selected(row.id);
     };
-    $scope.save = function (form, detail) {
+    $scope.save = function(form, detail) {
         var data = {
             penjualan: form,
             penjualandet: detail,
         };
         var url = (form.id > 0) ? 'penjualan/update/' + form.id : 'penjualan/create'
-        Data.post(url, data).then(function (result) {
+        Data.post(url, data).then(function(result) {
             if (result.status == 0) {
                 toaster.pop('error', "Terjadi Kesalahan", result.errors);
             } else {
@@ -235,7 +249,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             }
         });
     };
-    $scope.cancel = function () {
+    $scope.cancel = function() {
         if (!$scope.is_view) { //hanya waktu edit cancel, di load table lagi
             $scope.callServer(tableStateRef);
         }
@@ -244,9 +258,9 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         $scope.is_view = false;
     };
 
-    $scope.delete = function (row) {
+    $scope.delete = function(row) {
         if (confirm("Apa anda yakin akan MENGHAPUS PERMANENT item ini ?")) {
-            Data.delete('penjualan/delete/' + row.id).then(function (result) {
+            Data.delete('penjualan/delete/' + row.id).then(function(result) {
                 $scope.displayed.splice($scope.displayed.indexOf(row), 1);
             });
         }

@@ -41,7 +41,7 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
     };
 
     $scope.create = function(form) {
-        $scope.is_create = true;
+        $scope.is_create = false;
         $scope.is_edit = true;
         $scope.is_view = false;
         $scope.formtitle = "Form Tambah Data";
@@ -64,7 +64,7 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
         $scope.form = form;
         $scope.is_edit = true;
         $scope.is_view = false;
-        $scope.is_create = true;
+        $scope.is_create = false;
         $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode;
 
         $scope.selected(form);
