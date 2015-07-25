@@ -6,7 +6,7 @@ app.controller('penggunaCtrl', function($scope, Data, toaster) {
     $scope.is_edit = false;
     $scope.is_view = false;
 
-    Data.get('pengguna/roles').then(function(data) {
+    Data.get('roles/list').then(function(data) {
         $scope.roleslist = data.roles;
     });
 

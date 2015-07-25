@@ -76,7 +76,7 @@ class SiteController extends Controller {
                     ->join('JOIN', 'm_akses_cabang', 'm_akses_cabang.cabang_id=m_cabang.id')
                     ->select("m_cabang.*")
                     ->where("m_akses_cabang.roles_id = ".$model->roles_id);
-            Yii::error($model->roles_id);
+            
             $command = $query->createCommand();
             $cabang = $command->queryAll();
             $_SESSION['user']['cabang'] = $cabang;

@@ -140,19 +140,6 @@ class PenggunaController extends Controller {
         }
     }
 
-    public function actionRoles() {
-        $query = new Query;
-        $query->from('m_roles')
-                ->select('*');
-
-        $command = $query->createCommand();
-        $models = $command->queryAll();
-
-        $this->setHeader(200);
-
-        echo json_encode(array('status' => 1, 'roles' => $models));
-    }
-
     public function actionUpdate($id) {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
