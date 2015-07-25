@@ -174,7 +174,7 @@ class KartuStok extends \yii\db\ActiveRecord {
                             unset($tmp[$index]);
                         }
                     } else {
-                        $tmpSaldo[$a] = array('jumlah' => $valS['jumlah'], 'harga' => $valS['harga'], 'sub_total' => ($valS['harga'] * $valS['jumlah']));
+                        $tmpSaldo[$a] = array('jumlah' => $valS['jumlah'], 'harga' => $val['harga_keluar'], 'sub_total' => ($val['harga_keluar'] * $valS['jumlah']));
                     }
                     $a++;
                     $index++;

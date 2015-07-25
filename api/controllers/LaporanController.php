@@ -267,6 +267,13 @@ class LaporanController extends Controller {
                 $a = 1;
             }
 
+            $tmpSaldo['jumlah'][$a] = 0;
+            $tmpSaldo['harga'][$a] = 0;
+            $tmpSaldo['sub_total'][$a] = 0;
+
+            $tmpS[$pro->id][$a]['jumlah'] = 0;
+            $tmpS[$pro->id][$a]['harga'] = 0;
+
             if (!empty($saldoAwal[$pro->id])) {
                 foreach ($saldoAwal[$pro->id] as $sAwal) {
                     if (isset($sAwal['jumlah'])) {
@@ -278,13 +285,6 @@ class LaporanController extends Controller {
                         $tmpS[$pro->id][$a]['harga'] = $tmpSaldo['harga'][$a];
                     }
                 }
-            } else {
-                $tmpSaldo['jumlah'][$a] = 0;
-                $tmpSaldo['harga'][$a] = 0;
-                $tmpSaldo['sub_total'][$a] = 0;
-
-                $tmpS[$pro->id][$a]['jumlah'] = 0;
-                $tmpS[$pro->id][$a]['harga'] = 0;
             }
 
             $body[$pro->id]['title']['produk'] = $pro->nama;
