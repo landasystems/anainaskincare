@@ -117,13 +117,13 @@ class KartuStok extends \yii\db\ActiveRecord {
         if (!empty($cabang))
             $criteria .= ' and kartu_stok.cabang_id = ' . $cabang;
 
-//        if (empty($id_produk)) {
-        if (!empty($kategori))
-            $criteria .= ' and m_produk.kategori_id = ' . $kategori;
-//        }else {
-        if (!empty($id_produk))
-            $criteria .= ' and m_produk.id = ' . $id_produk;
-//        }
+        if (empty($id_produk)) {
+            if (!empty($kategori))
+                $criteria .= ' and m_produk.kategori_id = ' . $kategori;
+        }else {
+            if (!empty($id_produk))
+                $criteria .= ' and m_produk.id = ' . $id_produk;
+        }
 
         if ($type == 'balance') {
             $criteria .= " and date(kartu_stok.created_at) < '" . $date . "'";
@@ -139,19 +139,19 @@ class KartuStok extends \yii\db\ActiveRecord {
 
         $command = $query->createCommand();
         $kartu = $command->queryAll();
-        $i = 0;
         $produk_id = 0;
-        $created = '';
-        $a = 1;
+        $a = 0;
         $tmpSaldo = array();
+        $tmp = array();
         foreach ($kartu as $val) {
             if ($produk_id != $val['produk_id']) {
-                $tmp[1]['jumlah'] = 0;
-                $tmp[1]['harga'] = 0;
-                $a = 1;
+                $tmp[0]['jumlah'] = 0;
+                $tmp[0]['harga'] = 0;
+                $a = 0;
+                $tmpSaldo = array('jumlah' => '', 'harga' => '', 'sub_total' => '');
             }
 
-            if ($val['jumlah_keluar'] == 0) {
+            if ($val['jumlah_masuk'] > 0) {
 
                 $tmpSaldo[$a] = array('jumlah' => $val['jumlah_masuk'], 'harga' => $val['harga_masuk'], 'sub_total' => ($val['harga_masuk'] * $val['jumlah_masuk']));
 
@@ -160,21 +160,21 @@ class KartuStok extends \yii\db\ActiveRecord {
             } else {
                 $tempQty = $val['jumlah_keluar'];
                 $boolStatus = true;
-                $index = 1;
+                $tmpSaldo = array('jumlah' => '', 'harga' => '', 'sub_total' => '');
+                $index = 0;
                 foreach ($tmp as $valS) {
                     if ($boolStatus) {
                         if ($valS['jumlah'] > $tempQty) {
                             $valS['jumlah'] -= $tempQty;
                             $tmp[$index]['jumlah'] = $valS['jumlah'];
-
                             $boolStatus = false;
-                            $tmpSaldo[$a] = array('jumlah' => $valS['jumlah_masuk'], 'harga' => $valS['harga_masuk'], 'sub_total' => ($valS['harga_masuk'] * $valS['jumlah_masuk']));
+                            $tmpSaldo[$a] = array('jumlah' => $valS['jumlah'], 'harga' => $val['harga_keluar'], 'sub_total' => ($val['harga_keluar'] * $valS['jumlah']));
                         } else {
                             $tempQty -= $valS['jumlah'];
                             unset($tmp[$index]);
                         }
                     } else {
-                        $tmpSaldo[$a] = array('jumlah' => $valS['jumlah_masuk'], 'harga' => $valS['harga_masuk'], 'sub_total' => ($valS['harga_masuk'] * $valS['jumlah_masuk']));
+                        $tmpSaldo[$a] = array('jumlah' => $valS['jumlah'], 'harga' => $val['harga_keluar'], 'sub_total' => ($val['harga_keluar'] * $valS['jumlah']));
                     }
                     $a++;
                     $index++;
@@ -182,7 +182,6 @@ class KartuStok extends \yii\db\ActiveRecord {
             }
 
             $body[$val['produk_id']] = $tmpSaldo;
-            $i++;
             $a++;
             $produk_id = $val['produk_id'];
         }

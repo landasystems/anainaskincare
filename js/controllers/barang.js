@@ -1,4 +1,4 @@
-app.controller('barangCtrl', function ($scope, Data, toaster, FileUploader, $stateParams) {
+app.controller('barangCtrl', function($scope, Data, toaster, FileUploader, $stateParams) {
     var kode_unik = new Date().getUTCMilliseconds() + "" + (Math.floor(Math.random() * (20 - 10 + 1)) + 10);
     var uploader = $scope.uploader = new FileUploader({
         url: 'img/upload.php?folder=barang&kode=' + kode_unik,
@@ -8,7 +8,7 @@ app.controller('barangCtrl', function ($scope, Data, toaster, FileUploader, $sta
 
     uploader.filters.push({
         name: 'imageFilter',
-        fn: function (item) {
+        fn: function(item) {
             var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
             return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
         }
@@ -49,7 +49,7 @@ app.controller('barangCtrl', function ($scope, Data, toaster, FileUploader, $sta
             param['filter'] = tableState.search.predicateObject;
         }
         paramRef = param;
-        Data.get('barang', param).then(function (data) {
+        Data.get('barang', param).then(function(data) {
             $scope.displayed = data.data;
             tableState.pagination.numberOfPages = Math.ceil(data.totalItems / limit);
         });
@@ -57,16 +57,16 @@ app.controller('barangCtrl', function ($scope, Data, toaster, FileUploader, $sta
         $scope.isLoading = false;
     };
 
-    $scope.excel = function () {
-        Data.get('barang', paramRef).then(function (data) {
+    $scope.excel = function() {
+        Data.get('barang', paramRef).then(function(data) {
             window.location = 'api/web/barang/excel';
         });
     }
 
-    Data.get('barang/kategori').then(function (data) {
+    Data.get('barang/kategori').then(function(data) {
         $scope.sKategori = data.kategori;
     });
-    Data.get('barang/satuan').then(function (data) {
+    Data.get('barang/satuan').then(function(data) {
         $scope.sSatuan = data.satuan;
     });
 
@@ -89,7 +89,7 @@ app.controller('barangCtrl', function ($scope, Data, toaster, FileUploader, $sta
         });
 
     };
-    $scope.update = function (form) {
+    $scope.update = function(form) {
         $scope.is_create = false;
         $scope.is_edit = true;
         $scope.is_view = false;
@@ -97,7 +97,7 @@ app.controller('barangCtrl', function ($scope, Data, toaster, FileUploader, $sta
         $scope.form = form;
         $scope.stok(form.id);
     };
-    $scope.view = function (form) {
+    $scope.view = function(form) {
         $scope.is_create = false;
         $scope.is_edit = true;
         $scope.is_view = true;
@@ -140,25 +140,25 @@ app.controller('barangCtrl', function ($scope, Data, toaster, FileUploader, $sta
         $scope.is_create = false;
     };
 
-    $scope.trash = function (row) {
+    $scope.trash = function(row) {
         if (confirm("Apa anda yakin akan MENGHAPUS item ini ?")) {
             row.is_deleted = 1;
-            Data.post('barang/update/' + row.id, row).then(function (result) {
+            Data.post('barang/update/' + row.id, row).then(function(result) {
                 $scope.displayed.splice($scope.displayed.indexOf(row), 1);
             });
         }
     };
-    $scope.restore = function (row) {
+    $scope.restore = function(row) {
         if (confirm("Apa anda yakin akan MERESTORE item ini ?")) {
             row.is_deleted = 0;
-            Data.post('barang/update/' + row.id, row).then(function (result) {
+            Data.post('barang/update/' + row.id, row).then(function(result) {
                 $scope.displayed.splice($scope.displayed.indexOf(row), 1);
             });
         }
     };
     $scope.delete = function (row) {
         if (confirm("Apa anda yakin akan MENGHAPUS PERMANENT item ini ?")) {
-            Data.delete('barang/delete/' + row.id).then(function (result) {
+            Data.delete('barang/delete/' + row.id).then(function(result) {
                 $scope.displayed.splice($scope.displayed.indexOf(row), 1);
             });
         }

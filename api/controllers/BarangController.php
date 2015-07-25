@@ -27,7 +27,7 @@ class BarangController extends Controller {
                     'kategori' => ['get'],
                     'satuan' => ['get'],
                     'cari' => ['get'],
-                    'carilagi' => ['get'],
+                    'carilagi' => ['post'],
                     'getstok' => ['get'],
                 ],
             ]
@@ -61,10 +61,10 @@ class BarangController extends Controller {
         //init variable
         $params = $_REQUEST;
         $filter = array();
-        $sort = "m_produk.nama ASC";
+        $sort = "mp.kode ASC";
         $offset = 0;
         $limit = 10;
-        //        Yii::error($params);
+
         //limit & offset pagination
         if (isset($params['limit']))
             $limit = $params['limit'];
@@ -84,21 +84,23 @@ class BarangController extends Controller {
 
         //create query
         $query = new Query;
-        $query->offset($offset)
+        $query->from('m_produk as mp')
+                ->join('Left Join', 'm_satuan as ms', 'mp.satuan_id = ms.id')
+                ->join('Left Join', 'm_kategori as mk', 'mk.id = mp.kategori_id')
+                ->select('mp.*, ms.nama as satuan, mk.nama as kategori')
+                ->offset($offset)
                 ->limit($limit)
-//                ->select('m_user.id as id', 'm_roles.nama as roles')
-                ->from(['m_produk', 'm_kategori', 'm_satuan'])
-                ->where('m_produk.kategori_id = m_kategori.id and m_produk.satuan_id = m_satuan.id')
-                ->orderBy($sort)
-                ->select("m_produk.id, m_produk.nama as nama, m_kategori.nama as kategori, m_satuan.nama as satuan, m_produk.is_deleted as is_deleted,
-                    m_produk.kode, m_produk.type, m_produk.kategori_id, m_produk.satuan_id, m_produk.keterangan,m_produk.harga_beli_terakhir,m_produk.harga_jual,
-                    m_produk.diskon, m_produk.minimum_stok, m_produk.fee_terapis, m_produk.fee_dokter, m_produk.foto");
+                ->orderBy($sort);
 
         //filter
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
-                $query->andFilterWhere(['like', 'm_produk.' . $key, $val]);
+                if ($key == 'is_deleted') {
+                    $query->andFilterWhere(['like', 'mp.' . $key, $val]);
+                } else {
+                    $query->andFilterWhere(['like', $key, $val]);
+                }
             }
         }
 
@@ -107,7 +109,8 @@ class BarangController extends Controller {
 
         $command = $query->createCommand();
         $models = $command->queryAll();
-        $totalItems = $query->count();
+//        $totalItems = $query->count();
+        $totalItems = 0;
 
         $this->setHeader(200);
 
@@ -120,22 +123,14 @@ class BarangController extends Controller {
         $n = 1;
         $total = 0;
         foreach ($cabang as $vals) {
-
-            //mencari stok 
-            $ks = new KartuStok();
-            $stok = $ks->saldo('today', $vals->id, '', '', $id);
-            $s = 0;
-            if (isset($stok[$id])) {
-                foreach ($stok[$id] as $val) {
-                    $s += $val['jumlah'];
-                }
-            }
+            $st = new Barang;
+            $stok = $st->stok($id, $vals->id);
 
             $listStok[$n]['no'] = $n;
             $listStok[$n]['id'] = isset($vals->id) ? $vals->id : '-';
             $listStok[$n]['nama'] = isset($vals->nama) ? $vals->nama : '-';
-            $listStok[$n]['stok'] = $s;
-            $total += $s;
+            $listStok[$n]['stok'] = $stok;
+            $total += $stok;
             $n++;
         }
 
@@ -157,10 +152,10 @@ class BarangController extends Controller {
 
         if ($model->save()) {
 
-            if ($model->type == 'Barang') {
+            if ($model->type == 'Barang' and isset($params['stok'])) {
                 $sMasuk = $params['stok'];
                 foreach ($sMasuk as $vMasuk) {
-                    if ($vMasuk['iStok'] > 0) {
+                    if (isset($vMasuk['iStok']) and $vMasuk['iStok'] > 0) {
                         $kartu = new \app\models\KartuStok();
                         $kartu->kode = $model->kode;
                         $kartu->produk_id = $model->id;
@@ -175,10 +170,10 @@ class BarangController extends Controller {
             }
 
             $this->setHeader(200);
-//            echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
+            echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
             $this->setHeader(400);
-//            echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $model->errors), JSON_PRETTY_PRINT);
+            echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $model->errors), JSON_PRETTY_PRINT);
         }
     }
 
@@ -214,7 +209,7 @@ class BarangController extends Controller {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
         $ft = $model->foto;
-        $model->attributes = $params;
+        $model->attributes = isset($params['form']) ? $params['form'] : $params;
         if (empty($model->foto)) {
             $model->foto = $ft;
         }
@@ -267,16 +262,36 @@ class BarangController extends Controller {
     }
 
     public function actionCarilagi() {
-        $params = $_REQUEST;
+        $params = json_decode(file_get_contents("php://input"), true);
         $query = new Query;
         $query->from('m_produk')
                 ->select("m_produk.*")
                 ->where(['is_deleted' => 0, 'type' => 'Barang'])
                 ->andWhere(['like', 'nama', $params['nama']]);
+
         $command = $query->createCommand();
         $models = $command->queryAll();
+        if (!isset($params['cabang'])) {
+            $data = $models;
+        } else {
+            $data = array();
+            $n = 0;
+            foreach ($models as $key => $val) {
+                $st = new Barang;
+                $stok = $st->stok($val['id'], $params['cabang']);
+
+                $data[$key] = $val;
+                $data[$n]['stok'] = $stok;
+
+                $n++;
+            }
+        }
+
+
+
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'data' => $models));
+//        echo 
+        echo json_encode(array('status' => 1, 'data' => $data));
     }
 
     private function setHeader($status) {
