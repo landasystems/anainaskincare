@@ -40,8 +40,8 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
     Data.get('penjualan/customer').then(function(data) {
         $scope.sCustomer = data.customer;
     });
-    Data.get('penjualan/cabang').then(function(data) {
-        $scope.sCabang = data.cabang;
+    Data.get('site/session').then(function (data) {
+        $scope.sCabang = data.data.user.cabang;
     });
     Data.post('penjualan/dokter').then(function(data) {
         $scope.list_dokter = data.dokter;

@@ -76,8 +76,8 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
     }
 
 
-    Data.get('stokkeluar/cabang').then(function (data) {
-        $scope.listcabang = data.data;
+    Data.get('site/session').then(function (data) {
+        $scope.listcabang = data.data.user.cabang;
     });
 
     Data.get('stokkeluar/product').then(function (data) {

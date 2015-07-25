@@ -106,8 +106,8 @@ app.controller('r_penjualanCtrl', function ($scope, Data, toaster) {
     Data.get('returpenjualan/customer').then(function (data) {
         $scope.sCustomer = data.customer;
     });
-    Data.get('returpenjualan/cabang').then(function (data) {
-        $scope.sCabang = data.cabang;
+    Data.get('site/session').then(function (data) {
+        $scope.sCabang = data.data.user.cabang;
     });
     Data.get('returpenjualan/kodepenjualan').then(function (data) {
         $scope.listkodepenjualan = data.listkode;

@@ -15,6 +15,20 @@ angular.module('app')
                     name: 'POS Anaina',
                     version: '1.1',
                 }
+                
+                //cek warna di session
+                Data.get('site/session').then(function (data) {
+                    if (typeof data.data.user != "undefined") {
+                        $scope.app.settings = data.data.user.settings;
+                    } else { //default warna jika tidak ada setingan
+                        $scope.app.settings = {
+                            themeID: 11,
+                            navbarHeaderColor: 'bg-primary',
+                            navbarCollapseColor: 'bg-primary',
+                            asideColor: 'bg-dark',
+                        };
+                    }
+                });
 
                 function isSmartDevice($window)
                 {

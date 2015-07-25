@@ -87,8 +87,8 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
     }
 
 
-    Data.get('stokmasuk/cabang').then(function (data) {
-        $scope.listcabang = data.data;
+    Data.get('site/session').then(function (data) {
+        $scope.listcabang = data.data.user.cabang;
     });
 
     Data.get('stokmasuk/product').then(function (data) {
