@@ -3,6 +3,7 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
 
     //init data;
     var tableStateRef;
+    $scope.form = {};
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
@@ -21,8 +22,8 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
     Data.get('bayarpiutang/customer').then(function(data) {
         $scope.sCustomer = data.customer;
     });
-    Data.get('bayarpiutang/cabang').then(function(data) {
-        $scope.sCabang = data.cabang;
+    Data.get('site/session').then(function (data) {
+        $scope.sCabang = data.data.user.cabang;
     });
     Data.get('bayarpiutang/kode').then(function(data) {
         $scope.list_kode = data.kode;

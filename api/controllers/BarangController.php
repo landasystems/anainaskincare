@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Barang;
+use app\models\KartuStok;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -26,7 +27,7 @@ class BarangController extends Controller {
                     'kategori' => ['get'],
                     'satuan' => ['get'],
                     'cari' => ['get'],
-                    'carilagi' => ['get'],
+                    'carilagi' => ['post'],
                     'getstok' => ['get'],
                 ],
             ]
@@ -60,10 +61,10 @@ class BarangController extends Controller {
         //init variable
         $params = $_REQUEST;
         $filter = array();
-        $sort = "m_produk.nama ASC";
+        $sort = "mp.kode ASC";
         $offset = 0;
         $limit = 10;
-        //        Yii::error($params);
+
         //limit & offset pagination
         if (isset($params['limit']))
             $limit = $params['limit'];
@@ -83,21 +84,23 @@ class BarangController extends Controller {
 
         //create query
         $query = new Query;
-        $query->offset($offset)
+        $query->from('m_produk as mp')
+                ->join('Left Join', 'm_satuan as ms', 'mp.satuan_id = ms.id')
+                ->join('Left Join', 'm_kategori as mk', 'mk.id = mp.kategori_id')
+                ->select('mp.*, ms.nama as satuan, mk.nama as kategori')
+                ->offset($offset)
                 ->limit($limit)
-//                ->select('m_user.id as id', 'm_roles.nama as roles')
-                ->from(['m_produk', 'm_kategori', 'm_satuan'])
-                ->where('m_produk.kategori_id = m_kategori.id and m_produk.satuan_id = m_satuan.id')
-                ->orderBy($sort)
-                ->select("m_produk.id, m_produk.nama as nama, m_kategori.nama as kategori, m_satuan.nama as satuan, m_produk.is_deleted as is_deleted,
-                    m_produk.kode, m_produk.type, m_produk.kategori_id, m_produk.satuan_id, m_produk.keterangan,m_produk.harga_beli_terakhir,m_produk.harga_jual,
-                    m_produk.diskon, m_produk.minimum_stok, m_produk.fee_terapis, m_produk.fee_dokter, m_produk.foto");
+                ->orderBy($sort);
 
         //filter
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
-                $query->andFilterWhere(['like', 'm_produk.' . $key, $val]);
+                if ($key == 'is_deleted') {
+                    $query->andFilterWhere(['like', 'mp.' . $key, $val]);
+                } else {
+                    $query->andFilterWhere(['like', $key, $val]);
+                }
             }
         }
 
@@ -106,7 +109,8 @@ class BarangController extends Controller {
 
         $command = $query->createCommand();
         $models = $command->queryAll();
-        $totalItems = $query->count();
+//        $totalItems = $query->count();
+        $totalItems = 0;
 
         $this->setHeader(200);
 
@@ -114,8 +118,23 @@ class BarangController extends Controller {
     }
 
     public function actionGetstok($id) {
-        $model = $this->findModel($id);
-        echo json_encode(array('stok' => $model->stok));
+        $listStok = array();
+        $cabang = \app\models\Cabang::find()->where(['is_deleted' => 0])->all();
+        $n = 1;
+        $total = 0;
+        foreach ($cabang as $vals) {
+            $st = new Barang;
+            $stok = $st->stok($id, $vals->id);
+
+            $listStok[$n]['no'] = $n;
+            $listStok[$n]['id'] = isset($vals->id) ? $vals->id : '-';
+            $listStok[$n]['nama'] = isset($vals->nama) ? $vals->nama : '-';
+            $listStok[$n]['stok'] = $stok;
+            $total += $stok;
+            $n++;
+        }
+
+        echo json_encode(array('status' => 1, 'data' => $listStok, 'total' => $total), JSON_PRETTY_PRINT);
     }
 
     public function actionView($id) {
@@ -129,19 +148,26 @@ class BarangController extends Controller {
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = new Barang();
-        $model->attributes = $params;
+        $model->attributes = $params['form'];
 
         if ($model->save()) {
 
-            $kartu = new \app\models\KartuStok();
-            $kartu->kode = $model->kode;
-            $kartu->produk_id = $model->id;
-            $kartu->cabang_id = '';
-            $kartu->keterangan = 'Stok Awal';
-            $kartu->jumlah_masuk = $params['stok'];
-            $kartu->harga_masuk = $model->harga_beli_terakhir;
-            $kartu->created_at = date("Y-m-d H:i:s");
-            $kartu->save();
+            if ($model->type == 'Barang' and isset($params['stok'])) {
+                $sMasuk = $params['stok'];
+                foreach ($sMasuk as $vMasuk) {
+                    if (isset($vMasuk['iStok']) and $vMasuk['iStok'] > 0) {
+                        $kartu = new \app\models\KartuStok();
+                        $kartu->kode = $model->kode;
+                        $kartu->produk_id = $model->id;
+                        $kartu->cabang_id = $vMasuk['id'];
+                        $kartu->keterangan = 'Stok Awal';
+                        $kartu->jumlah_masuk = $vMasuk['iStok'];
+                        $kartu->harga_masuk = $model->harga_beli_terakhir;
+                        $kartu->created_at = date("Y-m-d H:i:s");
+                        $kartu->save();
+                    }
+                }
+            }
 
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
@@ -182,7 +208,11 @@ class BarangController extends Controller {
     public function actionUpdate($id) {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
-        $model->attributes = $params;
+        $ft = $model->foto;
+        $model->attributes = isset($params['form']) ? $params['form'] : $params;
+        if (empty($model->foto)) {
+            $model->foto = $ft;
+        }
 
         if ($model->save()) {
             $this->setHeader(200);
@@ -222,7 +252,7 @@ class BarangController extends Controller {
         $query = new Query;
         $query->from('m_produk')
                 ->select("m_produk.*")
-                ->where(['is_deleted'=>0])
+                ->where(['is_deleted' => 0])
                 ->andWhere(['like', 'nama', $params['nama']])
                 ->orWhere(['like', 'kode', $params['nama']]);
         $command = $query->createCommand();
@@ -230,17 +260,38 @@ class BarangController extends Controller {
         $this->setHeader(200);
         echo json_encode(array('status' => 1, 'data' => $models));
     }
+
     public function actionCarilagi() {
-        $params = $_REQUEST;
+        $params = json_decode(file_get_contents("php://input"), true);
         $query = new Query;
         $query->from('m_produk')
                 ->select("m_produk.*")
-                ->where(['is_deleted'=>0,'type'=>'Barang'])
+                ->where(['is_deleted' => 0, 'type' => 'Barang'])
                 ->andWhere(['like', 'nama', $params['nama']]);
+
         $command = $query->createCommand();
         $models = $command->queryAll();
+        if (!isset($params['cabang'])) {
+            $data = $models;
+        } else {
+            $data = array();
+            $n = 0;
+            foreach ($models as $key => $val) {
+                $st = new Barang;
+                $stok = $st->stok($val['id'], $params['cabang']);
+
+                $data[$key] = $val;
+                $data[$n]['stok'] = $stok;
+
+                $n++;
+            }
+        }
+
+
+
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'data' => $models));
+//        echo 
+        echo json_encode(array('status' => 1, 'data' => $data));
     }
 
     private function setHeader($status) {

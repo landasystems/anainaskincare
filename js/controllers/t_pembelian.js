@@ -1,6 +1,7 @@
 app.controller('pembelianCtrl', function ($scope, Data, toaster) {
     //init data
     var tableStateRef;
+    $scope.form = {};
     $scope.displayed = [];
     $scope.pembeliandet = [
         {

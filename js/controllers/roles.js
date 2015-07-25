@@ -2,9 +2,16 @@ app.controller('rolesCtrl', function ($scope, Data, toaster, $state) {
     //init data
     var tableStateRef;
     var paramRef;
+    $scope.form = {};
+    $scope.form = {};
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
+
+    $scope.listcabang = [];
+    Data.get('cabang/listcabang').then(function (data) {
+        $scope.listcabang = data.data;
+    });
 
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
@@ -126,7 +133,7 @@ app.controller('rolesCtrl', function ($scope, Data, toaster, $state) {
             "laporan_bonuskaryawan": false,
             "laporan_labarugi": false,
         }
-        
+
         angular.forEach(akses, function ($value, $key) {
             if ($key.indexOf(module) >= 0)
                 $scope.form.akses[$key] = valueCheck;

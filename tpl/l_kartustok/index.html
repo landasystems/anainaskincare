@@ -81,10 +81,10 @@
                                         <th>Jumlah</th>
                                     </tr>
                                 </thead>
-                                <tbody ng-repeat="list in list_detail" ng-if="list.total.saldo.harga > 0">
+                                <tbody ng-repeat="list in list_detail">
                                     <tr>
-                                        <td colspan="9"><b>{{list.title.produk}}</b></td>
-                                        <td colspan="3" align="right"><b>{{list.title.kategori}}</b></td>
+                                        <td colspan="9" style="border: none"><b>{{list.title.produk}}</b></td>
+                                        <td colspan="3" align="right" style="border: none"><b>{{list.title.kategori}}</b></td>
                                     </tr>
                                     <tr ng-if="list.saldo_awal.jumlah !== 0">
                                         <td style="border: none">{{laporan.tanggal_saldo| date}}</td>
@@ -146,7 +146,7 @@
                                     </tr>
                                 </tbody>
                                 <tfoot>
-                                    <tr>
+                                    <tr style="border: 1px solid #000">
                                         <td colspan="9" align="right"><b>Total Seluruh Stok</b></td>
                                         <td><b>{{laporan.grandJml}}</b></td>
                                         <td></td>

@@ -14,23 +14,12 @@ angular.module('app')
                 $scope.app = {
                     name: 'POS Anaina',
                     version: '1.1',
-                    // for chart colors
-                    color: {
-                        primary: '#7266ba',
-                        info: '#23b7e5',
-                        success: '#27c24c',
-                        warning: '#fad733',
-                        danger: '#f05050',
-                        light: '#e8eff0',
-                        dark: '#3a3f51',
-                        black: '#1c2b36'
-                    },
                 }
                 
                 //cek warna di session
                 Data.get('site/session').then(function (data) {
-                    if (typeof data.data.settings != "undefined") {
-                        $scope.app.settings = data.data.settings;
+                    if (typeof data.data.user != "undefined") {
+                        $scope.app.settings = data.data.user.settings;
                     } else { //default warna jika tidak ada setingan
                         $scope.app.settings = {
                             themeID: 11,
@@ -49,6 +38,17 @@ angular.module('app')
                     return (/iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/).test(ua);
                 }
 
+                $scope.pencarian = function ($query) {
+                    if ($query.length >= 3) {
+                        Data.get('barang/cari', {nama: $query}).then(function (data) {
+                            $scope.results = data.data;
+                        });
+                    }
+                }
+                $scope.pencarianDet = function ($query) {
+                    $state.go('master.barang', {form: $query});
+                }
+
                 $scope.logout = function () {
                     Data.get('site/logout').then(function (results) {
                         $state.go('access.signin');
@@ -56,5 +56,6 @@ angular.module('app')
                 }
 
             }]);
+
 
         
