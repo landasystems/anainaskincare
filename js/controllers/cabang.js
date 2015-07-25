@@ -2,13 +2,10 @@ app.controller('cabangCtrl', function ($scope, Data, toaster) {
     //init data
     var tableStateRef;
     var paramRef;
+    $scope.form = {};
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
-
-//    Data.get('barang/satuan').then(function(data) {
-//        $scope.sSatuan = data.satuan;
-//    });
 
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
@@ -32,7 +29,7 @@ app.controller('cabangCtrl', function ($scope, Data, toaster) {
 
         $scope.isLoading = false;
     };
-    
+
     $scope.excel = function () {
         Data.get('cabang', paramRef).then(function (data) {
             window.location = 'api/web/cabang/excel';
@@ -70,7 +67,7 @@ app.controller('cabangCtrl', function ($scope, Data, toaster) {
         });
     };
     $scope.cancel = function () {
-        if (!$scope.is_view){ //hanya waktu edit cancel, di load table lagi
+        if (!$scope.is_view) { //hanya waktu edit cancel, di load table lagi
             $scope.callServer(tableStateRef);
         }
         $scope.is_edit = false;

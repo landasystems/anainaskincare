@@ -2,10 +2,10 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
     //init data
     var tableStateRef;
     var paramRef;
+    $scope.form = {};
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
-    $scope.form = {};
 
     $scope.cariProduk = function ($query) {
         if ($query.length >= 3) {

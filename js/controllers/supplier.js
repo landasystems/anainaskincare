@@ -2,6 +2,7 @@ app.controller('supplierCtrl', function ($scope, Data, toaster) {
     //init data
     var tableStateRef;
     var paramRef;
+    $scope.form = {};
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;

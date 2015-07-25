@@ -17,6 +17,7 @@ app.controller('barangCtrl', function ($scope, Data, toaster, FileUploader, $sta
     //init data;
     var tableStateRef;
     var paramRef;
+    $scope.form = {};
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
