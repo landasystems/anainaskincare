@@ -148,7 +148,7 @@ class KartuStok extends \yii\db\ActiveRecord {
                 $tmp[0]['jumlah'] = 0;
                 $tmp[0]['harga'] = 0;
                 $a = 0;
-                $tmpSaldo[$a] = array('jumlah' => '', 'harga' => '', 'sub_total' => '');
+                $tmpSaldo = array('jumlah' => '', 'harga' => '', 'sub_total' => '');
             }
 
             if ($val['jumlah_masuk'] > 0) {
@@ -170,9 +170,7 @@ class KartuStok extends \yii\db\ActiveRecord {
                             $boolStatus = false;
                             $tmpSaldo[$a] = array('jumlah' => $valS['jumlah'], 'harga' => $val['harga_keluar'], 'sub_total' => ($val['harga_keluar'] * $valS['jumlah']));
                         } else {
-//                            $valS['jumlah'] -= $tempQty;
                             $tempQty -= $valS['jumlah'];
-//                            unset($tmp[$index]);
                             unset($tmp[$index]);
                         }
                     } else {
