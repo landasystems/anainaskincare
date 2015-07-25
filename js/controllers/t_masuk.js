@@ -2,10 +2,10 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
     //init data
     var tableStateRef;
     var paramRef;
+    $scope.form = {};
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
-    $scope.form = {};
 
     $scope.cariProduk = function ($query) {
         if ($query.length >= 3) {
@@ -87,8 +87,8 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
     }
 
 
-    Data.get('stokmasuk/cabang').then(function (data) {
-        $scope.listcabang = data.data;
+    Data.get('site/session').then(function (data) {
+        $scope.listcabang = data.data.user.cabang;
     });
 
     Data.get('stokmasuk/product').then(function (data) {

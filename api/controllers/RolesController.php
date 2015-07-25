@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Roles;
+use app\models\AksesCabang;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -116,8 +117,16 @@ class RolesController extends Controller {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = new Roles();
         $model->attributes = $params;
-
         if ($model->save()) {
+
+            //simpan akses cabang
+            foreach ($params['cabang'] as $val) {
+                $mAksesCabang = new AksesCabang();
+                $mAksesCabang->roles_id = $model->id;
+                $mAksesCabang->cabang_id = $val['id'];
+                $mAksesCabang->save();
+            }
+
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -132,6 +141,17 @@ class RolesController extends Controller {
         $model->attributes = $params;
 
         if ($model->save()) {
+            
+            //klo update, harus di hapus dulu, kemudian di insert
+            AksesCabang::deleteAll(['roles_id'=>$model->id]);
+            //simpan akses cabang
+            foreach ($params['cabang'] as $val) {
+                $mAksesCabang = new AksesCabang();
+                $mAksesCabang->roles_id = $model->id;
+                $mAksesCabang->cabang_id = $val['id'];
+                $mAksesCabang->save();
+            }
+            
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {

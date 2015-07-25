@@ -57,19 +57,19 @@ class StokkeluarController extends Controller {
         return true;
     }
 
-    public function actionCabang() {
-        $query = new Query;
-        $query->from('m_cabang')
-                ->select("*")
-                ->where("is_deleted = '0'");
-
-        $command = $query->createCommand();
-        $models = $command->queryAll();
-
-        $this->setHeader(200);
-
-        echo json_encode(array('status' => 1, 'data' => $models));
-    }
+//    public function actionCabang() {
+//        $query = new Query;
+//        $query->from('m_cabang')
+//                ->select("*")
+//                ->where("is_deleted = '0'");
+//
+//        $command = $query->createCommand();
+//        $models = $command->queryAll();
+//
+//        $this->setHeader(200);
+//
+//        echo json_encode(array('status' => 1, 'data' => $models));
+//    }
 
     public function actionProduct() {
         $query = new Query;

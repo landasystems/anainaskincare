@@ -5,8 +5,8 @@ app.controller('l_kartustokCtrl', function($scope, Data, toaster) {
     $scope.laporan = '';
 //    $scope.listpegawai = {};
 
-    Data.get('cabang/listcabang').then(function(data) {
-        $scope.listcabang = data.data;
+    Data.get('site/session').then(function (data) {
+        $scope.listcabang = data.data.user.cabang;
     });
 
     Data.get('kategori/listkategori').then(function(data) {

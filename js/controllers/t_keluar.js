@@ -2,6 +2,7 @@ app.controller('t_keluarCtrl', function($scope, Data, toaster) {
     //init data
     var tableStateRef;
     var paramRef;
+    $scope.form = {};
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
@@ -75,8 +76,8 @@ app.controller('t_keluarCtrl', function($scope, Data, toaster) {
     }
 
 
-    Data.get('stokkeluar/cabang').then(function(data) {
-        $scope.listcabang = data.data;
+    Data.get('site/session').then(function (data) {
+        $scope.listcabang = data.data.user.cabang;
     });
 
     Data.get('stokkeluar/product').then(function(data) {
@@ -137,7 +138,8 @@ app.controller('t_keluarCtrl', function($scope, Data, toaster) {
         $scope.is_view = false;
         $scope.formtitle = "Form Persediaan Keluar";
         $scope.form = {};
-        $scope.form.tanggal = moment().format('DD-MM-YYYY');
+//        $scope.form.tanggal = moment().format('DD-MM-YYYY');
+        $scope.form.tanggal = "aa";
     };
 
     $scope.update = function(id) {

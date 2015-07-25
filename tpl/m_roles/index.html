@@ -90,7 +90,16 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Akses Cabang</label>
                         <div class="col-sm-4">
-
+                            <ui-select multiple ng-model="form.cabang" theme="bootstrap">
+                                <ui-select-match placeholder="Pilih cabang yang boleh diakses...">{{$item.nama}}</ui-select-match>
+                                <ui-select-choices repeat="cabang in listcabang | filter: $select.search">
+                                    <div ng-bind-html="cabang.nama | highlight: $select.search"></div>
+                                    <small>
+                                        alamat: {{cabang.alamat}}
+                                        telephone: {{cabang.no_tlp}}
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
                         </div>
                     </div>
                     <div class="form-group">
@@ -100,7 +109,7 @@
                                     <div class="panel panel-info">
                                         <div class="panel-heading">
                                             <label class="i-checks">
-                                                <input type="checkbox" ng-disabled="is_view" ng-model='selectMaster' ng-click="checkAll('master',selectMaster)">
+                                                <input type="checkbox" ng-disabled="is_view" ng-model='selectMaster' ng-click="checkAll('master', selectMaster)">
                                                 <i></i>
                                                 Data Master
                                             </label>
@@ -182,7 +191,7 @@
                                     <div class="panel panel-info">
                                         <div class="panel-heading">
                                             <label class="i-checks">
-                                                <input type="checkbox" ng-disabled="is_view" ng-model='selectTransaksi' ng-click="checkAll('transaksi',selectTransaksi)">
+                                                <input type="checkbox" ng-disabled="is_view" ng-model='selectTransaksi' ng-click="checkAll('transaksi', selectTransaksi)">
                                                 <i></i>
                                                 Transaksi
                                             </label>
@@ -261,7 +270,7 @@
                                     <div class="panel panel-info">
                                         <div class="panel-heading">
                                             <label class="i-checks">
-                                                <input type="checkbox" ng-disabled="is_view" ng-model='selectLaporan' ng-click="checkAll('laporan',selectLaporan)">
+                                                <input type="checkbox" ng-disabled="is_view" ng-model='selectLaporan' ng-click="checkAll('laporan', selectLaporan)">
                                                 <i></i>
                                                 Laporan
                                             </label>
