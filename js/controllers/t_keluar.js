@@ -1,4 +1,4 @@
-app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
+app.controller('t_keluarCtrl', function($scope, Data, toaster) {
     //init data
     var tableStateRef;
     var paramRef;
@@ -6,14 +6,14 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
     $scope.is_edit = false;
     $scope.is_view = false;
 
-    $scope.open1 = function ($event) {
+    $scope.open1 = function($event) {
         $event.preventDefault();
         $event.stopPropagation();
         $scope.opened1 = true;
     };
-    $scope.cariProduk = function ($query) {
+    $scope.cariProduk = function($query, cabang) {
         if ($query.length >= 3) {
-            Data.get('barang/carilagi', {nama: $query}).then(function (data) {
+            Data.post('barang/carilagi', {nama: $query, cabang: cabang}).then(function(data) {
                 $scope.results = data.data;
             });
         }
@@ -29,10 +29,10 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
 
 
     //subtotal
-    $scope.subtotal = function () {
+    $scope.subtotal = function() {
         var total = 0;
         var sub_total = 0;
-        angular.forEach($scope.detskeluar, function (detail) {
+        angular.forEach($scope.detskeluar, function(detail) {
             var jml = (detail.jumlah) ? parseInt(detail.jumlah) : 0;
             var hrg = (detail.harga) ? parseInt(detail.harga) : 0;
             sub_total = (jml * hrg);
@@ -43,7 +43,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
     }
 
 
-    $scope.addDetail = function () {
+    $scope.addDetail = function() {
         var newDet = {
             stok_keluar_id: '',
             produk_id: '',
@@ -57,7 +57,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
 
 
 
-    $scope.removeRow = function (paramindex) {
+    $scope.removeRow = function(paramindex) {
         var comArr = eval($scope.detskeluar);
 
         if (comArr.length > 1) {
@@ -75,18 +75,18 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
     }
 
 
-    Data.get('stokkeluar/cabang').then(function (data) {
+    Data.get('stokkeluar/cabang').then(function(data) {
         $scope.listcabang = data.data;
     });
 
-    Data.get('stokkeluar/product').then(function (data) {
+    Data.get('stokkeluar/product').then(function(data) {
         $scope.list_produk = data.data;
     });
 
 //    $scope.code_cabang = null;
 
-    $scope.getkode = function (id) {
-        Data.get('stokkeluar/kode_cabang/' + id).then(function (data) {
+    $scope.getkode = function(id) {
+        Data.get('stokkeluar/kode_cabang/' + id).then(function(data) {
             $scope.form.kode = data.kode;
             $scope.form.cabang_id = id;
 
@@ -108,7 +108,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
             param['filter'] = tableState.search.predicateObject;
         }
         paramRef = param;
-        Data.get('stokkeluar/', param).then(function (data) {
+        Data.get('stokkeluar/', param).then(function(data) {
             $scope.displayed = data.data;
             tableState.pagination.numberOfPages = Math.ceil(data.totalItems / limit);
         });
@@ -116,13 +116,23 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         $scope.isLoading = false;
     };
 
-    $scope.excel = function () {
-        Data.get('stokkeluar', paramRef).then(function (data) {
+    $scope.tmb = 0;
+    $scope.cek = function(stok, jml) {
+        if (jml > stok) {
+            toaster.pop('error', "Terjadi Kesalahan", 'asdasdasd');
+            $scope.tmb = 0;
+        } else {
+            $scope.tmb = 1;
+        }
+    }
+
+    $scope.excel = function() {
+        Data.get('stokkeluar', paramRef).then(function(data) {
             window.location = 'api/web/stokkeluar/excel';
         });
     }
 
-    $scope.create = function (form, detail) {
+    $scope.create = function(form, detail) {
         $scope.is_edit = true;
         $scope.is_view = false;
         $scope.formtitle = "Form Persediaan Keluar";
@@ -130,8 +140,8 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         $scope.form.tanggal = moment().format('DD-MM-YYYY');
     };
 
-    $scope.update = function (id) {
-        Data.get('stokkeluar/view/' + id).then(function (data) {
+    $scope.update = function(id) {
+        Data.get('stokkeluar/view/' + id).then(function(data) {
             $scope.is_edit = true;
             $scope.is_view = false;
             $scope.form = data.data;
@@ -140,8 +150,8 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
 
         })
     };
-    $scope.view = function (id) {
-        Data.get('stokkeluar/view/' + id).then(function (data) {
+    $scope.view = function(id) {
+        Data.get('stokkeluar/view/' + id).then(function(data) {
             $scope.is_edit = true;
             $scope.is_view = true;
             $scope.form = data.data;
@@ -150,14 +160,14 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
 
         })
     };
-    $scope.save = function (form, detail) {
+    $scope.save = function(form, detail) {
         var data = {
             stokkeluar: form,
             detailskeluar: detail,
         };
 
         var url = (form.id > 0) ? 'stokkeluar/update/' + form.id : 'stokkeluar/create';
-        Data.post(url, data).then(function (result) {
+        Data.post(url, data).then(function(result) {
             if (result.status == 0) {
                 toaster.pop('error', "Terjadi Kesalahan", result.errors);
             } else {
@@ -167,7 +177,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
             }
         });
     };
-    $scope.cancel = function () {
+    $scope.cancel = function() {
         if (!$scope.is_view) { //hanya waktu edit cancel, di load table lagi
             $scope.callServer(tableStateRef);
         }
@@ -176,33 +186,33 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         $scope.detskeluar = [{}];
     };
 
-    $scope.trash = function (row) {
+    $scope.trash = function(row) {
         if (confirm("Apa anda yakin akan MENGHAPUS item ini ?")) {
             row.is_deleted = 1;
-            Data.post('stokkeluar/update/' + row.id, row).then(function (result) {
+            Data.post('stokkeluar/update/' + row.id, row).then(function(result) {
                 $scope.displayed.splice($scope.displayed.indexOf(row), 1);
             });
         }
     };
-    $scope.restore = function (row) {
+    $scope.restore = function(row) {
         if (confirm("Apa anda yakin akan MERESTORE item ini ?")) {
             row.is_deleted = 0;
-            Data.post('stokkeluar/update/' + row.id, row).then(function (result) {
+            Data.post('stokkeluar/update/' + row.id, row).then(function(result) {
                 $scope.displayed.splice($scope.displayed.indexOf(row), 1);
             });
         }
     };
-    $scope.delete = function (row) {
+    $scope.delete = function(row) {
         if (confirm("Apa anda yakin akan MENGHAPUS PERMANENT item ini ?")) {
-            Data.delete('stokkeluar/delete/' + row.id).then(function (result) {
+            Data.delete('stokkeluar/delete/' + row.id).then(function(result) {
                 $scope.displayed.splice($scope.displayed.indexOf(row), 1);
             });
         }
     };
 
 
-    $scope.selected = function (id) {
-        Data.get('stokkeluar/view/' + id).then(function (data) {
+    $scope.selected = function(id) {
+        Data.get('stokkeluar/view/' + id).then(function(data) {
             $scope.form = data.data;
             $scope.detskeluar = data.detail;
 

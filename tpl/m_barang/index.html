@@ -49,8 +49,9 @@
                             <th st-sort="type">Type</th>
                             <th st-sort="kategori">Kategori</th>
                             <th st-sort="satuan">Satuan</th>
-                            <th st-sort="harga_beli_terakhir">Hrga Beli</th>
+                            <th st-sort="harga_beli_terakhir">Harga Beli</th>
                             <th st-sort="harga_jual">Harga Jual</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody ng-show="!isLoading">
@@ -74,7 +75,7 @@
                     </tbody>
                     <tbody ng-show="isLoading">
                         <tr>
-                            <td colspan="4" class="text-center">Loading ... </td>
+                            <td colspan="8" class="text-center">Loading ... </td>
                         </tr>
                     </tbody>
                     <tfoot>
@@ -117,8 +118,8 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Type</label>
                                     <div class="col-sm-10">
-                                        <label class="btn btn-default" ng-model="form.type" ng-disabled="is_view" btn-radio="'Jasa'" required>Jasa</label>
-                                        <label class="btn btn-default" ng-model="form.type" ng-disabled="is_view" btn-radio="'Barang'" required>Barang</label>
+                                        <label class="btn btn-default" ng-model="form.type" btn-radio="'Jasa'" required>Jasa</label>
+                                        <label class="btn btn-default" ng-model="form.type" btn-radio="'Barang'" required>Barang</label>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -130,10 +131,10 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" ng-show="form.type == 'Barang'">
                                     <label class="col-sm-2 control-label">Satuan</label>
                                     <div class="col-sm-10">
-                                        <select class="form-control" ng-model="form.satuan_id" ng-disabled="is_view" required>
+                                        <select class="form-control" ng-model="form.satuan_id" ng-disabled="is_view">
                                             <option value="">-- Satuan --</option>
                                             <option ng-repeat="jenis in sSatuan" value="{{jenis.id}}">{{jenis.nama}}</option>
                                         </select>
@@ -147,7 +148,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-12">
-                                <div class="form-group">
+                                <div class="form-group" ng-show="form.type == 'Barang'">
                                     <label class="col-sm-5 control-label">Harga Beli Terakhir</label>
                                     <div class="col-sm-5">
                                         <div class="input-group">

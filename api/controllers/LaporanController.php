@@ -265,13 +265,15 @@ class LaporanController extends Controller {
         foreach ($produk as $pro) {
             if (!empty($saldoAwal[$pro->id])) {
                 foreach ($saldoAwal[$pro->id] as $sAwal) {
-                    $tmpSaldo['jumlah'][$a] = (int)$sAwal['jumlah'];
-                    $tmpSaldo['harga'][$a] = (int)$sAwal['harga'];
-                    $tmpSaldo['sub_total'][$a] = (int)$sAwal['sub_total'];
+                    if (isset($sAwal['jumlah'])) {
+                        $tmpSaldo['jumlah'][$a] = (int) isset($sAwal['jumlah']) ? $sAwal['jumlah'] : 0;
+                        $tmpSaldo['harga'][$a] = (int) isset($sAwal['harga']) ? $sAwal['harga'] : 0;
+                        $tmpSaldo['sub_total'][$a] = (int) $tmpSaldo['jumlah'][$a] * $tmpSaldo['harga'][$a];
 
-                    $tmp[$a]['jumlah'] = $sAwal['jumlah'];
-                    $tmp[$a]['harga'] = $sAwal['harga'];
-                    $a++;
+                        $tmp[$a]['jumlah'] = $tmpSaldo['jumlah'][$a];
+                        $tmp[$a]['harga'] = $tmpSaldo['harga'][$a];
+                        $a++;
+                    }
                 }
             } else {
                 $tmpSaldo['jumlah'][$a] = 0;
@@ -364,11 +366,11 @@ class LaporanController extends Controller {
                                 $tmpKeluar['harga'][$a] = $val['harga_keluar'];
                                 $tmpKeluar['sub_total'][$a] = $valS['jumlah'] * $tmpKeluar['harga'][$a];
 
-                                $valS['jumlah'] -= $tempQty;
-
-                                $tmpSaldo['jumlah'][$a] = $valS['jumlah']; //$valS['jumlah'];
-                                $tmpSaldo['harga'][$a] = $val['harga_keluar'];
-                                $tmpSaldo['sub_total'][$a] = $valS['jumlah'] * $tmpKeluar['harga'][$a];
+//                                $valS['jumlah'] -= $tempQty;
+                                $tempQty -= $valS['jumlah'];
+//                                $tmpSaldo['jumlah'][$a] = $valS['jumlah']; //$valS['jumlah'];
+//                                $tmpSaldo['harga'][$a] = $val['harga_keluar'];
+//                                $tmpSaldo['sub_total'][$a] = $valS['jumlah'] * $tmpKeluar['harga'][$a];
                                 unset($tmp[$index]);
                             }
                         } else {
