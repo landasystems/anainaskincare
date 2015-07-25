@@ -205,6 +205,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         $scope.is_view = false;
         $scope.formtitle = "Form Tambah Data";
         $scope.form = {};
+        $scope.form.credit = "0";
         $scope.retrive = {};
         $scope.detPenjualan = [
             {
