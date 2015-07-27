@@ -138,7 +138,7 @@ app.controller('t_keluarCtrl', function($scope, Data, toaster) {
         $scope.is_view = false;
         $scope.formtitle = "Form Persediaan Keluar";
         $scope.form = {};
-        $scope.form.tanggal = moment().format('DD-MM-YYYY');
+        $scope.form.tanggal = new Date();
 //        $scope.form.tanggal = "aa";
     };
 
