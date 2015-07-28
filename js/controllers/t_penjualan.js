@@ -214,7 +214,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
                 jumlah: '',
                 diskon: '',
             }];
-        $scope.form.tanggal = moment().format('DD-MM-YYYY');
+        $scope.form.tanggal = new Date();
 
     };
 

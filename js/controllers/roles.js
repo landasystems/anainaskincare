@@ -3,7 +3,6 @@ app.controller('rolesCtrl', function ($scope, Data, toaster, $state) {
     var tableStateRef;
     var paramRef;
     $scope.form = {};
-    $scope.form = {};
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
@@ -56,6 +55,9 @@ app.controller('rolesCtrl', function ($scope, Data, toaster, $state) {
         $scope.formtitle = "Edit Data : " + form.nama;
         $scope.form = form;
         $scope.form.akses = JSON.parse($scope.form.akses);
+        Data.get('cabang/akses/' + form.id).then(function (data) {
+           $scope.form.cabang = data.data;
+        });
     };
     $scope.view = function (form) {
         $scope.is_edit = true;
@@ -63,6 +65,9 @@ app.controller('rolesCtrl', function ($scope, Data, toaster, $state) {
         $scope.formtitle = "Lihat Data : " + form.nama;
         $scope.form = form;
         $scope.form.akses = JSON.parse($scope.form.akses);
+        Data.get('cabang/akses/' + form.id).then(function (data) {
+           $scope.form.cabang = data.data;
+        });
     };
     $scope.save = function (form) {
         var url = (form.id > 0) ? 'roles/update/' + form.id : 'roles/create';
