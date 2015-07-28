@@ -146,8 +146,8 @@ class KartuStok extends \yii\db\ActiveRecord {
         foreach ($kartu as $val) {
             if ($produk_id != $val['produk_id']) {
                 $a = 0;
-                $tmp[0] = array('jumlah' => 0, 'harga' => 0);
-                $tmpSaldo[0] = array('jumlah' => 0, 'harga' => 0, 'sub_total' => 0);
+                unset($tmpSaldo);
+                unset($tmp);
             }
 
             if ($val['jumlah_masuk'] > 0) {
@@ -155,25 +155,23 @@ class KartuStok extends \yii\db\ActiveRecord {
                 $tmp[$a] = array('jumlah' => $val['jumlah_masuk'], 'harga' => $val['harga_masuk']);
                 $harga = $val['harga_masuk'];
             } else {
-                unset($tmpSaldo);
-                $tmpSaldo[$a] = array('jumlah' => 0, 'harga' => 0, 'sub_total' => 0);
                 $tempQty = $val['jumlah_keluar'];
+                $keluar = $tempQty;
                 $boolStatus = true;
-                $index = 0;
-                $tmp[$a] = array('jumlah' => $val['jumlah_keluar'], 'harga' => 0);
                 foreach ($tmp as $valS) {
                     if ($boolStatus) {
+                        unset($tmpSaldo);
+                        unset($tmp);
                         if ($valS['jumlah'] > $tempQty) {
                             $valS['jumlah'] -= $tempQty;
-                            $tmp[$index]['jumlah'] = $valS['jumlah'];
                             $boolStatus = false;
                         } else {
-                            $valS['jumlah'] -= $tempQty;
-                            unset($tmp[$index]);
+                            $tempQty -= $valS['jumlah'];
                         }
                     }
                     $tmpSaldo[$a] = array('jumlah' => $valS['jumlah'], 'harga' => $harga, 'sub_total' => ($val['harga_keluar'] * $valS['jumlah']));
-                    $index++;
+                    $tmp[$a] = array('jumlah' => $tmpSaldo[$a]['jumlah'], 'harga' => $tmpSaldo[$a]['harga']);
+                    $a++;
                 }
             }
             $body[$val['produk_id']] = $tmpSaldo;

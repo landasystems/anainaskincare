@@ -199,13 +199,13 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         $scope.is_edit = true;
         $scope.is_view = false;
         $scope.is_create = true;
-        $scope.formtitle = "Edit Data Penjualan : " + row.id;
+        $scope.formtitle = "Edit Data Penjualan : " + row.kode;
         $scope.selected(row.id);
     };
     $scope.view = function(row) {
         $scope.is_edit = true;
         $scope.is_view = true;
-        $scope.formtitle = "Lihat Data Penjualan : " + row.id;
+        $scope.formtitle = "Lihat Data Penjualan : " + row.kode;
         $scope.selected(row.id);
     };
     $scope.save = function(form, detail) {

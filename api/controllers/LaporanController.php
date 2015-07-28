@@ -320,7 +320,6 @@ class LaporanController extends Controller {
 
             if ($pr != $val['produk_id']) {
                 $indeks = count(isset($body[$val['produk_id']]['saldo_awal']) ? $body[$val['produk_id']]['saldo_awal'] : 0) + 1;
-                unset($tmpSaldo);
                 //setting nilai awal temporari
                 unset($tmpSaldo);
                 unset($tmp);
@@ -351,27 +350,24 @@ class LaporanController extends Controller {
             }
 
             if ($val['jumlah_masuk'] > 0) {
-                if ($val['jumlah_masuk'] > 0) {
-                    //simpan saldo
-                    $tmpSaldo['jumlah'][$indeks] = $val['jumlah_masuk'];
-                    $tmpSaldo['harga'][$indeks] = $val['harga_masuk'];
-                    $tmpSaldo['sub_total'][$indeks] = $tmpSaldo['harga'][$indeks] * $tmpSaldo['jumlah'][$indeks];
+                //simpan saldo
+                $tmpSaldo['jumlah'][$indeks] = $val['jumlah_masuk'];
+                $tmpSaldo['harga'][$indeks] = $val['harga_masuk'];
+                $tmpSaldo['sub_total'][$indeks] = $tmpSaldo['harga'][$indeks] * $tmpSaldo['jumlah'][$indeks];
 
-                    //masukkan saldo ke temporari
-                    $tmp[$indeks]['jumlah'] = $tmpSaldo['jumlah'][$indeks];
-                    $tmp[$indeks]['harga'] = $tmpSaldo['harga'][$indeks];
+                //masukkan saldo ke temporari
+                $tmp[$indeks]['jumlah'] = $tmpSaldo['jumlah'][$indeks];
+                $tmp[$indeks]['harga'] = $tmpSaldo['harga'][$indeks];
 
-                    //simpan harga masuk
-                    $harga = $val['harga_masuk'];
+                //simpan harga masuk
+                $harga = $val['harga_masuk'];
 
-                    $tmpKeluar['jumlah'][$indeks] = 0;
-                    $tmpKeluar['harga'][$indeks] = 0;
-                    $tmpKeluar['sub_total'][$indeks] = 0;
-                }
+                $tmpKeluar['jumlah'][$indeks] = 0;
+                $tmpKeluar['harga'][$indeks] = 0;
+                $tmpKeluar['sub_total'][$indeks] = 0;
             } else {
                 $tempQty = $val['jumlah_keluar'];
                 $keluar = $tempQty;
-                \Yii::error($tempQty);
                 $boolStatus = true;
                 foreach ($tmp as $valS) {
                     if ($boolStatus) {
