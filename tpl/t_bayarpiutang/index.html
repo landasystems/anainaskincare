@@ -1,6 +1,6 @@
 <div ng-controller="bayarpiutangCtrl">
     <div class="bg-light lter b-b wrapper-md">
-        <h1 class="m-n font-thin h3">Data Master - Bayar Piutang</h1>
+        <h1 class="m-n font-thin h3">Bayar Piutang</h1>
     </div>
     <div class="wrapper-md" ng-show="!is_edit">
         <div class="panel panel-default" st-pipe="callServer" st-table="displayed">
@@ -8,7 +8,7 @@
                 <button class="btn btn-default btn-xs" ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed">Pencarian & Export Data</button>
                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                     <button type="button" class="btn btn-default fa fa-file-excel-o" ng-show="!isCollapsed">&nbsp;Export Excel</button>
-                    
+
                 </div> 
             </div>
             <div collapse="isCollapsed" class="panel-body collapse" style="height: 0px;">
@@ -33,7 +33,7 @@
                     </div>
                     <div class="form-group">
 
-                        
+
                         <label class="col-sm-2 control-label">Cabang</label>
                         <div class="col-sm-3">
                             <select class="form-control" ui-select2="" ng-model="form.cabang_id" ng-disabled="is_view" >
@@ -67,12 +67,11 @@
                     <tbody ng-show="!isLoading">
                         <tr ng-repeat="row in displayed" ng-dblclick="view(row)">
                             <td>{{row.kode}}</td>
-                            <td>{{row.tanggal | date:'dd MMM yyyy'}}</td>
+                            <td>{{row.tanggal| date:'dd MMM yyyy'}}</td>
                             <td>{{row.customer}}</td>
                             <td>{{row.klinik}}</td>
-
-                            <td>{{row.debet | currency}}</td>
-                            <td>{{row.credit | currency}}</td>
+                            <td>{{row.debet| currency}}</td>
+                            <td>{{row.credit| currency}}</td>
                             <td>{{row.status}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
@@ -84,14 +83,14 @@
                     </tbody>
                     <tbody ng-show="isLoading">
                         <tr>
-                            <td colspan="4" class="text-center">Loading ... </td>
+                            <td colspan="7" class="text-center">Loading ... </td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="2" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html">
-                            </td>
+                            <td colspan="7" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html"></td>
                         </tr>
+                    </tfoot>
                 </table>		
             </div>
         </div>
@@ -104,18 +103,18 @@
             <div class="col-sm-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <div class="font-bold"> {{formtitle}} Piutang</div>
+                        <div class="font-bold"> {{formtitle}}</div>
                     </div>
                     <div class="panel-body">
                         <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Kode</label>
                                 <div class="col-sm-9">
-                                     <input type="text" class="form-control" ng-model="form.kode" ng-disabled="true" >
-<!--                                    <select class="form-control" ui-select2="" ui-jq="chosen" ng-change="getpenjualan(form.penjualan_id)" ng-model="form.penjualan_id" ng-disabled="is_view" >
-                                        <option value="">-- Kode --</option>
-                                        <option ng-repeat="kode in list_kode" value="{{kode.id}}">{{kode.kode}} - {{kode.klinik}} - {{kode.customer}}</option>
-                                    </select>-->
+                                    <input type="text" class="form-control" ng-model="form.kode" ng-disabled="true" >
+                                    <!--                                    <select class="form-control" ui-select2="" ui-jq="chosen" ng-change="getpenjualan(form.penjualan_id)" ng-model="form.penjualan_id" ng-disabled="is_view" >
+                                                                            <option value="">-- Kode --</option>
+                                                                            <option ng-repeat="kode in list_kode" value="{{kode.id}}">{{kode.kode}} - {{kode.klinik}} - {{kode.customer}}</option>
+                                                                        </select>-->
                                 </div>
                             </div>
                             <div class="form-group">
@@ -138,8 +137,8 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-12">
-                           
-                             
+
+
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Klinik</label>
                                 <div class="col-sm-9">
@@ -152,15 +151,15 @@
                                     <textarea class="form-control" rows="4" ng-model="form.keterangan" ng-disabled="true" ></textarea>
                                 </div>
                             </div>
-                           
-                            
-                            
+
+
+
                         </div>
                         <div class="line line-dashed b-b line-lg pull-in"></div>
                         <h5 class="font-bold">- History Piutang-</h5> 
                         <table class="table table-bordered">
                             <thead>
-                      <tr>
+                                <tr>
                                     <td style="text-align: center;width:20%">Tanggal</td>
                                     <td style="text-align: center">Status</td>
                                     <td style="text-align: center;width:20%">Debet</td>
@@ -169,43 +168,43 @@
                                 </tr>
                             </thead>
                             <tr ng-repeat="detail in detPenjualan">
-                                    <td>
-                                        <div class="input-group">
-                                            <input required type="text" ng-disabled="is_view" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="detail.tanggal_transaksi" is-open="openedDet == $index" ng-change="setStatus()" ng-click="openDet($event, $index)"/>
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-calendar-o"></i>
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td style="text-align:center">
-                                        <span class="label bg-light" ng-show="$index > 0">{{detail.status}}</span>
-                                        <div ng-show="$index == 0" class="btn-group">
-                                            <label class="btn btn-sm btn-success" required ng-model="detail.status" ng-disabled="is_view" btn-radio="'lunas'"><i class="fa fa-check text-active"></i> Lunas</label>
-                                            <label class="btn btn-sm btn-info" required ng-model="detail.status" ng-disabled="is_view" btn-radio="'belum lunas'"><i class="fa fa-check text-active"></i> Belum Lunas</label>
-                                        </div>
-                                    </td>
-                                    <td style="text-align: center">
-                                        <div class="input-group m-b" style="margin:0px;">
-                                            <span class="input-group-addon">Rp</span>
-                                            <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-model="detail.debet" ng-disabled="is_view">
-                                        </div>
-                                    </td>
-                                    <td style="text-align: center">
-                                        <div class="input-group m-b" style="margin:0px;">
-                                            <span class="input-group-addon">Rp</span>
-                                            <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-model="detail.credit" ng-disabled="is_view">
-                                        </div>
-                                    </td>
-                                    <td style="text-align: center">
-                                        <button type="button" ng-disabled="is_view" class="btn btn-info fa fa-plus" ng-click="addrow()" ng-show="$index == 0"></button>
-                                        <button type="button" ng-disabled="is_view" class="btn btn-danger fa fa-minus-circle" ng-show="$index > 0" ng-click="removeRow($index)"></button>
-                                    </td>
-                                </tr>
+                                <td>
+                                    <div class="input-group">
+                                        <input required type="text" ng-disabled="is_view" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="detail.tanggal_transaksi" is-open="openedDet == $index" ng-change="setStatus()" ng-click="openDet($event, $index)"/>
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar-o"></i>
+                                        </span>
+                                    </div>
+                                </td>
+                                <td style="text-align:center">
+                                    <span class="label bg-light" ng-show="$index > 0">{{detail.status}}</span>
+                                    <div ng-show="$index == 0" class="btn-group">
+                                        <label class="btn btn-sm btn-success" required ng-model="detail.status" ng-disabled="is_view" btn-radio="'lunas'"><i class="fa fa-check text-active"></i> Lunas</label>
+                                        <label class="btn btn-sm btn-info" required ng-model="detail.status" ng-disabled="is_view" btn-radio="'belum lunas'"><i class="fa fa-check text-active"></i> Belum Lunas</label>
+                                    </div>
+                                </td>
+                                <td style="text-align: center">
+                                    <div class="input-group m-b" style="margin:0px;">
+                                        <span class="input-group-addon">Rp</span>
+                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-model="detail.debet" ng-disabled="is_view">
+                                    </div>
+                                </td>
+                                <td style="text-align: center">
+                                    <div class="input-group m-b" style="margin:0px;">
+                                        <span class="input-group-addon">Rp</span>
+                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-model="detail.credit" ng-disabled="is_view">
+                                    </div>
+                                </td>
+                                <td style="text-align: center">
+                                    <button type="button" ng-disabled="is_view" class="btn btn-info fa fa-plus" ng-click="addrow()" ng-show="$index == 0"></button>
+                                    <button type="button" ng-disabled="is_view" class="btn btn-danger fa fa-minus-circle" ng-show="$index > 0" ng-click="removeRow($index)"></button>
+                                </td>
+                            </tr>
                             <tr>
                                 <td colspan="3">Total</td>
-                                <td colspan="2">{{total | currency}}</td>
+                                <td colspan="2">{{total| currency}}</td>
                             </tr>
-                            
+
 
                         </table>
                         <div class="line line-dashed b-b line-lg pull-in"></div>
