@@ -178,7 +178,7 @@ class PenjualanController extends Controller {
                     $pinjaman = new Pinjaman();
                     $pinjaman->penjualan_id = $model->id;
                     $pinjaman->debet = $model->credit;
-                    $credit->tanggal_transaksi = $model->tanggal;
+                    $pinjaman->tanggal_transaksi = $model->tanggal;
                     $pinjaman->status = 'Belum Lunas';
                     $pinjaman->save();
                 }

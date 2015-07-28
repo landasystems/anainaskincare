@@ -84,13 +84,10 @@ app.controller('t_keluarCtrl', function($scope, Data, toaster) {
         $scope.list_produk = data.data;
     });
 
-//    $scope.code_cabang = null;
-
     $scope.getkode = function(id) {
         Data.get('stokkeluar/kode_cabang/' + id).then(function(data) {
             $scope.form.kode = data.kode;
             $scope.form.cabang_id = id;
-
         });
     };
 
@@ -116,16 +113,6 @@ app.controller('t_keluarCtrl', function($scope, Data, toaster) {
 
         $scope.isLoading = false;
     };
-
-    $scope.tmb = 0;
-    $scope.cek = function(stok, jml) {
-        if (jml > stok) {
-            toaster.pop('error', "Terjadi Kesalahan", 'asdasdasd');
-            $scope.tmb = 0;
-        } else {
-            $scope.tmb = 1;
-        }
-    }
 
     $scope.excel = function() {
         Data.get('stokkeluar', paramRef).then(function(data) {

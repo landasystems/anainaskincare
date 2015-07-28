@@ -141,46 +141,39 @@ class KartuStok extends \yii\db\ActiveRecord {
         $kartu = $command->queryAll();
         $produk_id = 0;
         $a = 0;
+        $harga = 0;
         $tmpSaldo = array();
-        $tmp = array();
         foreach ($kartu as $val) {
             if ($produk_id != $val['produk_id']) {
-                $tmp[0]['jumlah'] = 0;
-                $tmp[0]['harga'] = 0;
                 $a = 0;
-                $tmpSaldo = array('jumlah' => '', 'harga' => '', 'sub_total' => '');
+                unset($tmpSaldo);
+                unset($tmp);
             }
 
             if ($val['jumlah_masuk'] > 0) {
-
                 $tmpSaldo[$a] = array('jumlah' => $val['jumlah_masuk'], 'harga' => $val['harga_masuk'], 'sub_total' => ($val['harga_masuk'] * $val['jumlah_masuk']));
-
-                $tmp[$a]['jumlah'] = $val['jumlah_masuk'];
-                $tmp[$a]['harga'] = $val['harga_masuk'];
+                $tmp[$a] = array('jumlah' => $val['jumlah_masuk'], 'harga' => $val['harga_masuk']);
+                $harga = $val['harga_masuk'];
             } else {
                 $tempQty = $val['jumlah_keluar'];
+                $keluar = $tempQty;
                 $boolStatus = true;
-                $tmpSaldo = array('jumlah' => '', 'harga' => '', 'sub_total' => '');
-                $index = 0;
                 foreach ($tmp as $valS) {
                     if ($boolStatus) {
+                        unset($tmpSaldo);
+                        unset($tmp);
                         if ($valS['jumlah'] > $tempQty) {
                             $valS['jumlah'] -= $tempQty;
-                            $tmp[$index]['jumlah'] = $valS['jumlah'];
                             $boolStatus = false;
-                            $tmpSaldo[$a] = array('jumlah' => $valS['jumlah'], 'harga' => $val['harga_keluar'], 'sub_total' => ($val['harga_keluar'] * $valS['jumlah']));
                         } else {
                             $tempQty -= $valS['jumlah'];
-                            unset($tmp[$index]);
                         }
-                    } else {
-                        $tmpSaldo[$a] = array('jumlah' => $valS['jumlah'], 'harga' => $val['harga_keluar'], 'sub_total' => ($val['harga_keluar'] * $valS['jumlah']));
                     }
+                    $tmpSaldo[$a] = array('jumlah' => $valS['jumlah'], 'harga' => $harga, 'sub_total' => ($val['harga_keluar'] * $valS['jumlah']));
+                    $tmp[$a] = array('jumlah' => $tmpSaldo[$a]['jumlah'], 'harga' => $tmpSaldo[$a]['harga']);
                     $a++;
-                    $index++;
                 }
             }
-
             $body[$val['produk_id']] = $tmpSaldo;
             $a++;
             $produk_id = $val['produk_id'];

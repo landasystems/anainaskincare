@@ -9,20 +9,20 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
     $scope.is_view = false;
     $scope.is_create = false;
     $scope.openedDet = -1;
-    
-    $scope.openDet = function ($event, $index) {
+
+    $scope.openDet = function($event, $index) {
         $event.preventDefault();
         $event.stopPropagation();
         $scope.openedDet = $index;
     };
-    $scope.setStatus = function () {
+    $scope.setStatus = function() {
         $scope.openedDet = -1;
     };
 
     Data.get('bayarpiutang/customer').then(function(data) {
         $scope.sCustomer = data.customer;
     });
-    Data.get('site/session').then(function (data) {
+    Data.get('site/session').then(function(data) {
         $scope.sCabang = data.data.user.cabang;
     });
     Data.get('bayarpiutang/kode').then(function(data) {
@@ -78,31 +78,26 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
         $scope.is_edit = true;
         $scope.is_view = false;
         $scope.is_create = false;
-        $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode;
+        $scope.formtitle = "Edit Data Piutang : " + $scope.form.kode;
         $scope.detail(row);
-
-//        })
     };
-    $scope.view = function(form) {
+    $scope.view = function(row) {
         $scope.is_edit = true;
         $scope.is_view = true;
-        $scope.formtitle = "Lihat Data : " + form.nama;
         $scope.form = row;
         $scope.detail(row);
+        $scope.formtitle = "Lihat Data Piutang : " + $scope.form.kode;
         $scope.is_edit = true;
         $scope.is_view = true;
         $scope.is_create = false;
-        $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode;
-
-//        })
     };
-    $scope.save = function (form, detPenjualan) {
+    $scope.save = function(form, detPenjualan) {
         var data = {
             form: form,
             detail: detPenjualan
         };
         var url = 'bayarpiutang/update';
-        Data.post(url, data).then(function (result) {
+        Data.post(url, data).then(function(result) {
             if (result.status == 0) {
                 toaster.pop('error', "Terjadi Kesalahan", result.errors);
             } else {
@@ -131,7 +126,6 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
         Data.get('bayarpiutang/view/' + form.penjualan_id).then(function(result) {
 //            $scope.detail = result.data;
             $scope.detPenjualan = result.data;
-            console.log(result.data);
         });
     };
     $scope.addrow = function() {
