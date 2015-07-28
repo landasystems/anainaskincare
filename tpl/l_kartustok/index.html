@@ -129,8 +129,7 @@
                                             <p ng-repeat="jmlSaldo in detail.saldo.jumlah">{{jmlSaldo}} {{list.title.satuan}}</p>
                                         </td>
                                         <td style="border: none">
-                                             ---{{detail.saldo.harga}}---
-                                            <div ng-repeat="hargaSaldo in detail.saldo.harga">{{hargaSaldo}}</div>
+                                            <p ng-repeat="hargaSaldo in detail.saldo.harga">{{hargaSaldo | currency}}</p>
                                         </td>
                                         <td style="border: none">
                                             <p ng-repeat="subSaldo in detail.saldo.sub_total">{{subSaldo| currency }}</p>

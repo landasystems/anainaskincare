@@ -154,9 +154,9 @@ class LaporanController extends Controller {
         $params = json_decode(file_get_contents("php://input"), true);
         $data = array();
         $s = strtotime(date("Y-m-d", strtotime($params['tanggal']['startDate'])));
-        $e = strtotime(date("Y-m-d", strtotime($params['tanggal']['endDate'])));
         $start = date("Y-m-d", strtotime('+1 day', $s));
-        $end = date("Y-m-d", strtotime($e));
+        $end = date("Y-m-d", strtotime($params['tanggal']['endDate']));
+        $criteria = '';
         if (!empty($params['cabang_id'])) {
             $cbg = \app\models\Cabang::findOne(['id' => $params['cabang_id']]);
             $data['cabang'] = strtoupper($cbg->nama);
@@ -171,8 +171,9 @@ class LaporanController extends Controller {
         $data['end'] = $end;
 
         //penjualan gross
-        $penjualan = $connection->createCommand("SELECT sum(cash) as  penjualan FROM penjualan where (tanggal >= '" . $start . "' and tanggal <= '" . $end . "') $criteria")
+        $penjualan = $connection->createCommand("SELECT sum(total-credit) as  penjualan FROM penjualan where (tanggal >= '" . $start . "' and tanggal <= '" . $end . "') $criteria")
                 ->queryOne();
+        \Yii::error($penjualan);
         $data['penjualan'] = empty($penjualan['penjualan']) ? 0 : $penjualan['penjualan'];
 
         //pembayaran piutang
@@ -180,19 +181,27 @@ class LaporanController extends Controller {
                 ->queryOne();
         $data['pemb_piutang'] = empty($penjualan['pinjaman']) ? 0 : $penjualan['pinjaman'];
 
-        //diskon, bonus terapis, bonus dokter
-        $penjualan = $connection->createCommand("SELECT sum(penjualan_det.diskon) as diskon, sum(penjualan_det.fee_terapis) as bonus_terapis, sum(penjualan_det.fee_dokter) as bonus_dokter FROM penjualan, penjualan_det where penjualan.id=penjualan_det.penjualan_id and (penjualan.tanggal >= '" . $start . "' and penjualan.tanggal <= '" . $end . "') $criteria")
+        //diskon
+        $penjualan = $connection->createCommand("SELECT sum(penjualan_det.diskon) as diskon FROM penjualan, penjualan_det where penjualan.id=penjualan_det.penjualan_id and (penjualan.tanggal >= '" . $start . "' and penjualan.tanggal <= '" . $end . "') $criteria")
                 ->queryOne();
         $data['diskon'] = empty($penjualan['diskon']) ? 0 : $penjualan['diskon'];
+
+        //bonus terapis
+        $penjualan = $connection->createCommand("SELECT sum(penjualan_det.fee_terapis) as bonus_terapis FROM penjualan, penjualan_det where penjualan_det.pegawai_terapis_id is not NULL and penjualan.id=penjualan_det.penjualan_id and (penjualan.tanggal >= '" . $start . "' and penjualan.tanggal <= '" . $end . "') $criteria")
+                ->queryOne();
         $data['bonus_terapis'] = empty($penjualan['bonus_terapis']) ? 0 : $penjualan['bonus_terapis'];
+
+        //bonus dokter
+        $penjualan = $connection->createCommand("SELECT sum(penjualan_det.fee_dokter) as bonus_dokter FROM penjualan, penjualan_det where penjualan_det.pegawai_dokter_id is not NULL and penjualan.id=penjualan_det.penjualan_id and (penjualan.tanggal >= '" . $start . "' and penjualan.tanggal <= '" . $end . "') $criteria")
+                ->queryOne();
         $data['bonus_dokter'] = empty($penjualan['bonus_dokter']) ? 0 : $penjualan['bonus_dokter'];
 
         $criteria = !empty($params['cabang_id']) ? ' and pembelian.cabang_id = ' . $params['cabang_id'] : '';
 
         $data['total_nett'] = $data['penjualan'] + $data['pemb_piutang'] - $data['diskon'] - $data['bonus_terapis'] - $data['bonus_dokter'];
 
-        //hpp
-        $pembelian = $connection->createCommand("SELECT sum(cash) as  pembelian FROM pembelian where (tanggal >= '" . $start . "' and tanggal <= '" . $end . "') $criteria")
+        //pembelian
+        $pembelian = $connection->createCommand("SELECT sum(total-credit) as  pembelian FROM pembelian where (tanggal >= '" . $start . "' and tanggal <= '" . $end . "') $criteria")
                 ->queryOne();
         $data['pembelian'] = empty($pembelian['pembelian']) ? 0 : $pembelian['pembelian'];
 
@@ -362,36 +371,28 @@ class LaporanController extends Controller {
                     $tmpKeluar['sub_total'][$indeks] = 0;
                 }
             } else {
-                //reset saldo
-//                unset($tmpSaldo);
-//                unset($tmpKeluar);
-
                 $tempQty = $val['jumlah_keluar'];
+                $keluar = $tempQty;
+                \Yii::error($tempQty);
                 $boolStatus = true;
-//                $tmpKeluar['jumlah'][$indeks] = $tempQty;
-//                $tmpKeluar['harga'][$indeks] = $val['harga_keluar'];
-//                $tmpKeluar['sub_total'][$indeks] = $tmpKeluar['jumlah'][$indeks] * $tmpKeluar['harga'][$indeks];
-                \Yii::error($body[$pro->id]['temp']);
                 foreach ($tmp as $valS) {
                     if ($boolStatus) {
                         unset($tmpSaldo);
                         unset($tmp);
                         unset($tmpKeluar);
                         if ($valS['jumlah'] > $tempQty) {
+                            $tmpKeluar['jumlah'][$indeks] = $keluar;
+
                             $valS['jumlah'] -= $tempQty;
                             $boolStatus = false;
                         } else {
-                            $valS['jumlah'] = $tempQty - $valS['jumlah'];
+                            $tmpKeluar['jumlah'][$indeks] = $valS['jumlah'];
+                            $tempQty -= $valS['jumlah'];
                         }
                         //simpan stok keluar
-                        $tmpKeluar['jumlah'][$indeks] = $tempQty;
                         $tmpKeluar['harga'][$indeks] = $val['harga_keluar'];
                         $tmpKeluar['sub_total'][$indeks] = $tmpKeluar['jumlah'][$indeks] * $tmpKeluar['harga'][$indeks];
-                    } else {
-                        $tmpSaldo = $tmpSaldo;
                     }
-
-
                     //simpan stok saldo
                     $tmpSaldo['jumlah'][$indeks] = $valS['jumlah'];
                     $tmpSaldo['harga'][$indeks] = $valS['harga'];
