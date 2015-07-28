@@ -68,14 +68,7 @@ app.controller('t_keluarCtrl', function($scope, Data, toaster) {
             alert("Something gone wrong");
         }
     };
-
-
-    $scope.cabang = {
-        minimumInputLength: 3,
-        allowClear: true,
-    }
-
-
+    
     Data.get('site/session').then(function (data) {
         $scope.listcabang = data.data.user.cabang;
     });

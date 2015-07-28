@@ -81,13 +81,11 @@ class PembelianController extends Controller {
         $sort = "tanggal DESC";
         $offset = 0;
         $limit = 10;
-        //        Yii::error($params);
         //limit & offset pagination
         if (isset($params['limit']))
             $limit = $params['limit'];
         if (isset($params['offset']))
             $offset = $params['offset'];
-
         //sorting
         if (isset($params['sort'])) {
             $sort = $params['sort'];
@@ -98,7 +96,6 @@ class PembelianController extends Controller {
                     $sort.=" DESC";
             }
         }
-
         //create query
         $query = new Query;
         $query->offset($offset)
@@ -108,18 +105,24 @@ class PembelianController extends Controller {
                 ->join('JOIN', 'm_cabang as ca', 'pe.cabang_id= ca.id')
                 ->orderBy($sort)
                 ->select("pe.*,ca.nama as klinik, su.nama as nama_supplier,su.alamat as alamat, su.no_tlp as no_tlp,su.email as email");
-
         //filter
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
-                $query->andFilterWhere(['like', $key, $val]);
+                if ($key == 'tanggal') {
+                    $value = explode(' - ', $val);
+                    $start = date("Y-m-d", strtotime($value[0]));
+                    $end = date("Y-m-d", strtotime($value[1]));
+                    $query->andFilterWhere(['between', 'tanggal', $start, $end]);
+                } else {
+                    $query->andFilterWhere(['like', $key, $val]);
+                }
             }
         }
-
         $command = $query->createCommand();
         $models = $command->queryAll();
-        $totalItems = $query->count();
+//        $totalItems = $query->count();
+        $totalItems = 0;
 
         $this->setHeader(200);
 
@@ -322,8 +325,8 @@ class PembelianController extends Controller {
         $query = new Query;
         $query->select("pe.*,su.kode as kode_supplier, su.nama as nama_supplier,su.no_tlp as no_tlp, su.email as email, su.alamat as alamat,ca.nama as klinik")
                 ->from('pembelian as pe')
-                ->join("LEFT JOIN",'m_supplier as su','pe.supplier_id = su.id')
-                ->join("LEFT JOIN",'m_cabang as ca','pe.cabang_id = ca.id')
+                ->join("LEFT JOIN", 'm_supplier as su', 'pe.supplier_id = su.id')
+                ->join("LEFT JOIN", 'm_cabang as ca', 'pe.cabang_id = ca.id')
                 ->where(['like', 'pe.kode', $params['kode']])
                 ->limit(10);
         $command = $query->createCommand();

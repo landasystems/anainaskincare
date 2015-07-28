@@ -33,7 +33,7 @@ class PembelianDet extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pembelian_id', 'produk_id', 'jumlah', 'harga', 'diskon', 'sub_total','is_retur'], 'safe']
+            [['pembelian_id', 'produk_id', 'jumlah', 'harga', 'diskon', 'sub_total'], 'safe']
         ];
     }
 

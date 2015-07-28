@@ -1,3 +1,18 @@
+/*---table margin & padding 0px*/
+.det-trans > tbody > tr > td{ 
+    margin: 0px;
+    padding: 0px;
+}
+.det-trans > tfoot > tr > td{ 
+    margin: 0px;
+    padding: 0px;
+}
+
+.btn-det-trans{ 
+    height: 35px;
+}
+
+
 /*----pencarian*/
 #pencarian .form-control {
     height: 30px !important;
