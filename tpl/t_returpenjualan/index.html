@@ -132,10 +132,10 @@
                         <div class="col-md-4 col-sm-12">
                             <p class="text-muted font-bold">Detail Customer</p>
 
-                            <div class="form-group"  ng-show="is_create == true">
+                            <div class="form-group"  >
                                 <label class="col-sm-3 control-label">Kode Penjualan</label>
                                 <div class="col-sm-9">
-                                    <ui-select ng-change="getkodepenjualan(form)" ng-show="is_create == true"  ng-model="form.penjualan" theme="bootstrap" style="width: 245px; margin-top: 2px; margin-bottom: 1px;">
+                                    <ui-select ng-change="getkodepenjualan(form)" ng-model="form.penjualan" theme="bootstrap" style="width: 245px; margin-top: 2px; margin-bottom: 1px;">
                                         <ui-select-match placeholder="Cari Kode Penjualan">{{$select.selected.kode}}</ui-select-match>
                                         <ui-select-choices group-by="'group'" repeat="kodepenjualan in listkodepenjualan | filter: $select.search">
                                             <div ng-bind-html="kodepenjualan.kode | highlight: $select.search"></div>
@@ -150,13 +150,13 @@
                                                                         </select>-->
                                 </div>
                             </div>
-                            <div class="form-group" ng-show="is_edit == true">
+<!--                            <div class="form-group" ng-show="is_edit == true">
                                 <label class="col-sm-3 control-label">Kode Penjualan</label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" ng-model="penjualan.kode" ng-disabled="true"
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="form-group">
                             <label class="col-sm-3 control-label">No Telpon</label>
                             <div class="col-sm-9">
