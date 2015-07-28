@@ -21,6 +21,7 @@ class CabangController extends Controller {
                     'view' => ['get'],
                     'listcabang' => ['get'],
                     'excel' => ['get'],
+                    'akses' => ['get'],
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
@@ -60,9 +61,23 @@ class CabangController extends Controller {
 
         $command = $query->createCommand();
         $models = $command->queryAll();
-
+        
         $this->setHeader(200);
+        echo json_encode(array('status' => 1, 'data' => $models));
+    }
 
+    public function actionAkses($id) {
+        //mencari hak akses cabang
+        $query = new Query;
+        $query->from('m_cabang')
+                ->join('JOIN', 'm_akses_cabang', 'm_akses_cabang.cabang_id=m_cabang.id')
+                ->select("m_cabang.*")
+                ->where("m_akses_cabang.roles_id = " . $id);
+
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+        
+        $this->setHeader(200);
         echo json_encode(array('status' => 1, 'data' => $models));
     }
 

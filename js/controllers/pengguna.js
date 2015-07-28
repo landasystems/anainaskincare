@@ -1,12 +1,13 @@
 app.controller('penggunaCtrl', function($scope, Data, toaster) {
     //init data
     var tableStateRef;
+    $scope.form = {};
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_crate = false;
     $scope.is_view = false;
 
-    Data.get('pengguna/roles').then(function(data) {
+    Data.get('roles/list').then(function(data) {
         $scope.roleslist = data.roles;
     });
 

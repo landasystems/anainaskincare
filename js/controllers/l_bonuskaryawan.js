@@ -6,8 +6,9 @@ app.controller('l_bonuskaryawanCtrl', function($scope, Data, toaster) {
     $scope.tanggal = {startDate: null, endDate: null};
 //    $scope.listpegawai = {};
 
-    Data.get('cabang/listcabang').then(function(data) {
-        $scope.listcabang = data.data;
+    
+    Data.get('site/session').then(function (data) {
+        $scope.listcabang = data.data.user.cabang;
     });
 
     Data.get('pegawai/listpegawai').then(function(data) {

@@ -3,38 +3,33 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
 
     //init data;
     var tableStateRef;
+    $scope.form = {};
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
     $scope.is_create = false;
-    $scope.total = 0;
-
-    $scope.datepickerOptions = {
-        language: 'id',
-        autoclose: true,
-        weekStart: 0
-    }
+    $scope.openedDet = -1;
+    
+    $scope.openDet = function ($event, $index) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.openedDet = $index;
+    };
+    $scope.setStatus = function () {
+        $scope.openedDet = -1;
+    };
 
     Data.get('bayarpiutang/customer').then(function(data) {
         $scope.sCustomer = data.customer;
     });
-    Data.get('bayarpiutang/cabang').then(function(data) {
-        $scope.sCabang = data.cabang;
+    Data.get('site/session').then(function (data) {
+        $scope.sCabang = data.data.user.cabang;
     });
     Data.get('bayarpiutang/kode').then(function(data) {
         $scope.list_kode = data.kode;
     });
 
-    $scope.getpenjualan = function(wo) {
-//        alert(wo);
-        Data.get('bayarpiutang/det_penjualan/' + wo).then(function(data) {
-            $scope.form = data.penjualan;
-            $scope.form.penjualan_id = wo;
-            $scope.detPenjualan = data.detail;
-            $scope.total = data.total;
-            
-        });
-    };
+
 
 
     $scope.callServer = function callServer(tableState) {
@@ -78,22 +73,22 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
         ];
 
     };
-     $scope.update = function (row) {
+    $scope.update = function(row) {
         $scope.form = row;
-        $scope.getpenjualan(row);
         $scope.is_edit = true;
         $scope.is_view = false;
         $scope.is_create = false;
         $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode;
+        $scope.detail(row);
 
 //        })
     };
-    $scope.view = function (form) {
+    $scope.view = function(form) {
         $scope.is_edit = true;
         $scope.is_view = true;
         $scope.formtitle = "Lihat Data : " + form.nama;
-        $scope.form = form;
-        $scope.getpenjualan(form);
+        $scope.form = row;
+        $scope.detail(row);
         $scope.is_edit = true;
         $scope.is_view = true;
         $scope.is_create = false;
@@ -106,7 +101,7 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
             form: form,
             detail: detPenjualan
         };
-        var url = 'bayarpiutang/create';
+        var url = 'bayarpiutang/update';
         Data.post(url, data).then(function (result) {
             if (result.status == 0) {
                 toaster.pop('error', "Terjadi Kesalahan", result.errors);
@@ -132,7 +127,14 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
             });
         }
     };
-    $scope.addrow = function () {
+    $scope.detail = function(form) {
+        Data.get('bayarpiutang/view/' + form.penjualan_id).then(function(result) {
+//            $scope.detail = result.data;
+            $scope.detPenjualan = result.data;
+            console.log(result.data);
+        });
+    };
+    $scope.addrow = function() {
         $scope.detPenjualan.unshift({
             id: '',
 //            pembelian_id: ($scope.form.id != '') ? $scope.form.id : '',
@@ -142,7 +144,7 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
             credit: '',
         });
     };
-     $scope.removeRow = function (paramindex) {
+    $scope.removeRow = function(paramindex) {
         var comArr = eval($scope.detPenjualan);
         if (comArr.length > 1) {
             $scope.detPenjualan.splice(paramindex, 1);

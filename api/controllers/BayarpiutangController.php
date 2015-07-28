@@ -121,20 +121,16 @@ class BayarpiutangController extends Controller {
     }
 
     public function actionView($id) {
-        $total = 0;
-        $model = $this->findModel($id);
-        $query2 = new Query;
-        $query2->from('pinjaman')
-                ->where('penjualan_id="' . $model['penjualan_id'] . '"')
-                ->select('*');
-        $command2 = $query2->createCommand();
-        $detail = $command2->queryAll();
-        foreach ($detail as $data) {
-            $total += $data['credit'];
+        $isi = array();
+        $findDetail = Pinjaman::find()
+                ->where("penjualan_id=" . $id)
+                ->orderBy('id DESC')
+                ->all();
+        foreach ($findDetail as $val) {
+            $isi[] = $val->attributes;
         }
-
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes), 'detail' => $detail, 'total' => $total), JSON_PRETTY_PRINT);
+        echo json_encode(array('status' => 1, 'data' => $isi), JSON_PRETTY_PRINT);
     }
 
     public function actionCreate() {
@@ -166,20 +162,22 @@ class BayarpiutangController extends Controller {
         }
     }
 
-    public function actionUpdate($id) {
+    public function actionUpdate() {
         $params = json_decode(file_get_contents("php://input"), true);
-        $model = $this->findModel($id);
-        $model->attributes = $params;
-
-
-        if ($model->save()) {
-
-            $this->setHeader(200);
-            echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
-        } else {
-            $this->setHeader(400);
-            echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $model->errors), JSON_PRETTY_PRINT);
+//        Yii::error($params);
+        $id = array();
+        foreach ($params['detail'] as $key => $val) {
+            $model = Pinjaman::findOne($val['id']);
+            if (empty($model)) {
+                $model = new Pinjaman();
+            }
+            $model->attributes = $val;
+            $model->penjualan_id = $params['form']['penjualan_id'];
+            $model->tanggal_transaksi = date('Y-m-d', strtotime($val['tanggal_transaksi']));
+            $model->save();
+            $id[] = $model->id;
         }
+        $delete = Pinjaman::deleteAll('id NOT IN(' . implode(',', $id) . ')');
     }
 
     public function actionCustomer() {

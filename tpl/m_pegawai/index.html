@@ -13,21 +13,29 @@
             </div>
             <div collapse="isCollapsed" class="panel-body collapse" style="height: 0px;">
                 <div class="form-horizontal">
-                    <div class="form-group">
-                        <label class="col-sm-1 control-label">Status</label>
-                        <div class="col-sm-2">
-                            <select stInputEvent="change" st-search="is_deleted" class="form-control">
-                                <option value="0">Aktif</option>
-                                <option value="1">Terhapus</option>
-                            </select>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Status</label>
+                            <div class="col-sm-9">
+                                <select stInputEvent="change" st-search="is_deleted" class="form-control">
+                                    <option value="0">Aktif</option>
+                                    <option value="1">Terhapus</option>
+                                </select>
+                            </div>
                         </div>
-                        <label class="col-sm-1 control-label">NIP</label>
-                        <div class="col-sm-3">
-                            <input st-search="kode" class="form-control"/>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Nama Pegawai</label>
+                            <div class="col-sm-9">
+                                <input st-search="nama" class="form-control"/>
+                            </div>
                         </div>
-                        <label class="col-sm-1 control-label">Nama Pegawai</label>
-                        <div class="col-sm-3">
-                            <input st-search="nama" class="form-control"/>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">NIP</label>
+                            <div class="col-sm-9">
+                                <input st-search="kode" class="form-control"/>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -42,6 +50,7 @@
                             <th st-sort="address">Alamat</th>
                             <th st-sort="office_place">Klinik</th>
                             <th st-sort="roles">Jabatan</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody ng-show="!isLoading">
@@ -64,12 +73,12 @@
                     </tbody>
                     <tbody ng-show="isLoading">
                         <tr>
-                            <td colspan="4" class="text-center">Loading ... </td>
+                            <td colspan="7" class="text-center">Loading ... </td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="12" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html">
+                            <td colspan="7" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html">
                             </td>
                         </tr>
                 </table>		
