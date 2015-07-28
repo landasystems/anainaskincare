@@ -166,167 +166,156 @@
                                 </div>
                             </div>
                         </div>
-
-
-                        <div class="line line-dashed b-b line-lg pull-in"></div>
-                        <h5 class="font-bold">- Detail Pesanan</h5> 
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <td align="center">Barang</td>
-                                    <td align="center" width="50">Jumlah</td>
-                                    <td align="center" width="100">Tipe</td>
-                                    <td align="center" width="150">Harga</td>
-                                    <td align="center" width="150">Diskon</td>
-                                    <td align="center" width="200">Sub total</td>
-                                    <td>#</td>
-                                </tr>
-                            </thead>
-                            <tr ng-repeat="detail in detPenjualan">
-                                <td>
-
-                                    <div class="input-group">
-                                        <ui-select on-select="pilih(detail, $item)" ng-model="detail.produk" theme="bootstrap">
-                                            <ui-select-match placeholder="Pilih atau Cari nama produk">{{$select.selected.nama}}</ui-select-match>
-                                            <ui-select-choices refresh="cariProduk($select.search)" repeat="val in results">
-                                                {{val.nama}}
-                                            </ui-select-choices>
-                                        </ui-select>
-                                        <span class="input-group-btn">
-                                            <button ng-click="detail.produk = undefined" class="btn btn-default">
-                                                <span class="glyphicon glyphicon-trash"></span>
-                                            </button>
-                                        </span>
-                                    </div>
-
-                                    <table style="margin-top: 4px;" ng-show="detail.type == 'Jasa'">
+                        <br>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <h5 class="font-bold">- Detail Pesanan</h5> 
+                                <table class="table table-bordered det-trans">
+                                    <thead>
                                         <tr>
-                                            <td width="65%">                                       
-                                        <ui-select  ng-model="detail.dokter" theme="bootstrap">
-                                            <ui-select-match placeholder="Cari nama atau nip Dokter">{{$select.selected.nama}}</ui-select-match>
-                                            <ui-select-choices group-by="'group'" repeat="dokter in list_dokter | filter: $select.search">
-                                                <div ng-bind-html="dokter.nama | highlight: $select.search"></div>
-                                                <small>
-                                                    Nip : <span ng-bind-html="dokter.kode | highlight: $select.search"></span>
-                                                </small>
-                                            </ui-select-choices>
-                                        </ui-select>
+                                            <td align="center">Barang</td>
+                                            <td align="center" width="50">Jumlah</td>
+                                            <td align="center" width="100">Tipe</td>
+                                            <td align="center" width="150">Harga</td>
+                                            <td align="center" width="150">Diskon</td>
+                                            <td align="center" width="200">Sub total</td>
+                                            <td>#</td>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-repeat="detail in detPenjualan">
+                                        <td>
+                                            <div class="input-group">
+                                                <ui-select on-select="pilih(detail, $item)" ng-model="detail.produk" theme="bootstrap">
+                                                    <ui-select-match placeholder="Pilih atau Cari nama produk">{{$select.selected.nama}}</ui-select-match>
+                                                    <ui-select-choices refresh="cariProduk($select.search)" repeat="val in results">
+                                                        {{val.nama}}
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                                <span class="input-group-btn">
+                                                    <button ng-click="detail.produk = undefined" class="btn btn-default">
+                                                        <span class="glyphicon glyphicon-trash"></span>
+                                                    </button>
+                                                </span>
+                                            </div>
 
-                                        <!--                                        <ui-select ng-model="detail.terapis" theme="bootstrap" style="width: 350px; margin-top: 4px;">
-                                                                                    <ui-select-match placeholder="Cari nama atau nip Terapis">{{$select.selected.nama}}</ui-select-match>
-                                                                                    <ui-select-choices group-by="'group'" repeat="terapis in list_terapis | filter: $select.search">
-                                                                                        <div ng-bind-html="terapis.nama | highlight: $select.search"></div>
-                                                                                        <small>
-                                                                                            Nip : <span ng-bind-html="terapis.kode | highlight: $select.search"></span>
-                                                                                        </small>
-                                                                                    </ui-select-choices>
-                                                                                </ui-select>-->
+                                            <table style="margin-top: 4px;" ng-show="detail.type == 'Jasa'" class="det-trans">
+                                                <tr>
+                                                    <td width="65%">                                       
+                                                <ui-select  ng-model="detail.dokter" theme="bootstrap">
+                                                    <ui-select-match placeholder="Cari nama atau nip Dokter">{{$select.selected.nama}}</ui-select-match>
+                                                    <ui-select-choices group-by="'group'" repeat="dokter in list_dokter | filter: $select.search">
+                                                        <div ng-bind-html="dokter.nama | highlight: $select.search"></div>
+                                                        <small>
+                                                            Nip : <span ng-bind-html="dokter.kode | highlight: $select.search"></span>
+                                                        </small>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                        </td>
+                                        <td>
+                                            <div class="input-group " style="margin-bottom: 4px;margin-top: 2px;">
+                                                <span class="input-group-addon">Rp</span>
+                                                <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/"   ng-model="detail.fee_dokter">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                    <ui-select ng-model="detail.terapis" theme="bootstrap">
+                                        <ui-select-match placeholder="Cari nama atau nip Terapis">{{$select.selected.nama}}</ui-select-match>
+                                        <ui-select-choices group-by="'group'" repeat="terapis in list_terapis | filter: $select.search">
+                                            <div ng-bind-html="terapis.nama | highlight: $select.search"></div>
+                                            <small>
+                                                Nip : <span ng-bind-html="terapis.kode | highlight: $select.search"></span>
+                                            </small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    </td>
+                                    <td>
+                                        <div class="input-group " style="margin-bottom: 1px;margin-top: 2px;">
+                                            <span class="input-group-addon">Rp</span>
+                                            <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/"  ng-model="detail.fee_terapis">
+                                        </div> 
+                                    </td>
+                                    </tr>
+                                </table>
+
                                 </td>
                                 <td>
-                                    <div class="input-group m-b" style="margin-bottom: 4px;margin-top: 2px;">
+                                    <input type="text" class="form-control" ng-maxlength="4" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.jumlah" ng-disabled="is_view" ng-readonly="is_create == false" required>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" ng-maxlength="8"  ng-model="detail.type"  ng-disabled="true" ng-readonly="is_create == false" required>
+                                </td>
+                                <td>
+                                    <div class="input-group " style="margin:0px;">
                                         <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/"   ng-model="detail.fee_dokter">
+                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.harga"  ng-disabled="is_view"  required>
                                     </div>
                                 </td>
-                            <tr>
                                 <td>
-                            <ui-select ng-model="detail.terapis" theme="bootstrap">
-                                <ui-select-match placeholder="Cari nama atau nip Terapis">{{$select.selected.nama}}</ui-select-match>
-                                <ui-select-choices group-by="'group'" repeat="terapis in list_terapis | filter: $select.search">
-                                    <div ng-bind-html="terapis.nama | highlight: $select.search"></div>
-                                    <small>
-                                        Nip : <span ng-bind-html="terapis.kode | highlight: $select.search"></span>
-                                    </small>
-                                </ui-select-choices>
-                            </ui-select>
-                            </td>
-                            <td>
-                                <div class="input-group m-b" style="margin-bottom: 1px;margin-top: 2px;">
-                                    <span class="input-group-addon">Rp</span>
-                                    <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/"  ng-model="detail.fee_terapis">
-                                </div> 
-                            </td>
-                            </tr>
-                        </table>
-
-                        </td>
-                        <td>
-                            <input type="text" class="form-control" ng-maxlength="4" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.jumlah" ng-disabled="is_view" ng-readonly="is_create == false" required>
-                        </td>
-                        <td>
-                            <input type="text" class="form-control" ng-maxlength="8"  ng-model="detail.type"  ng-disabled="true" ng-readonly="is_create == false" required>
-                        </td>
-                        <td>
-                            <div class="input-group m-b" style="margin:0px;">
-                                <span class="input-group-addon">Rp</span>
-                                <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.harga"  ng-disabled="is_view"  required>
+                                    <div class="input-group " style="margin:0px;">
+                                        <span class="input-group-addon">Rp</span>
+                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.diskon"  ng-disabled="is_view" ng-readonly="is_create == false">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group " style="margin:0px;">
+                                        <span class="input-group-addon">Rp</span>
+                                        <input type="text" class="form-control" name="total" value="{{(detail.jumlah * detail.harga) - (detail.jumlah * detail.diskon) | number}}" ng-readonly="true"  ng-disabled="is_view" required>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button ng-click="addDetail()" class="btn btn-success" ng-show="$index == 0" ng-disabled="is_view"><i class="fa fa-plus"></i></button>
+                                    <button ng-click="removeRow($index)" class="btn btn-danger" ng-show="$index > 0" ng-disabled="is_view"><i class="fa fa-trash-o"></i></button>
+                                </td>
+                                </tr>
+                                <tr>
+                                    <th colspan="5" style="text-align: right;">Total :&nbsp;</th>
+                                    <td colspan="2">
+                                        <div class="input-group " style="width:100%">
+                                            <span class="input-group-addon">Rp</span>
+                                            <input type="text" class="form-control" ng-disabled="is_view"  ng-readonly="true" ng-model="form.total">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th colspan="5" style="text-align: right;">Cash :&nbsp;</th>
+                                    <td colspan="2">
+                                        <div class="input-group" style="width:100%">
+                                            <span class="input-group-addon">Rp</span>
+                                            <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.cash" ng-disabled="is_view" required>
+                                        </div>  
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th colspan="5" style="text-align: right;">Credit :&nbsp;</th>
+                                    <td colspan="2">
+                                        <div class="input-group" style="width:100%">
+                                            <span class="input-group-addon">Rp</span>
+                                            <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.credit" ng-disabled="is_view" required>
+                                        </div> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th colspan="5" style="text-align: right;">Kembalian :&nbsp;</th>
+                                    <td colspan="2">
+                                        <div class="input-group" style="width:100%">
+                                            <span class="input-group-addon">Rp</span>
+                                            <input type="text" class="form-control" ng-readonly="true" ng-disabled="is_view" value="{{((form.cash * 1 + form.credit * 1) - form.total) | number}}">
+                                        </div> 
+                                    </td>
+                                </tr>
+                                </table>
                             </div>
-                        </td>
-                        <td>
-                            <div class="input-group m-b" style="margin:0px;">
-                                <span class="input-group-addon">Rp</span>
-                                <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.diskon"  ng-disabled="is_view" ng-readonly="is_create == false">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="input-group m-b" style="margin:0px;">
-                                <span class="input-group-addon">Rp</span>
-                                <input type="text" class="form-control" name="total" value="{{(detail.jumlah * detail.harga) - (detail.jumlah * detail.diskon) | number}}" ng-readonly="true"  ng-disabled="is_view" required>
-                            </div>
-                        </td>
-                        <td >
-                            <button ng-click="addDetail()" class="btn btn-success" ng-show="$index == 0" ng-disabled="is_view"><i class="fa fa-plus"></i></button>
-                            <button ng-click="removeRow($index)" class="btn btn-danger" ng-show="$index > 0" ng-disabled="is_view"><i class="fa fa-trash-o"></i></button>
-                        </td>
-                        </tr>
-                        <tr>
-                            <th colspan="5" style="text-align: right;">Total :&nbsp;</th>
-                            <td colspan="2">
-                                <div class="input-group m-b" style="margin:0px;">
-                                    <span class="input-group-addon">Rp</span>
-                                    <input type="text" class="form-control" ng-disabled="is_view"  ng-readonly="true" ng-model="form.total">
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th colspan="5" style="text-align: right;">Cash :&nbsp;</th>
-                            <td colspan="2">
-                                <div class="input-group">
-                                    <span class="input-group-addon">Rp</span>
-                                    <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.cash" ng-disabled="is_view" required>
-                                </div>  
-                            </td>
-                        </tr>
-                        <tr>
-                            <th colspan="5" style="text-align: right;">Credit :&nbsp;</th>
-                            <td colspan="2">
-                                <div class="input-group">
-                                    <span class="input-group-addon">Rp</span>
-                                    <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.credit" ng-disabled="is_view" required>
-                                </div> 
-                            </td>
-                        </tr>
-                        <tr>
-                            <th colspan="5" style="text-align: right;">Kembalian :&nbsp;</th>
-                            <td colspan="2">
-                                <div class="input-group">
-                                    <span class="input-group-addon">Rp</span>
-                                    <input type="text" class="form-control" ng-readonly="true" ng-disabled="is_view" value="{{((form.cash * 1 + form.credit * 1) - form.total) | number}}">
-                                </div> 
-                            </td>
-                        </tr>
-
-                        </table>
+                        </div>
                         <div class="line line-dashed b-b line-lg pull-in"></div>
                         <div align="center">
                             <button type="submit" class="btn btn-default fa fa-arrow-circle-o-left" ng-click="cancel()">&nbsp;Back</button>
                             <button type="submit" class="btn btn-primary fa fa-save" ng-hide="is_view" ng-disabled="landaform.$invalid" ng-click="save(form, detPenjualan)">&nbsp;Simpan Perubahan</button>
                         </div>	
-
                     </div>
                 </div>
             </div>
-
     </div>
 </form>
 <!--PRINT-->

@@ -52,9 +52,7 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
 
         });
     };
-
-    //subtotal
-
+    
     //total
     $scope.subtotal = function () {
         var total = 0;
@@ -68,7 +66,6 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
         })
         $scope.form.total = total;
     }
-//    $scope.form.total=total();
 
     $scope.removeRow = function (paramindex) {
         var comArr = eval($scope.detsmasuk);
@@ -79,14 +76,6 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
             alert("Something gone wrong");
         }
     };
-
-
-    $scope.cabang = {
-        minimumInputLength: 3,
-        allowClear: true,
-    }
-
-
     Data.get('site/session').then(function (data) {
         $scope.listcabang = data.data.user.cabang;
     });

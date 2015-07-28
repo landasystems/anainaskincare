@@ -27,7 +27,6 @@ class StokmasukController extends Controller {
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
-                    'cabang' => ['get'],
                     'product' => ['get'],
                 ],
             ]
@@ -54,20 +53,6 @@ class StokmasukController extends Controller {
         }
 
         return true;
-    }
-
-    public function actionCabang() {
-        $query = new Query;
-        $query->from('m_cabang')
-                ->select("*")
-                ->where("is_deleted = '0'");
-
-        $command = $query->createCommand();
-        $models = $command->queryAll();
-
-        $this->setHeader(200);
-
-        echo json_encode(array('status' => 1, 'data' => $models));
     }
 
     public function actionProduct() {
@@ -110,6 +95,7 @@ class StokmasukController extends Controller {
 
     public function actionIndex() {
         //init variable
+        session_start();
         $params = $_REQUEST;
         $filter = array();
         $sort = "stok_masuk.id ASC";
@@ -138,7 +124,8 @@ class StokmasukController extends Controller {
                 ->from(['stok_masuk', 'm_cabang'])
                 ->orderBy($sort)
                 ->select("stok_masuk.*,  m_cabang.nama as cabang")
-                ->where('m_cabang.id = stok_masuk.cabang_id');
+                ->where('m_cabang.id = stok_masuk.cabang_id')
+                ->andWhere(['stok_masuk.cabang_id' => $_SESSION['user']['cabang_id']]);
 
         //filter
         if (isset($params['filter'])) {
@@ -154,7 +141,7 @@ class StokmasukController extends Controller {
                 }
             }
         }
-        session_start();
+
         $_SESSION['query'] = $query;
 
         $command = $query->createCommand();

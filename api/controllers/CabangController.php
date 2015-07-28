@@ -41,15 +41,13 @@ class CabangController extends Controller {
         }
         $verb = Yii::$app->getRequest()->getMethod();
         $allowed = array_map('strtoupper', $verbs);
-//        Yii::error($allowed);
-
+        
         if (!in_array($verb, $allowed)) {
 
             $this->setHeader(400);
             echo json_encode(array('status' => 0, 'error_code' => 400, 'message' => 'Method not allowed'), JSON_PRETTY_PRINT);
             exit;
         }
-
         return true;
     }
 

@@ -240,8 +240,8 @@ class PenjualanController extends Controller {
                 }
                 $det->attributes = $val;
                 $det->produk_id = $val['produk']['id'];
-                $det->pegawai_terapis_id = $val['terapis']['id'];
-                $det->pegawai_dokter_id = $val['dokter']['id'];
+                $det->pegawai_terapis_id = isset($val['terapis']['id']) ? $val['terapis']['id'] : null;
+                $det->pegawai_dokter_id = isset($val['dokter']['id']) ? $val['dokter']['id'] : null;
                 $det->penjualan_id = $model->id;
                 if ($det->save()) {
                     $id_det[] = $det->id;
