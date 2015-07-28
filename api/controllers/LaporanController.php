@@ -264,7 +264,7 @@ class LaporanController extends Controller {
                 ->from('kartu_stok as ks')
                 ->join('JOIN', 'm_produk as mp', 'ks.produk_id = mp.id')
                 ->where("mp.is_deleted = 0 and mp.type = 'Barang' and (date(ks.created_at) >= '" . $start . "' and date(ks.created_at) <= '" . $end . "') $criteria")
-                ->orderBy("ks.produk_id, ks.created_at ASC, ks.id ASC");
+                ->orderBy("ks.produk_id, ks.created_at ASC");
 
         $command = $query->createCommand();
         $kartu = $command->queryAll();
@@ -322,9 +322,9 @@ class LaporanController extends Controller {
                 $indeks = count(isset($body[$val['produk_id']]['saldo_awal']) ? $body[$val['produk_id']]['saldo_awal'] : 0) + 1;
                 unset($tmpSaldo);
                 //setting nilai awal temporari
-                $tmp[0]['jumlah'] = 0;
-                $tmp[0]['harga'] = 0;
-//                $tmpKeluar[0] = array('jumlah' => 0, 'harga' => 0, 'sub_total' => 0);
+                unset($tmpSaldo);
+                unset($tmp);
+                unset($tmpKeluar);
                 $tmpKeluar = array();
                 $tmpMasuk[0] = array('jumlah' => 0, 'harga' => 0, 'sub_total' => 0);
                 if (!empty($tempSaldo[$val['produk_id']])) {
@@ -349,8 +349,6 @@ class LaporanController extends Controller {
             } else {
                 unset($tmpKeluar);
             }
-
-
 
             if ($val['jumlah_masuk'] > 0) {
                 if ($val['jumlah_masuk'] > 0) {
