@@ -156,6 +156,7 @@ class BayarpiutangController extends Controller {
         $ganti = Pinjaman::findAll(['penjualan_id'=>$params['form']['penjualan_id']]);
         $debet = 0;
         $credit = 0;
+        Yii::error($ganti);
         foreach($ganti as $data){
             $debet += $data->debet;
             $credit += $data->credit;
@@ -192,6 +193,18 @@ class BayarpiutangController extends Controller {
             $model->save();
             $id[] = $model->id;
         }
+        $ganti = Pinjaman::findAll(['penjualan_id'=>$params['form']['penjualan_id']]);
+        $debet = 0;
+        $credit = 0;
+        Yii::error($ganti);
+        foreach($ganti as $data){
+            $debet += $data->debet;
+            $credit += $data->credit;
+            if($debet == $credit){
+                Pinjaman::updateAll(['status'=>'Lunas'],'penjualan_id="'.$params['form']['penjualan_id'].'"');
+            }
+        }
+        
         $delete = Pinjaman::deleteAll('id NOT IN(' . implode(',', $id) . ')');
     }
 

@@ -75,7 +75,7 @@
                             <td>{{row.status}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
-                                    <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ></button>
+                                    <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ng-show="row.status == 'Belum Lunas'" ></button>
                                     <button type="button" class="btn btn-danger fa fa-minus-circle" ng-click="delete(row);" ></button>
                                 </div> 
                             </td>
