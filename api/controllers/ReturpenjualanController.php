@@ -285,7 +285,7 @@ class ReturpenjualanController extends Controller {
     public function actionDet_kodepenjualan() {
         $params = json_decode(file_get_contents("php://input"), true);
 
-        $id = $params['penjualan']['id'];
+        $id = $params['id'];
        Yii::error($params);
         $query = new Query;
         $query->from('penjualan')
