@@ -132,7 +132,6 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Cabang</label>
                                 <div class="col-sm-9">
-                                    {{form.cabang_id}}
                                     <select class="form-control" ng-change="getkode_cabang(form.cabang_id)" ng-model="form.cabang_id" ng-disabled="is_view" >
                                         <option value="">-- Cabang --</option>
                                         <option ng-repeat="cabang in sCabang" value="{{cabang.id}}">{{cabang.nama}}</option>

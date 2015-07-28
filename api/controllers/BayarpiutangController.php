@@ -148,9 +148,25 @@ class BayarpiutangController extends Controller {
             $model->penjualan_id = $params['form']['penjualan_id'];
             if ($model->save()) {
                 $noErrors = true;
+                
             }
             $id[] = $model->id;
         }
+        // ganti status sukses
+        $ganti = Pinjaman::findAll(['penjualan_id'=>$params['form']['penjualan_id']]);
+        $debet = 0;
+        $credit = 0;
+        Yii::error($ganti);
+        foreach($ganti as $data){
+            $debet += $data->debet;
+            $credit += $data->credit;
+            if($debet == $credit){
+                 $sModel = Pinjaman::findOne($value['id']);
+                 $sModel->status = 'Lunas';
+                 $sModel->save();
+            }
+        }
+        
         $deleteAll = Pinjaman::deleteAll('id NOT IN(' . implode(',', $id) . ') AND penjualan_id=' . $params['form']['penjualan_id']);
 
         if ($deleteAll) {
@@ -177,6 +193,18 @@ class BayarpiutangController extends Controller {
             $model->save();
             $id[] = $model->id;
         }
+        $ganti = Pinjaman::findAll(['penjualan_id'=>$params['form']['penjualan_id']]);
+        $debet = 0;
+        $credit = 0;
+        Yii::error($ganti);
+        foreach($ganti as $data){
+            $debet += $data->debet;
+            $credit += $data->credit;
+            if($debet == $credit){
+                Pinjaman::updateAll(['status'=>'Lunas'],'penjualan_id="'.$params['form']['penjualan_id'].'"');
+            }
+        }
+        
         $delete = Pinjaman::deleteAll('id NOT IN(' . implode(',', $id) . ')');
     }
 
