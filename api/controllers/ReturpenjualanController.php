@@ -27,6 +27,7 @@ class ReturpenjualanController extends Controller {
                     'update' => ['post'],
                     'delete' => ['delete'],
                     'cabang' => ['get'],
+                    'excel' => ['get'],
                     'customer' => ['get'],
                     'produk' => ['get'],
                     'nm_customer' => ['post'],
@@ -65,6 +66,7 @@ class ReturpenjualanController extends Controller {
 
     public function actionIndex() {
         //init variable
+        session_start();
         $params = $_REQUEST;
         $filter = array();
         $sort = "r_penjualan.id ASC";
@@ -117,6 +119,7 @@ class ReturpenjualanController extends Controller {
                 }
             }
         }
+         $_SESSION['query'] = $query;
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -382,6 +385,15 @@ class ReturpenjualanController extends Controller {
             501 => 'Not Implemented',
         );
         return (isset($codes[$status])) ? $codes[$status] : '';
+    }
+    public function actionExcel() {
+        session_start();
+        $query = $_SESSION['query'];
+        $query->offset("");
+        $query->limit("");
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+        return $this->render("excel", ['models' => $models]);
     }
 
 }

@@ -3,6 +3,7 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
 
     //init data;
     var tableStateRef;
+    var paramRef;
     $scope.form = {};
     $scope.displayed = [];
     $scope.is_edit = false;
@@ -31,7 +32,7 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
         if (tableState.search.predicateObject) {
             param['filter'] = tableState.search.predicateObject;
         }
-
+         paramRef = param;
         Data.get('returpenjualan/', param).then(function(data) {
             $scope.displayed = data.data;
             tableState.pagination.numberOfPages = Math.ceil(data.totalItems / limit);
@@ -39,6 +40,11 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
 
         $scope.isLoading = false;
     };
+       $scope.excel = function () {
+        Data.get('returpenjualan', paramRef).then(function (data) {
+            window.location = 'api/web/returpenjualan/excel';
+        });
+    }
 
     $scope.create = function(form) {
         $scope.is_create = false;
