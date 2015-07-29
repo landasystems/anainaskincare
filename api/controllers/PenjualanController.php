@@ -50,7 +50,6 @@ class PenjualanController extends Controller {
         }
         $verb = Yii::$app->getRequest()->getMethod();
         $allowed = array_map('strtoupper', $verbs);
-//        Yii::error($allowed);
 
         if (!in_array($verb, $allowed)) {
 
@@ -63,12 +62,15 @@ class PenjualanController extends Controller {
     }
 
     public function actionIndex() {
+        session_start();
+
         //init variable
         $params = $_REQUEST;
         $filter = array();
         $sort = "penjualan.id ASC";
         $offset = 0;
         $limit = 10;
+
         //limit & offset pagination
         if (isset($params['limit']))
             $limit = $params['limit'];
@@ -92,6 +94,7 @@ class PenjualanController extends Controller {
                 ->limit($limit)
                 ->from(['penjualan', 'm_cabang', 'm_customer'])
                 ->where('penjualan.cabang_id = m_cabang.id and penjualan.customer_id = m_customer.id')
+                ->andWhere(['penjualan.cabang_id' => $_SESSION['user']['cabang_id']])
                 ->orderBy($sort)
                 ->select("m_cabang.nama as cabang, m_customer.nama as customer, penjualan.kode as kode, penjualan.tanggal as tanggal,
                     penjualan.keterangan as keterangan, penjualan.total as total, penjualan.cash as cash, penjualan.credit as credit, penjualan.status as status,
@@ -128,14 +131,14 @@ class PenjualanController extends Controller {
         $no_tlp = (isset($cus->no_tlp)) ? $cus->no_tlp : '';
         $email = (isset($cus->email)) ? $cus->email : '';
         $alamat = (isset($cus->alamat)) ? $cus->alamat : '';
-        
+
         $data['customers'] = [
             'id' => $idcus,
             'nama' => $cus_nama,
-            'no_tlp'=>$no_tlp,
-            'email'=>$email,
-            'alamat'=>$alamat
-                ];
+            'no_tlp' => $no_tlp,
+            'email' => $email,
+            'alamat' => $alamat
+        ];
 
         $det = PenjualanDet::find()
                 ->with(['barang'])

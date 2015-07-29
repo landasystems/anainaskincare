@@ -156,11 +156,7 @@ class StokkeluarController extends Controller {
     }
 
     public function actionView($id) {
-
-//        $model = $this->findModel($id);
-
         $query = new Query;
-
         $query->from(['stok_keluar', 'm_cabang'])
                 ->where('stok_keluar.id="' . $id . '" and m_cabang.id = stok_keluar.cabang_id ')
                 ->select("stok_keluar.*,  m_cabang.nama as namacabang");
@@ -182,9 +178,6 @@ class StokkeluarController extends Controller {
             $hargaBarang = (isset($val->barang->harga_beli_terakhir)) ? $val->barang->harga_beli_terakhir : '';
             $detail[$key]['produk'] = ['id' => $val->produk_id, 'nama' => $namaBarang, 'harga_beli_terakhir' => $hargaBarang];
         }
-//        $data = array();
-//        $data = $model->attributes;
-//        $data['tanggal'] = date("d-m-Y", strtotime($models['tanggal']));
 
         $this->setHeader(200);
         echo json_encode(array('status' => 1, 'data' => $models, 'detail' => $detail), JSON_PRETTY_PRINT);
@@ -273,7 +266,6 @@ class StokkeluarController extends Controller {
         if (($model = StokKeluar::findOne($id)) !== null) {
             return $model;
         } else {
-
             $this->setHeader(400);
             echo json_encode(array('status' => 0, 'error_code' => 400, 'message' => 'Bad request'), JSON_PRETTY_PRINT);
             exit;

@@ -350,18 +350,20 @@
             <tr ng-repeat="detail in detPenjualan">
                 <td>
                     {{detail.produk.nama}}
-                    <table ng-show="detail.type == 'Jasa'" border="0">
-                        <tr>
-                            <td>
-                                Dokter: {{detail.dokter.nama}} - {{detail.fee_dokter| currency:undefined:0}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Terapis: {{detail.terapis.nama}} - {{detail.fee_terapis| currency:undefined:0}}
-                            </td>
-                        </tr>
-                    </table>
+                    <div ng-show="detail.type == 'Jasa'">
+                        <table border="0">
+                            <tr>
+                                <td>
+                                    Dokter: {{detail.dokter.nama}} - {{detail.fee_dokter| currency:undefined:0}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Terapis: {{detail.terapis.nama}} - {{detail.fee_terapis| currency:undefined:0}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </td>
                 <td style="text-align: right">
                     {{detail.jumlah}}

@@ -52,7 +52,6 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
             $scope.retrive.alamat = data.data.alamat;
             $scope.form.customer_id = wo;
             $scope.form.credit = 0;
-
         });
     };
     $scope.getkode_cabang = function(id) {
@@ -80,7 +79,6 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
     }
     //retrive lebih dari 1 tabel
     $scope.pilihCustomer = function(form, $item) {
-
         form.no_tlp = $item.no_tlp;
         form.email = $item.email;
         form.alamat = $item.alamat;
@@ -123,7 +121,6 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         }
         $scope.total();
         $scope.detPenjualan.unshift(newDet);
-
     };
     $scope.total = function() {
         var total = 0;
@@ -201,12 +198,15 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         $scope.is_create = true;
         $scope.formtitle = "Edit Data Penjualan : " + row.kode;
         $scope.selected(row.id);
+        $scope.form = row;
     };
     $scope.view = function(row) {
         $scope.is_edit = true;
         $scope.is_view = true;
         $scope.formtitle = "Lihat Data Penjualan : " + row.kode;
         $scope.selected(row.id);
+        $scope.form = row;
+        console.log($scope.form);
     };
     $scope.save = function(form, detail) {
         var data = {

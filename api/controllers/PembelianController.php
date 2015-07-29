@@ -45,7 +45,6 @@ class PembelianController extends Controller {
         }
         $verb = Yii::$app->getRequest()->getMethod();
         $allowed = array_map('strtoupper', $verbs);
-//        Yii::error($allowed);
 
         if (!in_array($verb, $allowed)) {
 
@@ -65,7 +64,6 @@ class PembelianController extends Controller {
                 ->where('pembelian_id=' . $id);
 
         //filter
-
         $command = $query->createCommand();
         $models = $command->queryAll();
 
@@ -75,17 +73,21 @@ class PembelianController extends Controller {
     }
 
     public function actionIndex() {
+        session_start();
+
         //init variable
         $params = $_REQUEST;
         $filter = array();
         $sort = "tanggal DESC";
         $offset = 0;
         $limit = 10;
+
         //limit & offset pagination
         if (isset($params['limit']))
             $limit = $params['limit'];
         if (isset($params['offset']))
             $offset = $params['offset'];
+
         //sorting
         if (isset($params['sort'])) {
             $sort = $params['sort'];
@@ -96,6 +98,7 @@ class PembelianController extends Controller {
                     $sort.=" DESC";
             }
         }
+
         //create query
         $query = new Query;
         $query->offset($offset)
@@ -104,7 +107,9 @@ class PembelianController extends Controller {
                 ->join('JOIN', 'm_supplier as su', 'pe.supplier_id = su.id')
                 ->join('JOIN', 'm_cabang as ca', 'pe.cabang_id= ca.id')
                 ->orderBy($sort)
-                ->select("pe.*,ca.nama as klinik, su.nama as nama_supplier,su.alamat as alamat, su.no_tlp as no_tlp,su.email as email");
+                ->select("pe.*,ca.nama as klinik, su.nama as nama_supplier,su.alamat as alamat, su.no_tlp as no_tlp,su.email as email")
+                ->andWhere(['pe.cabang_id' => $_SESSION['user']['cabang_id']]);
+
         //filter
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
@@ -121,8 +126,7 @@ class PembelianController extends Controller {
         }
         $command = $query->createCommand();
         $models = $command->queryAll();
-//        $totalItems = $query->count();
-        $totalItems = 0;
+        $totalItems = $query->count();
 
         $this->setHeader(200);
 

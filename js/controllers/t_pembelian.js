@@ -6,7 +6,6 @@ app.controller('pembelianCtrl', function($scope, Data, toaster) {
     $scope.pembeliandet = [
         {
             id: '',
-//            pembelian_id: '',
             produk_id: '',
             jumlah: '',
             harga: '',
@@ -14,12 +13,6 @@ app.controller('pembelianCtrl', function($scope, Data, toaster) {
             sub_total: ''
         }
     ];
-    $scope.datepickerOptions = {
-        language: "id",
-        autoclose: true,
-        weekStart: 0
-    }
-
     $scope.is_edit = false;
     $scope.is_view = false;
     $scope.is_create = false;
@@ -114,6 +107,7 @@ app.controller('pembelianCtrl', function($scope, Data, toaster) {
         $scope.formtitle = "Lihat Pembelian : " + $scope.form.kode;
         $scope.det = {};
         $scope.getDetail(form.id);
+         $scope.bayar();
     };
     $scope.getDetail = function(id) {
         Data.get('pembelian/view/' + id).then(function(data) {
@@ -153,24 +147,9 @@ app.controller('pembelianCtrl', function($scope, Data, toaster) {
             });
         }
     };
-//    $scope.selectedSupplier = function (sup_id) {
-//        Data.get('pembelian/selectedsupplier/' + sup_id).then(function (result) {
-//            $scope.form.no_tlp = result.selected.no_tlp;
-//            $scope.form.email = result.selected.email;
-//            $scope.form.alamat = result.selected.alamat;
-//        });
-//    };
-//    $scope.selectedProduk = function (detail) {
-//        $scope.detail = detail;
-//        Data.get('pembelian/selectedproduk/' + detail.produk_id).then(function (result) {
-//            $scope.detail.diskon = parseInt(result.selected.diskon);
-//            $scope.detail.harga = parseInt(result.selected.harga_beli_terakhir);
-//        });
-//    };
     $scope.addrow = function() {
         $scope.pembeliandet.unshift({
             id: '',
-//            pembelian_id: ($scope.form.id != '') ? $scope.form.id : '',
             barang: [],
             jumlah: '',
             harga: '',
