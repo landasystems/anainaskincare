@@ -33,126 +33,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         autoclose: true,
         weekStart: 0
     }
-    Data.get('penjualan/customer').then(function(data) {
-        $scope.sCustomer = data.customer;
-    });
-    Data.get('site/session').then(function(data) {
-        $scope.sCabang = data.data.user.cabang;
-    });
-    Data.post('penjualan/dokter').then(function(data) {
-        $scope.list_dokter = data.dokter;
-    });
-    Data.post('penjualan/terapis').then(function(data) {
-        $scope.list_terapis = data.terapis;
-    });
-    $scope.getcustomer = function(wo) {
-        Data.get('penjualan/nm_customer/' + wo).then(function(data) {
-            $scope.retrive.no_tlp = data.data.no_tlp;
-            $scope.retrive.email = data.data.email;
-            $scope.retrive.alamat = data.data.alamat;
-            $scope.form.customer_id = wo;
-            $scope.form.credit = 0;
-        });
-    };
-    $scope.getkode_cabang = function(id) {
-        Data.get('penjualan/kode_cabang/' + id).then(function(data) {
-            $scope.form.kode = data.kode;
-            $scope.form.cabang_id = id;
-
-        });
-    };
-    //select2 product
-    $scope.cariProduk = function($query) {
-        if ($query.length >= 3) {
-            Data.get('barang/cari', {nama: $query}).then(function(data) {
-                $scope.results = data.data;
-            });
-        }
-    }
-    $scope.cariCustomer = function($query) {
-        if ($query.length >= 3) {
-            Data.get('customer/cari', {nama: $query}).then(function(data) {
-                $scope.results = data.data;
-                console.log(data.data);
-            });
-        }
-    }
-    //retrive lebih dari 1 tabel
-    $scope.pilihCustomer = function(form, $item) {
-        form.no_tlp = $item.no_tlp;
-        form.email = $item.email;
-        form.alamat = $item.alamat;
-    }
-    $scope.pilih = function(detail, $item) {
-        detail.harga = $item.harga_jual;
-        detail.type = $item.type;
-        detail.diskon = $item.diskon;
-        detail.fee_dokter = $item.fee_dokter;
-        detail.fee_terapis = $item.fee_terapis;
-    }
-    $scope.getproduk = function(detail) {
-        $scope.detail = detail;
-        Data.get('penjualan/det_produk/' + detail.produk_id).then(function(data) {
-            $scope.detail.type = data.produk.type;
-            $scope.detail.harga = data.produk.harga_jual;
-            $scope.detail.diskon = data.produk.diskon;
-            $scope.detail.fee_terapis = data.produk.fee_terapis;
-            $scope.detail.fee_dokter = data.produk.fee_dokter;
-            $scope.form.credit = 0;
-        });
-    };
-    //selected
-    $scope.selected = function(id) {
-        Data.get('penjualan/view/' + id).then(function(data) {
-            $scope.form = data.data;
-            $scope.form.no_tlp = data.data.customers.no_tlp;
-            $scope.form.email = data.data.customers.email;
-            $scope.form.alamat = data.data.customers.alamat;
-            $scope.detPenjualan = data.detail;
-        });
-        $scope.total();
-    }
-    $scope.addDetail = function() {
-        var newDet = {
-            id: '',
-            type: '',
-            jumlah: '',
-            diskon: '',
-        }
-        $scope.total();
-        $scope.detPenjualan.unshift(newDet);
-    };
-    $scope.total = function() {
-        var total = 0;
-        var diskon = 0;
-        angular.forEach($scope.detPenjualan, function(detail) {
-            diskon += detail.jumlah * detail.diskon;
-            total += detail.jumlah * detail.harga;
-        });
-        $scope.form.total = (total - diskon);
-        $scope.form.belanja = (total - diskon);
-        $scope.detail.sub_total = (total - diskon);
-    }
-    $scope.removeRow = function(paramindex) {
-        var comArr = eval($scope.detPenjualan);
-        $scope.total();
-        if (comArr.length > 1) {
-            $scope.detPenjualan.splice(paramindex, 1);
-            $scope.total();
-        } else {
-            alert("Something gone wrong");
-        }
-
-    };
-    $scope.bayar = function() {
-        var total = parseInt($scope.form.total);
-        var cash = parseInt($scope.form.cash);
-        var credit = total - cash;
-        $scope.form.credit = (credit > 0) ? credit : 0;
-    }
-    $scope.detail.type = {
-        allowClear: true,
-    }
+   
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
         $scope.isLoading = true;
@@ -206,7 +87,6 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         $scope.formtitle = "Lihat Data Penjualan : " + row.kode;
         $scope.selected(row.id);
         $scope.form = row;
-        console.log($scope.form);
     };
     $scope.save = function(form, detail) {
         var data = {
@@ -239,4 +119,131 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
             });
         }
     };
+     Data.get('penjualan/customer').then(function(data) {
+        $scope.sCustomer = data.customer;
+    });
+    Data.get('site/session').then(function(data) {
+        $scope.sCabang = data.data.user.cabang;
+    });
+    Data.post('penjualan/dokter').then(function(data) {
+        $scope.list_dokter = data.dokter;
+    });
+    Data.post('penjualan/terapis').then(function(data) {
+        $scope.list_terapis = data.terapis;
+    });
+    $scope.getcustomer = function(wo) {
+        Data.get('penjualan/nm_customer/' + wo).then(function(data) {
+            $scope.retrive.no_tlp = data.data.no_tlp;
+            $scope.retrive.email = data.data.email;
+            $scope.retrive.alamat = data.data.alamat;
+            $scope.form.customer_id = wo;
+            $scope.form.credit = 0;
+        });
+    };
+    $scope.getkode_cabang = function(form) {
+        Data.get('penjualan/kode_cabang/' + form.cabang.id).then(function(data) {
+            $scope.form.kode = data.kode;
+            $scope.form.cabang_id = id;
+
+        });
+    };
+      $scope.excel = function () {
+        Data.get('validasibom', paramRef).then(function (data) {
+            window.location = 'api/web/penjualan/excel';
+        });
+    }
+    //select2 product
+    $scope.cariProduk = function($query) {
+        if ($query.length >= 3) {
+            Data.get('barang/cari', {nama: $query}).then(function(data) {
+                $scope.results = data.data;
+            });
+        }
+    }
+    $scope.cariCustomer = function($query) {
+        if ($query.length >= 3) {
+            Data.get('customer/cari', {nama: $query}).then(function(data) {
+                $scope.results = data.data;
+                console.log(data.data);
+            });
+        }
+    }
+    //retrive lebih dari 1 tabel
+    $scope.pilihCustomer = function(form, $item) {
+        form.no_tlp = $item.no_tlp;
+        form.email = $item.email;
+        form.alamat = $item.alamat;
+    }
+    $scope.pilih = function(detail, $item) {
+        detail.harga = $item.harga_jual;
+        detail.type = $item.type;
+        detail.diskon = $item.diskon;
+        detail.fee_dokter = $item.fee_dokter;
+        detail.fee_terapis = $item.fee_terapis;
+    }
+    $scope.getproduk = function(detail) {
+        $scope.detail = detail;
+        Data.get('penjualan/det_produk/' + detail.produk_id).then(function(data) {
+            $scope.detail.type = data.produk.type;
+            $scope.detail.harga = data.produk.harga_jual;
+            $scope.detail.diskon = data.produk.diskon;
+            $scope.detail.fee_terapis = data.produk.fee_terapis;
+            $scope.detail.fee_dokter = data.produk.fee_dokter;
+            $scope.form.credit = 0;
+        });
+    };
+    //selected
+    $scope.selected = function(id) {
+        Data.get('penjualan/view/' + id).then(function(data) {
+            console.log(data.data);
+            $scope.form = data.data;
+            $scope.form.cabang_id = data.data.cabang_id.id;
+            $scope.form.no_tlp = data.data.customers.no_tlp;
+            $scope.form.email = data.data.customers.email;
+            $scope.form.alamat = data.data.customers.alamat;
+            $scope.detPenjualan = data.detail;
+        });
+        $scope.total();
+    }
+    $scope.addDetail = function() {
+        var newDet = {
+            id: '',
+            type: '',
+            jumlah: '',
+            diskon: '',
+        }
+        $scope.total();
+        $scope.detPenjualan.unshift(newDet);
+    };
+    $scope.total = function() {
+        var total = 0;
+        var diskon = 0;
+        angular.forEach($scope.detPenjualan, function(detail) {
+            diskon += detail.jumlah * detail.diskon;
+            total += detail.jumlah * detail.harga;
+        });
+        $scope.form.total = (total - diskon);
+        $scope.form.belanja = (total - diskon);
+        $scope.detail.sub_total = (total - diskon);
+    }
+    $scope.removeRow = function(paramindex) {
+        var comArr = eval($scope.detPenjualan);
+        $scope.total();
+        if (comArr.length > 1) {
+            $scope.detPenjualan.splice(paramindex, 1);
+            $scope.total();
+        } else {
+            alert("Something gone wrong");
+        }
+
+    };
+    $scope.bayar = function() {
+        var total = parseInt($scope.form.total);
+        var cash = parseInt($scope.form.cash);
+        var credit = total - cash;
+        $scope.form.credit = (credit > 0) ? credit : 0;
+    }
+    $scope.detail.type = {
+        allowClear: true,
+    }
 })
