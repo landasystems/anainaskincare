@@ -3,6 +3,8 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
 
     //init data;
     var tableStateRef;
+    var paramRef;
+    
     $scope.form = {};
     $scope.displayed = [];
     $scope.is_edit = false;
@@ -46,7 +48,7 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
         if (tableState.search.predicateObject) {
             param['filter'] = tableState.search.predicateObject;
         }
-
+        paramRef = param;
         Data.get('bayarpiutang/', param).then(function(data) {
             $scope.displayed = data.data;
 //            console.log($scope.displayed);
@@ -55,6 +57,12 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
 
         $scope.isLoading = false;
     };
+    
+    $scope.excel = function () {
+        Data.get('bayarpiutang', paramRef).then(function (data) {
+            window.location = 'api/web/bayarpiutang/excel';
+        });
+    }
 
     $scope.create = function(form) {
         $scope.is_create = true;

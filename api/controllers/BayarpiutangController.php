@@ -25,6 +25,7 @@ class BayarpiutangController extends Controller {
                     'update' => ['post'],
                     'delete' => ['delete'],
                     'cabang' => ['get'],
+                    'excel' => ['get'],
                     'customer' => ['get'],
                     'produk' => ['get'],
                     'det_penjualan' => ['get'],
@@ -59,6 +60,7 @@ class BayarpiutangController extends Controller {
 
     public function actionIndex() {
         //init variable
+         session_start();
         $params = $_REQUEST;
         $filter = array();
         $sort = "pinjaman.id ASC";
@@ -110,6 +112,7 @@ class BayarpiutangController extends Controller {
                 }
             }
         }
+        $_SESSION['query'] = $query;
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -325,6 +328,15 @@ class BayarpiutangController extends Controller {
             501 => 'Not Implemented',
         );
         return (isset($codes[$status])) ? $codes[$status] : '';
+    }
+    public function actionExcel() {
+        session_start();
+        $query = $_SESSION['query'];
+        $query->offset("");
+        $query->limit("");
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+        return $this->render("excel", ['models' => $models]);
     }
 
 }

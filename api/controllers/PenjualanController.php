@@ -26,6 +26,7 @@ class PenjualanController extends Controller {
                     'update' => ['post'],
                     'delete' => ['delete'],
                     'cabang' => ['get'],
+                    'excel' => ['get'],
                     'customer' => ['get'],
                     'produk' => ['get'],
                     'nm_customer' => ['get'],
@@ -115,11 +116,12 @@ class PenjualanController extends Controller {
                 }
             }
         }
+        $_SESSION['query'] = $query;
 
         $command = $query->createCommand();
         $models = $command->queryAll();
         $totalItems = $query->count();
-
+        
         $this->setHeader(200);
 
         echo json_encode(array('status' => 1, 'data' => $models, 'totalItems' => $totalItems), JSON_PRETTY_PRINT);
@@ -466,6 +468,15 @@ class PenjualanController extends Controller {
             501 => 'Not Implemented',
         );
         return (isset($codes[$status])) ? $codes[$status] : '';
+    }
+    public function actionExcel() {
+        session_start();
+        $query = $_SESSION['query'];
+        $query->offset("");
+        $query->limit("");
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+        return $this->render("excel", ['models' => $models]);
     }
 
 }

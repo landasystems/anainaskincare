@@ -3,6 +3,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
 
     //init data;
     var tableStateRef;
+    var paramRef;
     $scope.form = {};
     $scope.displayed = [];
     $scope.is_edit = false;
@@ -48,7 +49,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         if (tableState.search.predicateObject) {
             param['filter'] = tableState.search.predicateObject;
         }
-
+        paramRef = param;
         Data.get('penjualan/', param).then(function(data) {
             $scope.displayed = data.data;
             tableState.pagination.numberOfPages = Math.ceil(data.totalItems / limit);
@@ -148,7 +149,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         });
     };
       $scope.excel = function () {
-        Data.get('validasibom', paramRef).then(function (data) {
+        Data.get('penjualan', paramRef).then(function (data) {
             window.location = 'api/web/penjualan/excel';
         });
     }
