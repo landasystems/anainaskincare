@@ -2,7 +2,7 @@
 header("Content-type: application/vnd-ms-excel");
 header("Content-Disposition: attachment; filename=excel-Transaksi-Penjualan.xls");
 ?>
-<h3>Penjualan</h3>
+<h3>Data Transaksi Penjualan</h3>
 <br><br>
 <table border="1">
     <tr>
