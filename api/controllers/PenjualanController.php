@@ -139,6 +139,15 @@ class PenjualanController extends Controller {
             'email' => $email,
             'alamat' => $alamat
         ];
+        $data['cabang'] = [
+            'id' => '1',
+            'kode' => '001',
+            'nama' => 'anaina singosari',
+            'alamat' => 'jl raya mondoroko',
+            'no_tlp' => '03416677812',
+            'email' => 'anainasingosari@yahoo.com',
+            'is_deleted' => '0',
+        ];
 
         $det = PenjualanDet::find()
                 ->with(['barang'])
@@ -169,10 +178,12 @@ class PenjualanController extends Controller {
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
+        Yii::error($params);
         $model = new Penjualan();
         $model->attributes = $params['penjualan'];
         $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
         $model->customer_id = $params['penjualan']['customers']['id'];
+        $model->cabang_id = $params['penjualan']['cabang']['id'];
 
 
         if ($model->save()) {
@@ -217,6 +228,7 @@ class PenjualanController extends Controller {
         $model->attributes = $params['penjualan'];
         $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
         $model->customer_id = $params['penjualan']['customers']['id'];
+        $model->cabang_id = $params['penjualan']['cabang']['id'];
 
         if ($model->save()) {
             if ($model->status == 'Selesai') {
