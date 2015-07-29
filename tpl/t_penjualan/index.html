@@ -95,7 +95,7 @@
                                             </ui-select-choices>
                                         </ui-select>
                                         <span class="input-group-btn">
-                                            <button ng-click="detail.customer_id = undefined" class="btn btn-default">
+                                            <button ng-click="form.customers = undefined" class="btn btn-default">
                                                 <span class="glyphicon glyphicon-trash"></span>
                                             </button>
                                         </span>
@@ -328,95 +328,88 @@
 <!--PRINT-->
 
 <div id="printArea" ng-show="is_view">
-    <center>
-        <b>PERSEDIAAN BARANG MASUK</b>
-    </center>
-    <div class="kiri">
-        <img ng-src="img/logo.png" align="left" style="margin-right: 8px"/>
-        Jln P.ROON No.15 Sawotratap<br/>
-        Telp. 031-853 2117<br/>
-        www.anainaskincare.com
+    <div style="height: 75px;">
+        <div class="kiri">
+            <img ng-src="img/logo.png" align="left" style="margin-right: 8px"/>
+            Jln P.ROON No.15 Sawotratap<br/>
+            Telp. 031-853 2117<br/>
+            www.anainaskincare.com<br>
+            No. Nota : {{form.kode}}
+        </div>
+        <div class="kanan">
+            <span class="label"><u>Kepada Yth.</u></span><br/>
+            <span class="label">TN/NY {{form.customers.nama}}</span><br/>
+            <span class="label">{{form.alamat}} {{form.no_tlp}}</span><br/>
+        </div>
     </div>
-    <div class="kanan">
-        <span class="label"><u>Kepada Yth.</u></span><br/>
-        <span class="label">TN/NY .{{form.customer}}</span><br/>
-        <span class="label">{{form.alamat}} - {{form.no_tlp}}</span><br/>
-    </div>
-    <br/>
-    <table>
-        <thead>
-            <tr>
-                <th style="width:200px;">Nama Barang</th>
-                <th style="width:20px;">Banyaknya</th>
-                <th style="width:100px;">Harga</th>
-                <th style="width:200px;">Disc</th>
-                <th style="width:200px;">Jumlah Uang</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="detail in detPenjualan">
-                <td>
-                    {{detail.produk.nama}}
-                    <div ng-show="detail.type == 'Jasa'">
-                        <table border="0">
-                            <tr>
-                                <td>
-                                    Dokter: {{detail.dokter.nama}} - {{detail.fee_dokter| currency:undefined:0}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Terapis: {{detail.terapis.nama}} - {{detail.fee_terapis| currency:undefined:0}}
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </td>
-                <td style="text-align: right">
-                    {{detail.jumlah}}
-                </td>
-                <td style="text-align: right">
-                    {{detail.harga| currency:undefined:0}}
-                </td>
-                <td style="text-align: right">
-                    {{detail.diskon| currency:undefined:0}}
-                </td>
-                <td style="text-align: right">
-                    {{(detail.jumlah * detail.harga) - (detail.jumlah * detail.diskon) | number}}
-                </td>
-            </tr>
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="3" rowspan="4"> <b>Ket:</b> Barang - barang yang sudah di beli tidak dapat ditukar / dikembalikan kecuali ada perjanjian, Hormat kami <br>
-                    Dicetak Oleh: {{user.nama}} 
-                </td>
-                <th  style="text-align: right;border-bottom: none">Total :&nbsp;</th>
-                <td style="text-align: right;">
-                    {{form.total| currency:undefined:0}}
-                </td>
-            </tr>
-            <tr>
-                <th  style="text-align: right; border-bottom: none">Bayar :&nbsp;</th>
-                <td style="text-align: right;">
-                    {{form.cash| currency:undefined:0}}
-                </td>
-            </tr>
-            <tr>
-                <th  style="text-align: right;border-bottom: none">Kredit :&nbsp;</th>
-                <td style="text-align: right;">
-                    {{form.credit| currency:undefined:0}}
-                </td>
-            </tr>
+    <div style="margin-top: 20px;">
+        <table class="print-detail">
+            <thead>
+                <tr>
+                    <th style="width:400px;">Nama Barang</th>
+                    <th style="width:200px;">Banyaknya</th>
+                    <th style="width:200px;">Harga</th>
+                    <th style="width:200px;">Disc</th>
+                    <th style="width:200px;">Jumlah Uang</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="detail in detPenjualan">
+                    <td>
+                        {{detail.produk.nama}} 
+                        <div ng-if="detail.type == 'Jasa'">
+                            <p style="margin:0px;padding: 0px;">-Terapis : {{detail.terapis.nama}}</p>
+                            <p style="margin:0px;padding: 0px;">-Dokter : {{detail.dokter.nama}}</p>
+                        </div>
+                    </td>
+                    <td style="text-align: right; vertical-align: 0px;">
+                        {{detail.jumlah}}
+                    </td>
+                    <td style="text-align: right; vertical-align: 0px;">
+                        {{detail.harga| currency:undefined:0}}
+                    </td>
+                    <td style="text-align: right; vertical-align: 0px;">
+                        {{detail.diskon| currency:undefined:0}}
+                    </td>
+                    <td style="text-align: right; vertical-align: 0px;">
+                        {{(detail.jumlah * detail.harga) - (detail.jumlah * detail.diskon) | currency:undefined:0}}
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot style="font-style: normal;">
+                <tr>
+                    <td colspan="3" rowspan="4"> 
+                        <b>Ket:</b> Barang - barang yang sudah di beli tidak dapat ditukar / dikembalikan kecuali ada perjanjian, 
+                        <p>Hormat kami, </p>
+                        <p>Dicetak Oleh: {{user.nama}} </p>
+                    </td>
+                    <td  style="text-align: right;border-bottom: none">Total :&nbsp;</td>
+                    <td style="text-align: right;">
+                        {{form.total| currency:undefined:0}}
+                    </td>
+                </tr>
+                <tr>
+                    <td  style="text-align: right; border-bottom: none">Bayar :&nbsp;</td>
+                    <td style="text-align: right;">
+                        {{form.cash| currency:undefined:0}}
+                    </td>
+                </tr>
+                <tr>
+                    <td  style="text-align: right;border-bottom: none">Kredit :&nbsp;</td>
+                    <td style="text-align: right;">
+                        {{form.credit| currency:undefined:0}}
+                    </td>
+                </tr>
 
-            <tr>
-                <th  style="text-align: right;">Kembali :&nbsp;</th>
-                <td style="text-align: right;">
-                    {{((form.cash * 1 + form.credit * 1) - form.total) | currency:undefined:0}}
-                </td>
-            </tr>
-        </tfoot>
-    </table>
+                <tr>
+                    <td  style="text-align: right;">Kembali :&nbsp;</td>
+                    <td style="text-align: right;">
+                        {{((form.cash * 1 + form.credit * 1) - form.total) | currency:undefined:0}}
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
 </div>
 </div>
 
