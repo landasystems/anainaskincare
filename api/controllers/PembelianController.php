@@ -29,6 +29,7 @@ class PembelianController extends Controller {
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
+                    'kode_cabang' => ['get'],
                 ],
             ]
         ];

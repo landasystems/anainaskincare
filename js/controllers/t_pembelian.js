@@ -17,6 +17,13 @@ app.controller('pembelianCtrl', function($scope, Data, toaster) {
     $scope.is_view = false;
     $scope.is_create = false;
 
+    $scope.getkode_cabang = function(form) {
+        Data.get('pembelian/kode_cabang/' + form.cabang.id).then(function(data) {
+            $scope.form.kode = data.kode;
+            $scope.form.cabang_id = id;
+
+        });
+    };
     $scope.cariSupplier = function($query) {
         if ($query.length >= 3) {
             Data.get('supplier/cari', {nama: $query}).then(function(data) {
@@ -107,7 +114,7 @@ app.controller('pembelianCtrl', function($scope, Data, toaster) {
         $scope.formtitle = "Lihat Pembelian : " + $scope.form.kode;
         $scope.det = {};
         $scope.getDetail(form.id);
-         $scope.bayar();
+        $scope.bayar();
     };
     $scope.getDetail = function(id) {
         Data.get('pembelian/view/' + id).then(function(data) {
