@@ -4,7 +4,7 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
     //init data;
     var tableStateRef;
     var paramRef;
-    
+
     $scope.form = {};
     $scope.displayed = [];
     $scope.is_edit = false;
@@ -57,9 +57,9 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
 
         $scope.isLoading = false;
     };
-    
-    $scope.excel = function () {
-        Data.get('bayarpiutang', paramRef).then(function (data) {
+
+    $scope.excel = function() {
+        Data.get('bayarpiutang', paramRef).then(function(data) {
             window.location = 'api/web/bayarpiutang/excel';
         });
     }
@@ -76,7 +76,7 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
                 tanggal_transaksi: '',
                 status: '',
                 debet: '',
-                credit: ''
+                credit: 0
             }
         ];
 
@@ -88,12 +88,22 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
         $scope.is_create = false;
         $scope.formtitle = "Edit Data Piutang : " + $scope.form.kode;
         $scope.detail(row);
+        $scope.detPenjualan = [
+            {
+                id: '',
+                tanggal_transaksi: '',
+                status: '',
+                debet: '',
+                credit: 0
+            }
+        ];
     };
     $scope.view = function(row) {
         $scope.is_edit = true;
         $scope.is_view = true;
         $scope.form = row;
         $scope.detail(row);
+        $scope.total();
         $scope.formtitle = "Lihat Data Piutang : " + $scope.form.kode;
         $scope.is_edit = true;
         $scope.is_view = true;
@@ -134,7 +144,14 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
         Data.get('bayarpiutang/view/' + form.penjualan_id).then(function(result) {
 //            $scope.detail = result.data;
             $scope.detPenjualan = result.data;
+            angular.forEach($scope.detPenjualan, function(detail) {
+                detail.credit = (detail.credit != undefined) ? detail.credit : 0;
+                detail.debet= (detail.debet != undefined) ? detail.debet : 0;
+            });
+            $scope.total();
+
         });
+
     };
     $scope.addrow = function() {
         $scope.detPenjualan.unshift({
@@ -142,14 +159,27 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
 //            pembelian_id: ($scope.form.id != '') ? $scope.form.id : '',
             tanggal_transaksi: '',
             status: '',
-            debet: '',
-            credit: '',
+            debet: 0,
+            credit: 0,
         });
+        $scope.total();
     };
+
+    $scope.total = function() {
+        var total_debet = 0;
+        var total_credit = 0;
+        angular.forEach($scope.detPenjualan, function(detail) {
+            total_debet += (parseInt(detail.debet) != undefined) ? parseInt(detail.debet) : 0;
+            total_credit += (parseInt(detail.credit) != undefined) ? parseInt(detail.credit) : 0;
+        });
+        $scope.form.total_debet = total_debet;
+        $scope.form.total_credit = total_credit;
+    }
     $scope.removeRow = function(paramindex) {
         var comArr = eval($scope.detPenjualan);
         if (comArr.length > 1) {
             $scope.detPenjualan.splice(paramindex, 1);
+            $scope.total();
         } else {
             alert("Something gone wrong");
         }
