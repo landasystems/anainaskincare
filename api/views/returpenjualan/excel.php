@@ -1,8 +1,8 @@
 <?php
 header("Content-type: application/vnd-ms-excel");
-header("Content-Disposition: attachment; filename=excel-Transaksi-Penjualan.xls");
+header("Content-Disposition: attachment; filename=excel-Transaksi-Retur-Penjualan.xls");
 ?>
-<h3>Penjualan</h3>
+<h3>Data Transaksi Retur Penjualan</h3>
 <br><br>
 <table border="1">
     <tr>

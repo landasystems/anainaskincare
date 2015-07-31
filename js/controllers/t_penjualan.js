@@ -29,11 +29,6 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
             fee_dokter: '',
         }
     ];
-    $scope.datepickerOptions = {
-        language: 'id',
-        autoclose: true,
-        weekStart: 0
-    }
    
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;

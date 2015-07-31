@@ -148,6 +148,7 @@ class KartuStok extends \yii\db\ActiveRecord {
                 $a = 0;
                 unset($tmpSaldo);
                 unset($tmp);
+                $tmp[$a] = array('jumlah' => 0, 'harga' => 0);
             }
 
             if ($val['jumlah_masuk'] > 0) {

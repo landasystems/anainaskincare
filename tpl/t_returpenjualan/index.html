@@ -13,36 +13,33 @@
             </div>
             <div collapse="isCollapsed" class="panel-body collapse" style="height: 0px;">
                 <div class="form-horizontal">
-                    <div class="form-group">
-                        <div class="control-group">
-                            <label class="col-sm-2 control-label">Kode</label>
-                            <div class="col-sm-3">
-                                <input st-search="kode" class="form-control"/>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Kode Retur</label>
+                            <div class="col-sm-9">
+                                <input st-search="r_penjualan.kode" class="form-control"/>
                             </div>
                         </div>
-                        <div class="control-group">
-                            <label class="col-sm-2 control-label">Cabang</label>
-                            <div class="col-sm-3">
-                                <select ui-select2="selectcabang" st-search="cabang_id" ng-model="cabangs"  style="width: 250px;">
-                                    <option value="">-Pilih Cabang-</option>
-                                    <option ng-repeat="cabang in sCabang" value="{{cabang.id}}">{{cabang.nama}}</option>
-                                </select>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Periode</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" st-search="r_penjualan.tanggal" type="text" date-range-picker ng-model="tanggals">
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="control-group">
-                            <label class="col-sm-2 control-label">Kode Penjualan</label>
-                            <div class="col-sm-3">
-                                <input st-search="kode_penjualan" class="form-control"/>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Customer</label>
+                            <div class="col-sm-9">
+                                <input st-search="m_customer.nama" class="form-control"/>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="col-sm-2 control-label">Customer</label>
-                            <div class="col-sm-3">
-                                <select ui-select2="selectcustomer" st-search="customer_id" ng-model="customers" style="width: 250px;">
-                                    <option value="">-Pilih Customer-</option>
-                                    <option ng-repeat="customer in sCustomer" value="{{customer.id}}">{{customer.nama}}</option>
+                            <label class="col-sm-3 control-label">Cabang</label>
+                            <div class="col-sm-9">
+                                <select class="form-control " st-search="penjualan.cabang_id">
+                                    <option value="">-Pilih Cabang-</option>
+                                    <option ng-repeat="cabang in sCabang" value="{{cabang.id}}">{{cabang.nama}}</option>
                                 </select>
                             </div>
                         </div>
@@ -53,12 +50,12 @@
                 <table class="table table-striped table-hover" >
                     <thead>
                         <tr>
-                            <th st-sort="kode_retur">Kode Retur</th>
-                            <th st-sort="kode_penjualan">Kode Penjualan</th>
-                            <th st-sort="tanggal_retur">Tanggal</th>
-                            <th st-sort="cabang">Klink</th>
-                            <th st-sort="nama_customer">Customer</th>
-                            <th st-sort="total_retur">Total</th>
+                            <th st-sort="r_penjualan.kode">Kode Retur</th>
+                            <th st-sort="penjualan.kode">Kode Penjualan</th>
+                            <th st-sort="r_penjualan.tanggal">Tanggal</th>
+                            <th st-sort="m_cabang.nama">Cabang</th>
+                            <th st-sort="m_customer.nama">Customer</th>
+                            <th st-sort="r_penjualan.total">Total</th>
                         </tr>
                     </thead>
                     <tbody ng-show="!isLoading">
@@ -128,15 +125,14 @@
                         </div>
                         <div class="col-md-4 col-sm-12">
                             <p class="text-muted font-bold">Detail Customer</p>
-
                             <div class="form-group"  >
                                 <label class="col-sm-3 control-label">Kode Penjualan</label>
                                 <div class="col-sm-9">
-                                    <ui-select ng-change="getkodepenjualan(penjualan)" ng-model="penjualan" theme="bootstrap" style="width: 245px; margin-top: 2px; margin-bottom: 1px;">
+                                    <ui-select on-select="getkodepenjualan(penjualan)" ng-model="penjualan" theme="bootstrap">
+                                        {{$select.selected.nama}}
                                         <ui-select-match placeholder="Cari Kode Penjualan">{{$select.selected.kode}}</ui-select-match>
-                                        <ui-select-choices group-by="'group'" repeat="kodepenjualan in listkodepenjualan | filter: $select.search">
-                                            <div ng-bind-html="kodepenjualan.kode | highlight: $select.search"></div>
-
+                                        <ui-select-choices refresh="cariKode($select.search)" repeat="val in results">
+                                            {{val.kode}}
                                         </ui-select-choices>
                                     </ui-select>
                                 </div>
@@ -161,12 +157,11 @@
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-12">
-                            <p class="text-muted font-bold">Detail Klinik</p>
+                            <p class="text-muted font-bold">Detail Cabang</p>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Cabang</label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" ng-model="penjualan.klinik" ng-disabled="true" >
-
                                 </div>
                             </div>
                             <div class="form-group">
@@ -264,7 +259,6 @@
                                 <td width="14%">
                                     <div class="input-group m-b">
                                         <span class="input-group-addon">Rp</span>
-
                                         <input type="text" class="form-control" name="total" value="{{(detail.jumlah_retur * detail.harga) - (detail.jumlah_retur * detail.diskon_awal) | number}}" ng-readonly="true"  ng-disabled="is_view" >
                                     </div>
                                 </td>

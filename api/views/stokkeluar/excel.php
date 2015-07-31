@@ -2,7 +2,7 @@
 header("Content-type: application/vnd-ms-excel");
 header("Content-Disposition: attachment; filename=excel-Transaksi-StokKeluar.xls");
 ?>
-<h3>Data Master Stok Keluar</h3>
+<h3>Data Transaksi Stok Keluar</h3>
 <br><br>
 <table border="1">
     <tr>

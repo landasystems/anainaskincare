@@ -327,6 +327,9 @@ class LaporanController extends Controller {
                 unset($totalJml);
                 unset($totalHarga);
 
+                $tmp[$indeks]['jumlah'] = 0;
+                $tmp[$indeks]['harga'] = 0;
+
                 $totalJml = array('saldo' => 0, 'masuk' => 0, 'keluar' => 0);
                 $totalHarga = array('saldo' => 0, 'masuk' => 0, 'keluar' => 0);
                 if (!empty($tempSaldo[$val['produk_id']])) {

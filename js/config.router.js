@@ -198,7 +198,6 @@ angular.module('app')
                                     url: '/trans',
                                     templateUrl: 'tpl/app.html'
                                 })
-                                //
                                 .state('transaksi.stokmasuk', {
                                     url: '/masuk',
                                     templateUrl: 'tpl/t_masuk/index.html',
@@ -289,7 +288,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function($ocLazyLoad) {
-                                                return $ocLazyLoad.load([]).then(
+                                                return $ocLazyLoad.load(['daterangepicker']).then(
                                                         function() {
                                                             return $ocLazyLoad.load('js/controllers/t_penjualan.js');
                                                         }
@@ -303,7 +302,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function($ocLazyLoad) {
-                                                return $ocLazyLoad.load([]).then(
+                                                return $ocLazyLoad.load(['daterangepicker']).then(
                                                         function() {
                                                             return $ocLazyLoad.load('js/controllers/t_bayarpiutang.js');
                                                         }
@@ -317,7 +316,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function($ocLazyLoad) {
-                                                return $ocLazyLoad.load([]).then(
+                                                return $ocLazyLoad.load(['daterangepicker']).then(
                                                         function() {
                                                             return $ocLazyLoad.load('js/controllers/t_returpenjualan.js');
                                                         }
@@ -331,7 +330,6 @@ angular.module('app')
                                     url: '/laporan',
                                     templateUrl: 'tpl/app.html'
                                 })
-                                //
                                 .state('laporan.kartustok', {
                                     url: '/kartustok',
                                     templateUrl: 'tpl/l_kartustok/index.html',
