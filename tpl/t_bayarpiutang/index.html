@@ -169,7 +169,7 @@
                             </thead>
                             <tr ng-repeat="detail in detPenjualan">
                                 <td>
-                                    <div class="input-group">
+                                    <div class="input-group" style="margin:0px;">
                                         <input required type="text" ng-disabled="is_view" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="detail.tanggal_transaksi" is-open="openedDet == $index" ng-change="setStatus()" ng-click="openDet($event, $index)"/>
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar-o"></i>
@@ -178,7 +178,7 @@
                                 </td>
                                 <td style="text-align:center">
                                     <span class="label bg-light" ng-show="$index > 0">{{detail.status}}</span>
-                                    <div ng-show="$index == 0" class="btn-group">
+                                    <div ng-show="$index == 0" class="btn-group" style="margin:0px;">
                                         <label class="btn btn-sm btn-success" required ng-model="detail.status" ng-disabled="is_view" btn-radio="'lunas'"><i class="fa fa-check text-active"></i> Lunas</label>
                                         <label class="btn btn-sm btn-info" required ng-model="detail.status" ng-disabled="is_view" btn-radio="'belum lunas'"><i class="fa fa-check text-active"></i> Belum Lunas</label>
                                     </div>
@@ -186,13 +186,13 @@
                                 <td style="text-align: center">
                                     <div class="input-group m-b" style="margin:0px;">
                                         <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-model="detail.debet" ng-disabled="is_view">
+                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.debet" ng-disabled="is_view">
                                     </div>
                                 </td>
                                 <td style="text-align: center">
                                     <div class="input-group m-b" style="margin:0px;">
                                         <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-model="detail.credit" ng-disabled="is_view">
+                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()" ng-model="detail.credit" ng-disabled="is_view">
                                     </div>
                                 </td>
                                 <td style="text-align: center">
@@ -201,8 +201,9 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="3">Total</td>
-                                <td colspan="2">{{total| currency}}</td>
+                                <td colspan="2">Total</td>
+                                <td colspan="">{{form.total_debet | currency}}</td>
+                                <td colspan="2">{{form.total_credit | currency}}</td>
                             </tr>
 
 
