@@ -7,61 +7,56 @@
             <div class="panel-heading">
                 <button class="btn btn-default btn-xs" ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed">Pencarian & Export Data</button>
                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
-                    <button type="button" class="btn btn-default fa fa-file-excel-o" ng-show="!isCollapsed">&nbsp;Export Excel</button>
+                    <button type="button" class="btn btn-default fa fa-file-excel-o" ng-show="!isCollapsed" ng-click="excel()">&nbsp;Export Excel</button>
 
                 </div> 
             </div>
             <div collapse="isCollapsed" class="panel-body collapse" style="height: 0px;">
                 <div class="form-horizontal">
-                    <div class="form-group">
-
-                        <label class="col-sm-2 control-label">Kode</label>
-                        <div class="col-sm-3">
-                            <input st-search="kode" class="form-control"/>
-
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Kode</label>
+                            <div class="col-sm-9">
+                                <input st-search="penjualan.kode" class="form-control"/>
+                            </div>
                         </div>
-                        <label class="col-sm-2 control-label">Customer</label>
-                        <div class="col-sm-3">
-                            <select class="form-control" ui-select2="" ng-model="form.customer_id" ng-disabled="is_view" >
-                                <option value="">-- Customer --</option>
-                                <option ng-repeat="customer in sCustomer" value="{{customer.id}}">{{customer.nama}}</option>
-                            </select>
-
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Periode</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" st-search="tanggal" type="text" date-range-picker ng-model="tanggals">
+                            </div>
                         </div>
-
-
                     </div>
-                    <div class="form-group">
-
-
-                        <label class="col-sm-2 control-label">Cabang</label>
-                        <div class="col-sm-3">
-                            <select class="form-control" ui-select2="" ng-model="form.cabang_id" ng-disabled="is_view" >
-                                <option value="">-- Cabang --</option>
-                                <option ng-repeat="cabang in sCabang" value="{{cabang.id}}">{{cabang.nama}}</option>
-                            </select>
-
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Customer</label>
+                            <div class="col-sm-9">
+                                <input st-search="m_customer.nama" class="form-control"/>
+                            </div>
                         </div>
-
-
+                        <div class="control-group">
+                            <label class="col-sm-3 control-label">Cabang</label>
+                            <div class="col-sm-9">
+                                <select class="form-control " st-search="penjualan.cabang_id">
+                                    <option value="">-Pilih Cabang-</option>
+                                    <option ng-repeat="cabang in sCabang" value="{{cabang.id}}">{{cabang.nama}}</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-
-
-
-
                 </div>
             </div>
             <div class="table-responsive">
                 <table class="table table-striped table-hover" >
                     <thead>
                         <tr>
-                            <th st-sort="nama">Kode</th>
-                            <th st-sort="nama">Tanggal</th>
-                            <th st-sort="nama">Customer</th>
-                            <th st-sort="nama">Klinik</th>
-                            <th st-sort="nama">Debet</th>
-                            <th st-sort="nama">Kredit</th>
-                            <th st-sort="nama">Status</th>
+                            <th st-sort="penjualan.kode">Kode</th>
+                            <th st-sort="penjualan.tanggal">Tanggal</th>
+                            <th st-sort="m_customer.nama">Customer</th>
+                            <th st-sort="m_cabang.nama">Klinik</th>
+                            <th st-sort="debet">Debet</th>
+                            <th st-sort="pinjaman.credit">Kredit</th>
+                            <th st-sort="pinjaman.status">Status</th>
                         </tr>
                     </thead>
                     <tbody ng-show="!isLoading">
@@ -75,7 +70,7 @@
                             <td>{{row.status}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
-                                    <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ></button>
+                                    <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ng-show="row.status == 'Belum Lunas'" ></button>
                                     <button type="button" class="btn btn-danger fa fa-minus-circle" ng-click="delete(row);" ></button>
                                 </div> 
                             </td>

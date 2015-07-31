@@ -27,6 +27,7 @@ class ReturpenjualanController extends Controller {
                     'update' => ['post'],
                     'delete' => ['delete'],
                     'cabang' => ['get'],
+                    'excel' => ['get'],
                     'customer' => ['get'],
                     'produk' => ['get'],
                     'nm_customer' => ['post'],
@@ -65,6 +66,7 @@ class ReturpenjualanController extends Controller {
 
     public function actionIndex() {
         //init variable
+        session_start();
         $params = $_REQUEST;
         $filter = array();
         $sort = "r_penjualan.id ASC";
@@ -104,19 +106,17 @@ class ReturpenjualanController extends Controller {
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
-                Yii::error($key);
-                if ($key == 'cabang_id') {
-                    $query->andFilterWhere(['like', 'penjualan.' . $key, $val]);
-                    Yii::error($query);
-                } elseif ($key = 'kode_penjualan') {
-                    $query->andFilterWhere(['like', 'penjualan.kode', $val]);
-                } elseif ($key = 'customer_id') {
-                    $query->andFilterWhere(['like', 'penjualan.' . $key, $val]);
+                if ($key == 'r_penjualan.tanggal') {
+                    $value = explode(' - ', $val);
+                    $start = date("Y-m-d", strtotime($value[0]));
+                    $end = date("Y-m-d", strtotime($value[1]));
+                    $query->andFilterWhere(['between', 'r_penjualan.tanggal', $start, $end]);
                 } else {
-                    $query->andFilterWhere(['like', 'r_penjualan.' . $key, $val]);
+                    $query->andFilterWhere(['like', $key, $val]);
                 }
             }
         }
+        $_SESSION['query'] = $query;
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -128,17 +128,19 @@ class ReturpenjualanController extends Controller {
     }
 
     public function actionView($id) {
-
         $model = $this->findModel($id);
+
+        //detail
         $query2 = new Query;
         $query2->from('penjualan_det')
                 ->join('LEFT JOIN', 'm_produk', 'penjualan_det.produk_id = m_produk.id')
                 ->join('LEFt JOIN', 'r_penjualan_det as rp', 'rp.penjualan_det_id= penjualan_det.id')
                 ->where('r_penjualan_id="' . $model['id'] . '"')
-                ->select('penjualan_det.id as id, penjualan_det.type as type, penjualan_det.produk_id as produk_id,penjualan_det.jumlah as jumlah, penjualan_det.harga as harga_awal, penjualan_det.diskon as diskon_awal , m_produk.nama,
+                ->select('penjualan_det.id as id, penjualan_det.type as type, penjualan_det.produk_id as produk_id,penjualan_det.jumlah as jumlah, penjualan_det.harga as harga_awal, rp.diskon as diskon_awal , m_produk.nama,
                         rp.harga as harga, rp.jumlah_retur as jumlah_retur');
         $command2 = $query2->createCommand();
         $detail = $command2->queryAll();
+
         $query = new Query;
         $query->from('penjualan')
                 ->join('JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
@@ -150,7 +152,7 @@ class ReturpenjualanController extends Controller {
         $models = $command->queryOne();
         $models['penjualan'] = ['kode' => $model->penjualan->kode];
 
-         Yii::error($models);
+        Yii::error($models);
         $this->setHeader(200);
         echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes), 'detail' => $detail, 'penjualan' => $models), JSON_PRETTY_PRINT);
     }
@@ -244,7 +246,6 @@ class ReturpenjualanController extends Controller {
         $query->from('penjualan')
                 ->join('JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
                 ->join('JOIN', 'm_cabang', 'penjualan.cabang_id= m_cabang.id')
-//                ->where('penjualan.status="selesai"')
                 ->select('penjualan.kode as kode, penjualan.id as id, m_customer.nama as customer, m_cabang.nama as cabang');
 
         $command = $query->createCommand();
@@ -286,7 +287,7 @@ class ReturpenjualanController extends Controller {
         $params = json_decode(file_get_contents("php://input"), true);
 
         $id = $params['id'];
-       Yii::error($params);
+        Yii::error($params);
         $query = new Query;
         $query->from('penjualan')
                 ->join('JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
@@ -301,7 +302,7 @@ class ReturpenjualanController extends Controller {
         $query2->from('penjualan_det')
                 ->join('LEFT JOIN', 'm_produk', 'penjualan_det.produk_id = m_produk.id')
                 ->join('LEFt JOIN', 'r_penjualan_det as rp', 'rp.penjualan_det_id= penjualan_det.id')
-                ->where('penjualan_id="' . $id . '"')
+                ->where('penjualan_id="' . $id . '" and penjualan_det.type = "Barang"')
                 ->select('penjualan_det.id as id, penjualan_det.type as type, penjualan_det.produk_id as produk_id,penjualan_det.jumlah as jumlah, penjualan_det.harga as harga_awal, penjualan_det.diskon as diskon_awal , m_produk.nama,
                         rp.harga as harga, rp.jumlah_retur as jumlah_retur');
         $command2 = $query2->createCommand();
@@ -382,6 +383,16 @@ class ReturpenjualanController extends Controller {
             501 => 'Not Implemented',
         );
         return (isset($codes[$status])) ? $codes[$status] : '';
+    }
+
+    public function actionExcel() {
+        session_start();
+        $query = $_SESSION['query'];
+        $query->offset("");
+        $query->limit("");
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+        return $this->render("excel", ['models' => $models]);
     }
 
 }

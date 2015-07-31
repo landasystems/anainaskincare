@@ -25,6 +25,7 @@ class BayarpiutangController extends Controller {
                     'update' => ['post'],
                     'delete' => ['delete'],
                     'cabang' => ['get'],
+                    'excel' => ['get'],
                     'customer' => ['get'],
                     'produk' => ['get'],
                     'det_penjualan' => ['get'],
@@ -45,10 +46,8 @@ class BayarpiutangController extends Controller {
         }
         $verb = Yii::$app->getRequest()->getMethod();
         $allowed = array_map('strtoupper', $verbs);
-//        Yii::error($allowed);
 
         if (!in_array($verb, $allowed)) {
-
             $this->setHeader(400);
             echo json_encode(array('status' => 0, 'error_code' => 400, 'message' => 'Method not allowed'), JSON_PRETTY_PRINT);
             exit;
@@ -59,12 +58,13 @@ class BayarpiutangController extends Controller {
 
     public function actionIndex() {
         //init variable
+        session_start();
         $params = $_REQUEST;
         $filter = array();
         $sort = "pinjaman.id ASC";
         $offset = 0;
         $limit = 10;
-        //        Yii::error($params);
+
         //limit & offset pagination
         if (isset($params['limit']))
             $limit = $params['limit'];
@@ -99,17 +99,17 @@ class BayarpiutangController extends Controller {
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
-                if ($key == 'kode') {
-                    $query->andFilterWhere(['like', 'penjualan.' . $key, $val]);
-                } elseif ($key == 'customer_id') {
-                    $query->andFilterWhere(['like', 'm_customer.' . $key, $val]);
-                } elseif ($key == 'cabang_id') {
-                    $query->andFilterWhere(['like', 'm_cabang.' . $key, $val]);
+                if ($key == 'tanggal') {
+                    $value = explode(' - ', $val);
+                    $start = date("Y-m-d", strtotime($value[0]));
+                    $end = date("Y-m-d", strtotime($value[1]));
+                    $query->andFilterWhere(['between', 'tanggal', $start, $end]);
                 } else {
                     $query->andFilterWhere(['like', $key, $val]);
                 }
             }
         }
+        $_SESSION['query'] = $query;
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -148,24 +148,24 @@ class BayarpiutangController extends Controller {
             $model->penjualan_id = $params['form']['penjualan_id'];
             if ($model->save()) {
                 $noErrors = true;
-                
             }
             $id[] = $model->id;
         }
         // ganti status sukses
-        $ganti = Pinjaman::findAll(['penjualan_id'=>$params['form']['penjualan_id']]);
+        $ganti = Pinjaman::findAll(['penjualan_id' => $params['form']['penjualan_id']]);
         $debet = 0;
         $credit = 0;
-        foreach($ganti as $data){
+        Yii::error($ganti);
+        foreach ($ganti as $data) {
             $debet += $data->debet;
             $credit += $data->credit;
-            if($debet == $credit){
-                 $sModel = Pinjaman::findOne($value['id']);
-                 $sModel->status = 'Lunas';
-                 $sModel->save();
+            if ($debet == $credit) {
+                $sModel = Pinjaman::findOne($value['id']);
+                $sModel->status = 'Lunas';
+                $sModel->save();
             }
         }
-        
+
         $deleteAll = Pinjaman::deleteAll('id NOT IN(' . implode(',', $id) . ') AND penjualan_id=' . $params['form']['penjualan_id']);
 
         if ($deleteAll) {
@@ -192,6 +192,18 @@ class BayarpiutangController extends Controller {
             $model->save();
             $id[] = $model->id;
         }
+        $ganti = Pinjaman::findAll(['penjualan_id' => $params['form']['penjualan_id']]);
+        $debet = 0;
+        $credit = 0;
+        Yii::error($ganti);
+        foreach ($ganti as $data) {
+            $debet += $data->debet;
+            $credit += $data->credit;
+            if ($debet == $credit) {
+                Pinjaman::updateAll(['status' => 'Lunas'], 'penjualan_id="' . $params['form']['penjualan_id'] . '"');
+            }
+        }
+
         $delete = Pinjaman::deleteAll('id NOT IN(' . implode(',', $id) . ')');
     }
 
@@ -312,6 +324,16 @@ class BayarpiutangController extends Controller {
             501 => 'Not Implemented',
         );
         return (isset($codes[$status])) ? $codes[$status] : '';
+    }
+
+    public function actionExcel() {
+        session_start();
+        $query = $_SESSION['query'];
+        $query->offset("");
+        $query->limit("");
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+        return $this->render("excel", ['models' => $models]);
     }
 
 }

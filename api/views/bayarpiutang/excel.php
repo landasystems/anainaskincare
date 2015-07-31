@@ -1,15 +1,16 @@
 <?php
 header("Content-type: application/vnd-ms-excel");
-header("Content-Disposition: attachment; filename=excel-Transaksi-StokKeluar.xls");
+header("Content-Disposition: attachment; filename=excel-Transaksi-Piutang.xls");
 ?>
-<h3>Data Transaksi Stok Keluar</h3>
+<h3>Data Transaksi Piutang</h3>
 <br><br>
 <table border="1">
     <tr>
         <th>Kode</th>
         <th>Cabang</th>
+        <th>Customer</th>
         <th>Tanggal</th>
-        <th>Keterangan</th>
+        <th>Status</th>
         <th>Total</th>
     </tr>
     <?php
@@ -17,10 +18,11 @@ header("Content-Disposition: attachment; filename=excel-Transaksi-StokKeluar.xls
         ?>
         <tr>
             <td>&nbsp;<?=$arr['kode']?></td>
-            <td><?=$arr['cabang']?></td>
+            <td><?=$arr['klinik']?></td>
+            <td><?=$arr['customer']?></td>
             <td><?=$arr['tanggal']?></td>
-            <td><?=$arr['keterangan']?></td>
-            <td>&nbsp;<?=$arr['total']?></td>
+            <td><?=$arr['status']?></td>
+            <td>&nbsp;<?=$arr['debet']?></td>
             
         </tr>
     <?php } ?>

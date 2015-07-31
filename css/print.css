@@ -2,18 +2,18 @@
   
  Hartija Css Print  Framework
    * Version:   1.0 
-	 
+         
 -------------------------------------------------------------- */
 
 body { 
-width:100% !important;
-margin:0 !important;
-padding:0 !important;
-line-height: 1.1; 
-font-family: Garamond,"Times New Roman", serif; 
-color: #000; 
-background: none; 
-font-size: 14pt; }
+    width:100% !important;
+    margin:0 !important;
+    padding:0 !important;
+    line-height: 1.1; 
+    font-family: Garamond,"Times New Roman", serif; 
+    color: #000; 
+    background: none; 
+    font-size: 11pt; }
 
 /* Headings */
 h1,h2,h3,h4,h5,h6 { page-break-after:avoid; }
@@ -64,3 +64,16 @@ span.label{width: 180px;display: inline-table;}
 #header, #footer, #navigation, #rightSideBar, #leftSideBar 
 {display:none;}
 */
+.print-detail{
+    border-collapse: collapse;
+}
+
+.print-detail th, td{
+    border: 1px solid  #333;
+}
+
+.print-detail tfoot td{
+    border: 0px;
+}
+
+

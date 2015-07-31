@@ -324,8 +324,14 @@ class LaporanController extends Controller {
                 unset($tmpSaldo);
                 unset($tmp);
                 unset($tmpKeluar);
-                $tmpKeluar = array();
-                $tmpMasuk[0] = array('jumlah' => 0, 'harga' => 0, 'sub_total' => 0);
+                unset($totalJml);
+                unset($totalHarga);
+
+                $tmp[$indeks]['jumlah'] = 0;
+                $tmp[$indeks]['harga'] = 0;
+
+                $totalJml = array('saldo' => 0, 'masuk' => 0, 'keluar' => 0);
+                $totalHarga = array('saldo' => 0, 'masuk' => 0, 'keluar' => 0);
                 if (!empty($tempSaldo[$val['produk_id']])) {
                     for ($idk = 0; $idk < count($tempSaldo[$val['produk_id']]); $idk++) {
                         $sAwal = $tempSaldo[$val['produk_id']];
@@ -350,6 +356,10 @@ class LaporanController extends Controller {
             }
 
             if ($val['jumlah_masuk'] > 0) {
+                //total masuk
+                $totalJml['masuk'] += $val['jumlah_masuk'];
+                $totalHarga['masuk'] += ($val['jumlah_masuk'] * $val['harga_masuk']);
+
                 //simpan saldo
                 $tmpSaldo['jumlah'][$indeks] = $val['jumlah_masuk'];
                 $tmpSaldo['harga'][$indeks] = $val['harga_masuk'];
@@ -366,6 +376,9 @@ class LaporanController extends Controller {
                 $tmpKeluar['harga'][$indeks] = 0;
                 $tmpKeluar['sub_total'][$indeks] = 0;
             } else {
+                $totalJml['keluar'] += $val['jumlah_keluar'];
+                $totalHarga['keluar'] += ($val['jumlah_keluar'] * $val['harga_keluar']);
+
                 $tempQty = $val['jumlah_keluar'];
                 $keluar = $tempQty;
                 $boolStatus = true;
@@ -397,6 +410,16 @@ class LaporanController extends Controller {
 
                     $indeks++;
                 }
+
+                foreach ($tmpKeluar['sub_total'] as $vKeluar) {
+                    
+                }
+            }
+
+            $totalJml['saldo'] += ($totalJml['masuk'] - $val['jumlah_keluar']);
+            $totalHarga['saldo'] = 0;
+            foreach ($tmpSaldo['sub_total'] as $key => $vKeluar) {
+                $totalHarga['saldo'] += $vKeluar;
             }
 
             $body[$val['produk_id']]['body'][$i]['tanggal'] = date("Y-m-d", strtotime($val['created_at']));
@@ -411,19 +434,25 @@ class LaporanController extends Controller {
             $body[$val['produk_id']]['body'][$i]['saldo']['jumlah'] = $tmpSaldo['jumlah'];
             $body[$val['produk_id']]['body'][$i]['saldo']['harga'] = $tmpSaldo['harga'];
             $body[$val['produk_id']]['body'][$i]['saldo']['sub_total'] = $tmpSaldo['sub_total'];
-            $body[$val['produk_id']]['temp'] = $tmpSaldo;
-////            $body[$val['produk_id']]['total']['saldo']['jumlah'] = $totalJml['saldo'];
-////            $body[$val['produk_id']]['total']['saldo']['harga'] = $totalHarga['saldo'];
-////            $body[$val['produk_id']]['total']['masuk']['jumlah'] = $totalJml['masuk'];
-////            $body[$val['produk_id']]['total']['masuk']['harga'] = $totalHarga['masuk'];
-////            $body[$val['produk_id']]['total']['keluar']['jumlah'] = $totalJml['keluar'];
-////            $body[$val['produk_id']]['total']['keluar']['harga'] = $totalHarga['keluar'];
+            $body[$val['produk_id']]['total']['masuk']['jumlah'] = $totalJml['masuk'];
+            $body[$val['produk_id']]['total']['masuk']['harga'] = $totalHarga['masuk'];
+            $body[$val['produk_id']]['total']['keluar']['jumlah'] = $totalJml['keluar'];
+            $body[$val['produk_id']]['total']['keluar']['harga'] = $totalHarga['keluar'];
+            $body[$val['produk_id']]['total']['saldo']['jumlah'] = $body[$val['produk_id']]['total']['masuk']['jumlah'] - $body[$val['produk_id']]['total']['keluar']['jumlah'];
+            $body[$val['produk_id']]['total']['saldo']['harga'] = $totalHarga['saldo'];
 
             $indeks++;
             $pr = $val['produk_id'];
-//            Yii::error($body[$val['produk_id']]['body']);
             $i++;
         }
+        $grandJml = 0;
+        $grandHarga = 0;
+        foreach ($body as $val) {
+            $grandJml += $val['total']['saldo']['jumlah'];
+            $grandHarga += $val['total']['saldo']['harga'];
+        }
+        $data['grandJml'] = $grandJml;
+        $data['grandHarga'] = $grandHarga;
         echo json_encode(array('status' => 1, 'data' => $data, 'detail' => $body), JSON_PRETTY_PRINT);
     }
 

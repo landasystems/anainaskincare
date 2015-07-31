@@ -27,7 +27,6 @@ class StokmasukController extends Controller {
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
-                    'cabang' => ['get'],
                     'product' => ['get'],
                 ],
             ]
@@ -56,20 +55,6 @@ class StokmasukController extends Controller {
         return true;
     }
 
-    public function actionCabang() {
-        $query = new Query;
-        $query->from('m_cabang')
-                ->select("*")
-                ->where("is_deleted = '0'");
-
-        $command = $query->createCommand();
-        $models = $command->queryAll();
-
-        $this->setHeader(200);
-
-        echo json_encode(array('status' => 1, 'data' => $models));
-    }
-
     public function actionProduct() {
         $query = new Query;
         $query->from('m_produk')
@@ -83,7 +68,7 @@ class StokmasukController extends Controller {
 
         echo json_encode(array('status' => 1, 'data' => $models));
     }
-    
+
     public function actionKode_cabang($id) {
         $query = new Query;
 
@@ -93,7 +78,7 @@ class StokmasukController extends Controller {
         $command = $query->createCommand();
         $models = $command->query()->read();
         $code = $models['kode'];
-        
+
         $query2 = new Query;
         $query2->from('stok_masuk')
                 ->select('kode')
@@ -102,14 +87,15 @@ class StokmasukController extends Controller {
 
         $command2 = $query2->createCommand();
         $models2 = $command2->query()->read();
-        $kode_mdl = (substr($models2['kode'],-5) + 1);
-        $kode=substr('00000'.$kode_mdl,strlen($kode_mdl));
+        $kode_mdl = (substr($models2['kode'], -5) + 1);
+        $kode = substr('00000' . $kode_mdl, strlen($kode_mdl));
         $this->setHeader(200);
-        echo json_encode(array('status' => 1,'kode' => 'MASUK/'.$code.'/'.$kode));
+        echo json_encode(array('status' => 1, 'kode' => 'MASUK/' . $code . '/' . $kode));
     }
 
     public function actionIndex() {
         //init variable
+        session_start();
         $params = $_REQUEST;
         $filter = array();
         $sort = "stok_masuk.id ASC";
@@ -138,7 +124,8 @@ class StokmasukController extends Controller {
                 ->from(['stok_masuk', 'm_cabang'])
                 ->orderBy($sort)
                 ->select("stok_masuk.*,  m_cabang.nama as cabang")
-                ->where('m_cabang.id = stok_masuk.cabang_id');
+                ->where('m_cabang.id = stok_masuk.cabang_id')
+                ->andWhere(['stok_masuk.cabang_id' => $_SESSION['user']['cabang_id']]);
 
         //filter
         if (isset($params['filter'])) {
@@ -149,13 +136,12 @@ class StokmasukController extends Controller {
                     $start = date("Y-m-d", strtotime($value[0]));
                     $end = date("Y-m-d", strtotime($value[1]));
                     $query->andFilterWhere(['between', 'stok_masuk.tanggal', $start, $end]);
-//                    $query->where("stok_keluar.tanggal >= '$start' and stok_keluar.tanggal <= '$end'");
                 } else {
                     $query->andFilterWhere(['like', 'stok_masuk.' . $key, $val]);
                 }
             }
         }
-        session_start();
+
         $_SESSION['query'] = $query;
 
         $command = $query->createCommand();
@@ -173,16 +159,16 @@ class StokmasukController extends Controller {
 //        $models = $model->attributes;
         $query = new Query;
 
-        $query->from(['stok_masuk','m_cabang'])
-               ->where('stok_masuk.id="' . $id . '" and m_cabang.id = stok_masuk.cabang_id ')
+        $query->from(['stok_masuk', 'm_cabang'])
+                ->where('stok_masuk.id="' . $id . '" and m_cabang.id = stok_masuk.cabang_id ')
                 ->select("stok_masuk.*,  m_cabang.nama as namacabang");
-        
+
         $command = $query->createCommand();
         $models = $command->query()->read();
 //        $model = $models->attributes;
-        
-        
-        
+
+
+
         $det = StokMasukDet::find()
                 ->with('barang')
                 ->orderBy('id')
@@ -191,16 +177,16 @@ class StokmasukController extends Controller {
 
         foreach ($det as $key => $val) {
             $detail[$key] = $val->attributes;
-            
+
             //menambahkan json detail, select2
             $namaBarang = (isset($val->barang->nama)) ? $val->barang->nama : '';
             $hargaBarang = (isset($val->barang->harga_beli_terakhir)) ? $val->barang->harga_beli_terakhir : '';
             $jualBarang = (isset($val->barang->harga_jual)) ? $val->barang->harga_jual : '';
-            $detail[$key]['produk'] =  ['id'=>$val->produk_id,'nama'=>$namaBarang,'harga_beli_terakhir'=>$hargaBarang, 'harga_jual'=>$jualBarang];
+            $detail[$key]['produk'] = ['id' => $val->produk_id, 'nama' => $namaBarang, 'harga_beli_terakhir' => $hargaBarang, 'harga_jual' => $jualBarang];
         }
 
         $this->setHeader(200);
-        echo json_encode(array('status' => 1,'data' => $models, 'detail' => $detail), JSON_PRETTY_PRINT);
+        echo json_encode(array('status' => 1, 'data' => $models, 'detail' => $detail), JSON_PRETTY_PRINT);
     }
 
     public function actionCreate() {
