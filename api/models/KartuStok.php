@@ -143,7 +143,7 @@ class KartuStok extends \yii\db\ActiveRecord {
         foreach ($kartu as $val) {
 
             if ($pr != $val['produk_id']) {
-                $indeks = count(isset($body[$val['produk_id']]['saldo_awal']) ? $body[$val['produk_id']]['saldo_awal'] : 0) + 1;
+                $indeks = 1;
                 //setting nilai awal temporari
                 unset($tmpSaldo);
                 unset($tmp);
@@ -153,15 +153,14 @@ class KartuStok extends \yii\db\ActiveRecord {
                 $tmpSaldo['jumlah'][0] = 0;
                 $tmpSaldo['harga'][0] = 0;
                 $tmpSaldo['sub_total'][0] = 0;
+
+                $tmp[0]['jumlah'] = 0;
+                $tmp[0]['harga'] = 0;
             } else {
                 unset($tmpKeluar);
             }
 
             if ($val['jumlah_masuk'] > 0) {
-                //total masuk
-                $totalJml['masuk'] += $val['jumlah_masuk'];
-                $totalHarga['masuk'] += ($val['jumlah_masuk'] * $val['harga_masuk']);
-
                 $tempQty = $val['jumlah_masuk'];
                 $masuk = $tempQty;
                 $first = true;
@@ -227,7 +226,7 @@ class KartuStok extends \yii\db\ActiveRecord {
                         $tmpKeluar['sub_total'][$indeks] = $tmpKeluar['jumlah'][$indeks] * $tmpKeluar['harga'][$indeks];
                     }
                     //simpan stok saldo
-                    $tmpSaldo['jumlah'][$indeks] = ($valS['jumlah'] == $tmpKeluar['jumlah'][$indeks]) ? 0 : $valS['jumlah'];
+                    $tmpSaldo['jumlah'][$indeks] = (isset($tmpKeluar['jumlah'][$indeks]) and $valS['jumlah'] == $tmpKeluar['jumlah'][$indeks]) ? 0 : $valS['jumlah'];
                     $tmpSaldo['harga'][$indeks] = $valS['harga'];
                     $tmpSaldo['sub_total'][$indeks] = $tmpSaldo['harga'][$indeks] * $tmpSaldo['jumlah'][$indeks];
 
