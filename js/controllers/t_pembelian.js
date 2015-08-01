@@ -88,12 +88,15 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
             {
                 id: '',
                 barang: [],
-                jumlah: '',
-                harga: '',
-                diskon: '',
-                sub_total: ''
+                jumlah: 0,
+                harga: 0,
+                diskon: 0,
+                sub_total: 0
             }
         ];
+        $scope.form.cash = 0; 
+        $scope.form.credit = 0; 
+        $scope.form.kembalian = 0; 
     };
     $scope.update = function (form) {
         $scope.is_edit = true;
@@ -171,10 +174,10 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
             id: '',
 //            pembelian_id: ($scope.form.id != '') ? $scope.form.id : '',
             barang: [],
-            jumlah: '',
-            harga: '',
-            diskon: '',
-            sub_total: '',
+            jumlah: 0,
+            harga: 0,
+            diskon: 0,
+            sub_total: 0,
         });
         $scope.calculate();
         $scope.bayar();
