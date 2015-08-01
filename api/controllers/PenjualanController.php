@@ -140,6 +140,17 @@ class PenjualanController extends Controller {
         $no_tlp = (isset($cus->no_tlp)) ? $cus->no_tlp : '';
         $email = (isset($cus->email)) ? $cus->email : '';
         $alamat = (isset($cus->alamat)) ? $cus->alamat : '';
+        
+        $cab = \app\models\Cabang::find()
+                ->where(['id' => $model['cabang_id']])
+                ->One();
+        $idcab = (isset($cab->id)) ? $cab->id : '';
+        $cabkode = (isset($cab->kode)) ? $cab->kode : '';
+        $cabnama = (isset($cab->nama)) ? $cab->nama : '';
+        $cabalamat = (isset($cab->alamat)) ? $cab->alamat : '';
+        $cabnotlp = (isset($cab->no_tlp)) ? $cab->no_tlp : '';
+        $cabemail = (isset($cab->email)) ? $cab->email : '';
+        $cabis_deleted = (isset($cab->is_deleted)) ? $cab->is_deleted : '';
 
         $data['customers'] = [
             'id' => $idcus,
@@ -149,14 +160,32 @@ class PenjualanController extends Controller {
             'alamat' => $alamat
         ];
         $data['cabang'] = [
-            'id' => '1',
-            'kode' => '001',
-            'nama' => 'anaina singosari',
-            'alamat' => 'jl raya mondoroko',
-            'no_tlp' => '03416677812',
-            'email' => 'anainasingosari@yahoo.com',
-            'is_deleted' => '0',
+            'id' => $idcab,
+            'kode' => $cabkode,
+            'nama' => $cabnama,
+            'alamat' => $cabalamat,
+            'no_tlp' => $cabnotlp,
+            'email' => $cabemail,
+            'is_deleted' => $cabis_deleted,
         ];
+        
+        // terapis 
+         $query2 = new Query;
+        $query2->from('m_pegawai')
+                ->select('*')
+                ->where('is_deleted = "0" and jabatan = "terapis" and cabang_id="' . $model['customer_id'] . '"');
+
+        $command2 = $query2->createCommand();
+        $terapis = $command2->queryAll();
+        
+        // dokter
+         $query3 = new Query;
+        $query3->from('m_pegawai')
+                ->select('*')
+                ->where('is_deleted = "0" and jabatan = "dokter" and cabang_id="' . $model['customer_id'] . '"');
+
+        $command3 = $query3->createCommand();
+        $dokter = $command3->queryAll();
 
         $det = PenjualanDet::find()
                 ->with(['barang'])
@@ -182,7 +211,7 @@ class PenjualanController extends Controller {
 
 
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'data' => $data, 'detail' => $detail), JSON_PRETTY_PRINT);
+        echo json_encode(array('status' => 1, 'data' => $data, 'detail' => $detail, 'terapis'=>$terapis, 'dokter'=>$dokter), JSON_PRETTY_PRINT);
     }
 
     public function actionCreate() {
