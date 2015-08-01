@@ -14,8 +14,8 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
             });
         }
     }
-    
-    $scope.pilih = function (detail, $item){
+
+    $scope.pilih = function (detail, $item) {
         detail.harga = $item.harga_beli_terakhir;
     }
 
@@ -58,9 +58,9 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
         var total = 0;
         var sub_total = 0;
         angular.forEach($scope.detsmasuk, function (detail) {
-            var jml = (detail.jumlah) ? parseInt(detail.jumlah) : 0;
-            var hrg = (detail.harga) ? parseInt(detail.harga) : 0;
-            sub_total = (jml * hrg);
+            var jml = parseInt(detail.jumlah) ? parseInt(detail.jumlah) : 0;
+            var hrg = parseInt(detail.harga) ? parseInt(detail.harga) : 0;
+            sub_total += (jml * hrg);
             detail.sub_total = sub_total;
             total += sub_total;
         })
@@ -129,14 +129,12 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
     $scope.update = function (form) {
         $scope.is_edit = true;
         $scope.is_view = false;
-        $scope.form = form;
         $scope.formtitle = "Edit Persediaan Masuk : " + $scope.form.kode;
         $scope.selected(form.id);
     };
     $scope.view = function (form) {
         $scope.is_edit = true;
         $scope.is_view = true;
-        $scope.form = form;
         $scope.formtitle = "Persediaan Masuk : " + $scope.form.kode;
         $scope.selected(form.id);
 
@@ -194,9 +192,9 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
         Data.get('stokmasuk/view/' + id).then(function (data) {
             $scope.form = data.data;
             $scope.detsmasuk = data.detail;
-
+            $scope.subtotal();
         });
-        $scope.subtotal();
+
     }
 
 });

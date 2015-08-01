@@ -125,7 +125,7 @@ class PegawaiController extends Controller {
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
-                $query->andFilterWhere(['like', 't1.' . $key, $val]);
+                $query->andFilterWhere(['like',  $key, $val]);
             }
         }
 
