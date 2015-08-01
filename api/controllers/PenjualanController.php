@@ -341,10 +341,11 @@ class PenjualanController extends Controller {
     }
 
     public function actionDokter() {
+        session_start();
         $query = new Query;
         $query->from('m_pegawai')
                 ->select('*')
-                ->where("is_deleted = '0' and jabatan = 'dokter'");
+                ->where("is_deleted = '0' and jabatan = 'dokter' and ");
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -355,10 +356,11 @@ class PenjualanController extends Controller {
     }
 
     public function actionTerapis() {
+        session_start();
         $query = new Query;
         $query->from('m_pegawai')
                 ->select('*')
-                ->where("is_deleted = '0' and jabatan = 'terapis'");
+                ->where("is_deleted = '0' and jabatan = 'terapis' ");
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -400,8 +402,27 @@ class PenjualanController extends Controller {
         $models2 = $command2->query()->read();
         $kode_mdl = (substr($models2['kode'], -5) + 1);
         $kode = substr('00000' . $kode_mdl, strlen($kode_mdl));
+        
+        // terapis 
+         $query2 = new Query;
+        $query2->from('m_pegawai')
+                ->select('*')
+                ->where('is_deleted = "0" and jabatan = "terapis" and cabang_id="' . $id . '"');
+
+        $command2 = $query2->createCommand();
+        $terapis = $command2->queryAll();
+        
+        // dokter
+         $query3 = new Query;
+        $query3->from('m_pegawai')
+                ->select('*')
+                ->where('is_deleted = "0" and jabatan = "dokter" and cabang_id="' . $id . '"');
+
+        $command3 = $query3->createCommand();
+        $dokter = $command3->queryAll();
+        
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'kode' => 'JUAL/' . $code . '/' . $kode));
+        echo json_encode(array('status' => 1, 'kode' => 'JUAL/' . $code . '/' . $kode,'terapis'=>$terapis,'dokter'=>$dokter));
     }
 
     public function actionDet_produk($id) {

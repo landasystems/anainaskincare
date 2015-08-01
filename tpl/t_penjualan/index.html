@@ -263,7 +263,7 @@
 
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" ng-maxlength="4" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.jumlah" ng-disabled="is_view" ng-readonly="is_create == false" required>
+                                    <input type="text" class="form-control" ng-maxlength="4" ng-pattern="/^[0-9]+$/" ng-change="total()"  ng-model="detail.jumlah" ng-disabled="is_view" ng-readonly="is_create == false" required>
                                 </td>
                                 <td>
                                     <input type="text" class="form-control" ng-maxlength="8"  ng-model="detail.type"  ng-disabled="true" ng-readonly="is_create == false" required>
@@ -271,13 +271,13 @@
                                 <td>
                                     <div class="input-group " style="margin:0px;">
                                         <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.harga"  ng-disabled="is_view"  required>
+                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-change="total()"  ng-model="detail.harga"  ng-disabled="is_view"  required>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="input-group " style="margin:0px;">
                                         <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.diskon"  ng-disabled="is_view" ng-readonly="is_create == false">
+                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-change="total()"  ng-model="detail.diskon"  ng-disabled="is_view" ng-readonly="is_create == false">
                                     </div>
                                 </td>
                                 <td>
@@ -292,7 +292,20 @@
                                 </td>
                                 </tr>
                                 <tr>
-                                    <th colspan="5" style="text-align: right;">Total :&nbsp;</th>
+                                    <th colspan="3" style="text-align: right;">Total :&nbsp;</th>
+                                    <td colspan="">
+                                        
+                                        <div class="input-group " style="width:100%">
+                                            <span class="input-group-addon">Rp</span>
+                                            <input type="text" class="form-control" ng-disabled="is_view"  ng-readonly="true" ng-model="form.total_harga">
+                                        </div>
+                                    </td>
+                                    <td colspan="">
+                                        <div class="input-group " style="width:100%">
+                                            <span class="input-group-addon">Rp</span>
+                                            <input type="text" class="form-control" ng-disabled="is_view"  ng-readonly="true" ng-model="form.total_diskon">
+                                        </div>
+                                    </td>
                                     <td colspan="2">
                                         <div class="input-group " style="width:100%">
                                             <span class="input-group-addon">Rp</span>
