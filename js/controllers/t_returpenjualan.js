@@ -11,6 +11,7 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
     $scope.is_create = false;
     $scope.penjualan = []
     $scope.detPenjualan = []
+     $scope.form.biaya_lain = 0;
     $scope.open1 = function($event) {
         $event.preventDefault();
         $event.stopPropagation();
@@ -115,6 +116,7 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
             $scope.detPenjualan = data.detail;
             $scope.form.kode = data.kode;
             $scope.form.penjualan = data.penjualan;
+            $scope.form.biaya_lain = 0;
             angular.forEach($scope.detPenjualan, function(detail) {
                 detail.jumlah_retur = (detail.jumlah_retur !== null) ? detail.jumlah_retur : 0;
                 detail.diskon = (detail.diskon_awal !== null) ? detail.diskon_awal : 0;
