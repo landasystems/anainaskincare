@@ -141,7 +141,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
     $scope.getkode_cabang = function(form) {
         Data.get('penjualan/kode_cabang/' + form.cabang.id).then(function(data) {
             $scope.form.kode = data.kode;
-            $scope.form.cabang_id = id;
+//            $scope.form.cabang_id = id;
             $scope.list_dokter = data.dokter;
             $scope.list_terapis = data.terapis;
 
