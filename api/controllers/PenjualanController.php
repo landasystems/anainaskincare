@@ -194,7 +194,6 @@ class PenjualanController extends Controller {
         $model->customer_id = $params['penjualan']['customers']['id'];
         $model->cabang_id = $params['penjualan']['cabang']['id'];
 
-
         if ($model->save()) {
             if ($model->status == "Pesan") {
                 if ($model->credit > 0) {
