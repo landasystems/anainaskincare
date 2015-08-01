@@ -218,8 +218,10 @@ class KartuStok extends \yii\db\ActiveRecord {
                                 $valS['jumlah'] -= $tempQty;
                                 $tmpKeluar['jumlah'][$indeks] = $tempQty;
                                 $valS['harga'] = $val['harga_keluar'];
+                                $tempQty = $tempQty - $tmpKeluar['jumlah'][$indeks];
+                            } else {
+                                $tempQty -= $valS['jumlah'];
                             }
-                            $tempQty -= $valS['jumlah'];
                         }
                         //simpan stok keluar
                         $tmpKeluar['harga'][$indeks] = $val['harga_keluar'];
@@ -230,7 +232,7 @@ class KartuStok extends \yii\db\ActiveRecord {
                     $tmpSaldo['harga'][$indeks] = $valS['harga'];
                     $tmpSaldo['sub_total'][$indeks] = $tmpSaldo['harga'][$indeks] * $tmpSaldo['jumlah'][$indeks];
 
-                    $tmp[$indeks]['jumlah'] = $valS['jumlah'];
+                    $tmp[$indeks]['jumlah'] = $tmpSaldo['jumlah'][$indeks];
                     $tmp[$indeks]['harga'] = $tmpSaldo['harga'][$indeks];
 
                     $indeks++;
