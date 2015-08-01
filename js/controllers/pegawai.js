@@ -36,7 +36,7 @@ app.controller('pegawaiCtrl', function ($scope, Data, toaster) {
     };
 
     $scope.excel = function () {
-        Data.get('supplier', paramRef).then(function (data) {
+        Data.get('pegawai', paramRef).then(function (data) {
             window.location = 'api/web/pegawai/excel';
         });
     }

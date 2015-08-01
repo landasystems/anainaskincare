@@ -131,7 +131,7 @@
                     <div class="line line-dashed b-b line-lg pull-in"></div>
                     <h5 class="font-bold">- Detail Stok Keluar</h5>
                     <div class="line line-dashed b-b line-lg pull-in"></div>
-                    <table class="table table-bordered">
+                    <table class="table table-bordered det-trans" >
                         <thead>
                             <tr>
                                 <th style="text-align: center;">Barang</th>
@@ -181,9 +181,9 @@
                             <tr style="">
                                 <th colspan="3" style="text-align: right;">Total :&nbsp;</th>
                                 <td colspan="2" >
-                                    <div class="input-group m-b"  style="margin:0px;">
+                                    <div class="input-group m-b"  style="margin:0px; width:100%;">
                                         <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-disabled="is_view"  ng-readonly="true" ng-model="form.total" style="width:140px;">
+                                        <input type="text" class="form-control" ng-disabled="is_view"  ng-readonly="true" ng-model="form.total">
                                     </div>
                                 </td>
                             </tr>
@@ -210,8 +210,8 @@
         </center>
         <div class="kiri">
             <img ng-src="img/logo.png" align="left" style="margin-right: 8px"/>
-            Jln P.ROON No.15 Sawotratap<br/>
-            Telp. 031-853 2117<br/>
+            {{form.alamat_cabang| uppercase}}<br/>
+            Telp. {{form.telpcabang| uppercase}}<br/>
             www.anainaskincare.com
         </div>
         <div class="kanan">
@@ -220,39 +220,41 @@
             <span class="label">Tanggal</span>: {{form.tanggal| date}}<br/>
         </div>
         <br/>
-        <table>
-            <thead>
-                <tr>
-                    <th>Barang</th>
-                    <th style="width:50px;">Jumlah</th>
-                    <th style="width:200px;">Harga</th>
-                    <th style="width:200px;">Sub Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="detail in detskeluar">
-                    <td>
-                        {{detail.produk.nama}}
-                    </td>
-                    <td style="text-align: right">
-                        {{detail.jumlah}}
-                    </td>
-                    <td style="text-align: right">
-                        {{detail.harga| currency:undefined:0}}
-                    </td>
-                    <td style="text-align: right">
-                        {{detail.sub_total| currency:undefined:0}}
-                    </td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th colspan="3" style="text-align: right;">Total :&nbsp;</th>
-                    <td style="text-align: right;">
-                        {{form.total| currency:undefined:0}}
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
+        <div style="margin-top: 20px;">
+            <table class="print-detail">
+                <thead>
+                    <tr>
+                        <th>Barang</th>
+                        <th style="width:50px;">Jumlah</th>
+                        <th style="width:200px;">Harga</th>
+                        <th style="width:200px;">Sub Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="detail in detskeluar">
+                        <td>
+                            {{detail.produk.nama}}
+                        </td>
+                        <td style="text-align: right">
+                            {{detail.jumlah}}
+                        </td>
+                        <td style="text-align: right">
+                            {{detail.harga| currency:undefined:0}}
+                        </td>
+                        <td style="text-align: right">
+                            {{detail.sub_total| currency:undefined:0}}
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="3" style="text-align: right;  border-bottom: none; border-right: none; border-left: none;">Total :&nbsp;</th>
+                        <td style="text-align: right;  border-bottom: none;">
+                            {{form.total| currency:undefined:0}}
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
 </div>

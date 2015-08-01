@@ -159,7 +159,7 @@ class StokkeluarController extends Controller {
         $query = new Query;
         $query->from(['stok_keluar', 'm_cabang'])
                 ->where('stok_keluar.id="' . $id . '" and m_cabang.id = stok_keluar.cabang_id ')
-                ->select("stok_keluar.*,  m_cabang.nama as namacabang");
+                ->select("stok_keluar.*,  m_cabang.nama as namacabang, m_cabang.alamat as alamat_cabang, m_cabang.no_tlp as telpcabang");
 
         $command = $query->createCommand();
         $models = $command->query()->read();

@@ -85,6 +85,7 @@ app.controller('pembelianCtrl', function($scope, Data, toaster) {
         $scope.is_create = true;
         $scope.formtitle = "Form Pembelian";
         $scope.form = {};
+        $scope.form.tanggal =  new Date();
         $scope.pembeliandet = [
             {
                 id: '',

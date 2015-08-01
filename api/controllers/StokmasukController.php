@@ -161,7 +161,7 @@ class StokmasukController extends Controller {
 
         $query->from(['stok_masuk', 'm_cabang'])
                 ->where('stok_masuk.id="' . $id . '" and m_cabang.id = stok_masuk.cabang_id ')
-                ->select("stok_masuk.*,  m_cabang.nama as namacabang");
+                ->select("stok_masuk.*,  m_cabang.nama as namacabang , m_cabang.alamat as alamat_cabang, m_cabang.no_tlp as telpcabang");
 
         $command = $query->createCommand();
         $models = $command->query()->read();
