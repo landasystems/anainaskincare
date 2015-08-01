@@ -50,20 +50,19 @@ class Barang extends \yii\db\ActiveRecord {
         ];
     }
 
-    public function getStok() {
+    public function Stok($id, $cabang = '') {
+        $barang = Barang::findOne(['id' => $id]);
+
         $ks = new KartuStok();
-        $stok = $ks->saldo('today', '', $this->kategori_id, '', $this->id);
+        $stok = $ks->saldo('today', $cabang, $barang->kategori_id, '', $barang->id);
+
         $s = 0;
-        if (isset($stok[$this->id])) {
-            foreach ($stok[$this->id] as $val) {
-                $s += $val['jumlah'];
+        if (isset($stok[$barang->id])) {
+            foreach ($stok[$barang->id]['jumlah'] as $key => $val) {
+                $s += isset($val) ? $val : 0;
             }
         }
         return $s;
-    }
-
-    public function getCoba() {
-        return "aa";
     }
 
     public function getKategori() {

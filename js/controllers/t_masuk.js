@@ -2,14 +2,14 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
     //init data
     var tableStateRef;
     var paramRef;
+    $scope.form = {};
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
-    $scope.form = {};
 
     $scope.cariProduk = function ($query) {
         if ($query.length >= 3) {
-            Data.get('barang/carilagi', {nama: $query}).then(function (data) {
+            Data.post('barang/carilagi', {nama: $query}).then(function (data) {
                 $scope.results = data.data;
             });
         }
@@ -52,9 +52,7 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
 
         });
     };
-
-    //subtotal
-
+    
     //total
     $scope.subtotal = function () {
         var total = 0;
@@ -68,7 +66,6 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
         })
         $scope.form.total = total;
     }
-//    $scope.form.total=total();
 
     $scope.removeRow = function (paramindex) {
         var comArr = eval($scope.detsmasuk);
@@ -79,16 +76,8 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
             alert("Something gone wrong");
         }
     };
-
-
-    $scope.cabang = {
-        minimumInputLength: 3,
-        allowClear: true,
-    }
-
-
-    Data.get('stokmasuk/cabang').then(function (data) {
-        $scope.listcabang = data.data;
+    Data.get('site/session').then(function (data) {
+        $scope.listcabang = data.data.user.cabang;
     });
 
     Data.get('stokmasuk/product').then(function (data) {
@@ -135,7 +124,7 @@ app.controller('t_masukCtrl', function ($scope, Data, toaster) {
         $scope.is_view = false;
         $scope.formtitle = "Form Persediaan Masuk";
         $scope.form = {};
-        $scope.form.tanggal = moment().format('DD-MM-YYYY');
+        $scope.form.tanggal = new Date();
     };
     $scope.update = function (form) {
         $scope.is_edit = true;

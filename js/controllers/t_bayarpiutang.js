@@ -3,26 +3,29 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
 
     //init data;
     var tableStateRef;
+    var paramRef;
+
+    $scope.form = {};
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
     $scope.is_create = false;
     $scope.openedDet = -1;
-    
-    $scope.openDet = function ($event, $index) {
+
+    $scope.openDet = function($event, $index) {
         $event.preventDefault();
         $event.stopPropagation();
         $scope.openedDet = $index;
     };
-    $scope.setStatus = function () {
+    $scope.setStatus = function() {
         $scope.openedDet = -1;
     };
 
     Data.get('bayarpiutang/customer').then(function(data) {
         $scope.sCustomer = data.customer;
     });
-    Data.get('bayarpiutang/cabang').then(function(data) {
-        $scope.sCabang = data.cabang;
+    Data.get('site/session').then(function(data) {
+        $scope.sCabang = data.data.user.cabang;
     });
     Data.get('bayarpiutang/kode').then(function(data) {
         $scope.list_kode = data.kode;
@@ -45,7 +48,7 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
         if (tableState.search.predicateObject) {
             param['filter'] = tableState.search.predicateObject;
         }
-
+        paramRef = param;
         Data.get('bayarpiutang/', param).then(function(data) {
             $scope.displayed = data.data;
 //            console.log($scope.displayed);
@@ -54,6 +57,12 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
 
         $scope.isLoading = false;
     };
+
+    $scope.excel = function() {
+        Data.get('bayarpiutang', paramRef).then(function(data) {
+            window.location = 'api/web/bayarpiutang/excel';
+        });
+    }
 
     $scope.create = function(form) {
         $scope.is_create = true;
@@ -67,7 +76,7 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
                 tanggal_transaksi: '',
                 status: '',
                 debet: '',
-                credit: ''
+                credit: 0
             }
         ];
 
@@ -77,31 +86,36 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
         $scope.is_edit = true;
         $scope.is_view = false;
         $scope.is_create = false;
-        $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode;
+        $scope.formtitle = "Edit Data Piutang : " + $scope.form.kode;
         $scope.detail(row);
-
-//        })
+        $scope.detPenjualan = [
+            {
+                id: '',
+                tanggal_transaksi: '',
+                status: '',
+                debet: '',
+                credit: 0
+            }
+        ];
     };
-    $scope.view = function(form) {
+    $scope.view = function(row) {
         $scope.is_edit = true;
         $scope.is_view = true;
-        $scope.formtitle = "Lihat Data : " + form.nama;
         $scope.form = row;
         $scope.detail(row);
+        $scope.total();
+        $scope.formtitle = "Lihat Data Piutang : " + $scope.form.kode;
         $scope.is_edit = true;
         $scope.is_view = true;
         $scope.is_create = false;
-        $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode;
-
-//        })
     };
-    $scope.save = function (form, detPenjualan) {
+    $scope.save = function(form, detPenjualan) {
         var data = {
             form: form,
             detail: detPenjualan
         };
         var url = 'bayarpiutang/update';
-        Data.post(url, data).then(function (result) {
+        Data.post(url, data).then(function(result) {
             if (result.status == 0) {
                 toaster.pop('error', "Terjadi Kesalahan", result.errors);
             } else {
@@ -130,8 +144,14 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
         Data.get('bayarpiutang/view/' + form.penjualan_id).then(function(result) {
 //            $scope.detail = result.data;
             $scope.detPenjualan = result.data;
-            console.log(result.data);
+            angular.forEach($scope.detPenjualan, function(detail) {
+                detail.credit = (detail.credit != undefined) ? detail.credit : 0;
+                detail.debet= (detail.debet != undefined) ? detail.debet : 0;
+            });
+            $scope.total();
+
         });
+
     };
     $scope.addrow = function() {
         $scope.detPenjualan.unshift({
@@ -139,14 +159,27 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
 //            pembelian_id: ($scope.form.id != '') ? $scope.form.id : '',
             tanggal_transaksi: '',
             status: '',
-            debet: '',
-            credit: '',
+            debet: 0,
+            credit: 0,
         });
+        $scope.total();
     };
+
+    $scope.total = function() {
+        var total_debet = 0;
+        var total_credit = 0;
+        angular.forEach($scope.detPenjualan, function(detail) {
+            total_debet += (parseInt(detail.debet) != undefined) ? parseInt(detail.debet) : 0;
+            total_credit += (parseInt(detail.credit) != undefined) ? parseInt(detail.credit) : 0;
+        });
+        $scope.form.total_debet = total_debet;
+        $scope.form.total_credit = total_credit;
+    }
     $scope.removeRow = function(paramindex) {
         var comArr = eval($scope.detPenjualan);
         if (comArr.length > 1) {
             $scope.detPenjualan.splice(paramindex, 1);
+            $scope.total();
         } else {
             alert("Something gone wrong");
         }

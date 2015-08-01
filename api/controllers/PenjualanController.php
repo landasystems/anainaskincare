@@ -26,6 +26,7 @@ class PenjualanController extends Controller {
                     'update' => ['post'],
                     'delete' => ['delete'],
                     'cabang' => ['get'],
+                    'excel' => ['get'],
                     'customer' => ['get'],
                     'produk' => ['get'],
                     'nm_customer' => ['get'],
@@ -50,7 +51,6 @@ class PenjualanController extends Controller {
         }
         $verb = Yii::$app->getRequest()->getMethod();
         $allowed = array_map('strtoupper', $verbs);
-//        Yii::error($allowed);
 
         if (!in_array($verb, $allowed)) {
 
@@ -63,12 +63,15 @@ class PenjualanController extends Controller {
     }
 
     public function actionIndex() {
+        session_start();
+
         //init variable
         $params = $_REQUEST;
         $filter = array();
         $sort = "penjualan.id ASC";
         $offset = 0;
         $limit = 10;
+
         //limit & offset pagination
         if (isset($params['limit']))
             $limit = $params['limit'];
@@ -91,25 +94,34 @@ class PenjualanController extends Controller {
         $query->offset($offset)
                 ->limit($limit)
                 ->from(['penjualan', 'm_cabang', 'm_customer'])
-                ->where('penjualan.cabang_id = m_cabang.id and penjualan.customer_id = m_customer.id')
                 ->orderBy($sort)
                 ->select("m_cabang.nama as cabang, m_customer.nama as customer, penjualan.kode as kode, penjualan.tanggal as tanggal,
                     penjualan.keterangan as keterangan, penjualan.total as total, penjualan.cash as cash, penjualan.credit as credit, penjualan.status as status,
                     penjualan.kode as kode, penjualan.id as id,  penjualan.customer_id as customer_id, penjualan.cabang_id as cabang_id,
-                    m_customer.no_tlp as no_tlp, m_customer.email as email, m_customer.alamat as alamat");
+                    m_customer.no_tlp as no_tlp, m_customer.email as email, m_customer.alamat as alamat")
+                ->where('penjualan.cabang_id = m_cabang.id and penjualan.customer_id = m_customer.id')
+                ->andWhere(['penjualan.cabang_id' => $_SESSION['user']['cabang_id']]);
 
         //filter
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
-                $query->andFilterWhere(['like', $key, $val]);
+                if ($key == 'tanggal') {
+                    $value = explode(' - ', $val);
+                    $start = date("Y-m-d", strtotime($value[0]));
+                    $end = date("Y-m-d", strtotime($value[1]));
+                    $query->andFilterWhere(['between', 'tanggal', $start, $end]);
+                } else {
+                    $query->andFilterWhere(['like', $key, $val]);
+                }
             }
         }
+        $_SESSION['query'] = $query;
 
         $command = $query->createCommand();
         $models = $command->queryAll();
         $totalItems = $query->count();
-
+        
         $this->setHeader(200);
 
         echo json_encode(array('status' => 1, 'data' => $models, 'totalItems' => $totalItems), JSON_PRETTY_PRINT);
@@ -128,14 +140,23 @@ class PenjualanController extends Controller {
         $no_tlp = (isset($cus->no_tlp)) ? $cus->no_tlp : '';
         $email = (isset($cus->email)) ? $cus->email : '';
         $alamat = (isset($cus->alamat)) ? $cus->alamat : '';
-        
+
         $data['customers'] = [
             'id' => $idcus,
             'nama' => $cus_nama,
-            'no_tlp'=>$no_tlp,
-            'email'=>$email,
-            'alamat'=>$alamat
-                ];
+            'no_tlp' => $no_tlp,
+            'email' => $email,
+            'alamat' => $alamat
+        ];
+        $data['cabang'] = [
+            'id' => '1',
+            'kode' => '001',
+            'nama' => 'anaina singosari',
+            'alamat' => 'jl raya mondoroko',
+            'no_tlp' => '03416677812',
+            'email' => 'anainasingosari@yahoo.com',
+            'is_deleted' => '0',
+        ];
 
         $det = PenjualanDet::find()
                 ->with(['barang'])
@@ -166,10 +187,12 @@ class PenjualanController extends Controller {
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
+        Yii::error($params);
         $model = new Penjualan();
         $model->attributes = $params['penjualan'];
         $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
         $model->customer_id = $params['penjualan']['customers']['id'];
+        $model->cabang_id = $params['penjualan']['cabang']['id'];
 
 
         if ($model->save()) {
@@ -178,7 +201,7 @@ class PenjualanController extends Controller {
                     $pinjaman = new Pinjaman();
                     $pinjaman->penjualan_id = $model->id;
                     $pinjaman->debet = $model->credit;
-                    $credit->tanggal_transaksi = $model->tanggal;
+                    $pinjaman->tanggal_transaksi = $model->tanggal;
                     $pinjaman->status = 'Belum Lunas';
                     $pinjaman->save();
                 }
@@ -214,6 +237,7 @@ class PenjualanController extends Controller {
         $model->attributes = $params['penjualan'];
         $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
         $model->customer_id = $params['penjualan']['customers']['id'];
+        $model->cabang_id = $params['penjualan']['cabang']['id'];
 
         if ($model->save()) {
             if ($model->status == 'Selesai') {
@@ -240,8 +264,8 @@ class PenjualanController extends Controller {
                 }
                 $det->attributes = $val;
                 $det->produk_id = $val['produk']['id'];
-                $det->pegawai_terapis_id = $val['terapis']['id'];
-                $det->pegawai_dokter_id = $val['dokter']['id'];
+                $det->pegawai_terapis_id = isset($val['terapis']['id']) ? $val['terapis']['id'] : null;
+                $det->pegawai_dokter_id = isset($val['dokter']['id']) ? $val['dokter']['id'] : null;
                 $det->penjualan_id = $model->id;
                 if ($det->save()) {
                     $id_det[] = $det->id;
@@ -444,6 +468,15 @@ class PenjualanController extends Controller {
             501 => 'Not Implemented',
         );
         return (isset($codes[$status])) ? $codes[$status] : '';
+    }
+    public function actionExcel() {
+        session_start();
+        $query = $_SESSION['query'];
+        $query->offset("");
+        $query->limit("");
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+        return $this->render("excel", ['models' => $models]);
     }
 
 }

@@ -3,13 +3,15 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
 
     //init data;
     var tableStateRef;
+    var paramRef;
+    $scope.form = {};
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
     $scope.is_create = false;
     $scope.penjualan = []
     $scope.detPenjualan = []
-     $scope.open1 = function ($event) {
+    $scope.open1 = function($event) {
         $event.preventDefault();
         $event.stopPropagation();
         $scope.opened1 = true;
@@ -30,33 +32,33 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
         if (tableState.search.predicateObject) {
             param['filter'] = tableState.search.predicateObject;
         }
-
+        paramRef = param;
         Data.get('returpenjualan/', param).then(function(data) {
             $scope.displayed = data.data;
-//            console.log($scope.displayed);
             tableState.pagination.numberOfPages = Math.ceil(data.totalItems / limit);
         });
 
         $scope.isLoading = false;
     };
-
+    $scope.excel = function() {
+        Data.get('returpenjualan', paramRef).then(function(data) {
+            window.location = 'api/web/returpenjualan/excel';
+        });
+    }
     $scope.create = function(form) {
         $scope.is_create = false;
         $scope.is_edit = true;
         $scope.is_view = false;
-        $scope.formtitle = "Form Tambah Data";
+        $scope.formtitle = "Form Retur Penjualan";
         $scope.form = {};
-        $scope.form.tanggal = moment().format('DD-MM-YYYY');
-
-
+        $scope.form.tanggal = new Date();
     };
     $scope.update = function(form) {
         $scope.form = form;
         $scope.is_edit = true;
         $scope.is_view = false;
         $scope.is_create = false;
-        $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode;
-//        console.log(form);
+        $scope.formtitle = "Edit Retur Penjualan : " + $scope.form.kode;
         $scope.selected(form);
 
     };
@@ -65,13 +67,10 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
         $scope.is_edit = true;
         $scope.is_view = false;
         $scope.is_create = false;
-        $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode;
-
+        $scope.formtitle = "Edit Retur Penjualan : " + $scope.form.kode;
         $scope.selected(form);
-
     };
     $scope.save = function(form, detail) {
-        console.log(form);
         var data = {
             retur_penjualan: form,
             retur_penjualandet: detail,
@@ -102,55 +101,35 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
             });
         }
     };
-    Data.get('returpenjualan/customer').then(function(data) {
-        $scope.sCustomer = data.customer;
-    });
-    Data.get('returpenjualan/cabang').then(function(data) {
-        $scope.sCabang = data.cabang;
-    });
-    Data.get('returpenjualan/kodepenjualan').then(function(data) {
-        $scope.listkodepenjualan = data.listkode;
-    });
-
-    $scope.cabang = {
-        minimumInputLength: 3,
-        allowClear: true,
-    }
-
-    Data.get('returpenjualan/produk').then(function(data) {
-        $scope.sProduk = data.produk;
-    });
     //select2 product
-    $scope.cariKode = function ($query) {
+    $scope.cariKode = function($query) {
         if ($query.length >= 3) {
-            Data.get('penjualan/cari', {nama: $query}).then(function (data) {
+            Data.get('penjualan/cari', {nama: $query}).then(function(data) {
                 $scope.results = data.data;
             });
         }
     }
     $scope.getkodepenjualan = function(wo) {
-        Data.post('returpenjualan/det_kodepenjualan/' , wo).then(function(data) {
+        Data.post('returpenjualan/det_kodepenjualan/', wo).then(function(data) {
             $scope.penjualan = data.penjualan;
             $scope.detPenjualan = data.detail;
             $scope.form.kode = data.kode;
-//            console.log(data.detail);
+            $scope.form.penjualan = data.penjualan;
             angular.forEach($scope.detPenjualan, function(detail) {
                 detail.jumlah_retur = (detail.jumlah_retur !== null) ? detail.jumlah_retur : 0;
+                detail.diskon = (detail.diskon_awal !== null) ? detail.diskon_awal : 0;
+                detail.harga = (detail.harga !== null) ? detail.harga : 0;
             })
-
         });
     };
     $scope.selected = function(form) {
-           Data.get('returpenjualan/view/' + form.id).then(function(data) {
+        Data.get('returpenjualan/view/' + form.id).then(function(data) {
             $scope.form = data.data;
-            $scope.form.penjualan = data.penjualan.penjualan[0];
             $scope.penjualan = data.penjualan;
             $scope.detPenjualan = data.detail;
-            console.log(data.penjualan);
             angular.forEach($scope.detPenjualan, function(detail) {
                 detail.jumlah_retur = (detail.jumlah_retur !== null) ? detail.jumlah_retur : 0;
             })
-
         });
     }
 
@@ -161,7 +140,6 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
         var diskon_retur = 0;
         var lain = parseInt($scope.form.biaya_lain);
         angular.forEach($scope.detPenjualan, function(detail) {
-
             diskon_retur += detail.jumlah_retur * detail.diskon_awal;
             total_retur += detail.jumlah_retur * detail.harga;
         })
@@ -177,8 +155,5 @@ app.controller('r_penjualanCtrl', function($scope, Data, toaster) {
         var diskon = parseInt($scope.form.total_diskon);
         var credit = (total - diskon) - cash;
         $scope.form.credit = (credit > 0) ? credit : 0;
-
     }
-
-
 })

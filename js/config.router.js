@@ -1,13 +1,13 @@
 angular.module('app')
         .run(
                 ['$rootScope', '$state', '$stateParams', 'Data',
-                    function ($rootScope, $state, $stateParams, Data) {
+                    function($rootScope, $state, $stateParams, Data) {
                         $rootScope.$state = $state;
                         $rootScope.$stateParams = $stateParams;
                         //pengecekan login
-                        $rootScope.$on("$stateChangeStart", function (event, toState) {
+                        $rootScope.$on("$stateChangeStart", function(event, toState) {
                             var globalmenu = ['app.dashboard', 'master.userprofile', 'access.signin', 'transaksi.coba'];
-                            Data.get('site/session').then(function (results) {
+                            Data.get('site/session').then(function(results) {
                                 if (typeof results.data.user != "undefined") {
                                     $rootScope.user = results.data.user;
                                     if (results.data.user.akses[(toState.name).replace(".", "_")]) { // jika punya hak akses, return true
@@ -29,7 +29,7 @@ angular.module('app')
                 )
         .config(
                 ['$stateProvider', '$urlRouterProvider',
-                    function ($stateProvider, $urlRouterProvider) {
+                    function($stateProvider, $urlRouterProvider) {
 
                         $urlRouterProvider
                                 .otherwise('/app/dashboard');
@@ -44,7 +44,7 @@ angular.module('app')
                                     templateUrl: 'tpl/dashboard.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function ($ocLazyLoad) {
+                                            function($ocLazyLoad) {
 
                                             }]
                                     }
@@ -60,7 +60,7 @@ angular.module('app')
                                     templateUrl: 'tpl/page_signin.html',
                                     resolve: {
                                         deps: ['uiLoad',
-                                            function (uiLoad) {
+                                            function(uiLoad) {
                                                 return uiLoad.load(['js/controllers/site.js']);
                                             }]
                                     }
@@ -83,7 +83,7 @@ angular.module('app')
                                     templateUrl: 'tpl/m_pegawai/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function ($ocLazyLoad) {
+                                            function($ocLazyLoad) {
                                                 return $ocLazyLoad.load('js/controllers/pegawai.js');
                                             }]
                                     }
@@ -93,7 +93,7 @@ angular.module('app')
                                     templateUrl: 'tpl/m_roles/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function ($ocLazyLoad) {
+                                            function($ocLazyLoad) {
                                                 return $ocLazyLoad.load('js/controllers/roles.js');
                                             }]
                                     }
@@ -103,7 +103,7 @@ angular.module('app')
                                     templateUrl: 'tpl/m_satuan/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function ($ocLazyLoad) {
+                                            function($ocLazyLoad) {
                                                 return $ocLazyLoad.load('js/controllers/satuan.js');
                                             }]
                                     }
@@ -113,7 +113,7 @@ angular.module('app')
                                     templateUrl: 'tpl/m_user/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function ($ocLazyLoad) {
+                                            function($ocLazyLoad) {
                                                 return $ocLazyLoad.load('js/controllers/pengguna.js');
                                             }]
                                     }
@@ -123,7 +123,7 @@ angular.module('app')
                                     templateUrl: 'tpl/m_user/profile.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function ($ocLazyLoad) {
+                                            function($ocLazyLoad) {
                                                 return $ocLazyLoad.load('js/controllers/pengguna_profile.js');
                                             }]
                                     }
@@ -133,7 +133,7 @@ angular.module('app')
                                     templateUrl: 'tpl/m_cabang/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function ($ocLazyLoad) {
+                                            function($ocLazyLoad) {
                                                 return $ocLazyLoad.load('js/controllers/cabang.js');
                                             }]
                                     }
@@ -143,7 +143,7 @@ angular.module('app')
                                     templateUrl: 'tpl/m_customer/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function ($ocLazyLoad) {
+                                            function($ocLazyLoad) {
                                                 return $ocLazyLoad.load('js/controllers/customer.js');
                                             }]
                                     }
@@ -153,7 +153,7 @@ angular.module('app')
                                     templateUrl: 'tpl/m_supplier/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function ($ocLazyLoad) {
+                                            function($ocLazyLoad) {
                                                 return $ocLazyLoad.load('js/controllers/supplier.js');
                                             }]
                                     }
@@ -163,7 +163,7 @@ angular.module('app')
                                     templateUrl: 'tpl/m_karyawan/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function ($ocLazyLoad) {
+                                            function($ocLazyLoad) {
                                                 return $ocLazyLoad.load('js/controllers/karyawan.js');
                                             }]
                                     }
@@ -173,19 +173,20 @@ angular.module('app')
                                     templateUrl: 'tpl/m_kategori/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function ($ocLazyLoad) {
+                                            function($ocLazyLoad) {
                                                 return $ocLazyLoad.load('js/controllers/kategori.js');
                                             }]
                                     }
                                 })
                                 .state('master.barang', {
                                     url: '/barang',
+                                    params: {'form': null},
                                     templateUrl: 'tpl/m_barang/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function ($ocLazyLoad) {
+                                            function($ocLazyLoad) {
                                                 return $ocLazyLoad.load('angularFileUpload').then(
-                                                        function () {
+                                                        function() {
                                                             return $ocLazyLoad.load('js/controllers/barang.js');
                                                         }
                                                 );
@@ -197,15 +198,14 @@ angular.module('app')
                                     url: '/trans',
                                     templateUrl: 'tpl/app.html'
                                 })
-                                //
                                 .state('transaksi.stokmasuk', {
                                     url: '/masuk',
                                     templateUrl: 'tpl/t_masuk/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select', 'daterangepicker']).then(
-                                                        function () {
+                                            function($ocLazyLoad) {
+                                                return $ocLazyLoad.load(['daterangepicker']).then(
+                                                        function() {
                                                             return $ocLazyLoad.load('js/controllers/t_masuk.js');
                                                         }
                                                 );
@@ -217,9 +217,9 @@ angular.module('app')
                                     templateUrl: 'tpl/t_keluar/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select', 'daterangepicker']).then(
-                                                        function () {
+                                            function($ocLazyLoad) {
+                                                return $ocLazyLoad.load(['daterangepicker']).then(
+                                                        function() {
                                                             return $ocLazyLoad.load('js/controllers/t_keluar.js');
                                                         }
                                                 );
@@ -231,9 +231,9 @@ angular.module('app')
                                     templateUrl: 'tpl/t_coba/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function ($ocLazyLoad) {
+                                            function($ocLazyLoad) {
                                                 return $ocLazyLoad.load([]).then(
-                                                        function () {
+                                                        function() {
                                                             return $ocLazyLoad.load('js/controllers/t_coba.js');
                                                         }
                                                 );
@@ -245,9 +245,9 @@ angular.module('app')
                                     templateUrl: 'tpl/t_bayarhutang/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select', 'daterangepicker']).then(
-                                                        function () {
+                                            function($ocLazyLoad) {
+                                                return $ocLazyLoad.load(['daterangepicker']).then(
+                                                        function() {
                                                             return $ocLazyLoad.load('js/controllers/t_bayarhutang.js');
                                                         }
                                                 );
@@ -259,9 +259,9 @@ angular.module('app')
                                     templateUrl: 'tpl/t_returpembelian/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select', 'daterangepicker']).then(
-                                                        function () {
+                                            function($ocLazyLoad) {
+                                                return $ocLazyLoad.load(['daterangepicker']).then(
+                                                        function() {
                                                             return $ocLazyLoad.load('js/controllers/t_returpembelian.js');
                                                         }
                                                 );
@@ -273,9 +273,9 @@ angular.module('app')
                                     templateUrl: 'tpl/t_pembelian/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select']).then(
-                                                        function () {
+                                            function($ocLazyLoad) {
+                                                return $ocLazyLoad.load(['daterangepicker']).then(
+                                                        function() {
                                                             return $ocLazyLoad.load('js/controllers/t_pembelian.js');
                                                         }
                                                 );
@@ -287,9 +287,9 @@ angular.module('app')
                                     templateUrl: 'tpl/t_penjualan/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select']).then(
-                                                        function () {
+                                            function($ocLazyLoad) {
+                                                return $ocLazyLoad.load(['daterangepicker']).then(
+                                                        function() {
                                                             return $ocLazyLoad.load('js/controllers/t_penjualan.js');
                                                         }
                                                 );
@@ -301,9 +301,9 @@ angular.module('app')
                                     templateUrl: 'tpl/t_bayarpiutang/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select']).then(
-                                                        function () {
+                                            function($ocLazyLoad) {
+                                                return $ocLazyLoad.load(['daterangepicker']).then(
+                                                        function() {
                                                             return $ocLazyLoad.load('js/controllers/t_bayarpiutang.js');
                                                         }
                                                 );
@@ -315,9 +315,9 @@ angular.module('app')
                                     templateUrl: 'tpl/t_returpenjualan/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['ui.select']).then(
-                                                        function () {
+                                            function($ocLazyLoad) {
+                                                return $ocLazyLoad.load(['daterangepicker']).then(
+                                                        function() {
                                                             return $ocLazyLoad.load('js/controllers/t_returpenjualan.js');
                                                         }
                                                 );
@@ -330,15 +330,14 @@ angular.module('app')
                                     url: '/laporan',
                                     templateUrl: 'tpl/app.html'
                                 })
-                                //
                                 .state('laporan.kartustok', {
                                     url: '/kartustok',
                                     templateUrl: 'tpl/l_kartustok/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['daterangepicker', 'ui.select']).then(
-                                                        function () {
+                                            function($ocLazyLoad) {
+                                                return $ocLazyLoad.load(['daterangepicker', ]).then(
+                                                        function() {
                                                             return $ocLazyLoad.load('js/controllers/l_kartustok.js');
                                                         }
                                                 );
@@ -350,9 +349,9 @@ angular.module('app')
                                     templateUrl: 'tpl/l_bonuskaryawan/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['daterangepicker', 'ui.select']).then(
-                                                        function () {
+                                            function($ocLazyLoad) {
+                                                return $ocLazyLoad.load(['daterangepicker', ]).then(
+                                                        function() {
                                                             return $ocLazyLoad.load('js/controllers/l_bonuskaryawan.js');
                                                         }
                                                 );
@@ -364,9 +363,9 @@ angular.module('app')
                                     templateUrl: 'tpl/l_labarugi/index.html',
                                     resolve: {
                                         deps: ['$ocLazyLoad',
-                                            function ($ocLazyLoad) {
-                                                return $ocLazyLoad.load(['daterangepicker', 'ui.select']).then(
-                                                        function () {
+                                            function($ocLazyLoad) {
+                                                return $ocLazyLoad.load(['daterangepicker', ]).then(
+                                                        function() {
                                                             return $ocLazyLoad.load('js/controllers/l_labarugi.js');
                                                         }
                                                 );

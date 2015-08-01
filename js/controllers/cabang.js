@@ -2,13 +2,10 @@ app.controller('cabangCtrl', function ($scope, Data, toaster) {
     //init data
     var tableStateRef;
     var paramRef;
+    $scope.form = {};
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
-
-//    Data.get('barang/satuan').then(function(data) {
-//        $scope.sSatuan = data.satuan;
-//    });
 
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
@@ -32,7 +29,7 @@ app.controller('cabangCtrl', function ($scope, Data, toaster) {
 
         $scope.isLoading = false;
     };
-    
+
     $scope.excel = function () {
         Data.get('cabang', paramRef).then(function (data) {
             window.location = 'api/web/cabang/excel';
@@ -42,19 +39,19 @@ app.controller('cabangCtrl', function ($scope, Data, toaster) {
     $scope.create = function (form) {
         $scope.is_edit = true;
         $scope.is_view = false;
-        $scope.formtitle = "Form Tambah Klinik";
+        $scope.formtitle = "Form Tambah Cabang";
         $scope.form = {};
     };
     $scope.update = function (form) {
         $scope.is_edit = true;
         $scope.is_view = false;
-        $scope.formtitle = "Edit Klinik : " + form.kode + " - " + form.nama;
+        $scope.formtitle = "Edit Cabang : " + form.kode + " - " + form.nama;
         $scope.form = form;
     };
     $scope.view = function (form) {
         $scope.is_edit = true;
         $scope.is_view = true;
-        $scope.formtitle = "Lihat Klinik : " + form.kode + " - " + form.nama;
+        $scope.formtitle = "Lihat Cabang : " + form.kode + " - " + form.nama;
         $scope.form = form;
     };
     $scope.save = function (form) {
@@ -70,7 +67,7 @@ app.controller('cabangCtrl', function ($scope, Data, toaster) {
         });
     };
     $scope.cancel = function () {
-        if (!$scope.is_view){ //hanya waktu edit cancel, di load table lagi
+        if (!$scope.is_view) { //hanya waktu edit cancel, di load table lagi
             $scope.callServer(tableStateRef);
         }
         $scope.is_edit = false;

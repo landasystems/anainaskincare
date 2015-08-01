@@ -2,9 +2,15 @@ app.controller('rolesCtrl', function ($scope, Data, toaster, $state) {
     //init data
     var tableStateRef;
     var paramRef;
+    $scope.form = {};
     $scope.displayed = [];
     $scope.is_edit = false;
     $scope.is_view = false;
+
+    $scope.listcabang = [];
+    Data.get('cabang/listcabang').then(function (data) {
+        $scope.listcabang = data.data;
+    });
 
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
@@ -49,6 +55,9 @@ app.controller('rolesCtrl', function ($scope, Data, toaster, $state) {
         $scope.formtitle = "Edit Data : " + form.nama;
         $scope.form = form;
         $scope.form.akses = JSON.parse($scope.form.akses);
+        Data.get('cabang/akses/' + form.id).then(function (data) {
+           $scope.form.cabang = data.data;
+        });
     };
     $scope.view = function (form) {
         $scope.is_edit = true;
@@ -56,6 +65,9 @@ app.controller('rolesCtrl', function ($scope, Data, toaster, $state) {
         $scope.formtitle = "Lihat Data : " + form.nama;
         $scope.form = form;
         $scope.form.akses = JSON.parse($scope.form.akses);
+        Data.get('cabang/akses/' + form.id).then(function (data) {
+           $scope.form.cabang = data.data;
+        });
     };
     $scope.save = function (form) {
         var url = (form.id > 0) ? 'roles/update/' + form.id : 'roles/create';
@@ -126,7 +138,7 @@ app.controller('rolesCtrl', function ($scope, Data, toaster, $state) {
             "laporan_bonuskaryawan": false,
             "laporan_labarugi": false,
         }
-        
+
         angular.forEach(akses, function ($value, $key) {
             if ($key.indexOf(module) >= 0)
                 $scope.form.akses[$key] = valueCheck;

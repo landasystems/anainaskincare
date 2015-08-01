@@ -56,7 +56,7 @@ class SiteController extends Controller {
         session_start();
         session_destroy();
     }
-    
+
     public function actionLogin() {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = User::find()->where(['username' => $params['username'], 'password' => sha1($params['password'])])->one();
@@ -69,9 +69,26 @@ class SiteController extends Controller {
             $akses = (isset($model->roles->akses)) ? $model->roles->akses : '[]';
             $_SESSION['user']['akses'] = json_decode($akses);
             $_SESSION['user']['settings'] = json_decode($model->settings);
-            
+
+            //mencari hak akses cabang
+            $query = new Query;
+            $query->from('m_cabang')
+                    ->join('JOIN', 'm_akses_cabang', 'm_akses_cabang.cabang_id=m_cabang.id')
+                    ->select("m_cabang.*")
+                    ->where("m_akses_cabang.roles_id = " . $model->roles_id);
+
+            $command = $query->createCommand();
+            $cabang = $command->queryAll();
+            $_SESSION['user']['cabang'] = $cabang;
+
+            $cbg = array();
+            foreach ($cabang as $val) {
+                $cbg[] = $val['id'];
+            }
+            $_SESSION['user']['cabang_id'] = $cbg;
+
             $this->setHeader(200);
-            echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
+            echo json_encode(array('status' => 1, 'data' => array_filter($_SESSION)), JSON_PRETTY_PRINT);
         } else {
             $this->setHeader(400);
             echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => "Authentication Systems gagal, Username atau password Anda salah."), JSON_PRETTY_PRINT);

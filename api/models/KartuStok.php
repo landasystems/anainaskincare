@@ -136,55 +136,115 @@ class KartuStok extends \yii\db\ActiveRecord {
                 ->select("kartu_stok.*")
                 ->where("m_produk.is_deleted = 0 and m_produk.type = 'Barang' and m_produk.id = kartu_stok.produk_id $criteria")
                 ->orderBy("kartu_stok.produk_id, kartu_stok.created_at ASC, kartu_stok.id ASC");
-
         $command = $query->createCommand();
         $kartu = $command->queryAll();
+        $pr = 0;
         $i = 0;
-        $produk_id = 0;
-        $created = '';
-        $a = 1;
-        $tmpSaldo = array();
         foreach ($kartu as $val) {
-            if ($produk_id != $val['produk_id']) {
-                $tmp[1]['jumlah'] = 0;
-                $tmp[1]['harga'] = 0;
-                $a = 1;
+
+            if ($pr != $val['produk_id']) {
+                $indeks = count(isset($body[$val['produk_id']]['saldo_awal']) ? $body[$val['produk_id']]['saldo_awal'] : 0) + 1;
+                //setting nilai awal temporari
+                unset($tmpSaldo);
+                unset($tmp);
+                unset($tmpKeluar);
+                unset($totalJml);
+                unset($totalHarga);
+                $tmpSaldo['jumlah'][0] = 0;
+                $tmpSaldo['harga'][0] = 0;
+                $tmpSaldo['sub_total'][0] = 0;
+            } else {
+                unset($tmpKeluar);
             }
 
-            if ($val['jumlah_keluar'] == 0) {
+            if ($val['jumlah_masuk'] > 0) {
+                //total masuk
+                $totalJml['masuk'] += $val['jumlah_masuk'];
+                $totalHarga['masuk'] += ($val['jumlah_masuk'] * $val['harga_masuk']);
 
-                $tmpSaldo[$a] = array('jumlah' => $val['jumlah_masuk'], 'harga' => $val['harga_masuk'], 'sub_total' => ($val['harga_masuk'] * $val['jumlah_masuk']));
+                $tempQty = $val['jumlah_masuk'];
+                $masuk = $tempQty;
+                $first = true;
+                $boolStatus = true;
 
-                $tmp[$a]['jumlah'] = $val['jumlah_masuk'];
-                $tmp[$a]['harga'] = $val['harga_masuk'];
+                $jml = array_sum(isset($tmpSaldo['jumlah']) ? $tmpSaldo['jumlah'] : array(0));
+                if ($jml >= 0) {
+                    $tmp[$indeks]['jumlah'] = $val['jumlah_masuk'];
+                    $tmp[$indeks]['harga'] = $val['harga_masuk'];
+                }
+                foreach ($tmp as $key => $valS) {
+                    if ($first) {
+                        unset($tmpSaldo);
+                        unset($tmp);
+                        $first = false;
+                    }
+                    if ($valS['jumlah'] < 0) {
+                        if ($boolStatus) {
+                            if ($valS['jumlah'] >= $masuk) {
+                                $boolStatus = true;
+                            } else {
+                                $valS['jumlah'] += $tempQty;
+                                $valS['harga'] = $val['harga_masuk'];
+                                $tempQty += $valS['jumlah'];
+                            }
+                        }
+                    }
+                    $tmpSaldo['jumlah'][$indeks] = $valS['jumlah'];
+                    $tmpSaldo['harga'][$indeks] = $valS['harga'];
+                    $tmpSaldo['sub_total'][$indeks] = $tmpSaldo['harga'][$indeks] * $tmpSaldo['jumlah'][$indeks];
+                    $tmp[$indeks]['jumlah'] = $tmpSaldo['jumlah'][$indeks];
+                    $tmp[$indeks]['harga'] = $tmpSaldo['harga'][$indeks];
+                    $indeks++;
+                }
             } else {
                 $tempQty = $val['jumlah_keluar'];
+                $first = true;
                 $boolStatus = true;
-                $index = 1;
+                $saldo = 0;
                 foreach ($tmp as $valS) {
+                    if ($first) {
+                        unset($tmpSaldo);
+                        unset($tmp);
+                        unset($tmpKeluar);
+                        $first = false;
+                    }
                     if ($boolStatus) {
                         if ($valS['jumlah'] > $tempQty) {
+                            $tmpKeluar['jumlah'][$indeks] = $tempQty;
                             $valS['jumlah'] -= $tempQty;
-                            $tmp[$index]['jumlah'] = $valS['jumlah'];
-
                             $boolStatus = false;
-                            $tmpSaldo[$a] = array('jumlah' => $valS['jumlah_masuk'], 'harga' => $valS['harga_masuk'], 'sub_total' => ($valS['harga_masuk'] * $valS['jumlah_masuk']));
                         } else {
+                            $tmpKeluar['jumlah'][$indeks] = $valS['jumlah'];
+                            if ($valS['jumlah'] <= 0) {
+                                $valS['jumlah'] -= $tempQty;
+                                $tmpKeluar['jumlah'][$indeks] = $tempQty;
+                                $valS['harga'] = $val['harga_keluar'];
+                            }
                             $tempQty -= $valS['jumlah'];
-                            unset($tmp[$index]);
                         }
-                    } else {
-                        $tmpSaldo[$a] = array('jumlah' => $valS['jumlah_masuk'], 'harga' => $valS['harga_masuk'], 'sub_total' => ($valS['harga_masuk'] * $valS['jumlah_masuk']));
+                        //simpan stok keluar
+                        $tmpKeluar['harga'][$indeks] = $val['harga_keluar'];
+                        $tmpKeluar['sub_total'][$indeks] = $tmpKeluar['jumlah'][$indeks] * $tmpKeluar['harga'][$indeks];
                     }
-                    $a++;
-                    $index++;
+                    //simpan stok saldo
+                    $tmpSaldo['jumlah'][$indeks] = ($valS['jumlah'] == $tmpKeluar['jumlah'][$indeks]) ? 0 : $valS['jumlah'];
+                    $tmpSaldo['harga'][$indeks] = $valS['harga'];
+                    $tmpSaldo['sub_total'][$indeks] = $tmpSaldo['harga'][$indeks] * $tmpSaldo['jumlah'][$indeks];
+
+                    $tmp[$indeks]['jumlah'] = $valS['jumlah'];
+                    $tmp[$indeks]['harga'] = $tmpSaldo['harga'][$indeks];
+
+                    $indeks++;
                 }
             }
 
-            $body[$val['produk_id']] = $tmpSaldo;
+            $body[$val['produk_id']]['jumlah'] = $tmpSaldo['jumlah'];
+            $body[$val['produk_id']]['harga'] = $tmpSaldo['harga'];
+            $body[$val['produk_id']]['sub_total'] = $tmpSaldo['sub_total'];
+
+            $indeks++;
+            $pr = $val['produk_id'];
             $i++;
-            $a++;
-            $produk_id = $val['produk_id'];
         }
         return $body;
     }
