@@ -242,25 +242,25 @@
                                     <input type="text" class="form-control" ng-maxlength="8"  ng-model="detail.type"  ng-disabled="true" ng-readonly="is_create == false" >
                                 </td>
                                 <td width="14%">
-                                    <div class="input-group m-b">
+                                    <div class="input-group">
                                         <span class="input-group-addon">Rp</span>
                                         <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.harga_awal" ng-disabled="true" >
                                     </div>
                                 </td>
                                 <td width="14%">
-                                    <div class="input-group m-b">
+                                    <div class="input-group">
                                         <span class="input-group-addon">Rp</span>
                                         <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.harga"  >
                                     </div>
                                 </td>
                                 <td width="14%">
-                                    <div class="input-group m-b">
+                                    <div class="input-group">
                                         <span class="input-group-addon">Rp</span>
                                         <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.diskon_awal"  >
                                     </div>
                                 </td>
                                 <td width="14%">
-                                    <div class="input-group m-b">
+                                    <div class="input-group">
                                         <span class="input-group-addon">Rp</span>
                                         <input type="text" class="form-control" name="total" value="{{(detail.jumlah_retur * detail.harga) - (detail.jumlah_retur * detail.diskon_awal) | number}}" ng-readonly="true"  ng-disabled="is_view" >
                                     </div>
@@ -278,7 +278,7 @@
                             <tr>
                                 <th colspan="7" style="text-align: right;">Total :&nbsp;</th>
                                 <td >
-                                    <div class="input-group m-b" style="margin:0px;">
+                                    <div class="input-group" style="margin:0px;">
                                         <span class="input-group-addon">Rp</span>
                                         <input type="text" class="form-control" ng-disabled="is_view"  ng-readonly="true" ng-model="form.total">
                                     </div>
