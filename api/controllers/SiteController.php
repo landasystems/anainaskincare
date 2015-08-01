@@ -75,11 +75,17 @@ class SiteController extends Controller {
             $query->from('m_cabang')
                     ->join('JOIN', 'm_akses_cabang', 'm_akses_cabang.cabang_id=m_cabang.id')
                     ->select("m_cabang.*")
-                    ->where("m_akses_cabang.roles_id = ".$model->roles_id);
-            
+                    ->where("m_akses_cabang.roles_id = " . $model->roles_id);
+
             $command = $query->createCommand();
             $cabang = $command->queryAll();
             $_SESSION['user']['cabang'] = $cabang;
+
+            $cbg = array();
+            foreach ($cabang as $val) {
+                $cbg[] = $val['id'];
+            }
+            $_SESSION['user']['cabang_id'] = $cbg;
 
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($_SESSION)), JSON_PRETTY_PRINT);

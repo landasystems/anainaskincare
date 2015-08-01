@@ -57,20 +57,6 @@ class StokkeluarController extends Controller {
         return true;
     }
 
-//    public function actionCabang() {
-//        $query = new Query;
-//        $query->from('m_cabang')
-//                ->select("*")
-//                ->where("is_deleted = '0'");
-//
-//        $command = $query->createCommand();
-//        $models = $command->queryAll();
-//
-//        $this->setHeader(200);
-//
-//        echo json_encode(array('status' => 1, 'data' => $models));
-//    }
-
     public function actionProduct() {
         $query = new Query;
         $query->from('m_produk')
@@ -111,6 +97,7 @@ class StokkeluarController extends Controller {
 
     public function actionIndex() {
         //init variable
+        session_start();
         $params = $_REQUEST;
         $filter = array();
         $sort = "stok_keluar.id ASC";
@@ -139,8 +126,8 @@ class StokkeluarController extends Controller {
                 ->from(['stok_keluar', 'm_cabang'])
                 ->orderBy($sort)
                 ->select("stok_keluar.id, stok_keluar.kode, stok_keluar.tanggal, m_cabang.nama as cabang, stok_keluar.keterangan, stok_keluar.total")
-                ->where('m_cabang.id = stok_keluar.cabang_id');
-
+                ->where('m_cabang.id = stok_keluar.cabang_id')
+                ->andWhere(['stok_keluar.cabang_id' => $_SESSION['user']['cabang_id']]);
 
         //filter
         if (isset($params['filter'])) {
@@ -151,19 +138,16 @@ class StokkeluarController extends Controller {
                     $start = date("Y-m-d", strtotime($value[0]));
                     $end = date("Y-m-d", strtotime($value[1]));
                     $query->andFilterWhere(['between', 'stok_keluar.tanggal', $start, $end]);
-//                    $query->where("stok_keluar.tanggal >= '$start' and stok_keluar.tanggal <= '$end'");
                 } else {
                     $query->andFilterWhere(['like', 'stok_keluar.' . $key, $val]);
                 }
             }
         }
 
-        session_start();
         $_SESSION['query'] = $query;
 
         $command = $query->createCommand();
         $models = $command->queryAll();
-//        $models['tanggal'] = strtotime($model['tanggal']);
         $totalItems = $query->count();
 
         $this->setHeader(200);
@@ -172,18 +156,14 @@ class StokkeluarController extends Controller {
     }
 
     public function actionView($id) {
+        $query = new Query;
+        $query->from(['stok_keluar', 'm_cabang'])
+                ->where('stok_keluar.id="' . $id . '" and m_cabang.id = stok_keluar.cabang_id ')
+                ->select("stok_keluar.*,  m_cabang.nama as namacabang, m_cabang.alamat as alamat_cabang, m_cabang.no_tlp as telpcabang");
 
-//        $model = $this->findModel($id);
-        
-         $query = new Query;
-
-        $query->from(['stok_keluar','m_cabang'])
-               ->where('stok_keluar.id="' . $id . '" and m_cabang.id = stok_keluar.cabang_id ')
-                ->select("stok_keluar.*,  m_cabang.nama as namacabang");
-        
         $command = $query->createCommand();
         $models = $command->query()->read();
-        
+
         $det = StokKeluarDet::find()
                 ->with('barang')
                 ->orderBy('id')
@@ -198,9 +178,6 @@ class StokkeluarController extends Controller {
             $hargaBarang = (isset($val->barang->harga_beli_terakhir)) ? $val->barang->harga_beli_terakhir : '';
             $detail[$key]['produk'] = ['id' => $val->produk_id, 'nama' => $namaBarang, 'harga_beli_terakhir' => $hargaBarang];
         }
-//        $data = array();
-//        $data = $model->attributes;
-//        $data['tanggal'] = date("d-m-Y", strtotime($models['tanggal']));
 
         $this->setHeader(200);
         echo json_encode(array('status' => 1, 'data' => $models, 'detail' => $detail), JSON_PRETTY_PRINT);
@@ -289,7 +266,6 @@ class StokkeluarController extends Controller {
         if (($model = StokKeluar::findOne($id)) !== null) {
             return $model;
         } else {
-
             $this->setHeader(400);
             echo json_encode(array('status' => 0, 'error_code' => 400, 'message' => 'Bad request'), JSON_PRETTY_PRINT);
             exit;

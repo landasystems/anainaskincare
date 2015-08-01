@@ -1,11 +1,16 @@
 app.controller('l_kartustokCtrl', function($scope, Data, toaster) {
+    $scope.exportData = function() {
+        var blob = new Blob([document.getElementById('exportable').innerHTML], {
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+        });
+        saveAs(blob, "Report-Kartu-Stok.xls");
+    };
 
     $scope.detail_laporan = false;
     $scope.form = {};
     $scope.laporan = '';
-//    $scope.listpegawai = {};
 
-    Data.get('site/session').then(function (data) {
+    Data.get('site/session').then(function(data) {
         $scope.listcabang = data.data.user.cabang;
     });
 

@@ -52,14 +52,14 @@ class Barang extends \yii\db\ActiveRecord {
 
     public function Stok($id, $cabang = '') {
         $barang = Barang::findOne(['id' => $id]);
-        
+
         $ks = new KartuStok();
         $stok = $ks->saldo('today', $cabang, $barang->kategori_id, '', $barang->id);
 
         $s = 0;
         if (isset($stok[$barang->id])) {
-            foreach ($stok[$barang->id] as $val) {
-                $s += isset($val['jumlah']) ? $val['jumlah'] : 0;
+            foreach ($stok[$barang->id]['jumlah'] as $key => $val) {
+                $s += isset($val) ? $val : 0;
             }
         }
         return $s;

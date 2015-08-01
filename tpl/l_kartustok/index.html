@@ -1,3 +1,4 @@
+<script src="vendor/modules/FileSaver.js"></script>
 <div ng-controller="l_kartustokCtrl">
     <div class="bg-light lter b-b wrapper-md">
         <h1 class="m-n font-thin h3">Laporan Kartu Stok</h1>
@@ -39,13 +40,13 @@
                     <center style="width: 100%">
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <!--<button type="submit" class="btn btn-success fa fa-file-excel-o"  ng-disabled="landaform.$invalid"  ng-click="export(form)">&nbsp;Export Excel</button>-->
+                                <button type="submit" class="btn btn-success fa fa-file-excel-o"  ng-disabled="landaform.$invalid"  ng-click="exportData()">&nbsp;Export Excel</button>
                                 <button type="submit" class="btn btn-primary fa  fa-search" ng-disabled="landaform.$invalid" ng-click="view(form)">&nbsp;Tampilkan</button>
                             </div>
                         </div>
                     </center>	
                 </form>
-                <div ng-show="detail_laporan" style="margin-top: 50px;">
+                <div ng-show="detail_laporan" style="margin-top: 50px;" id="exportable">
                     <center>
                         <h4>KARTU STOK ANAINA SKIN CARE</h4>
                         <h5>CABANG : {{laporan.cabang}}</h5>
@@ -101,7 +102,10 @@
                                         </td>
                                     </tr>
                                     <tr ng-repeat="detail in list.body">
-                                        <td style="border: none">{{detail.tanggal| date}}</td>
+                                   
+                                        <td style="border: none">
+                                                
+                                            {{detail.tanggal| date}}</td>
                                         <td style="border: none">{{detail.keterangan}}</td>
                                         <td style="border: none">{{detail.kode}}</td>
                                         <td style="border: none">
@@ -114,22 +118,22 @@
                                             <p ng-if="detail.masuk.sub_total !== 0">{{detail.masuk.sub_total| currency}}</p>
                                         </td>
                                         <td style="border: none">
-                                            <p ng-repeat="jmlKeluar in detail.keluar.jumlah" ng-if="jmlKeluar !== 0">{{jmlKeluar}} {{list.title.satuan}}</p>
+                                            <p ng-repeat="jmlKeluar in detail.keluar.jumlah" >{{jmlKeluar}} {{list.title.satuan}}</p>
                                         </td>
                                         <td style="border: none">
-                                            <p ng-repeat="hargaKeluar in detail.keluar.harga" ng-if="hargaKeluar !== 0">{{hargaKeluar| currency}}</p>
+                                            <p ng-repeat="hargaKeluar in detail.keluar.harga">{{hargaKeluar| currency}}</p>
                                         </td>
                                         <td style="border: none">
-                                            <p ng-repeat="saldoKeluar in detail.keluar.sub_total" ng-if="saldoKeluar !== 0">{{saldoKeluar| currency}}</p>
+                                            <p ng-repeat="saldoKeluar in detail.keluar.sub_total">{{saldoKeluar| currency}}</p>
                                         </td>
                                         <td style="border: none">
-                                            <p ng-repeat="jmlSaldo in detail.saldo.jumlah" ng-if="jmlSaldo !== '0'">{{jmlSaldo}} {{list.title.satuan}}</p>
+                                            <p ng-repeat="jmlSaldo in detail.saldo.jumlah">{{jmlSaldo}} {{list.title.satuan}}</p>
                                         </td>
                                         <td style="border: none">
-                                            <p ng-repeat="hargaSaldo in detail.saldo.harga" ng-if="jmlSaldo !== '0'">{{hargaSaldo| currency }}</p>
+                                            <p ng-repeat="hargaSaldo in detail.saldo.harga">{{hargaSaldo | currency}}</p>
                                         </td>
                                         <td style="border: none">
-                                            <p ng-repeat="subSaldo in detail.saldo.sub_total" ng-if="jmlSaldo !== '0'">{{subSaldo| currency }}</p>
+                                            <p ng-repeat="subSaldo in detail.saldo.sub_total">{{subSaldo| currency }}</p>
                                         </td>
                                     </tr>
                                     <tr>

@@ -1,11 +1,11 @@
 <div ng-controller="penggunaCtrl">
     <div class="bg-light lter b-b wrapper-md">
-        <h1 class="m-n font-thin h3">Data Master - Hak Akses</h1>
+        <h1 class="m-n font-thin h3">Data Master - User</h1>
     </div>
     <div class="wrapper-md" ng-show="!is_edit">
         <div class="panel panel-default" st-pipe="callServer" st-table="displayed">
             <div class="panel-heading">
-                <button class="btn btn-default btn-xs" ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed">Pencarian & Export Data</button>
+                <button class="btn btn-default btn-xs" ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed">Pencarian</button>
                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                     <button type="button" class="btn btn-primary fa fa-plus-square-o" ng-click="create();">&nbsp;Tambah Data</button>
                 </div> 
@@ -125,7 +125,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Password</label>
                         <div class="col-sm-4">
-                            <input type="password" class="form-control" ng-model="form.password" ng-disabled="is_view"/>
+                            <input type="password" class="form-control" ng-model="form.password" ng-disabled="is_view" ng-required="is_create == true"/>
                             <span class="help-block m-b-none">Isikan password baru, untuk mengganti password</span>
                         </div>
                     </div>
