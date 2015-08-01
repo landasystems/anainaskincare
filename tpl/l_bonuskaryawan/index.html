@@ -1,3 +1,4 @@
+<script src="vendor/modules/FileSaver.js"></script>
 <div ng-controller="l_bonuskaryawanCtrl">
     <div class="bg-light lter b-b wrapper-md">
         <h1 class="m-n font-thin h3">Laporan Bonus Karyawan</h1>
@@ -39,13 +40,13 @@
                     <center style="width: 100%">
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <!--<button type="submit" class="btn btn-success fa fa-file-excel-o"  ng-disabled="landaform.$invalid"  ng-click="excel(form)">&nbsp;Export Excel</button>-->
+                                <button type="submit" class="btn btn-success fa fa-file-excel-o"  ng-disabled="landaform.$invalid"  ng-click="exportData()">&nbsp;Export Excel</button>
                                 <button type="submit" class="btn btn-primary fa  fa-search" ng-disabled="landaform.$invalid" ng-click="view(form)">&nbsp;Tampilkan</button>
                             </div>
                         </div>
                     </center>	
                 </form>
-                <div ng-show="detail_laporan" style="margin-top: 50px;">
+                <div ng-show="detail_laporan" style="margin-top: 50px;" id="bonus">
                     <center>
                         <h4>LAPORAN BONUS KARYAWAN ANAINA SKIN CARE</h4>
                         <h5>CABANG : {{detail.cabang}}</h5>

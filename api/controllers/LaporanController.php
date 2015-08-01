@@ -434,24 +434,26 @@ class LaporanController extends Controller {
                             $valS['jumlah'] -= $tempQty;
                             $boolStatus = false;
                         } else {
-                            $tmpKeluar['jumlah'][$indeks] = $valS['jumlah'];
+                            $tmpKeluar['jumlah'][$indeks] = ($tempQty > 0) ? $valS['jumlah'] : $tempQty;
                             if ($valS['jumlah'] <= 0) {
                                 $valS['jumlah'] -= $tempQty;
                                 $tmpKeluar['jumlah'][$indeks] = $tempQty;
                                 $valS['harga'] = $val['harga_keluar'];
+                                $tempQty = $tempQty - $tmpKeluar['jumlah'][$indeks];
+                            } else {
+                                $tempQty -= $valS['jumlah'];
                             }
-                            $tempQty -= $valS['jumlah'];
                         }
                         //simpan stok keluar
                         $tmpKeluar['harga'][$indeks] = $val['harga_keluar'];
                         $tmpKeluar['sub_total'][$indeks] = $tmpKeluar['jumlah'][$indeks] * $tmpKeluar['harga'][$indeks];
                     }
                     //simpan stok saldo
-                    $tmpSaldo['jumlah'][$indeks] = ($valS['jumlah'] == $tmpKeluar['jumlah'][$indeks]) ? 0 : $valS['jumlah'];
+                    $tmpSaldo['jumlah'][$indeks] = (isset($tmpKeluar['jumlah'][$indeks]) and $tmpKeluar['jumlah'][$indeks] == $valS['jumlah']) ? 0 : $valS['jumlah'];
                     $tmpSaldo['harga'][$indeks] = $valS['harga'];
                     $tmpSaldo['sub_total'][$indeks] = $tmpSaldo['harga'][$indeks] * $tmpSaldo['jumlah'][$indeks];
 
-                    $tmp[$indeks]['jumlah'] = $valS['jumlah'];
+                    $tmp[$indeks]['jumlah'] = $tmpSaldo['jumlah'][$indeks];
                     $tmp[$indeks]['harga'] = $tmpSaldo['harga'][$indeks];
 
                     $indeks++;
@@ -533,4 +535,5 @@ class LaporanController extends Controller {
     }
 
 }
+
 ?>
