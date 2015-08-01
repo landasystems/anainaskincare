@@ -30,6 +30,7 @@ class PembelianController extends Controller {
                     'update' => ['post'],
                     'delete' => ['delete'],
                     'kode_cabang' => ['get'],
+                    'lastcode' => ['get'],
                 ],
             ]
         ];
@@ -167,34 +168,12 @@ class PembelianController extends Controller {
         echo json_encode(array('status' => 1, 'supplier' => $supplier, 'detail' => $detail), JSON_PRETTY_PRINT);
     }
 
-    public function actionKliniklist() {
-        //create query
-        $query = new Query;
-        $query->select("*")
-                ->from('m_cabang')
-                ->where('is_deleted=0');
-
-        //filter
-
-        $command = $query->createCommand();
-        $models = $command->queryAll();
-
-        $this->setHeader(200);
-
-        echo json_encode(array('status' => 1, 'listKlinik' => $models), JSON_PRETTY_PRINT);
-    }
-
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = new Pembelian();
 //        Yii::error($params);
-
-        $klinik = Cabang::findOne($params['pembelian']['cabang_id']);
         $model->attributes = $params['pembelian'];
         $model->supplier_id = $params['pembelian']['supplier']['id'];
-        $lastNumber = Pembelian::find()->orderBy("id DESC")->one();
-        $number = (empty($lastNumber)) ? 1 : $lastNumber->id + 1;
-        $model->kode = 'BELI/' . $klinik->kode . '/' . substr("00000" . $number, -5);
         $model->tanggal = date("Y-m-d", strtotime($params['pembelian']['tanggal']));
 
 
@@ -204,7 +183,7 @@ class PembelianController extends Controller {
                 $credit->pembelian_id = $model->id;
                 $credit->credit = $model->credit;
                 $credit->status = 'belum lunas';
-                $credit->tanggal_transaksi = $model->tanggal;
+                    $credit->tanggal_transaksi = $model->tanggal;
                 $credit->save();
             }
             foreach ($params['pembeliandet'] as $val) {
@@ -266,7 +245,7 @@ class PembelianController extends Controller {
                     $keterangan = 'pembelian';
                     $stok = new KartuStok();
                     $hapus = $stok->hapusKartu($keterangan, $model->id);
-                    $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
+                    $update = $stok->process('in', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
                 }
             }
             $deleteDetail = PembelianDet::deleteAll('id NOT IN (' . implode(',', $id_det) . ') AND pembelian_id=' . $model->id);
@@ -281,6 +260,7 @@ class PembelianController extends Controller {
     public function actionDelete($id) {
         $model = $this->findModel($id);
         $deleteDetail = PembelianDet::deleteAll(['pembelian_id' => $model->id]);
+        $deleteHutang = Hutang::deleteAll(['pembelian_id' => $model->id]);
         if ($model->delete()) {
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
@@ -338,6 +318,16 @@ class PembelianController extends Controller {
         $models = $command->queryAll();
         $this->setHeader(200);
         echo json_encode(array('status' => 1, 'data' => $models));
+    }
+
+    public function actionLastcode() {
+        $params = $_REQUEST;
+//        Yii::error($params);
+        $findLast = Pembelian::find()->orderBy("id DESC")->one();
+        $number = (empty($findLast)) ? 1 : $findLast->id + 1;
+        $lastCode = 'BELI/' . $params['kode'] . '/' . substr('00000'.$number,-5);
+        $this->setHeader(200);
+        echo json_encode(array('status' => 1, 'kode' => $lastCode));
     }
 
 }
