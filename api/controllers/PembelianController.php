@@ -31,6 +31,7 @@ class PembelianController extends Controller {
                     'delete' => ['delete'],
                     'kode_cabang' => ['get'],
                     'lastcode' => ['get'],
+                    'excel' => ['get'],
                 ],
             ]
         ];
@@ -111,7 +112,7 @@ class PembelianController extends Controller {
                 ->orderBy($sort)
                 ->select("pe.*,ca.nama as klinik, su.nama as nama_supplier,su.alamat as alamat, su.no_tlp as no_tlp,su.email as email")
                 ->andWhere(['pe.cabang_id' => $_SESSION['user']['cabang_id']]);
-
+        $_SESSION['query'] = $query;
         //filter
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
@@ -183,7 +184,7 @@ class PembelianController extends Controller {
                 $credit->pembelian_id = $model->id;
                 $credit->credit = $model->credit;
                 $credit->status = 'belum lunas';
-                    $credit->tanggal_transaksi = $model->tanggal;
+                $credit->tanggal_transaksi = $model->tanggal;
                 $credit->save();
             }
             foreach ($params['pembeliandet'] as $val) {
@@ -261,7 +262,11 @@ class PembelianController extends Controller {
         $model = $this->findModel($id);
         $deleteDetail = PembelianDet::deleteAll(['pembelian_id' => $model->id]);
         $deleteHutang = Hutang::deleteAll(['pembelian_id' => $model->id]);
+        $keterangan = 'pembelian';
+        $stok = new KartuStok();
+        $hapus = $stok->hapusKartu($keterangan, $id);
         if ($model->delete()) {
+
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -305,6 +310,17 @@ class PembelianController extends Controller {
         return (isset($codes[$status])) ? $codes[$status] : '';
     }
 
+    public function actionExcel() {
+        session_start();
+        $query = $_SESSION['query'];
+        $query->offset("");
+        $query->limit("");
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+        Yii::error($models);
+        return $this->render("excel", ['models' => $models]);
+    }
+
     public function actionCari() {
         $params = $_REQUEST;
         $query = new Query;
@@ -322,10 +338,9 @@ class PembelianController extends Controller {
 
     public function actionLastcode() {
         $params = $_REQUEST;
-//        Yii::error($params);
         $findLast = Pembelian::find()->orderBy("id DESC")->one();
         $number = (empty($findLast)) ? 1 : $findLast->id + 1;
-        $lastCode = 'BELI/' . $params['kode'] . '/' . substr('00000'.$number,-5);
+        $lastCode = 'BELI/' . $params['kode'] . '/' . substr('00000' . $number, -5);
         $this->setHeader(200);
         echo json_encode(array('status' => 1, 'kode' => $lastCode));
     }

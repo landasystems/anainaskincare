@@ -1,6 +1,7 @@
 app.controller('pembelianCtrl', function ($scope, Data, toaster) {
 //init data
     var tableStateRef;
+    var paramRef;
     $scope.form = {};
     $scope.displayed = [];
     $scope.pembeliandet = [
@@ -70,6 +71,7 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
         if (tableState.search.predicateObject) {
             param['filter'] = tableState.search.predicateObject;
         }
+        paramRef = param;
 
         Data.get('pembelian', param).then(function (data) {
             $scope.displayed = data.data;
@@ -201,10 +203,10 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
         var credit = (parseInt($scope.form.credit) !== null) ? parseInt($scope.form.credit) : 0;
         var kembalian = cash - total + credit;
         $scope.form.kembalian = (kembalian > 0) ? kembalian : 0;
-    }
-    $scope.getCode = function (cabang) {
-        Data.get('pembelian/lastcode', cabang).then(function (data) {
-            $scope.form.kode = data.kode;
+    };
+    $scope.excel = function () {
+        Data.get('pembelian', paramRef).then(function (data) {
+            window.location = 'api/web/pembelian/excel';
         });
-    }
-})
+    };
+});
