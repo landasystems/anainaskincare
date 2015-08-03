@@ -25,6 +25,7 @@ class HutangController extends Controller {
                     'delete' => ['delete'],
                     'listpembelian' => ['get'],
                     'selected' => ['get'],
+                    'excel' => ['get'],
                 ],
             ]
         ];
@@ -97,7 +98,7 @@ class HutangController extends Controller {
                 $query->andFilterWhere(['like', $key, $val]);
             }
         }
-
+        $_SESSION['query'] = $query;
         $command = $query->createCommand();
         $models = $command->queryAll();
         $totalItems = $query->count();
@@ -212,7 +213,16 @@ class HutangController extends Controller {
         );
         return (isset($codes[$status])) ? $codes[$status] : '';
     }
-
+    public function actionExcel() {
+        session_start();
+        $query = $_SESSION['query'];
+        $query->offset("");
+        $query->limit("");
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+//        Yii::error($models);
+        return $this->render("excel", ['models' => $models]);
+    }
 }
 
 ?>
