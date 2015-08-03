@@ -28,7 +28,5 @@ app.controller('t_cobaCtrl', function ($scope, Data, toaster, $http, $timeout) {
 
     $scope.multipleDemo = {};
     $scope.multipleDemo.selectedPeople = [$scope.people[5], $scope.people[4]];
-    
-    $scope.tess = {"9":"80000","10":"70000"};
 });
 
