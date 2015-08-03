@@ -382,32 +382,35 @@ class LaporanController extends Controller {
                 }
 
                 foreach ($tmp as $key => $valS) {
-                    if ($first) {
-                        unset($tmpSaldo);
-                        unset($tmp);
-                        $first = false;
-                    }
+                    if ($valS['jumlah'] > 0) {
+                        $saldo = $valS['jumlah'];
+                        if ($first) {
+                            unset($tmpSaldo);
+                            unset($tmp);
+                            $first = false;
+                        }
 
-                    if ($valS['jumlah'] < 0) {
-                        if ($boolStatus) {
-                            if ($valS['jumlah'] >= $masuk) {
-                                $boolStatus = true;
-                            } else {
-                                $valS['jumlah'] += $tempQty;
-                                $valS['harga'] = $val['harga_masuk'];
-                                $tempQty += $valS['jumlah'];
+                        if ($valS['jumlah'] < 0) {
+                            if ($boolStatus) {
+                                if ($valS['jumlah'] >= $masuk) {
+                                    $boolStatus = true;
+                                } else {
+                                    $valS['jumlah'] += $tempQty;
+                                    $valS['harga'] = $val['harga_masuk'];
+                                    $tempQty += $valS['jumlah'];
+                                }
                             }
                         }
+
+                        $tmpSaldo['jumlah'][$indeks] = $valS['jumlah'];
+                        $tmpSaldo['harga'][$indeks] = $valS['harga'];
+                        $tmpSaldo['sub_total'][$indeks] = $tmpSaldo['harga'] [$indeks] * $tmpSaldo['jumlah'][$indeks];
+
+                        $tmp[$indeks]['jumlah'] = $tmpSaldo['jumlah'][$indeks];
+                        $tmp[$indeks]['harga'] = $tmpSaldo['harga'][$indeks];
+
+                        $indeks++;
                     }
-
-                    $tmpSaldo['jumlah'][$indeks] = $valS['jumlah'];
-                    $tmpSaldo['harga'][$indeks] = $valS['harga'];
-                    $tmpSaldo['sub_total'][$indeks] = $tmpSaldo['harga'] [$indeks] * $tmpSaldo['jumlah'][$indeks];
-
-                    $tmp[$indeks]['jumlah'] = $tmpSaldo['jumlah'][$indeks];
-                    $tmp[$indeks]['harga'] = $tmpSaldo['harga'][$indeks];
-
-                    $indeks++;
                 }
 
                 $tmpKeluar['jumlah'][$indeks] = 0;
@@ -420,41 +423,47 @@ class LaporanController extends Controller {
                 $tempQty = $val['jumlah_keluar'];
                 $first = true;
                 $boolStatus = true;
-                $saldo = 0;
                 foreach ($tmp as $valS) {
-                    if ($first) {
-                        unset($tmpSaldo);
-                        unset($tmp);
-                        unset($tmpKeluar);
-                        $first = false;
-                    }
-                    if ($boolStatus) {
-                        if ($valS['jumlah'] > $tempQty) {
-                            $tmpKeluar['jumlah'][$indeks] = $tempQty;
-                            $valS['jumlah'] -= $tempQty;
-                            $boolStatus = false;
-                        } else {
-                            $tmpKeluar['jumlah'][$indeks] = $valS['jumlah'];
-                            if ($valS['jumlah'] <= 0) {
-                                $valS['jumlah'] -= $tempQty;
-                                $tmpKeluar['jumlah'][$indeks] = $tempQty;
-                                $valS['harga'] = $val['harga_keluar'];
-                            }
-                            $tempQty -= $valS['jumlah'];
+                    if ($valS['jumlah'] > 0) {
+                        if ($first) {
+                            unset($tmpSaldo);
+                            unset($tmp);
+                            unset($tmpKeluar);
+                            $first = false;
                         }
-                        //simpan stok keluar
-                        $tmpKeluar['harga'][$indeks] = $val['harga_keluar'];
-                        $tmpKeluar['sub_total'][$indeks] = $tmpKeluar['jumlah'][$indeks] * $tmpKeluar['harga'][$indeks];
+                        if ($boolStatus) {
+                            if ($valS['jumlah'] > $tempQty) {
+                                $tmpKeluar['jumlah'][$indeks] = $tempQty;
+                                $valS['jumlah'] -= $tempQty;
+                                $boolStatus = false;
+                            } else {
+                                $tmpKeluar['jumlah'][$indeks] = ($tempQty > 0) ? $valS['jumlah'] : $tempQty;
+                                if ($valS['jumlah'] <= 0) {
+                                    $valS['jumlah'] -= $tempQty;
+                                    $tmpKeluar['jumlah'][$indeks] = $tempQty;
+                                    $valS['harga'] = $val['harga_keluar'];
+                                    $tempQty = $tempQty - $tmpKeluar['jumlah'][$indeks];
+                                } else {
+                                    $tempQty -= $valS['jumlah'];
+                                }
+                            }
+                            //simpan stok keluar
+                            $tmpKeluar['harga'][$indeks] = $val['harga_keluar'];
+                            $tmpKeluar['sub_total'][$indeks] = $tmpKeluar['jumlah'][$indeks] * $tmpKeluar['harga'][$indeks];
+                        }
+
+                        if ($saldo > 0) {
+                            //simpan stok saldo
+                            $tmpSaldo['jumlah'][$indeks] = (isset($tmpKeluar['jumlah'][$indeks]) and $tmpKeluar['jumlah'][$indeks] == $valS['jumlah']) ? 0 : $valS['jumlah'];
+                            $tmpSaldo['harga'][$indeks] = $valS['harga'];
+                            $tmpSaldo['sub_total'][$indeks] = $tmpSaldo['harga'][$indeks] * $tmpSaldo['jumlah'][$indeks];
+                        }
+
+                        $tmp[$indeks]['jumlah'] = $tmpSaldo['jumlah'][$indeks];
+                        $tmp[$indeks]['harga'] = $tmpSaldo['harga'][$indeks];
+
+                        $indeks++;
                     }
-                    //simpan stok saldo
-                    $tmpSaldo['jumlah'][$indeks] = (isset($tmpKeluar['jumlah'][$indeks]) and $tmpKeluar['jumlah'][$indeks] == $valS['jumlah']) ? 0 : $valS['jumlah'];
-                    $tmpSaldo['harga'][$indeks] = $valS['harga'];
-                    $tmpSaldo['sub_total'][$indeks] = $tmpSaldo['harga'][$indeks] * $tmpSaldo['jumlah'][$indeks];
-
-                    $tmp[$indeks]['jumlah'] = $valS['jumlah'];
-                    $tmp[$indeks]['harga'] = $tmpSaldo['harga'][$indeks];
-
-                    $indeks++;
                 }
             }
 
@@ -533,4 +542,5 @@ class LaporanController extends Controller {
     }
 
 }
+
 ?>

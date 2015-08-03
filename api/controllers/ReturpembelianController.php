@@ -30,6 +30,8 @@ class ReturpembelianController extends Controller {
                     'delete' => ['delete'],
 //                    'pembelianlist' => ['get'],
                     'selected' => ['get'],
+                    'excel' => ['get'],
+                    'lastcode' => ['get'],
                 ],
             ]
         ];
@@ -101,7 +103,7 @@ class ReturpembelianController extends Controller {
                 $query->andFilterWhere(['like', $key, $val]);
             }
         }
-
+        $_SESSION['query'] = $query;
         $command = $query->createCommand();
         $models = $command->queryAll();
         $totalItems = $query->count();
@@ -117,8 +119,6 @@ class ReturpembelianController extends Controller {
             $pembelian = $command->queryOne();
             $models[$keys]['pembelian'] = $pembelian;
         }
-        Yii::error($models);
-
         $this->setHeader(200);
 
         echo json_encode(array('status' => 1, 'data' => $models, 'totalItems' => $totalItems), JSON_PRETTY_PRINT);
@@ -164,12 +164,7 @@ class ReturpembelianController extends Controller {
         $params = json_decode(file_get_contents("php://input"), true);
 //        Yii::error($params);
         $model = new RPembelian();
-
-        $klinik = Cabang::findOne($params['retur']['pembelian']['cabang_id']);
         $model->attributes = $params['retur'];
-        $lastNumber = RPembelian::find()->orderBy("id DESC")->one();
-        $number = (empty($lastNumber)) ? 1 : $lastNumber->id + 1;
-        $model->kode = 'RBELI/' . $klinik->kode . '/' . substr("00000" . $number, -5);
         $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
         $model->pembelian_id = $params['retur']['pembelian']['id'];
         $model->total = $params['retur']['sub_totals'];
@@ -282,6 +277,19 @@ class ReturpembelianController extends Controller {
             501 => 'Not Implemented',
         );
         return (isset($codes[$status])) ? $codes[$status] : '';
+    }
+    
+    public function actionLastcode($id){
+        $params = $_REQUEST;
+//        Yii::error($id);
+        $kodeCabang = Cabang::findOne($id);
+        $number = RPembelian::find()->orderBy('id DESC')->one();
+        $lastNumber= (empty($number)) ? 1 : $number->id+1;
+        
+        $format = 'RBELI/'.$kodeCabang->kode.'/'.substr('00000'.$lastNumber, -5);
+        
+        $this->setHeader(200);
+        echo json_encode(array('status' => 1, 'kode' => $format), JSON_PRETTY_PRINT);
     }
 
 }

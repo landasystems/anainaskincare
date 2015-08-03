@@ -15,7 +15,7 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
             });
         }
     };
-    $scope.pilihPembelian = function (form, $item){
+    $scope.pilihPembelian = function (form, $item,is_create) {
 //        console.log(is_create);
         form.nama_supplier = $item.nama_supplier;
         form.no_tlp = $item.no_tlp;
@@ -23,8 +23,11 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
         form.alamat = $item.alamat;
         form.klinik = $item.klinik;
         $scope.selectedPembelian($item);
+        if (is_create) {
+            $scope.getCode($item.cabang_id);
+        }
     };
-     $scope.open1 = function ($event) {
+    $scope.open1 = function ($event) {
         $event.preventDefault();
         $event.stopPropagation();
         $scope.opened1 = true;
@@ -69,8 +72,8 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
         $scope.is_create = false;
         $scope.formtitle = "Edit Retur : " + form.kode;
         $scope.form = form;
-        $scope.pilihPembelian(form,form.pembelian);
-        
+        $scope.pilihPembelian(form, form.pembelian,$scope.is_create);
+
     };
     $scope.view = function (form) {
         $scope.is_edit = true;
@@ -78,14 +81,14 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
         $scope.is_create = false;
         $scope.formtitle = "Lihat Retur : " + form.kode;
         $scope.form = form;
-        $scope.pilihPembelian(form,form.pembelian);
+        $scope.pilihPembelian(form, form.pembelian,$scope.is_create);
     };
     $scope.save = function (form, detail) {
         var data = {
             retur: form,
             returdet: detail,
         };
-        var url = (form.id > 0) ? 'returpembelian/update/'+form.id : 'returpembelian/create';
+        var url = (form.id > 0) ? 'returpembelian/update/' + form.id : 'returpembelian/create';
         Data.post(url, data).then(function (result) {
             if (result.status == 0) {
                 toaster.pop('error', "Terjadi Kesalahan", result.errors);
@@ -114,8 +117,8 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
     $scope.selectedPembelian = function (form) {
         var id = ($scope.form.id !== undefined) ? $scope.form.id : 0;
         var data = {
-          form : form,
-          id : id
+            form: form,
+            id: id
         };
         Data.get('returpembelian/view/', data).then(function (result) {
 //            $scope.det = result.pembelian;
@@ -156,5 +159,10 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
         var total_diskon = parseInt($scope.form.total_diskon);
         var biaya_lain = ($scope.form.biaya_lain !== undefined) ? parseInt($scope.form.biaya_lain) : 0;
         $scope.form.total_biaya = total_retur - total_diskon + biaya_lain;
+    };
+    $scope.getCode = function (cabang) {
+        Data.get('returpembelian/lastcode/' + cabang).then(function (result) {
+            $scope.form.kode = result.kode;
+        });
     };
 });
