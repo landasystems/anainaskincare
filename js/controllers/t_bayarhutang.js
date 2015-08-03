@@ -41,6 +41,17 @@ app.controller('hutangCtrl', function ($scope, Data, toaster) {
 
         $scope.isLoading = false;
     };
+    $scope.getkode_cabang = function (form, is_create) {
+        if (is_create) {
+            Data.get('pembelian/lastcode/', form.cabang).then(function (data) {
+                $scope.form.kode = data.kode;
+                $scope.form.cabang_id = form.cabang.id;
+            });
+        }
+    };
+    Data.get('site/session').then(function (data) {
+        $scope.sCabang = data.data.user.cabang;
+    });
 
     $scope.create = function (form) {
         $scope.is_create = true;
@@ -101,7 +112,7 @@ app.controller('hutangCtrl', function ($scope, Data, toaster) {
     };
     $scope.delete = function (row) {
         if (confirm("Apa anda yakin akan MENGHAPUS PERMANENT item ini ?")) {
-            Data.delete('hutang/delete/' + row.id).then(function (result) {
+            Data.delete('hutang/delete/' + row.pembelian_id).then(function (result) {
                 $scope.displayed.splice($scope.displayed.indexOf(row), 1);
             });
         }
@@ -114,7 +125,9 @@ app.controller('hutangCtrl', function ($scope, Data, toaster) {
                 detail.debet = (detail.debet == undefined) ? 0 : detail.debet;
                 detail.credit = (detail.credit == undefined) ? 0 : detail.credit;
             });
+            $scope.total();
         });
+        
     };
     $scope.addrow = function () {
         $scope.history.unshift({

@@ -37,10 +37,12 @@
                         <div class="control-group">
                             <label class="col-sm-3 control-label">Cabang</label>
                             <div class="col-sm-9">
-                                <select class="form-control " st-search="pe.cabang_id">
-                                    <option value="">-Pilih Cabang-</option>
-                                    <option ng-repeat="cabang in sCabang" value="{{cabang.id}}">{{cabang.nama}}</option>
-                                </select>
+                                <ui-select on_select="getkode_cabang(form,is_create)" ng-model="cabang" theme="bootstrap">
+                                    <ui-select-match placeholder="Cari Cabang">{{$select.selected.nama}}</ui-select-match>
+                                    <ui-select-choices group-by="'group'" repeat="dokter in sCabang | filter: $select.search">
+                                        <div ng-bind-html="dokter.nama | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
                             </div>
                         </div>
                     </div>
@@ -224,7 +226,7 @@
 
 
                     <div class="col-sm-12">
-                        <table class="table-striped table table-bordered">
+                        <table class="table-striped table-bordered det-trans">
                             <thead>
                                 <tr>
                                     <th style="text-align: center">Barang</th>
@@ -238,30 +240,30 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="list in details">
-                                    <td style="text-align: center">
+                                    <td style="text-align: center;width: ">
                                         {{list.nama_produk}}
                                     </td>
-                                    <td style="text-align: center; width: 10%">{{list.jumlah}}</td>
-                                    <td style="text-align: center; width: 10%"><input ng-change="subtotal()" class="form-control" style="width:100%" type="text" ng-pattern="/^[0-9]+$/" ng-model="list.jumlah_retur"></td>
-                                    <td style="text-align: center; width: 20%">
+                                    <td style="width: 10%">{{list.jumlah}}</td>
+                                    <td style="width: 10%"><input ng-change="subtotal()" class="form-control" style="width:100%" type="text" ng-pattern="/^[0-9]+$/" ng-model="list.jumlah_retur"></td>
+                                    <td style="width: 15%">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon">Rp.</span>
                                             <input class="form-control" style="width:100%" type="text" ng-pattern="/^[0-9]+$/" ng-model="list.harga" ng-disabled="true">
                                         </div>
                                     </td>
-                                    <td style="text-align: center; width: 20%">
+                                    <td style="width: 15%">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon">Rp.</span>
                                             <input class="form-control" style="width:100%" ng-change="subtotal()" type="text" ng-pattern="/^[0-9]+$/" ng-model="list.harga_retur">
                                         </div>
                                     </td>
-                                    <td style="text-align: center; width: 20%">
+                                    <td style="width: 15%">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon">Rp.</span>
                                             <input class="form-control" style="width:100%" ng-change="subtotal()" type="text" ng-pattern="/^[0-9]+$/" ng-model="list.diskon">
                                         </div>
                                     </td>
-                                    <td style="text-align: center; width: 20%">
+                                    <td style="width: 15%;">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon">Rp.</span>
                                             <input class="form-control" style="width:100%" type="text" ng-pattern="/^[0-9]+$/" ng-model="list.sub_total_retur" ng-disabled="true">
@@ -304,6 +306,5 @@
                 </div>
             </div>
         </div>
-</div>
-</form>
+    </form>
 </div>

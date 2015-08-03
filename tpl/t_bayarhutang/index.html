@@ -37,10 +37,12 @@
                         <div class="control-group">
                             <label class="col-sm-3 control-label">Cabang</label>
                             <div class="col-sm-9">
-                                <select class="form-control " st-search="cabang_id">
-                                    <option value="">-Pilih Cabang-</option>
-                                    <option ng-repeat="cabang in listcabang" value="{{cabang.id}}">{{cabang.nama}}</option>
-                                </select>
+                                <ui-select on_select="getkode_cabang(form,is_create)" ng-model="cabang" theme="bootstrap">
+                                    <ui-select-match placeholder="Cari Cabang">{{$select.selected.nama}}</ui-select-match>
+                                    <ui-select-choices group-by="'group'" repeat="dokter in sCabang | filter: $select.search">
+                                        <div ng-bind-html="dokter.nama | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
                             </div>
                         </div>
                     </div>
@@ -142,7 +144,7 @@
                         </div>
                         <div class="line line-dashed b-b line-lg pull-in"></div>
                         <h5 class="font-bold">- Detail Hutang</h5> 
-                        <table class="table table-bordered">
+                        <table class="table table-bordered det-trans">
                             <thead>
                                 <tr>
                                     <td style="text-align: center;width:20%">Tanggal</td>
@@ -155,7 +157,7 @@
                             <tbody>
                                 <tr ng-repeat="hist in history">
                                     <td>
-                                        <div class="input-group">
+                                        <div class="input-group" style="padding:0px;margin:0px">
                                             <input required type="text" ng-disabled="is_view" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="hist.tanggal_transaksi" is-open="openedDet == $index" ng-change="setStatus()" ng-click="openDet($event, $index)"/>
                                             <span class="input-group-addon">
                                                 <i class="fa fa-calendar-o"></i>
@@ -190,8 +192,8 @@
                             <tfoot>
                                 <tr>
                                     <td colspan="2" style="text-align: right">Saldo</td>
-                                    <td>{{form.total_debet}}</td>
-                                    <td>{{form.total_credit}}</td>
+                                    <td style="text-align: right">{{form.total_debet | currency}}</td>
+                                    <td style="text-align: right">{{form.total_credit | currency}}</td>
                                     <td></td>
                                 </tr>
                             </tfoot>
@@ -202,7 +204,6 @@
                             <button type="submit" class="btn btn-primary fa fa-save" ng-hide="is_view" ng-disabled="landaform.$invalid" ng-click="save(form, history)">&nbsp;Simpan Perubahan</button>
                         </div>
                     </div>
-
                 </div>
             </div>
         </form>
