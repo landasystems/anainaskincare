@@ -1,4 +1,5 @@
 RewriteEngine on
+php_value date.timezone "Asia/Jakarta"
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
