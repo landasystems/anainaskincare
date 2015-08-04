@@ -3,6 +3,7 @@
 
 angular.module('app', [
     'ngAnimate',
+    'ngSanitize',
     'ui.router',
     'ui.bootstrap',
     'oc.lazyLoad',
