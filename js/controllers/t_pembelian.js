@@ -17,11 +17,13 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
     $scope.is_edit = false;
     $scope.is_view = false;
     $scope.is_create = false;
-    $scope.getkode_cabang = function (form) {
-        Data.get('pembelian/lastcode/', form.cabang).then(function (data) {
-            $scope.form.kode = data.kode;
-            $scope.form.cabang_id = form.cabang.id;
-        });
+    $scope.getkode_cabang = function (form, is_create) {
+        if (is_create) {
+            Data.get('pembelian/lastcode/', form.cabang).then(function (data) {
+                $scope.form.kode = data.kode;
+                $scope.form.cabang_id = form.cabang.id;
+            });
+        }
     };
     $scope.cariSupplier = function ($query) {
         if ($query.length >= 3) {
@@ -35,7 +37,7 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
     });
     $scope.cariProduk = function ($query) {
         if ($query.length >= 3) {
-            Data.get('barang/cari', {nama: $query}).then(function (data) {
+            Data.get('barang/caribarang', {nama: $query}).then(function (data) {
                 $scope.listProduk = data.data;
                 angular.forEach($scope.listProduk, function (detail) {
                     detail.diskon = (detail.diskon != undefined) ? detail.diskon : 0;
@@ -85,7 +87,7 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
         $scope.is_create = true;
         $scope.formtitle = "Form Pembelian";
         $scope.form = {};
-        $scope.form.tanggal =  new Date();
+        $scope.form.tanggal = new Date();
         $scope.pembeliandet = [
             {
                 id: '',

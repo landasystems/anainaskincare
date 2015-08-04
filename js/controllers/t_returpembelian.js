@@ -1,6 +1,7 @@
 app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
     //init data
     var tableStateRef;
+    var paramRef;
     $scope.form = {};
     $scope.displayed = [];
     $scope.is_edit = false;
@@ -47,6 +48,7 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
         if (tableState.search.predicateObject) {
             param['filter'] = tableState.search.predicateObject;
         }
+        paramRef = param;
 
         Data.get('returpembelian', param).then(function (data) {
             $scope.displayed = data.data;
@@ -55,6 +57,17 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
 
         $scope.isLoading = false;
     };
+//    $scope.getkode_cabang = function (form, is_create) {
+//        if (is_create) {
+//            Data.get('pembelian/lastcode/', form.cabang).then(function (data) {
+//                $scope.form.kode = data.kode;
+//                $scope.form.cabang_id = form.cabang.id;
+//            });
+//        }
+//    };
+    Data.get('site/session').then(function (data) {
+        $scope.sCabang = data.data.user.cabang;
+    });
 
     $scope.create = function (form) {
         $scope.is_edit = true;

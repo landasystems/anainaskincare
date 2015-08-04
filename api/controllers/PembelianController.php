@@ -129,6 +129,10 @@ class PembelianController extends Controller {
         }
         $command = $query->createCommand();
         $models = $command->queryAll();
+        foreach($models as $key => $val){
+            $cabang = Cabang::findOne($val['cabang_id']);
+            $models[$key]['cabang'] = $cabang->attributes;
+        }
         $totalItems = $query->count();
 
         $this->setHeader(200);
@@ -235,8 +239,6 @@ class PembelianController extends Controller {
                 if (empty($det)) {
                     $det = new PembelianDet();
                 }
-//                $det->attributes = $val;
-//                $det->pembelian_id = $id;
                 $det->attributes = $val;
                 $det->produk_id = $val['barang']['id'];
                 $det->pembelian_id = $model->id;
