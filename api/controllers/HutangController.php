@@ -160,17 +160,17 @@ class HutangController extends Controller {
             }
             $model->attributes = $val;
             $model->pembelian_id = $params['form']['pembelian_id'];
-            $model->tanggal_transaksi = date('Y-m-d',  strtotime($val['tanggal_transaksi']));
+            $model->tanggal_transaksi = date('Y-m-d', strtotime($val['tanggal_transaksi']));
             $model->save();
             $id[] = $model->id; 
         }
-        $delete = Hutang::deleteAll('id NOT IN('.implode(',',$id).')');
+        $delete = Hutang::deleteAll('id NOT IN('.implode(',',$id).') and pembelian_id='.$params['form']['pembelian_id']);
     }
 
     public function actionDelete($id) {
-        $model = $this->findModel($id);
+        $model = Hutang::deleteAll(['pembelian_id' => $id]);
 
-        if ($model->delete()) {
+        if ($model) {
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {

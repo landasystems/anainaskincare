@@ -179,6 +179,7 @@ class ReturpembelianController extends Controller {
                     $det->r_pembelian_id = $model->id;
                     $det->pembelian_det_id = $data['id'];
                     $det->jumlah = $data['jumlah_retur'];
+                    $det->harga = $data['harga_retur'];
                     $det->sub_total = $data['sub_total_retur'];
                     if ($det->save()) {
                         $pembelian = Pembelian::findOne($model->pembelian_id);
@@ -214,6 +215,7 @@ class ReturpembelianController extends Controller {
                     $det->r_pembelian_id = $model->id;
                     $det->pembelian_det_id = $data['id'];
                     $det->jumlah = $data['jumlah_retur'];
+                    $det->harga = $data['harga_retur'];
                     $det->sub_total = $data['sub_total_retur'];
                     if ($det->save()) {
                         $pembelian = Pembelian::findOne($model->pembelian_id);
@@ -221,6 +223,7 @@ class ReturpembelianController extends Controller {
                         $stok = new KartuStok();
                         $hapus = $stok->hapusKartu($keterangan, $id);
                         $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $pembelian->cabang_id, $det->harga, $keterangan, $model->id);
+                    
                     }
                 }
             }
@@ -234,7 +237,7 @@ class ReturpembelianController extends Controller {
 
     public function actionDelete($id) {
         $model = $this->findModel($id);
-        $deleteDetail = RPembelianDet::deleteAll(['r_penjualan_id' => $id]);
+        $deleteDetail = RPembelianDet::deleteAll(['r_pembelian_id' => $id]);
 
         if ($model->delete()) {
             $this->setHeader(200);

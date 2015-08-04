@@ -37,10 +37,12 @@
                         <div class="control-group">
                             <label class="col-sm-3 control-label">Cabang</label>
                             <div class="col-sm-9">
-                                <select class="form-control " st-search="cabang_id">
-                                    <option value="">-Pilih Cabang-</option>
-                                    <option ng-repeat="cabang in listcabang" value="{{cabang.id}}">{{cabang.nama}}</option>
-                                </select>
+                                <ui-select on_select="getkode_cabang(form,is_create)" ng-model="cabang" theme="bootstrap">
+                                    <ui-select-match placeholder="Cari Cabang">{{$select.selected.nama}}</ui-select-match>
+                                    <ui-select-choices group-by="'group'" repeat="dokter in sCabang | filter: $select.search">
+                                        <div ng-bind-html="dokter.nama | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
                             </div>
                         </div>
                     </div>
@@ -94,16 +96,14 @@
     <form name="landaform" class="form-horizontal form-validation">
         <div class="wrapper-md" ng-show="is_edit">
             <div class="panel panel-default col-sm-13">
+                <div class="panel-heading">
+                    {{formtitle}}
+                    <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
+                        <button type="button" class="btn btn-primary fa fa-print" ng-print print-element-id="printArea" ng-show="is_view">&nbsp;Print</button>
+                    </div> 
+                </div>
                 <div class="panel-body">
-                    <div class="panel-heading">
-                        {{formtitle}}
-                        <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
-                            <button type="button" class="btn btn-primary fa fa-print" ng-print print-element-id="printArea" ng-show="is_view">&nbsp;Print</button>
-                        </div> 
-                    </div>
-
                     <div class="col-md-6">
-                        <p class="text-muted font-bold">Detail Transaksi</p>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Kode Pembelian</label>
                             <div class="col-sm-9">
@@ -113,7 +113,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Cabang</label>
                             <div class="col-sm-9">
-                                <ui-select on_select="getkode_cabang(form)" ng-model="form.cabang" theme="bootstrap">
+                                <ui-select on_select="getkode_cabang(form,is_create)" ng-model="form.cabang" theme="bootstrap">
                                     <ui-select-match placeholder="Cari Cabang">{{$select.selected.nama}}</ui-select-match>
                                     <ui-select-choices group-by="'group'" repeat="dokter in sCabang | filter: $select.search">
                                         <div ng-bind-html="dokter.nama | highlight: $select.search"></div>
@@ -150,7 +150,6 @@
                     </div>
                     <div class="col-md-6">
                         <div class="img-thumbnail">
-                            <p class="text-muted font-bold">Detail Supplier</p>
                             <div class="form-group">
                                 <label class="col-sm-4 control-label">Nama Supplier</label>
                                 <div class="col-sm-7">
