@@ -62,7 +62,7 @@
                         <tr ng-repeat="row in displayed" ng-dblclick="view(row)">
                             <td>{{row.kode}}</td>
                             <td>{{row.kode_penjualan}}</td>
-                            <td>{{row.tanggal| date:'dd-MMM-yyyy'}}</td>
+                            <td>{{row.tanggal| date}}</td>
                             <td>{{row.cabang}}</td>
                             <td>{{row.nama_customer}}</td>
                             <td style="text-align: right;">{{row.total|  currency:undefined:0}}</td>
