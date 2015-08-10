@@ -102,10 +102,7 @@
                                         </td>
                                     </tr>
                                     <tr ng-repeat="detail in list.body">
-
-                                        <td style="border: none">
-
-                                            {{detail.tanggal| date}}</td>
+                                        <td style="border: none">{{detail.tanggal| date}}</td>
                                         <td style="border: none">{{detail.keterangan}}</td>
                                         <td style="border: none">{{detail.kode}}</td>
                                         <td style="border: none">
@@ -133,7 +130,7 @@
                                             <p ng-repeat="hargaSaldo in detail.saldo.harga">{{hargaSaldo |  currency:undefined:0}}</p>
                                         </td>
                                         <td style="text-align: right; border: none">
-                                            <p ng-repeat="subSaldo in detail.saldo.sub_total">{{subSaldo| currency }}</p>
+                                            <p ng-repeat="subSaldo in detail.saldo.sub_total">{{subSaldo| currency:undefined:0}}</p>
                                         </td>
                                     </tr>
                                     <tr>

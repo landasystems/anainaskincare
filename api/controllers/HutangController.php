@@ -89,7 +89,7 @@ class HutangController extends Controller {
                 ->join('JOIN', 'm_cabang as c', ' p.cabang_id= c.id')
                 ->where('h.credit > 0')
                 ->orderBy($sort)
-                ->select("h.*,p.*,s.nama as nama, s.no_tlp as no_tlp,s.email as email, s.alamat as alamat,c.nama as klinik");
+                ->select("h.*,p.kode, p.tanggal,s.nama as nama, s.no_tlp as no_tlp,s.email as email, s.alamat as alamat,c.nama as klinik");
 
         //filter
         if (isset($params['filter'])) {
