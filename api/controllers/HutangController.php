@@ -25,6 +25,7 @@ class HutangController extends Controller {
                     'delete' => ['delete'],
                     'listpembelian' => ['get'],
                     'selected' => ['get'],
+                    'excel' => ['get'],
                 ],
             ]
         ];
@@ -97,7 +98,7 @@ class HutangController extends Controller {
                 $query->andFilterWhere(['like', $key, $val]);
             }
         }
-
+        $_SESSION['query'] = $query;
         $command = $query->createCommand();
         $models = $command->queryAll();
         $totalItems = $query->count();
@@ -159,17 +160,17 @@ class HutangController extends Controller {
             }
             $model->attributes = $val;
             $model->pembelian_id = $params['form']['pembelian_id'];
-            $model->tanggal_transaksi = date('Y-m-d',  strtotime($val['tanggal_transaksi']));
+            $model->tanggal_transaksi = date('Y-m-d', strtotime($val['tanggal_transaksi']));
             $model->save();
             $id[] = $model->id; 
         }
-        $delete = Hutang::deleteAll('id NOT IN('.implode(',',$id).')');
+        $delete = Hutang::deleteAll('id NOT IN('.implode(',',$id).') and pembelian_id='.$params['form']['pembelian_id']);
     }
 
     public function actionDelete($id) {
-        $model = $this->findModel($id);
+        $model = Hutang::deleteAll(['pembelian_id' => $id]);
 
-        if ($model->delete()) {
+        if ($model) {
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -212,7 +213,16 @@ class HutangController extends Controller {
         );
         return (isset($codes[$status])) ? $codes[$status] : '';
     }
-
+    public function actionExcel() {
+        session_start();
+        $query = $_SESSION['query'];
+        $query->offset("");
+        $query->limit("");
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+//        Yii::error($models);
+        return $this->render("excel", ['models' => $models]);
+    }
 }
 
 ?>

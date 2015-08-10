@@ -7,20 +7,43 @@
             <div class="panel-heading">
                 <button class="btn btn-default btn-xs" ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed">Pencarian & Export Data</button>
                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
-                    <button type="button" class="btn btn-default fa fa-file-excel-o" ng-show="!isCollapsed">&nbsp;Export Excel</button>
+                    <button type="button" class="btn btn-default fa fa-file-excel-o" ng-show="!isCollapsed" ng-click="excel()">&nbsp;Export Excel</button>
                     <!--<button type="button" class="btn btn-primary fa fa-plus-square-o" ng-click="create();">&nbsp;Tambah Data</button>-->
                 </div>
             </div>
             <div collapse="isCollapsed" class="panel-body collapse" style="height: 0px;">
                 <div class="form-horizontal">
-                    <div class="form-group">
-                        <label class="col-sm-1 control-label">NIP</label>
-                        <div class="col-sm-3">
-                            <input st-search="kode" class="form-control"/>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Kode</label>
+                            <div class="col-sm-9">
+                                <input st-search="pe.kode" class="form-control"/>
+                            </div>
                         </div>
-                        <label class="col-sm-1 control-label">Nama Pegawai</label>
-                        <div class="col-sm-3">
-                            <input st-search="nama" class="form-control"/>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Periode</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" st-search="tanggal" type="text" date-range-picker ng-model="tanggals">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Supplier</label>
+                            <div class="col-sm-9">
+                                <input st-search="su.nama" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="col-sm-3 control-label">Cabang</label>
+                            <div class="col-sm-9">
+                                <ui-select on_select="getkode_cabang(form,is_create)" ng-model="cabang" theme="bootstrap">
+                                    <ui-select-match placeholder="Cari Cabang">{{$select.selected.nama}}</ui-select-match>
+                                    <ui-select-choices group-by="'group'" repeat="dokter in sCabang | filter: $select.search">
+                                        <div ng-bind-html="dokter.nama | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -29,11 +52,11 @@
                 <table class="table table-striped table-hover" >
                     <thead>
                         <tr>
-                            <th st-sort="kode">Kode Pembelian</th>
-                            <th st-sort="tanggal">Tanggal</th>
-                            <th st-sort="nama">Nama Supplier</th>
-                            <th st-sort="klinik">Klinik</th>
-                            <th st-sort="total">Total</th>
+                            <th st-sort="p.kode">Kode Pembelian</th>
+                            <th st-sort="p.tanggal">Tanggal</th>
+                            <th st-sort="s.nama">Nama Supplier</th>
+                            <th st-sort="c.nama">Cabang</th>
+                            <th st-sort="p.total">Total</th>
                             <!--<th st-sort="status">Status Pembayaran</th>-->
                             <th></th>
                         </tr>
@@ -41,7 +64,7 @@
                     <tbody ng-show="!isLoading">
                         <tr ng-repeat="row in displayed" ng-dblclick="view(row)">
                             <td>{{row.kode}}</td>
-                            <td>{{row.tanggal}}</td>
+                            <td>{{row.tanggal | date}}</td>
                             <td>{{row.nama}}</td>
                             <td>{{row.klinik}}</td>
                             <td style="text-align: right;">{{row.total}}</td>
@@ -107,7 +130,7 @@
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Klinik</label>
+                                <label class="col-sm-3 control-label">Cabang</label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" ng-model="form.klinik" ng-disabled="true" >
                                 </div>
@@ -120,8 +143,8 @@
                             </div>
                         </div>
                         <div class="line line-dashed b-b line-lg pull-in"></div>
-                        <h5 class="font-bold">- Detail Pembelian</h5> 
-                        <table class="table table-bordered">
+                        <h5 class="font-bold">- Detail Hutang</h5> 
+                        <table class="table table-bordered det-trans">
                             <thead>
                                 <tr>
                                     <td style="text-align: center;width:20%">Tanggal</td>
@@ -134,7 +157,7 @@
                             <tbody>
                                 <tr ng-repeat="hist in history">
                                     <td>
-                                        <div class="input-group">
+                                        <div class="input-group" style="padding:0px;margin:0px">
                                             <input required type="text" ng-disabled="is_view" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="hist.tanggal_transaksi" is-open="openedDet == $index" ng-change="setStatus()" ng-click="openDet($event, $index)"/>
                                             <span class="input-group-addon">
                                                 <i class="fa fa-calendar-o"></i>
@@ -151,13 +174,13 @@
                                     <td style="text-align: center">
                                         <div class="input-group m-b" style="margin:0px;">
                                             <span class="input-group-addon">Rp</span>
-                                            <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-model="hist.debet" ng-disabled="is_view">
+                                            <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-change="total()" ng-model="hist.debet" ng-disabled="is_view">
                                         </div>
                                     </td>
                                     <td style="text-align: center">
                                         <div class="input-group m-b" style="margin:0px;">
                                             <span class="input-group-addon">Rp</span>
-                                            <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-model="hist.credit" ng-disabled="is_view">
+                                            <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-change="total()" ng-model="hist.credit" ng-disabled="is_view">
                                         </div>
                                     </td>
                                     <td style="text-align: center">
@@ -169,8 +192,8 @@
                             <tfoot>
                                 <tr>
                                     <td colspan="2" style="text-align: right">Saldo</td>
-                                    <td>{{}}</td>
-                                    <td>{{}}</td>
+                                    <td style="text-align: right">{{form.total_debet | currency}}</td>
+                                    <td style="text-align: right">{{form.total_credit | currency}}</td>
                                     <td></td>
                                 </tr>
                             </tfoot>
@@ -181,7 +204,6 @@
                             <button type="submit" class="btn btn-primary fa fa-save" ng-hide="is_view" ng-disabled="landaform.$invalid" ng-click="save(form, history)">&nbsp;Simpan Perubahan</button>
                         </div>
                     </div>
-
                 </div>
             </div>
         </form>

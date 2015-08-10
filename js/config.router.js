@@ -59,9 +59,10 @@ angular.module('app')
                                     url: '/signin',
                                     templateUrl: 'tpl/page_signin.html',
                                     resolve: {
-                                        deps: ['uiLoad',
-                                            function(uiLoad) {
-                                                return uiLoad.load(['js/controllers/site.js']);
+                                        deps: ['$ocLazyLoad',
+                                            function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load('js/controllers/site.js').then(
+                                                        );
                                             }]
                                     }
                                 })

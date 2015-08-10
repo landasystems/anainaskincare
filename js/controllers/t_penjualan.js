@@ -141,7 +141,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
     $scope.getkode_cabang = function(form) {
         Data.get('penjualan/kode_cabang/' + form.cabang.id).then(function(data) {
             $scope.form.kode = data.kode;
-            $scope.form.cabang_id = id;
+//            $scope.form.cabang_id = id;
             $scope.list_dokter = data.dokter;
             $scope.list_terapis = data.terapis;
 
@@ -196,6 +196,8 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
     $scope.selected = function(id) {
         Data.get('penjualan/view/' + id).then(function(data) {
             $scope.form = data.data;
+             $scope.list_dokter = data.dokter;
+            $scope.list_terapis = data.terapis;
             $scope.form.cabang_id = data.data.cabang_id.id;
             $scope.form.no_tlp = data.data.customers.no_tlp;
             $scope.form.email = data.data.customers.email;

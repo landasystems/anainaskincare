@@ -10,11 +10,20 @@
             </small>
         </ui-select-choices>
     </ui-select>
-    <p>Selected: {{multipleDemo.selectedPeople}}</p>
-    <hr>
+
+
+    <ui-select tagging="tagTransform" tagging-label="false" ng-model="multipleDemo.colors" theme="bootstrap" sortable="true" ng-disabled="disabled" style="width: 300px;" title="Choose a color">
+        <ui-select-match placeholder="Select colors...">{{$select.selected.name}}</ui-select-match>
+        <ui-select-choices repeat="person in people | filter:$select.search" >
+            <small>
+                email: {{person.email}} 
+                age: <span ng-bind-html="''+person.age | highlight: $select.search"></span>
+            </small>
+        </ui-select-choices>
+    </ui-select>
     
-    {{tess}}
-    <div ng-repeat="val in tess">
-        {{val}}
-    </div>
+    
+    <input type="text" datepicker-popup="MM/dd/yyyy" class="form-control" ng-model="asf" is-open="open" ng-click="open = true" datepicker-local-date>
+      --{{asf}}--
+    
 </div>
