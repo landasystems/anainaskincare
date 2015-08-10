@@ -82,5 +82,23 @@ class Pembelian extends \yii\db\ActiveRecord {
     public function getPinjaman() {
         return $this->hasOne(Pinjaman::className(), ['pembelian_id' => 'id']);
     }
+    
+     public function behaviors()
+         {
+             return [
+                 [
+                     'class' => BlameableBehavior::className(),
+                     'createdByAttribute' => 'created_at',
+                     'updatedByAttribute' => 'modified_at',
+                 ],
+                 'timestamp' => [
+                     'class' => 'yii\behaviors\TimestampBehavior',
+                     'attributes' => [
+                         ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'modified_at'],
+                         ActiveRecord::EVENT_BEFORE_UPDATE => ['modified_at'],
+                     ],
+                 ],
+             ];
+         }
 
 }

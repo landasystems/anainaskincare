@@ -25,7 +25,7 @@ use app\models\Cabang;
             <td><?=$arr['nama_supplier']?></td>
             <td><?=$arr['tanggal']?></td>
             <td><?=$arr['keterangan']?></td>
-            <td>&nbsp;<?=$arr['total']?></td>
+            <td style="text-align: right;">&nbsp;<?=$arr['total']?></td>
             
         </tr>
     <?php } ?>
