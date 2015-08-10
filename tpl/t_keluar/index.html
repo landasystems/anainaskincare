@@ -164,13 +164,13 @@
                                 <td style="width:50px;">
                                     <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" ng-change="subtotal()" ng-model="detail.jumlah" ng-keyup="cek(detail.produk.stok, detail.jumlah)" ng-disabled="is_view" ng-readonly="is_create == false" required>
                                 </td>
-                                <td style="width:200px;">
+                                <td style="width:135px;">
                                     <div class="input-group m-b" style="margin:0px;">
                                         <span class="input-group-addon">Rp</span>
                                         <input type="text" class="form-control angka" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-change="subtotal()"  ng-model="detail.harga"  ng-disabled="is_view" ng-readonly="is_create == false" required>
                                     </div>
                                 </td>
-                                <td style="width:200px;">
+                                <td style="width:135px;">
                                     <div class="input-group m-b" style="margin:0px;">
                                         <span class="input-group-addon">Rp</span>
                                         <input type="text" class="form-control angka" ng-model="detail.sub_total" ng-readonly="true"  ng-disabled="is_view">

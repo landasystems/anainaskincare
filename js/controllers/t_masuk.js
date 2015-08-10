@@ -124,6 +124,7 @@ app.controller('t_masukCtrl', function($scope, Data, toaster) {
         $scope.is_view = false;
         $scope.formtitle = "Form Persediaan Masuk";
         $scope.form = {};
+        $scope.detsmasuk = [{}];
         $scope.form.tanggal = new Date();
     };
     $scope.update = function(form) {
