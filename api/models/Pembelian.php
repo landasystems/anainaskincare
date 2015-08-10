@@ -3,7 +3,9 @@
 namespace app\models;
 
 use Yii;
-
+use yii\db\ActiveRecord;
+use yii\behaviors\SluggableBehavior;
+use yii\behaviors\BlameableBehavior;
 /**
  * This is the model class for table "pembelian".
  *
@@ -88,8 +90,8 @@ class Pembelian extends \yii\db\ActiveRecord {
              return [
                  [
                      'class' => BlameableBehavior::className(),
-                     'createdByAttribute' => 'created_at',
-                     'updatedByAttribute' => 'modified_at',
+                     'createdByAttribute' => 'created_by',
+                     'updatedByAttribute' => 'modified_by',
                  ],
                  'timestamp' => [
                      'class' => 'yii\behaviors\TimestampBehavior',
