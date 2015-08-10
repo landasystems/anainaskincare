@@ -129,7 +129,7 @@ class PembelianController extends Controller {
         }
         $command = $query->createCommand();
         $models = $command->queryAll();
-        foreach($models as $key => $val){
+        foreach ($models as $key => $val) {
             $cabang = Cabang::findOne($val['cabang_id']);
             $models[$key]['cabang'] = $cabang->attributes;
         }
@@ -197,9 +197,11 @@ class PembelianController extends Controller {
                 $modelDet->produk_id = $val['barang']['id'];
                 $modelDet->pembelian_id = $model->id;
                 if ($modelDet->save()) {
-                    $keterangan = 'pembelian';
-                    $stok = new KartuStok();
-                    $update = $stok->process('in', $model->tanggal, $model->kode, $modelDet->produk_id, $modelDet->jumlah, $model->cabang_id, $modelDet->harga, $keterangan, $model->id);
+                    if ($model->status == 'clear') {
+                        $keterangan = 'pembelian';
+                        $stok = new KartuStok();
+                        $update = $stok->process('in', $model->tanggal, $model->kode, $modelDet->produk_id, $modelDet->jumlah, $model->cabang_id, $modelDet->harga, $keterangan, $model->id);
+                    }
                 }
             }
 
@@ -233,7 +235,6 @@ class PembelianController extends Controller {
 
             $pembelianDet = $params['pembeliandet'];
             $id_det = array();
-//            Yii::error($pembelianDet);
             foreach ($pembelianDet as $val) {
                 $det = PembelianDet::findOne($val['id']);
                 if (empty($det)) {
@@ -245,10 +246,12 @@ class PembelianController extends Controller {
 
                 if ($det->save()) {
                     $id_det[] = $det->id;
-                    $keterangan = 'pembelian';
-                    $stok = new KartuStok();
-                    $hapus = $stok->hapusKartu($keterangan, $model->id);
-                    $update = $stok->process('in', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
+                    if ($model->status == 'clear') {
+                        $keterangan = 'pembelian';
+                        $stok = new KartuStok();
+                        $hapus = $stok->hapusKartu($keterangan, $model->id);
+                        $update = $stok->process('in', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
+                    }
                 }
             }
             $deleteDetail = PembelianDet::deleteAll('id NOT IN (' . implode(',', $id_det) . ') AND pembelian_id=' . $model->id);
@@ -331,6 +334,7 @@ class PembelianController extends Controller {
                 ->join("LEFT JOIN", 'm_supplier as su', 'pe.supplier_id = su.id')
                 ->join("LEFT JOIN", 'm_cabang as ca', 'pe.cabang_id = ca.id')
                 ->where(['like', 'pe.kode', $params['kode']])
+                ->andWhere(['pe.cabang_id' => $_SESSION['user']['cabang_id']])
                 ->limit(10);
         $command = $query->createCommand();
         $models = $command->queryAll();

@@ -6,6 +6,7 @@ use Yii;
 use yii\db\ActiveRecord;
 use yii\behaviors\SluggableBehavior;
 use yii\behaviors\BlameableBehavior;
+
 /**
  * This is the model class for table "stok_masuk".
  *
@@ -22,21 +23,19 @@ use yii\behaviors\BlameableBehavior;
  *
  * @property StokMasukDet[] $stokMasukDets
  */
-class StokMasuk extends \yii\db\ActiveRecord
-{
+class StokMasuk extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'stok_masuk';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['cabang_id', 'total', 'created_at', 'created_by', 'modified_at', 'modified_by'], 'integer'],
             [['tanggal'], 'safe'],
@@ -48,8 +47,7 @@ class StokMasuk extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'kode' => 'Kode',
@@ -67,26 +65,25 @@ class StokMasuk extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStokMasukDets()
-    {
+    public function getStokMasukDets() {
         return $this->hasMany(StokMasukDet::className(), ['stok_masuk_id' => 'id']);
     }
-    
-    public function behaviors()
-         {
-             return [
-                 [
-                     'class' => BlameableBehavior::className(),
-                     'createdByAttribute' => 'created_at',
-                     'updatedByAttribute' => 'modified_at',
-                 ],
-                 'timestamp' => [
-                     'class' => 'yii\behaviors\TimestampBehavior',
-                     'attributes' => [
-                         ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'modified_at'],
-                         ActiveRecord::EVENT_BEFORE_UPDATE => ['modified_at'],
-                     ],
-                 ],
-             ];
-         }
+
+    public function behaviors() {
+        return [
+            [
+                'class' => BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'modified_by',
+            ],
+            'timestamp' => [
+                'class' => 'yii\behaviors\TimestampBehavior',
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'modified_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['modified_at'],
+                ],
+            ],
+        ];
+    }
+
 }

@@ -87,12 +87,12 @@ class BayarpiutangController extends Controller {
         $query->offset($offset)
                 ->limit($limit)
                 ->from('pinjaman')
-                ->join('JOIN', 'penjualan', 'pinjaman.penjualan_id= penjualan.id')
-                ->join('JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
-                ->join('JOIN', 'm_cabang', 'penjualan.cabang_id= m_cabang.id')
+                ->join('LEFT JOIN', 'penjualan', 'pinjaman.penjualan_id= penjualan.id')
+                ->join('LEFT JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
+                ->join('LEFT JOIN', 'm_cabang', 'penjualan.cabang_id= m_cabang.id')
                 ->where('pinjaman.debet != 0')
                 ->orderBy($sort)
-                ->select("pinjaman.*,m_cabang.nama as klinik, m_customer.nama as customer,penjualan.tanggal as tanggal, penjualan.kode as kode, m_customer.no_tlp as no_tlp,
+                ->select("pinjaman.debet, pinjaman.credit as kredit, pinjaman.tanggal_transaksi, pinjaman.status ,m_cabang.nama as klinik, m_customer.nama as customer,penjualan.tanggal as tanggal, penjualan.kode as kode, m_customer.no_tlp as no_tlp,
                             m_customer.email as email, m_customer.alamat as alamat, penjualan.keterangan as keterangan, penjualan.id as penjualan_id");
 
         //filter
@@ -145,6 +145,7 @@ class BayarpiutangController extends Controller {
                 $model = new Pinjaman();
             }
             $model->attributes = $value;
+            $model->status = $params['form']['status'];
             $model->penjualan_id = $params['form']['penjualan_id'];
             if ($model->save()) {
                 $noErrors = true;
@@ -179,7 +180,6 @@ class BayarpiutangController extends Controller {
 
     public function actionUpdate() {
         $params = json_decode(file_get_contents("php://input"), true);
-//        Yii::error($params);
         $id = array();
         foreach ($params['detail'] as $key => $val) {
             $model = Pinjaman::findOne($val['id']);
@@ -187,6 +187,7 @@ class BayarpiutangController extends Controller {
                 $model = new Pinjaman();
             }
             $model->attributes = $val;
+            $model->status = $params['form']['status'];
             $model->penjualan_id = $params['form']['penjualan_id'];
             $model->tanggal_transaksi = date('Y-m-d', strtotime($val['tanggal_transaksi']));
             $model->save();
