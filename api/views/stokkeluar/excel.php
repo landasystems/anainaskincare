@@ -20,7 +20,7 @@ header("Content-Disposition: attachment; filename=excel-Transaksi-StokKeluar.xls
             <td><?=$arr['cabang']?></td>
             <td><?=$arr['tanggal']?></td>
             <td><?=$arr['keterangan']?></td>
-            <td>&nbsp;<?=$arr['total']?></td>
+            <td style="text-align: right">&nbsp;<?=$arr['total']?></td>
             
         </tr>
     <?php } ?>

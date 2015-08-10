@@ -82,6 +82,7 @@ class StokmasukController extends Controller {
         $query2 = new Query;
         $query2->from('stok_masuk')
                 ->select('kode')
+                ->where("cabang_id = $id")
                 ->orderBy('kode DESC')
                 ->limit(1);
 

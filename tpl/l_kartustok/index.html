@@ -111,28 +111,28 @@
                                         <td style="border: none">
                                             <p ng-if="detail.masuk.jumlah !== 0">{{detail.masuk.jumlah}} {{list.title.satuan}}</p>
                                         </td>
-                                        <td style="border: none">
+                                        <td style="text-align: right; border: none">
                                             <p ng-if="detail.masuk.harga !== 0">{{detail.masuk.harga| currency}}</p>
                                         </td>
-                                        <td style="border: none">
+                                        <td style="text-align: right; border: none">
                                             <p ng-if="detail.masuk.sub_total !== 0">{{detail.masuk.sub_total| currency}}</p>
                                         </td>
                                         <td style="border: none">
                                             <p ng-repeat="jmlKeluar in detail.keluar.jumlah" >{{jmlKeluar}} {{list.title.satuan}}</p>
                                         </td>
-                                        <td style="border: none">
+                                        <td style="text-align: right; border: none">
                                             <p ng-repeat="hargaKeluar in detail.keluar.harga">{{hargaKeluar| currency}}</p>
                                         </td>
-                                        <td style="border: none">
+                                        <td style="text-align: right; border: none">
                                             <p ng-repeat="saldoKeluar in detail.keluar.sub_total">{{saldoKeluar| currency}}</p>
                                         </td>
                                         <td style="border: none">
                                             <p ng-repeat="jmlSaldo in detail.saldo.jumlah">{{jmlSaldo}} {{list.title.satuan}}</p>
                                         </td>
-                                        <td style="border: none">
+                                        <td style="text-align: right; border: none">
                                             <p ng-repeat="hargaSaldo in detail.saldo.harga">{{hargaSaldo | currency}}</p>
                                         </td>
-                                        <td style="border: none">
+                                        <td style="text-align: right; border: none">
                                             <p ng-repeat="subSaldo in detail.saldo.sub_total">{{subSaldo| currency }}</p>
                                         </td>
                                     </tr>
@@ -140,13 +140,13 @@
                                         <td colspan="3" style="border: none"><b>Total</b></td>
                                         <td style="border: none"><b>{{list.total.masuk.jumlah}}</b></td>
                                         <td style="border: none"></td>
-                                        <td style="border: none"><b>{{list.total.masuk.harga| currency}}</b></td>
+                                        <td style="text-align: right; border: none"><b>{{list.total.masuk.harga| currency}}</b></td>
                                         <td style="border: none"><b>{{list.total.keluar.jumlah}}</b></td>
                                         <td style="border: none"></td>
-                                        <td style="border: none"><b>{{list.total.keluar.harga| currency}}</b></td>
+                                        <td style="text-align: right; border: none"><b>{{list.total.keluar.harga| currency}}</b></td>
                                         <td style="border: none"><b>{{list.total.saldo.jumlah}}</b></td>
                                         <td style="border: none"></td>
-                                        <td style="border: none"><b>{{list.total.saldo.harga| currency}}</b></td>
+                                        <td style="text-align: right; border: none"><b>{{list.total.saldo.harga| currency}}</b></td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
@@ -154,7 +154,7 @@
                                         <td colspan="9" align="right"><b>Total Seluruh Stok</b></td>
                                         <td><b>{{laporan.grandJml}}</b></td>
                                         <td></td>
-                                        <td><b>{{laporan.grandHarga| currency}}</b></td>
+                                        <td style="text-align: right;"><b>{{laporan.grandHarga| currency}}</b></td>
                                     </tr>
                                 </tfoot>
                             </table>
