@@ -65,7 +65,7 @@
                             <td>{{row.tanggal| date:'dd-MMM-yyyy'}}</td>
                             <td>{{row.cabang}}</td>
                             <td>{{row.nama_customer}}</td>
-                            <td>{{row.total| currency}}</td>
+                            <td>{{row.total| currency:undefined:0}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ></button>
@@ -335,16 +335,16 @@
                                 {{detail.jumlah_retur}}
                             </td>
                             <td style="text-align: right; vertical-align: 0px;">
-                                {{detail.harga_awal| currency:undefined:0}}
+                                {{detail.harga_awal| currency:undefined:0:undefined:0}}
                             </td>
                             <td style="text-align: right; vertical-align: 0px;">
-                                {{detail.harga| currency:undefined:0}}
+                                {{detail.harga| currency:undefined:0:undefined:0}}
                             </td>
                             <td style="text-align: right; vertical-align: 0px;">
-                                {{detail.diskon_awal | currency:undefined:0}}
+                                {{detail.diskon_awal | currency:undefined:0:undefined:0}}
                             </td>
                             <td style="text-align: right; vertical-align: 0px;">
-                                {{(detail.jumlah_retur * detail.harga) - (detail.jumlah_retur * detail.diskon_awal) | currency:undefined:0}}
+                                {{(detail.jumlah_retur * detail.harga) - (detail.jumlah_retur * detail.diskon_awal) | currency:undefined:0:undefined:0}}
                             </td>
                         </tr>
                     </tbody>
@@ -357,13 +357,13 @@
                             </td>
                             <td colspan=""  style="text-align: right;border-bottom: none">Total :&nbsp;</td>
                             <td style="text-align: right;">
-                                {{form.biaya_lain| currency:undefined:0}}
+                                {{form.biaya_lain| currency:undefined:0:undefined:0}}
                             </td>
                         </tr>
                         <tr>
                             <td  style="text-align: right; border-bottom: none">Bayar :&nbsp;</td>
                             <td style="text-align: right;">
-                                {{form.total| currency:undefined:0}}
+                                {{form.total| currency:undefined:0:undefined:0}}
                             </td>
                         </tr>
                         <

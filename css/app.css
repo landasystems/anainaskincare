@@ -1,3 +1,18 @@
+/*---table margin & padding 0px*/
+.det-trans > tbody > tr > td{ 
+    margin: 0px;
+    padding: 0px;
+}
+.det-trans > tfoot > tr > td{ 
+    margin: 0px;
+    padding: 0px;
+}
+
+.btn-det-trans{ 
+    height: 35px;
+}
+
+
 /*----pencarian*/
 #pencarian .form-control {
     height: 30px !important;
@@ -762,6 +777,10 @@ body {
 }
 
 .app-footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
     z-index: 1005;
 }
 
@@ -1062,6 +1081,12 @@ body {
     .navbar-form .form-group {
         margin-bottom: 0;
     }
+}
+
+html {
+    background: url('../img/bg.jpg');
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 .app.container {
@@ -2187,7 +2212,7 @@ fieldset[disabled] .btn-black.active {
 }
 
 .settings {
-    
+
 }
 
 .settings.active {
