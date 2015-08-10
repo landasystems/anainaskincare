@@ -30,12 +30,12 @@ header("Content-Disposition: attachment; filename=excel-master-barang.xls");
             <td><?=$arr['satuan']?></td>
             <td><?=$arr['type']?></td>
             <td><?=$arr['keterangan']?></td>
-            <td>&nbsp;<?=$arr['harga_beli_terakhir']?></td>
-            <td>&nbsp;<?=$arr['harga_jual']?></td>
+            <td style="text-align: right">&nbsp;<?=$arr['harga_beli_terakhir']?></td>
+            <td style="text-align: right">&nbsp;<?=$arr['harga_jual']?></td>
             <td>&nbsp;<?=$arr['diskon']?></td>
             <td>&nbsp;<?=$arr['minimum_stok']?></td>
-            <td>&nbsp;<?=$arr['fee_terapis']?></td>
-            <td>&nbsp;<?=$arr['fee_dokter']?></td>
+            <td style="text-align: right">&nbsp;<?=$arr['fee_terapis']?></td>
+            <td style="text-align: right">&nbsp;<?=$arr['fee_dokter']?></td>
             
         </tr>
     <?php } ?>

@@ -93,14 +93,14 @@ class PenjualanController extends Controller {
         $query = new Query;
         $query->offset($offset)
                 ->limit($limit)
-                ->from(['penjualan', 'm_cabang', 'm_customer'])
-                ->orderBy($sort)
-                ->select("m_cabang.nama as cabang, m_customer.nama as customer, penjualan.kode as kode, penjualan.tanggal as tanggal,
+                ->from('penjualan')
+                ->join('LEFT JOIN', 'm_cabang', 'penjualan.cabang_id = m_cabang.id')
+                ->join('LEFT JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
+                ->select('m_cabang.nama as cabang, m_customer.nama as customer, penjualan.kode as kode, penjualan.tanggal as tanggal,
                     penjualan.keterangan as keterangan, penjualan.total as total, penjualan.cash as cash, penjualan.credit as credit, penjualan.status as status,
                     penjualan.kode as kode, penjualan.id as id,  penjualan.customer_id as customer_id, penjualan.cabang_id as cabang_id,
-                    m_customer.no_tlp as no_tlp, m_customer.email as email, m_customer.alamat as alamat")
-                ->where('penjualan.cabang_id = m_cabang.id and penjualan.customer_id = m_customer.id')
-                ->andWhere(['penjualan.cabang_id' => $_SESSION['user']['cabang_id']]);
+                    m_customer.no_tlp as no_tlp, m_customer.email as email, m_customer.alamat as alamat')
+                ->where(['penjualan.cabang_id' => $_SESSION['user']['cabang_id']]);
 
         //filter
         if (isset($params['filter'])) {
@@ -159,6 +159,7 @@ class PenjualanController extends Controller {
             'email' => $email,
             'alamat' => $alamat
         ];
+
         $data['cabang'] = [
             'id' => $idcab,
             'kode' => $cabkode,
@@ -220,7 +221,7 @@ class PenjualanController extends Controller {
         $model = new Penjualan();
         $model->attributes = $params['penjualan'];
         $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
-        $model->customer_id = $params['penjualan']['customers']['id'];
+        $model->customer_id = isset($params['penjualan']['customers']['id']) ? $params['penjualan']['customers']['id'] : null;
         $model->cabang_id = $params['penjualan']['cabang']['id'];
 
         if ($model->save()) {
@@ -241,7 +242,6 @@ class PenjualanController extends Controller {
                 $det->produk_id = $data['produk']['id'];
                 $det->pegawai_terapis_id = isset($data['terapis']['id']) ? $data['terapis']['id'] : '';
                 $det->pegawai_dokter_id = isset($data['dokter']['id']) ? $data['terapis']['id'] : '';
-//                $det->sub_total = str_replace('.', '', $data['sub_total']);
 
                 if ($det->save()) {
                     $keterangan = 'penjualan';
@@ -264,7 +264,7 @@ class PenjualanController extends Controller {
         $model = $this->findModel($id);
         $model->attributes = $params['penjualan'];
         $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
-        $model->customer_id = $params['penjualan']['customers']['id'];
+        $model->customer_id = isset($params['penjualan']['customers']['id']) ? $params['penjualan']['customers']['id'] : null;
         $model->cabang_id = $params['penjualan']['cabang']['id'];
 
         if ($model->save()) {

@@ -65,8 +65,8 @@
                             <td>{{row.tanggal| date:'dd MMM yyyy'}}</td>
                             <td>{{row.customer}}</td>
                             <td>{{row.klinik}}</td>
-                            <td>{{row.debet| currency}}</td>
-                            <td>{{row.credit| currency}}</td>
+                            <td style="text-align: right;">{{row.debet|  currency:undefined:0}}</td>
+                            <td style="text-align: right;">{{row.credit|  currency:undefined:0}}</td>
                             <td>{{row.status}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
@@ -193,8 +193,8 @@
                             </tr>
                             <tr style="padding: 10px; margin: 10px;">
                                 <td colspan="2" style="padding: 10px; margin: 10px;">Total</td>
-                                <td style="padding: 10px; margin: 10px;">{{form.total_debet | currency}}</td>
-                                <td style="padding: 10px; margin: 10px;">{{form.total_credit | currency}}</td>
+                                <td style="padding: 10px; margin: 10px;">{{form.total_debet | currency:undefined:0}}</td>
+                                <td style="padding: 10px; margin: 10px;">{{form.total_credit | currency:undefined:0}}</td>
                             </tr>
                         </table>
                         <div class="line line-dashed b-b line-lg pull-in"></div>

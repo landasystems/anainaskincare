@@ -66,20 +66,20 @@
                         <tbody ng-repeat="list in list_detail">
                             <tr>
                                 <td colspan="4"><b>{{list.title.nama}}</b></td>
-                                <td><b>{{list.title.sub_total| currency}}</b></td>
+                                <td><b>{{list.title.sub_total| currency:undefined:0}}</b></td>
                             </tr>
                             <tr ng-repeat="detail in list.body">
                                 <td>{{detail.tanggal| date}}</td>
                                 <td>{{detail.kode}}</td>
                                 <td>{{detail.produk}}</td>
                                 <td>{{detail.jabatan}}</td>
-                                <td>{{detail.fee| currency}}</td>
+                                <td style="text-align: right;">{{detail.fee|  currency:undefined:0}}</td>
                             </tr>
                         </tbody>
                         <tfoot>
                             <tr>
                                 <td colspan="4" align="right"><b>Total</b></td>
-                                <td><b>{{detail.total| currency}}</b></td>
+                                <td><b>{{detail.total| currency:undefined:0}}</b></td>
                             </tr>
                         </tfoot>
                     </table>

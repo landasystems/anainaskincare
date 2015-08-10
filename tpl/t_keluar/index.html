@@ -49,7 +49,7 @@
                             <th st-sort="tanggal">Tanggal</th>
                             <th st-sort="m_cabang.nama">Cabang</th>
                             <th st-sort="keterangan">Keterangan</th>
-                            <th st-sort="total">Total</th>
+                            <th style="text-align: right;" st-sort="total">Total</th>
                             <th style="text-align: center;">Action</th>
                         </tr>
                     </thead>
@@ -59,7 +59,7 @@
                             <td>{{row.tanggal| date}}</td>
                             <td>{{row.cabang}}</td>
                             <td>{{row.keterangan}}</td>
-                            <td>{{row.total| currency}}</td>
+                            <td style="text-align: right">{{row.total|  currency:undefined:0}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ></button>
@@ -243,10 +243,10 @@
                             {{detail.jumlah}}
                         </td>
                         <td style="text-align: right">
-                            {{detail.harga| currency:undefined:0}}
+                            {{detail.harga| currency:undefined:0:undefined:0}}
                         </td>
                         <td style="text-align: right">
-                            {{detail.sub_total| currency:undefined:0}}
+                            {{detail.sub_total| currency:undefined:0:undefined:0}}
                         </td>
                     </tr>
                 </tbody>
@@ -254,7 +254,7 @@
                     <tr>
                         <th colspan="3" style="text-align: right;  border-bottom: none; border-right: none; border-left: none;">Total :&nbsp;</th>
                         <td style="text-align: right;  border-bottom: none;">
-                            {{form.total| currency:undefined:0}}
+                            {{form.total| currency:undefined:0:undefined:0}}
                         </td>
                     </tr>
                 </tfoot>

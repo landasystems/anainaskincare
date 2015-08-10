@@ -25,24 +25,22 @@ use Yii;
  * @property Hutang $id0
  * @property PenjualanDet $id1
  */
-class Penjualan extends \yii\db\ActiveRecord
-{
+class Penjualan extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'penjualan';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['cabang_id', 'customer_id', 'total', 'cash', 'credit', 'created_at', 'created_by', 'modified_at', 'modified_by'], 'integer'],
-            [['tanggal'], 'safe'],
+            [['cabang_id', 'total', 'cash', 'credit', 'created_at', 'created_by', 'modified_at', 'modified_by'], 'integer'],
+            [['tanggal', 'customer_id'], 'safe'],
             [['keterangan'], 'string'],
             [['kode'], 'string', 'max' => 25],
             [['status'], 'string', 'max' => 45]
@@ -52,8 +50,7 @@ class Penjualan extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'kode' => 'Kode',
@@ -83,8 +80,8 @@ class Penjualan extends \yii\db\ActiveRecord
 //    /**
 //     * @return \yii\db\ActiveQuery
 //     */
-    public function customers()
-    {
+    public function customers() {
         return $this->hasOne(Customer::className(), ['id' => 'customer_id']);
     }
+
 }
