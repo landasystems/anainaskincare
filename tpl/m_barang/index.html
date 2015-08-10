@@ -61,8 +61,8 @@
                             <td>{{row.type}}</td>
                             <td>{{row.kategori}}</td>
                             <td>{{row.satuan}}</td>
-                            <td style="text-align: right">{{row.harga_beli_terakhir| currency}}</td>
-                            <td style="text-align: right">{{row.harga_jual| currency}}</td>
+                            <td style="text-align: right">{{row.harga_beli_terakhir|  currency:undefined:0}}</td>
+                            <td style="text-align: right">{{row.harga_jual|  currency:undefined:0}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ng-show="row.is_deleted == 0"></button>
