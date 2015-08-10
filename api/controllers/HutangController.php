@@ -109,13 +109,13 @@ class HutangController extends Controller {
     }
 
     public function actionView($id) {
-        $isi= array();
-        $findDetail= Hutang::find()
-                ->where("pembelian_id=".$id)
+        $isi = array();
+        $findDetail = Hutang::find()
+                ->where("pembelian_id=" . $id)
                 ->orderBy('id DESC')
                 ->all();
-        foreach($findDetail as $val){
-            $isi[]= $val->attributes;
+        foreach ($findDetail as $val) {
+            $isi[] = $val->attributes;
         }
         $this->setHeader(200);
         echo json_encode(array('status' => 1, 'data' => $isi), JSON_PRETTY_PRINT);
@@ -153,18 +153,19 @@ class HutangController extends Controller {
         $params = json_decode(file_get_contents("php://input"), true);
 //        Yii::error($params);
         $id = array();
-        foreach($params['detail'] as $key => $val){
+        foreach ($params['detail'] as $key => $val) {
             $model = Hutang::findOne($val['id']);
-            if(empty($model)){
+            if (empty($model)) {
                 $model = new Hutang();
             }
             $model->attributes = $val;
             $model->pembelian_id = $params['form']['pembelian_id'];
+            $model->status = $params['form']['status'];
             $model->tanggal_transaksi = date('Y-m-d', strtotime($val['tanggal_transaksi']));
             $model->save();
-            $id[] = $model->id; 
+            $id[] = $model->id;
         }
-        $delete = Hutang::deleteAll('id NOT IN('.implode(',',$id).') and pembelian_id='.$params['form']['pembelian_id']);
+        $delete = Hutang::deleteAll('id NOT IN(' . implode(',', $id) . ') and pembelian_id=' . $params['form']['pembelian_id']);
     }
 
     public function actionDelete($id) {
@@ -213,6 +214,7 @@ class HutangController extends Controller {
         );
         return (isset($codes[$status])) ? $codes[$status] : '';
     }
+
     public function actionExcel() {
         session_start();
         $query = $_SESSION['query'];
@@ -223,6 +225,7 @@ class HutangController extends Controller {
 //        Yii::error($models);
         return $this->render("excel", ['models' => $models]);
     }
+
 }
 
 ?>
