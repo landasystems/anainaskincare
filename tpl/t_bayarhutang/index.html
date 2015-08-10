@@ -57,18 +57,18 @@
                             <th st-sort="s.nama">Nama Supplier</th>
                             <th st-sort="c.nama">Cabang</th>
                             <th st-sort="p.total">Total</th>
-                            <!--<th st-sort="status">Status Pembayaran</th>-->
+                            <th st-sort="status">Status</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody ng-show="!isLoading">
                         <tr ng-repeat="row in displayed" ng-dblclick="view(row)">
                             <td>{{row.kode}}</td>
-                            <td>{{row.tanggal | date}}</td>
+                            <td>{{row.tanggal| date}}</td>
                             <td>{{row.nama}}</td>
                             <td>{{row.klinik}}</td>
-                            <td style="text-align: right;">{{row.total}}</td>
-                            <!--<td>{{row.status}}</td>-->
+                            <td style="text-align: right;">{{row.credit}}</td>
+                            <td>{{row.status}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)"></button>
@@ -141,17 +141,25 @@
                                     <textarea class="form-control" rows="4" ng-model="form.keterangan" ng-disabled="true" ></textarea>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Status</label>
+                                <div class="col-sm-9">
+                                    <div class="btn-group">
+                                        <label class="btn btn-default" ng-model="form.status" btn-radio="'Lunas'">Lunas</label>
+                                        <label class="btn btn-default" ng-model="form.status" btn-radio="'Belum Lunas'">Belum Lunas</label>
+                                    </div>    
+                                </div>
+                            </div>
                         </div>
                         <div class="line line-dashed b-b line-lg pull-in"></div>
                         <h5 class="font-bold">- Detail Hutang</h5> 
                         <table class="table table-bordered det-trans">
                             <thead>
                                 <tr>
-                                    <td style="text-align: center;width:20%">Tanggal</td>
-                                    <td style="text-align: center">Status</td>
-                                    <td style="text-align: center;width:20%">Debet</td>
-                                    <td style="text-align: center;width:20%">Credit</td>
-                                    <td style="width:5%"></td>
+                                    <td style="text-align: center;">Tanggal</td>
+                                    <td style="text-align: center;">Debet</td>
+                                    <td style="text-align: center;">Credit</td>
+                                    <td style="width:20px;"></td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -162,13 +170,6 @@
                                             <span class="input-group-addon">
                                                 <i class="fa fa-calendar-o"></i>
                                             </span>
-                                        </div>
-                                    </td>
-                                    <td style="text-align:center">
-                                        <span class="label bg-light" ng-show="$index > 0">{{hist.status}}</span>
-                                        <div ng-show="$index == 0" class="btn-group">
-                                            <label class="btn btn-sm btn-success" required ng-model="hist.status" ng-disabled="is_view" btn-radio="'lunas'"><i class="fa fa-check text-active"></i> Lunas</label>
-                                            <label class="btn btn-sm btn-info" required ng-model="hist.status" ng-disabled="is_view" btn-radio="'belum lunas'"><i class="fa fa-check text-active"></i> Belum Lunas</label>
                                         </div>
                                     </td>
                                     <td style="text-align: center">
@@ -192,8 +193,8 @@
                             <tfoot>
                                 <tr>
                                     <td colspan="2" style="text-align: right">Saldo</td>
-                                    <td style="text-align: right">{{form.total_debet | currency:undefined:0}}</td>
-                                    <td style="text-align: right">{{form.total_credit | currency:undefined:0}}</td>
+                                    <td style="text-align: right">{{form.total_debet| currency:undefined:0}}</td>
+                                    <td style="text-align: right">{{form.total_credit| currency:undefined:0}}</td>
                                     <td></td>
                                 </tr>
                             </tfoot>
