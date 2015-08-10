@@ -238,8 +238,8 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <button class="btn btn-info fa fa-plus btn-det-trans" ng-click="addrow(det)" ng-show="$index == 0"></button>
-                                            <button class="btn btn-danger fa fa-minus-circle btn-det-trans" ng-show="$index > 0" ng-click="removeRow($index)"></button>
+                                            <button ng-disabled="is_view" class="btn btn-info fa fa-plus btn-det-trans" ng-click="addrow(det)" ng-show="$index == 0"></button>
+                                            <button ng-disabled="is_view" class="btn btn-danger fa fa-minus-circle btn-det-trans" ng-show="$index > 0" ng-click="removeRow($index)"></button>
                                         </td>
                                     </tr>
                                 </tbody>
