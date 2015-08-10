@@ -218,23 +218,23 @@
                                                 </span>
                                             </div>
                                         </td>
-                                        <td><input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-change="calculate()" ng-model="detail.jumlah" ng-readonly="is_view"></td>
+                                        <td><input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" ng-change="calculate()" ng-model="detail.jumlah" ng-readonly="is_view"></td>
                                         <td>
                                             <div class="input-group " style="margin:0px;">
                                                 <span class="input-group-addon">Rp</span>
-                                                <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-change="calculate()" ng-model="detail.harga" ng-disabled="is_view">
+                                                <input type="text" class="form-control angka" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-change="calculate()" ng-model="detail.harga" ng-disabled="is_view">
                                             </div>
                                         </td>
                                         <td>
                                             <div class="input-group " style="margin:0px;">
                                                 <span class="input-group-addon">Rp</span>
-                                                <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-change="calculate()" ng-model="detail.diskon" ng-disabled="is_view">
+                                                <input type="text" class="form-control angka" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-change="calculate()" ng-model="detail.diskon" ng-disabled="is_view">
                                             </div>
                                         </td>
                                         <td>
                                             <div class="input-group " style="margin:0px;">
                                                 <span class="input-group-addon">Rp</span>
-                                                <input type="text" class="form-control" ng-maxlength="15" value="{{(detail.jumlah * detail.harga) - (detail.jumlah * detail.diskon)}}" ng-readonly="true">
+                                                <input type="text" class="form-control angka" ng-maxlength="15" value="{{(detail.jumlah * detail.harga) - (detail.jumlah * detail.diskon)}}" ng-readonly="true">
                                             </div>
                                         </td>
                                         <td>
@@ -249,19 +249,19 @@
                                         <td>
                                             <div class="input-group "  style="width:100%">
                                                 <span class="input-group-addon">Rp</span>
-                                                <input type="text" class="form-control" ng-maxlength="15" ng-model="form.total_belanja" ng-readonly="true">
+                                                <input type="text" class="form-control angka" ng-maxlength="15" ng-model="form.total_belanja" ng-readonly="true">
                                             </div>
                                         </td>
                                         <td>
                                             <div class="input-group "  style="width:100%">
                                                 <span class="input-group-addon">Rp</span>
-                                                <input type="text" class="form-control" ng-maxlength="15" ng-model="form.diskon" ng-readonly="true">
+                                                <input type="text" class="form-control angka" ng-maxlength="15" ng-model="form.diskon" ng-readonly="true">
                                             </div>
                                         </td>
                                         <td colspan="2">
                                             <div class="input-group "  style="width:100%">
                                                 <span class="input-group-addon">Rp</span>
-                                                <input type="text" class="form-control" ng-maxlength="15" ng-model="form.total" ng-change="bayar()" ng-readonly="true">
+                                                <input type="text" class="form-control angka" ng-maxlength="15" ng-model="form.total" ng-change="bayar()" ng-readonly="true">
                                             </div>
                                         </td>
                                     </tr>
@@ -270,7 +270,7 @@
                                         <td colspan="2">
                                             <div class="input-group "  style="width:100%">
                                                 <span class="input-group-addon">Rp</span>
-                                                <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-maxlength="15" ng-change="bayar()" ng-model="form.cash">
+                                                <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" ng-maxlength="15" ng-change="bayar()" ng-model="form.cash">
                                             </div>
                                         </td>
                                     </tr>
@@ -279,7 +279,7 @@
                                         <td colspan="2">
                                             <div class="input-group "  style="width:100%">
                                                 <span class="input-group-addon">Rp</span>
-                                                <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-maxlength="15" ng-change="bayar()" ng-model="form.credit">
+                                                <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" ng-maxlength="15" ng-change="bayar()" ng-model="form.credit">
                                             </div>
                                         </td>
                                     </tr>
@@ -288,7 +288,7 @@
                                         <td colspan="2">
                                             <div class="input-group "  style="width:100%">
                                                 <span class="input-group-addon">Rp</span>
-                                                <input type="text" class="form-control" ng-maxlength="15" ng-model="form.kembalian" ng-readonly="true">
+                                                <input type="text" class="form-control angka" ng-maxlength="15" ng-model="form.kembalian" ng-readonly="true">
                                             </div>
                                         </td>
                                     </tr>

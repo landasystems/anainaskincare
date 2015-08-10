@@ -190,7 +190,7 @@
                             <div class="col-sm-7">
                                 <div class="input-group">
                                     <span class="input-group-addon">Rp</span>
-                                    <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.total" ng-disabled="true" >
+                                    <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" ng-model="form.total" ng-disabled="true" >
                                 </div>  
                             </div>
                         </div>
@@ -199,7 +199,7 @@
                             <div class="col-sm-7">
                                 <div class="input-group">
                                     <span class="input-group-addon">Rp</span>
-                                    <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.cash" ng-disabled="true" >
+                                    <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" ng-model="form.cash" ng-disabled="true" >
                                 </div>  
                             </div>
                         </div>
@@ -208,7 +208,7 @@
                             <div class="col-sm-7">
                                 <div class="input-group">
                                     <span class="input-group-addon">Rp</span>
-                                    <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.credit" ng-disabled="true" >
+                                    <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" ng-model="form.credit" ng-disabled="true" >
                                 </div>  
                             </div>
                         </div>
@@ -217,7 +217,7 @@
                             <div class="col-sm-7">
                                 <div class="input-group">
                                     <span class="input-group-addon">Rp</span>
-                                    <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" value="{{form.cash - form.total}}" ng-disabled="true" >
+                                    <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" value="{{form.cash - form.total}}" ng-disabled="true" >
                                 </div>  
                             </div>
                         </div>
@@ -248,25 +248,25 @@
                                     <td style="width: 15%">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon">Rp.</span>
-                                            <input class="form-control" style="width:100%" type="text" ng-pattern="/^[0-9]+$/" ng-model="list.harga" ng-disabled="true">
+                                            <input class="form-control angka" style="width:100%" type="text" ng-pattern="/^[0-9]+$/" ng-model="list.harga" ng-disabled="true">
                                         </div>
                                     </td>
                                     <td style="width: 15%">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon">Rp.</span>
-                                            <input class="form-control" style="width:100%" ng-change="subtotal()" type="text" ng-pattern="/^[0-9]+$/" ng-model="list.harga_retur">
+                                            <input class="form-control angka" style="width:100%" ng-change="subtotal()" type="text" ng-pattern="/^[0-9]+$/" ng-model="list.harga_retur">
                                         </div>
                                     </td>
                                     <td style="width: 15%">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon">Rp.</span>
-                                            <input class="form-control" style="width:100%" ng-change="subtotal()" type="text" ng-pattern="/^[0-9]+$/" ng-model="list.diskon">
+                                            <input class="form-control angka" style="width:100%" ng-change="subtotal()" type="text" ng-pattern="/^[0-9]+$/" ng-model="list.diskon">
                                         </div>
                                     </td>
                                     <td style="width: 15%;">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon">Rp.</span>
-                                            <input class="form-control" style="width:100%" type="text" ng-pattern="/^[0-9]+$/" ng-model="list.sub_total_retur" ng-disabled="true">
+                                            <input class="form-control angka" style="width:100%" type="text" ng-pattern="/^[0-9]+$/" ng-model="list.sub_total_retur" ng-disabled="true">
                                         </div>
                                     </td>
                                 </tr>
@@ -283,7 +283,7 @@
                                     <td style="text-align: center">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon">Rp.</span>
-                                            <input type="text" ng-pattern="/^[0-9]+$/" class="form-control" ng-change="total()" ng-model="form.biaya_lain" ng-disabled="is_view">
+                                            <input type="text" ng-pattern="/^[0-9]+$/" class="form-control angka" ng-change="total()" ng-model="form.biaya_lain" ng-disabled="is_view">
                                         </div>
                                     </td>
                                 </tr>

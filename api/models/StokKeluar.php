@@ -77,8 +77,8 @@ class StokKeluar extends \yii\db\ActiveRecord
              return [
                  [
                      'class' => BlameableBehavior::className(),
-                     'createdByAttribute' => 'created_at',
-                     'updatedByAttribute' => 'modified_at',
+                     'createdByAttribute' => 'created_by',
+                     'updatedByAttribute' => 'modified_by',
                  ],
                  'timestamp' => [
                      'class' => 'yii\behaviors\TimestampBehavior',

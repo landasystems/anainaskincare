@@ -3,7 +3,9 @@
 namespace app\models;
 
 use Yii;
-
+use yii\db\ActiveRecord;
+use yii\behaviors\SluggableBehavior;
+use yii\behaviors\BlameableBehavior;
 /**
  * This is the model class for table "penjualan".
  *
@@ -83,5 +85,22 @@ class Penjualan extends \yii\db\ActiveRecord {
     public function customers() {
         return $this->hasOne(Customer::className(), ['id' => 'customer_id']);
     }
+    public function behaviors()
+         {
+             return [
+                 [
+                     'class' => BlameableBehavior::className(),
+                     'createdByAttribute' => 'created_by',
+                     'updatedByAttribute' => 'modified_by',
+                 ],
+                 'timestamp' => [
+                     'class' => 'yii\behaviors\TimestampBehavior',
+                     'attributes' => [
+                         ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'modified_at'],
+                         ActiveRecord::EVENT_BEFORE_UPDATE => ['modified_at'],
+                     ],
+                 ],
+             ];
+         }
 
 }

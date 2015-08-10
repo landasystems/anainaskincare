@@ -22,7 +22,7 @@ header("Content-Disposition: attachment; filename=excel-Transaksi-Piutang.xls");
             <td><?=$arr['customer']?></td>
             <td><?=$arr['tanggal']?></td>
             <td><?=$arr['status']?></td>
-            <td>&nbsp;<?=$arr['debet']?></td>
+            <td style="text-align: right;">&nbsp;<?=$arr['debet']?></td>
             
         </tr>
     <?php } ?>
