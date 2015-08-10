@@ -59,7 +59,7 @@
                             <td>{{row.tanggal| date}}</td>
                             <td>{{row.cabang}}</td>
                             <td>{{row.keterangan}}</td>
-                            <td style="text-align: right">{{row.total| currency}}</td>
+                            <td style="text-align: right">{{row.total|  currency:undefined:0}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ></button>
@@ -144,12 +144,16 @@
                         <tbody>
                             <tr ng-repeat="detail in detskeluar" >
                                 <td style="margin:0px; ">
+                                    asadf
                                     <div class="input-group">
                                         <ui-select on-select="detail.harga = $item.harga_jual" ng-model="detail.produk" theme="bootstrap">
                                             <ui-select-match>{{$select.selected.nama}}</ui-select-match>
                                             <ui-select-choices refresh="cariProduk($select.search, form.cabang_id)" repeat="val in results">
                                                 {{val.nama}}
                                             </ui-select-choices>
+                                            <ui-select-no-choice>
+                                                <div style="text-align: center;">There is nothing to show</div>
+                                            </ui-select-no-choice>
                                         </ui-select>
                                         <span class="input-group-btn">
                                             <button ng-click="detail.produk = undefined" class="btn btn-default">
@@ -159,12 +163,12 @@
                                     </div>
                                 </td>
                                 <td style="width:50px;">
-                                    <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-change="subtotal()" ng-model="detail.jumlah" ng-keyup="cek(detail.produk.stok, detail.jumlah)" ng-disabled="is_view" ng-readonly="is_create == false" required>
+                                    <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" ng-change="subtotal()" ng-model="detail.jumlah" ng-keyup="cek(detail.produk.stok, detail.jumlah)" ng-disabled="is_view" ng-readonly="is_create == false" required>
                                 </td>
                                 <td style="width:200px;">
                                     <div class="input-group m-b" style="margin:0px;">
                                         <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-change="subtotal()"  ng-model="detail.harga"  ng-disabled="is_view" ng-readonly="is_create == false" required>
+                                        <input type="text" class="form-control angka" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-change="subtotal()"  ng-model="detail.harga"  ng-disabled="is_view" ng-readonly="is_create == false" required>
                                     </div>
                                 </td>
                                 <td style="width:200px;">
@@ -239,10 +243,10 @@
                             {{detail.jumlah}}
                         </td>
                         <td style="text-align: right">
-                            {{detail.harga| currency:undefined:0}}
+                            {{detail.harga| currency:undefined:0:undefined:0}}
                         </td>
                         <td style="text-align: right">
-                            {{detail.sub_total| currency:undefined:0}}
+                            {{detail.sub_total| currency:undefined:0:undefined:0}}
                         </td>
                     </tr>
                 </tbody>
@@ -250,7 +254,7 @@
                     <tr>
                         <th colspan="3" style="text-align: right;  border-bottom: none; border-right: none; border-left: none;">Total :&nbsp;</th>
                         <td style="text-align: right;  border-bottom: none;">
-                            {{form.total| currency:undefined:0}}
+                            {{form.total| currency:undefined:0:undefined:0}}
                         </td>
                     </tr>
                 </tfoot>

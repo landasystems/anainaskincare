@@ -59,6 +59,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         $scope.formtitle = "Form Tambah Data";
         $scope.form = {};
         $scope.form.credit = "0";
+        $scope.form.status = 'Selesai',
         $scope.retrive = {};
         $scope.detPenjualan = [
             {
@@ -123,12 +124,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
     Data.get('site/session').then(function(data) {
         $scope.sCabang = data.data.user.cabang;
     });
-//    Data.post('penjualan/dokter').then(function(data) {
-//        $scope.list_dokter = data.dokter;
-//    });
-//    Data.post('penjualan/terapis').then(function(data) {
-//        $scope.list_terapis = data.terapis;
-//    });
+    
     $scope.getcustomer = function(wo) {
         Data.get('penjualan/nm_customer/' + wo).then(function(data) {
             $scope.retrive.no_tlp = data.data.no_tlp;
@@ -141,7 +137,6 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
     $scope.getkode_cabang = function(form) {
         Data.get('penjualan/kode_cabang/' + form.cabang.id).then(function(data) {
             $scope.form.kode = data.kode;
-//            $scope.form.cabang_id = id;
             $scope.list_dokter = data.dokter;
             $scope.list_terapis = data.terapis;
 
@@ -156,7 +151,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
     $scope.cariProduk = function($query) {
         if ($query.length >= 3) {
             Data.get('barang/cari', {nama: $query}).then(function(data) {
-                $scope.results = data.data;
+                $scope.resultsProduk = data.data;
             });
         }
     }

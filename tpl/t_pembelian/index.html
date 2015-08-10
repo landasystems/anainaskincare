@@ -67,7 +67,7 @@
                             <td>{{row.tanggal| date}}</td>
                             <td>{{row.nama_supplier}}</td>
                             <td>{{row.klinik}}</td>
-                            <td style="text-align: right;">{{row.total| currency}}</td>
+                            <td style="text-align: right;">{{row.total|  currency:undefined:0}}</td>
                             <td>{{row.status}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
@@ -348,13 +348,13 @@
                             {{detail.jumlah}}
                         </td>
                         <td style="text-align: right; vertical-align: 0px;">
-                            {{detail.harga| currency:undefined:0}}
+                            {{detail.harga| currency:undefined:0:undefined:0}}
                         </td>
                         <td style="text-align: right; vertical-align: 0px;">
-                            {{detail.diskon| currency:undefined:0}}
+                            {{detail.diskon| currency:undefined:0:undefined:0}}
                         </td>
                         <td style="text-align: right; vertical-align: 0px;">
-                            {{(detail.jumlah * detail.harga) - (detail.jumlah * detail.diskon) | currency : undefined:0}}
+                            {{(detail.jumlah * detail.harga) - (detail.jumlah * detail.diskon) | currency:undefined:0 : undefined:0}}
                         </td>
                     </tr>
                 </tbody>
@@ -366,26 +366,26 @@
                         </td>
                         <td  style="text-align: right;border-bottom: none">Total :&nbsp;</td>
                         <td style="text-align: right;">
-                            {{form.total| currency:undefined:0}}
+                            {{form.total| currency:undefined:0:undefined:0}}
                         </td>
                     </tr>
                     <tr>
                         <td  style="text-align: right; border-bottom: none">Bayar :&nbsp;</td>
                         <td style="text-align: right;">
-                            {{form.cash| currency:undefined:0}}
+                            {{form.cash| currency:undefined:0:undefined:0}}
                         </td>
                     </tr>
                     <tr>
                         <td  style="text-align: right;border-bottom: none">Kredit :&nbsp;</td>
                         <td style="text-align: right;">
-                            {{form.credit| currency:undefined:0}}
+                            {{form.credit| currency:undefined:0:undefined:0}}
                         </td>
                     </tr>
 
                     <tr>
                         <td  style="text-align: right;">Kembali :&nbsp;</td>
                         <td style="text-align: right;">
-                            {{((form.cash * 1 + form.credit * 1) - form.total) | currency:undefined:0}}
+                            {{((form.cash * 1 + form.credit * 1) - form.total) | currency:undefined:0:undefined:0}}
                         </td>
                     </tr>
                 </tfoot>
