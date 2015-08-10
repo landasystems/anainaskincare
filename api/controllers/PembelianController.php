@@ -187,7 +187,7 @@ class PembelianController extends Controller {
                 $credit = new Hutang();
                 $credit->pembelian_id = $model->id;
                 $credit->credit = $model->credit;
-                $credit->status = 'belum lunas';
+                $credit->status = 'Belum Lunas';
                 $credit->tanggal_transaksi = $model->tanggal;
                 $credit->save();
             }
