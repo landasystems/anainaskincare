@@ -17,6 +17,7 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
         $event.stopPropagation();
         $scope.openedDet = $index;
     };
+    
     $scope.setStatus = function() {
         $scope.openedDet = -1;
     };
@@ -30,9 +31,6 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
     Data.get('bayarpiutang/kode').then(function(data) {
         $scope.list_kode = data.kode;
     });
-
-
-
 
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
@@ -86,7 +84,7 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
         $scope.is_edit = true;
         $scope.is_view = false;
         $scope.is_create = false;
-        $scope.formtitle = "Edit Data Piutang : " + $scope.form.kode;
+        $scope.formtitle = "Data Piutang : " + $scope.form.kode;
         $scope.detail(row);
         $scope.detPenjualan = [
             {
@@ -146,7 +144,7 @@ app.controller('bayarpiutangCtrl', function($scope, Data, toaster) {
             $scope.detPenjualan = result.data;
             angular.forEach($scope.detPenjualan, function(detail) {
                 detail.credit = (detail.credit != undefined) ? detail.credit : 0;
-                detail.debet= (detail.debet != undefined) ? detail.debet : 0;
+                detail.debet = (detail.debet != undefined) ? detail.debet : 0;
             });
             $scope.total();
 

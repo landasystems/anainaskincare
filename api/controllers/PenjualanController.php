@@ -244,9 +244,11 @@ class PenjualanController extends Controller {
                 $det->pegawai_dokter_id = isset($data['dokter']['id']) ? $data['terapis']['id'] : '';
 
                 if ($det->save()) {
-                    $keterangan = 'penjualan';
-                    $stok = new \app\models\KartuStok();
-                    $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
+                    if ($model->status == 'Selesai') {
+                        $keterangan = 'penjualan';
+                        $stok = new \app\models\KartuStok();
+                        $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
+                    }
                 }
                 // stock
             }
@@ -297,10 +299,12 @@ class PenjualanController extends Controller {
                 $det->penjualan_id = $model->id;
                 if ($det->save()) {
                     $id_det[] = $det->id;
-                    $keterangan = 'penjualan';
-                    $stok = new \app\models\KartuStok();
-                    $hapus = $stok->hapusKartu($keterangan, $model->id);
-                    $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
+                    if ($model->status == 'Selesai') {
+                        $keterangan = 'penjualan';
+                        $stok = new \app\models\KartuStok();
+                        $hapus = $stok->hapusKartu($keterangan, $model->id);
+                        $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
+                    }
                 }
                 //stok
             }
@@ -319,6 +323,7 @@ class PenjualanController extends Controller {
         $query = new Query;
         $query->from('penjualan')
                 ->select("penjualan.*")
+                ->where(['penjualan.cabang_id' => $_SESSION['user']['cabang_id']])
                 ->andWhere(['like', 'kode', $params['nama']]);
         $command = $query->createCommand();
         $models = $command->queryAll();

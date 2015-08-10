@@ -62,7 +62,7 @@
                         <tr ng-repeat="row in displayed" ng-dblclick="view(row)">
                             <td>{{row.kode}}</td>
                             <td>{{row.kode_penjualan}}</td>
-                            <td>{{row.tanggal| date:'dd-MMM-yyyy'}}</td>
+                            <td>{{row.tanggal| date}}</td>
                             <td>{{row.cabang}}</td>
                             <td>{{row.nama_customer}}</td>
                             <td style="text-align: right;">{{row.total|  currency:undefined:0}}</td>
@@ -98,7 +98,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         {{formtitle}}
-                        <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
+                        <div class="btn-group pull-right" role="group" style="margin-top: -3px;" ng-hide="is_view == false">
                             <button type="button" class="btn btn-primary fa fa-print" ng-print print-element-id="printArea">&nbsp;Print</button>
                         </div> 
                     </div>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -50,18 +51,20 @@ use yii\db\BaseActiveRecord;
  * @author Alexander Kochetov <creocoder@gmail.com>
  * @since 2.0
  */
-class BlameableBehavior extends AttributeBehavior
-{
+class BlameableBehavior extends AttributeBehavior {
+
     /**
      * @var string the attribute that will receive current user ID value
      * Set this property to false if you do not want to record the creator ID.
      */
     public $createdByAttribute = 'created_by';
+
     /**
      * @var string the attribute that will receive current user ID value
      * Set this property to false if you do not want to record the updater ID.
      */
     public $updatedByAttribute = 'updated_by';
+
     /**
      * @var callable the value that will be assigned to the attributes. This should be a valid
      * PHP callable whose return value will be assigned to the current attribute(s).
@@ -77,12 +80,10 @@ class BlameableBehavior extends AttributeBehavior
      */
     public $value;
 
-
     /**
      * @inheritdoc
      */
-    public function init()
-    {
+    public function init() {
         parent::init();
 
         if (empty($this->attributes)) {
@@ -99,13 +100,14 @@ class BlameableBehavior extends AttributeBehavior
      * @param Event $event
      * @return mixed the value of the user.
      */
-    protected function getValue($event)
-    {
+    protected function getValue($event) {
+        session_start();
         if ($this->value === null) {
-            $user = Yii::$app->get('user', false);
-            return $user && !$user->isGuest ? $user->id : null;
+            $user = $_SESSION['user']['id'];
+            return !empty($user) ? $user : 0;
         } else {
             return call_user_func($this->value, $event);
         }
     }
+
 }
