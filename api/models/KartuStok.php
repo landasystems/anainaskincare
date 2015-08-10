@@ -150,12 +150,13 @@ class KartuStok extends \yii\db\ActiveRecord {
                 unset($tmpKeluar);
                 unset($totalJml);
                 unset($totalHarga);
-                $tmpSaldo['jumlah'][0] = 0;
-                $tmpSaldo['harga'][0] = 0;
-                $tmpSaldo['sub_total'][0] = 0;
 
-                $tmp[0]['jumlah'] = 0;
-                $tmp[0]['harga'] = 0;
+                $tmpSaldo['jumlah'][$indeks] = 0;
+                $tmpSaldo['harga'][$indeks] = 0;
+                $tmpSaldo['sub_total'][$indeks] = 0;
+
+                $tmp[$indeks]['jumlah'] = 0;
+                $tmp[$indeks]['harga'] = 0;
             } else {
                 unset($tmpKeluar);
             }
@@ -167,79 +168,95 @@ class KartuStok extends \yii\db\ActiveRecord {
                 $boolStatus = true;
 
                 $jml = array_sum(isset($tmpSaldo['jumlah']) ? $tmpSaldo['jumlah'] : array(0));
+
                 if ($jml >= 0) {
                     $tmp[$indeks]['jumlah'] = $val['jumlah_masuk'];
                     $tmp[$indeks]['harga'] = $val['harga_masuk'];
                 }
+
                 foreach ($tmp as $key => $valS) {
-                    if ($valS['jumlah'] > 0) {
-                        if ($first) {
-                            unset($tmpSaldo);
-                            unset($tmp);
-                            $first = false;
-                        }
-                        if ($valS['jumlah'] < 0) {
-                            if ($boolStatus) {
-                                if ($valS['jumlah'] >= $masuk) {
-                                    $boolStatus = true;
-                                } else {
-                                    $valS['jumlah'] += $tempQty;
-                                    $valS['harga'] = $val['harga_masuk'];
-                                    $tempQty += $valS['jumlah'];
-                                }
+//                    if ($valS['jumlah'] > 0) {
+                    if ($first) {
+                        unset($tmpSaldo);
+                        unset($tmp);
+                        $first = false;
+                    }
+
+                    if ($valS['jumlah'] < 0) {
+                        if ($boolStatus) {
+                            if ($valS['jumlah'] >= $masuk) {
+                                $boolStatus = true;
+                            } else {
+                                $valS['jumlah'] += $tempQty;
+                                $valS['harga'] = $val['harga_masuk'];
+                                $tempQty += $valS['jumlah'];
                             }
                         }
+                    }
+
+                    if ($valS['jumlah'] != 0) {
                         $tmpSaldo['jumlah'][$indeks] = $valS['jumlah'];
                         $tmpSaldo['harga'][$indeks] = $valS['harga'];
                         $tmpSaldo['sub_total'][$indeks] = $tmpSaldo['harga'][$indeks] * $tmpSaldo['jumlah'][$indeks];
+
                         $tmp[$indeks]['jumlah'] = $tmpSaldo['jumlah'][$indeks];
                         $tmp[$indeks]['harga'] = $tmpSaldo['harga'][$indeks];
-                        $indeks++;
                     }
+
+                    $indeks++;
+//                    }
                 }
             } else {
                 $tempQty = $val['jumlah_keluar'];
                 $first = true;
                 $boolStatus = true;
-                $saldo = 0;
+//                $saldo = 0;
+                $jml = array_sum(isset($tmpSaldo['jumlah']) ? $tmpSaldo['jumlah'] : array(0));
+                if ($jml >= 0) {
+                    $tmp[$indeks]['jumlah'] = $val['jumlah_masuk'];
+                    $tmp[$indeks]['harga'] = $val['harga_masuk'];
+                }
                 foreach ($tmp as $valS) {
-                    if ($valS['jumlah']) {
-                        if ($first) {
-                            unset($tmpSaldo);
-                            unset($tmp);
-                            unset($tmpKeluar);
-                            $first = false;
-                        }
-                        if ($boolStatus) {
-                            if ($valS['jumlah'] > $tempQty) {
-                                $tmpKeluar['jumlah'][$indeks] = $tempQty;
+//                    if ($valS['jumlah']) {
+                    if ($first) {
+                        unset($tmpSaldo);
+                        unset($tmp);
+                        unset($tmpKeluar);
+                        $first = false;
+                    }
+                    if ($boolStatus) {
+                        if ($valS['jumlah'] > $tempQty) {
+                            $tmpKeluar['jumlah'][$indeks] = $tempQty;
+                            $valS['jumlah'] -= $tempQty;
+                            $boolStatus = false;
+                        } else {
+                            $tmpKeluar['jumlah'][$indeks] = ($tempQty > 0) ? $valS['jumlah'] : $tempQty;
+                            if ($valS['jumlah'] <= 0) {
                                 $valS['jumlah'] -= $tempQty;
-                                $boolStatus = false;
+                                $tmpKeluar['jumlah'][$indeks] = $tempQty;
+                                $valS['harga'] = $val['harga_keluar'];
+                                $tempQty = $tempQty - $tmpKeluar['jumlah'][$indeks];
                             } else {
-                                $tmpKeluar['jumlah'][$indeks] = $valS['jumlah'];
-                                if ($valS['jumlah'] <= 0) {
-                                    $valS['jumlah'] -= $tempQty;
-                                    $tmpKeluar['jumlah'][$indeks] = $tempQty;
-                                    $valS['harga'] = $val['harga_keluar'];
-                                    $tempQty = $tempQty - $tmpKeluar['jumlah'][$indeks];
-                                } else {
-                                    $tempQty -= $valS['jumlah'];
-                                }
+                                $tempQty -= $valS['jumlah'];
                             }
-                            //simpan stok keluar
-                            $tmpKeluar['harga'][$indeks] = $val['harga_keluar'];
-                            $tmpKeluar['sub_total'][$indeks] = $tmpKeluar['jumlah'][$indeks] * $tmpKeluar['harga'][$indeks];
                         }
+                        //simpan stok keluar
+                        $tmpKeluar['harga'][$indeks] = ($tmpKeluar['jumlah'][$indeks] == 0) ? 0 : $val['harga_keluar'];
+                        $tmpKeluar['sub_total'][$indeks] = $tmpKeluar['jumlah'][$indeks] * $tmpKeluar['harga'][$indeks];
+                    }
+
+                    if ($valS['jumlah'] != 0) {
                         //simpan stok saldo
-                        $tmpSaldo['jumlah'][$indeks] = (isset($tmpKeluar['jumlah'][$indeks]) and $valS['jumlah'] == $tmpKeluar['jumlah'][$indeks]) ? 0 : $valS['jumlah'];
-                        $tmpSaldo['harga'][$indeks] = $valS['harga'];
+                        $tmpSaldo['jumlah'][$indeks] = (isset($tmpKeluar['jumlah'][$indeks]) and $tmpKeluar['jumlah'][$indeks] == $valS['jumlah']) ? 0 : $valS['jumlah'];
+                        $tmpSaldo['harga'][$indeks] = ($tmpSaldo['jumlah'][$indeks] == 0) ? 0 : $valS['harga'];
                         $tmpSaldo['sub_total'][$indeks] = $tmpSaldo['harga'][$indeks] * $tmpSaldo['jumlah'][$indeks];
 
                         $tmp[$indeks]['jumlah'] = $tmpSaldo['jumlah'][$indeks];
                         $tmp[$indeks]['harga'] = $tmpSaldo['harga'][$indeks];
-
-                        $indeks++;
                     }
+
+                    $indeks++;
+//                    }
                 }
             }
 

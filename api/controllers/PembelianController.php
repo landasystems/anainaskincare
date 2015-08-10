@@ -327,6 +327,7 @@ class PembelianController extends Controller {
     }
 
     public function actionCari() {
+        session_start();
         $params = $_REQUEST;
         $query = new Query;
         $query->select("pe.*,su.kode as kode_supplier, su.nama as nama_supplier,su.no_tlp as no_tlp, su.email as email, su.alamat as alamat,ca.nama as klinik")
