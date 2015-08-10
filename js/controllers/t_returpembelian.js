@@ -75,6 +75,7 @@ app.controller('returPembelianCtrl', function ($scope, Data, toaster) {
         $scope.is_create = true;
         $scope.formtitle = "Form Retur Pembelian";
         $scope.form = {};
+        $scope.form.tanggal = new Date();
         $scope.form.biaya_lain = 0;
         $scope.det = {};
         $scope.details = {};

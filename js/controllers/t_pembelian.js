@@ -202,8 +202,9 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
     $scope.bayar = function () {
         var cash = (parseInt($scope.form.cash) !== null) ? parseInt($scope.form.cash) : 0;
         var total = (parseInt($scope.form.total) !== null) ? parseInt($scope.form.total) : 0;
-        var credit = (parseInt($scope.form.credit) !== null) ? parseInt($scope.form.credit) : 0;
+        var credit = total - cash;
         var kembalian = cash - total + credit;
+        $scope.form.credit = credit;
         $scope.form.kembalian = (kembalian > 0) ? kembalian : 0;
     };
     $scope.excel = function () {

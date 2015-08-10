@@ -201,7 +201,7 @@
                                             <td align="center">Harga</td>
                                             <td align="center">Diskon</td>
                                             <td align="center">Sub total</td>
-                                            <td>#</td>
+                                            <td ng-hide="is_view">#</td>
                                         </tr>
                                     </thead>
                                     <tr ng-repeat="detail in detPenjualan">
@@ -286,7 +286,7 @@
                                         <input type="text" class="form-control angka" name="total" value="{{(detail.jumlah * detail.harga) - (detail.jumlah * detail.diskon) | number}}" ng-readonly="true"  ng-disabled="is_view" required>
                                     </div>
                                 </td>
-                                <td>
+                                <td ng-hide="is_view">
                                     <button ng-click="addDetail()" class="btn btn-success" ng-show="$index == 0" ng-disabled="is_view"><i class="fa fa-plus"></i></button>
                                     <button ng-click="removeRow($index)" class="btn btn-danger" ng-show="$index > 0" ng-disabled="is_view"><i class="fa fa-trash-o"></i></button>
                                 </td>

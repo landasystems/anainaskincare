@@ -166,19 +166,19 @@
                                             <i class="fa fa-calendar-o"></i>
                                         </span>
                                     </div>
-                                <td style="text-align: center">
+                                <td style="text-align: center; width: 135px;">
                                     <div class="input-group m-b" style="margin:0px;">
                                         <span class="input-group-addon">Rp</span>
                                         <input type="text" class="form-control angka" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.debet" ng-disabled="is_view">
                                     </div>
                                 </td>
-                                <td style="text-align: center">
+                                <td style="text-align: center; width: 135px;">
                                     <div class="input-group m-b" style="margin:0px;">
                                         <span class="input-group-addon">Rp</span>
                                         <input type="text" class="form-control angka" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()" ng-model="detail.credit" ng-disabled="is_view">
                                     </div>
                                 </td>
-                                <td style="text-align: center">
+                                <td style="text-align: center;">
                                     <button type="button" ng-disabled="is_view" class="btn btn-info fa fa-plus" ng-click="addrow()" ng-show="$index == 0" style="width:100%; height:34px;"></button>
                                     <button type="button" ng-disabled="is_view" class="btn btn-danger fa fa-minus-circle" ng-show="$index > 0" ng-click="removeRow($index)" style="width:100%;height:34px;"></button>
                                 </td>
