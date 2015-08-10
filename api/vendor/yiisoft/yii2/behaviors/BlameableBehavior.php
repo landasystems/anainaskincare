@@ -101,9 +101,10 @@ class BlameableBehavior extends AttributeBehavior {
      * @return mixed the value of the user.
      */
     protected function getValue($event) {
-        session_start();
+//        session_start();
         if ($this->value === null) {
-            $user = $_SESSION['user']['id'];
+//            $user = $_SESSION['user']['id'];
+            $user = Yii::$app->session->get('id');
             return !empty($user) ? $user : 0;
         } else {
             return call_user_func($this->value, $event);

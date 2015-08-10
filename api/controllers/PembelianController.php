@@ -176,7 +176,6 @@ class PembelianController extends Controller {
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = new Pembelian();
-//        Yii::error($params);
         $model->attributes = $params['pembelian'];
         $model->supplier_id = $params['pembelian']['supplier']['id'];
         $model->tanggal = date("Y-m-d", strtotime($params['pembelian']['tanggal']));
