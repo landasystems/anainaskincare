@@ -76,25 +76,11 @@ span.label{width: 180px;display: inline-table;}
     border: 0px;
 }
 
-.print-detail-dot{
-    font-size: 8pt;
-    width: 100%;
+#nota_print{
+    margin: 3px;
+    padding:3px;
+    line-height: 12px;
+    font-size: 10px;        
+    /*font-family: monospace;*/
+    page-break-after: avoid;
 }
-
-.print-detail-dot th, td{
-    border: none;
-    font-size: 8pt;
-    margin: 2px;
-    padding: 2px;
-    margin-left: 0px;
-    margin-right: 0px;
-    padding-left: 0px;
-    padding-right: 0px;
-}
-
-.print-detail-dot tfoot td{
-    border: none;
-    font-size: 8pt;
-}
-
-
