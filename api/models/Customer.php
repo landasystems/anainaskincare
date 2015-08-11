@@ -16,24 +16,23 @@ use Yii;
  * @property string $alamat
  * @property integer $is_deleted
  */
-class Customer extends \yii\db\ActiveRecord
-{
+class Customer extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'm_customer';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['alamat'], 'string'],
             [['is_deleted'], 'integer'],
+            [['tanggal_lahir'], 'safe'],
             [['kode', 'no_tlp'], 'string', 'max' => 25],
             [['nama', 'email'], 'string', 'max' => 45],
             [['jenis_kelamin'], 'string', 'max' => 15]
@@ -43,8 +42,7 @@ class Customer extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'kode' => 'Kode',
@@ -56,4 +54,5 @@ class Customer extends \yii\db\ActiveRecord
             'is_deleted' => 'Is Deleted',
         ];
     }
+
 }

@@ -182,7 +182,7 @@ class LaporanController extends Controller {
         $data['pemb_piutang'] = empty($penjualan['pinjaman']) ? 0 : $penjualan['pinjaman'];
 
         //diskon
-        $penjualan = $connection->createCommand("SELECT sum(penjualan_det.diskon) as diskon FROM penjualan, penjualan_det where penjualan.id=penjualan_det.penjualan_id and (penjualan.tanggal >= '" . $start . "' and penjualan.tanggal <= '" . $end . "') $criteria")
+        $penjualan = $connection->createCommand("SELECT sum(penjualan_det.diskon * penjualan_det.jumlah)  as diskon FROM penjualan, penjualan_det where penjualan.id=penjualan_det.penjualan_id and (penjualan.tanggal >= '" . $start . "' and penjualan.tanggal <= '" . $end . "') $criteria")
                 ->queryOne();
         $data['diskon'] = empty($penjualan['diskon']) ? 0 : $penjualan['diskon'];
 

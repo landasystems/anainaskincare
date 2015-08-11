@@ -7,9 +7,11 @@ app.controller('customerCtrl', function ($scope, Data, toaster) {
     $scope.is_edit = false;
     $scope.is_view = false;
 
-//    Data.get('barang/satuan').then(function(data) {
-//        $scope.sSatuan = data.satuan;
-//    });
+    $scope.open1 = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.opened1 = true;
+    };
 
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
@@ -33,7 +35,7 @@ app.controller('customerCtrl', function ($scope, Data, toaster) {
 
         $scope.isLoading = false;
     };
-    
+
     $scope.excel = function () {
         Data.get('customer', paramRef).then(function (data) {
             window.location = 'api/web/customer/excel';
@@ -45,12 +47,14 @@ app.controller('customerCtrl', function ($scope, Data, toaster) {
         $scope.is_view = false;
         $scope.formtitle = "Form Tambah Customer";
         $scope.form = {};
+        $scope.form.tanggal_lahir = new Date();
     };
     $scope.update = function (form) {
         $scope.is_edit = true;
         $scope.is_view = false;
         $scope.formtitle = "Edit Customer : " + form.kode + " - " + form.nama;
         $scope.form = form;
+        $scope.form.tanggal_lahir = new Date(form.tanggal_lahir);
     };
     $scope.view = function (form) {
         $scope.is_edit = true;
@@ -71,7 +75,7 @@ app.controller('customerCtrl', function ($scope, Data, toaster) {
         });
     };
     $scope.cancel = function () {
-        if (!$scope.is_view){ //hanya waktu edit cancel, di load table lagi
+        if (!$scope.is_view) { //hanya waktu edit cancel, di load table lagi
             $scope.callServer(tableStateRef);
         }
         $scope.is_edit = false;
