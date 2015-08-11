@@ -7,8 +7,8 @@ app.controller('l_kartustatusCtrl', function ($scope, Data, toaster) {
     };
 
     $scope.detail_laporan = false;
-    $scope.customer = {};
-    $scope.laporan = '';
+    $scope.laporan = {};
+    $scope.form = {};
 
     Data.get('site/session').then(function (data) {
         $scope.listcabang = data.data.user.cabang;

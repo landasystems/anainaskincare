@@ -4,7 +4,9 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Customer;
+use app\models\Barang;
 use app\models\Penjualan;
+use app\models\PenjualanDet;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -48,10 +50,38 @@ class KartustatusController extends Controller {
 
     public function actionIndex() {
         $params = json_decode(file_get_contents("php://input"), true);
-//        print_r($params);
-        $penjualan = Penjualan::find()->where('customer_id = ' . $params['customer']['id'])->all();
+
+        $query = new Query;
+        $query->from('penjualan')
+                ->select('*')
+                ->where('customer_id = "' . $params['customer']['id'] . '"')
+                ->andFilterWhere(['between', 'tanggal', $params['tanggal']['startDate'], $params['tanggal']['endDate']]);
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+
+
+        $data = array();
+        $i = 0;
+        foreach ($models as $val => $key) {
+            $data[$val] = $key;
+
+            $query2 = new Query;
+            $query2->from('penjualan_det, m_produk')
+                    ->select('m_produk.nama')
+                    ->where('penjualan_det.produk_id = m_produk.id and penjualan_det.penjualan_id = "' . $key['id'] . '"');
+            $command2 = $query2->createCommand();
+            $models2 = $command2->queryAll();
+            $terapi = array();
+            foreach ($models2 as $v) {
+                $terapi[] = $v['nama'];
+            }
+            $data[$i]['terapi'] = join(",", $terapi);
+            unset($terapi);
+            $i++;
+        }
+
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'data' => array_filter($penjualan)), JSON_PRETTY_PRINT);
+        echo json_encode(array('status' => 1, 'data' => array_filter($data)), JSON_PRETTY_PRINT);
     }
 
     private function setHeader($status) {

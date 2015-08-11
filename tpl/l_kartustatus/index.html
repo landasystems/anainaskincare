@@ -46,6 +46,7 @@
                         </div>
                     </center>	
                 </form>
+               
                 <div ng-show="detail_laporan" style="margin-top: 50px;" id="omset">
                     <center>
                         <h4>KARTU STATUS</h4>
@@ -65,21 +66,19 @@
                             <tr>
                                 <th>No</th>
                                 <th>Tanggal</th>
-                                <th>Anamnesa</th>
-                                <th>Diagnosa</th>
+                                <th>Keterangan</th>
                                 <th>Therapy</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-if="!laporan.length">
-                                <td colspan="5">Tidak ada data.</td>
+                                <td colspan="4">Tidak ada data.</td>
                             </tr>
                             <tr ng-repeat="val in laporan">
                                 <td>{{$index + 1}}</td>
-                                <td>{{val.tanggal}}</td>
-                                <td>{{val.anamnesa}}</td>
-                                <td>{{val.diagnosa}}</td>
+                                <td>{{val.tanggal| date}}</td>
                                 <td>{{val.keterangan}}</td>
+                                <td>{{val.terapi}}</td>
                             </tr>
                         </tbody>
                     </table>
