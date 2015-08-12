@@ -11,6 +11,7 @@ namespace yii\behaviors;
 use Yii;
 use yii\base\Event;
 use yii\db\BaseActiveRecord;
+use yii\web\Session;
 
 /**
  * BlameableBehavior automatically fills the specified attributes with the current user ID.
@@ -104,8 +105,12 @@ class BlameableBehavior extends AttributeBehavior {
 //        session_start();
         if ($this->value === null) {
 //            $user = $_SESSION['user']['id'];
-            $user = Yii::$app->session->get('id');
+//            $user = Yii::$app->session->get('id');
+            $session = new Session;
+            $session->open();
+            $user = $session['user']['id'];
             return !empty($user) ? $user : 0;
+            $session->close();
         } else {
             return call_user_func($this->value, $event);
         }

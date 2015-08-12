@@ -92,6 +92,7 @@ class PenjualanController extends Controller {
         //create query
         $query = new Query;
         $query->offset($offset)
+                ->orderBy($sort)
                 ->limit($limit)
                 ->from('penjualan')
                 ->join('LEFT JOIN', 'm_cabang', 'penjualan.cabang_id = m_cabang.id')
@@ -116,7 +117,7 @@ class PenjualanController extends Controller {
                 }
             }
         }
-        $_SESSION['query'] = $query;
+        $_SESSION['query'] = $filter;
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -144,6 +145,7 @@ class PenjualanController extends Controller {
         $cab = \app\models\Cabang::find()
                 ->where(['id' => $model['cabang_id']])
                 ->One();
+
         $idcab = (isset($cab->id)) ? $cab->id : '';
         $cabkode = (isset($cab->kode)) ? $cab->kode : '';
         $cabnama = (isset($cab->nama)) ? $cab->nama : '';
@@ -151,6 +153,15 @@ class PenjualanController extends Controller {
         $cabnotlp = (isset($cab->no_tlp)) ? $cab->no_tlp : '';
         $cabemail = (isset($cab->email)) ? $cab->email : '';
         $cabis_deleted = (isset($cab->is_deleted)) ? $cab->is_deleted : '';
+
+        $user = \app\models\Pengguna::find()
+                ->where(['id' => $model['created_by']])
+                ->One();
+
+        $data['user'] = [
+            'id' => isset($user->id) ? $user->id : '-',
+            'nama' => isset($user->nama) ? $user->nama : '-',
+        ];
 
         $data['customers'] = [
             'id' => $idcus,
@@ -527,12 +538,8 @@ class PenjualanController extends Controller {
 
     public function actionExcel() {
         session_start();
-        $query = $_SESSION['query'];
-        $query->offset("");
-        $query->limit("");
-        $command = $query->createCommand();
-        $models = $command->queryAll();
-        return $this->render("excel", ['models' => $models]);
+        $filter = $_SESSION['query'];
+        return $this->render("excel", ['filter' => $filter]);
     }
 
 }

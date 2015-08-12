@@ -196,6 +196,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             $scope.form.email = data.data.customers.email;
             $scope.form.alamat = data.data.customers.alamat;
             $scope.form.customers = data.data.customers;
+            $scope.form.user = data.data.user;
             $scope.detPenjualan = data.detail;
             angular.forEach($scope.detPenjualan, function (detail) {
                 detail.diskon = (detail.diskon != undefined) ? detail.diskon : 0;
