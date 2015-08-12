@@ -41,6 +41,7 @@ app.controller('cabangCtrl', function ($scope, Data, toaster) {
         $scope.is_view = false;
         $scope.formtitle = "Form Tambah Cabang";
         $scope.form = {};
+        $scope.form.is_deleted = '0';
     };
     $scope.update = function (form) {
         $scope.is_edit = true;

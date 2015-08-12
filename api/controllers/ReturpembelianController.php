@@ -208,6 +208,12 @@ class ReturpembelianController extends Controller {
 
         if ($model->save()) {
             $deleteAll = RPembelianDet::deleteAll('r_pembelian_id=' . $model->id);
+
+            //hapus kartu stok
+            $keterangan = 'r_pembelian';
+            $stok = new KartuStok();
+            $hapus = $stok->hapusKartu($keterangan, $id);
+
             foreach ($params['returdet'] as $data) {
                 if ($data['jumlah_retur'] != 0 || $data['jumlah_retur'] != "") {
                     $det = new RPembelianDet();
@@ -219,11 +225,8 @@ class ReturpembelianController extends Controller {
                     $det->sub_total = $data['sub_total_retur'];
                     if ($det->save()) {
                         $pembelian = Pembelian::findOne($model->pembelian_id);
-                        $keterangan = 'r_pembelian';
-                        $stok = new KartuStok();
-                        $hapus = $stok->hapusKartu($keterangan, $id);
+
                         $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $pembelian->cabang_id, $det->harga, $keterangan, $model->id);
-                    
                     }
                 }
             }
@@ -281,16 +284,16 @@ class ReturpembelianController extends Controller {
         );
         return (isset($codes[$status])) ? $codes[$status] : '';
     }
-    
-    public function actionLastcode($id){
+
+    public function actionLastcode($id) {
         $params = $_REQUEST;
 //        Yii::error($id);
         $kodeCabang = Cabang::findOne($id);
         $number = RPembelian::find()->orderBy('id DESC')->one();
-        $lastNumber= (empty($number)) ? 1 : $number->id+1;
-        
-        $format = 'RBELI/'.$kodeCabang->kode.'/'.substr('00000'.$lastNumber, -5);
-        
+        $lastNumber = (empty($number)) ? 1 : $number->id + 1;
+
+        $format = 'RBELI/' . $kodeCabang->kode . '/' . substr('00000' . $lastNumber, -5);
+
         $this->setHeader(200);
         echo json_encode(array('status' => 1, 'kode' => $format), JSON_PRETTY_PRINT);
     }

@@ -201,6 +201,12 @@ class ReturpenjualanController extends Controller {
 
         if ($model->save()) {
             $deleteAll = RPenjualanDet::deleteAll('r_penjualan_id=' . $model->id);
+
+            //hapus kartu stok
+            $keterangan = 'r_penjualan';
+            $stok = new \app\models\KartuStok();
+            $hapus = $stok->hapusKartu($keterangan, $id);
+
             foreach ($params['retur_penjualandet'] as $data) {
                 if (!empty($data['jumlah_retur']) || $data['jumlah_retur'] != 0) {
                     $detail = new RPenjualanDet();
@@ -212,9 +218,6 @@ class ReturpenjualanController extends Controller {
                     $detail->save();
                     if ($detail->save()) {
                         $pinjaman = Penjualan::findOne($model->penjualan_id);
-                        $keterangan = 'r_penjualan';
-                        $stok = new \app\models\KartuStok();
-                        $hapus = $stok->hapusKartu($keterangan, $id);
                         $update = $stok->process('in', $model->tanggal, $model->kode, $detail->produk_id, $detail->jumlah_retur, $pinjaman->cabang_id, $detail->harga, $keterangan, $model->id);
                     }
                 }

@@ -34,6 +34,7 @@ app.controller('satuanCtrl', function ($scope, Data, toaster) {
         $scope.is_view = false;
         $scope.formtitle = "Form Tambah Data";
         $scope.form = {};
+        $scope.form.is_deleted = '0';
     };
     $scope.update = function (form) {
         $scope.is_edit = true;

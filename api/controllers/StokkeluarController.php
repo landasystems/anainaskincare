@@ -220,6 +220,11 @@ class StokkeluarController extends Controller {
 
         if ($model->save()) {
             $deleteDetail = StokKeluarDet::deleteAll(['stok_keluar_id' => $model->id]);
+            //hapus kartu stok
+            $keterangan = 'stok keluar';
+            $stok = new KartuStok();
+            $hapus = $stok->hapusKartu($keterangan, $model->id);
+            
             $detailSkeluar = $params['detailskeluar'];
             foreach ($detailSkeluar as $val) {
                 $det = new StokKeluarDet();
@@ -229,9 +234,6 @@ class StokkeluarController extends Controller {
                 $det->save();
 
                 //perbarui kartu stok
-                $keterangan = 'stok keluar';
-                $stok = new KartuStok();
-                $hapus = $stok->hapusKartu($keterangan, $model->id);
                 $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $id);
             }
             $this->setHeader(200);

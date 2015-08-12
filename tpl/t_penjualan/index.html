@@ -96,7 +96,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         {{formtitle}}
-                        <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
+                        <div class="btn-group pull-right" role="group" style="margin-top: -3px;" ng-hide="is_view == false">
                             <button type="button" class="btn btn-primary fa fa-print" ng-print print-element-id="printArea">&nbsp;Print</button>
                         </div> 
                     </div>
@@ -146,58 +146,55 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-5 col-sm-12">
-                            <div class="img-thumbnail">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Customer</label>
-                                    <div class="col-sm-9">
-                                        <div class="input-group">
-                                            <ui-select on-select="pilihCustomer(form, $item)" ng-model="form.customers" theme="bootstrap">
-                                                {{$select.selected.nama}}
-                                                <ui-select-match placeholder="Pilih atau Cari nama Customer">{{$select.selected.nama}}</ui-select-match>
-                                                <ui-select-choices refresh="cariCustomer($select.search)" repeat="val in results">
-                                                    {{val.kode}} - {{val.nama}} ( {{val.tanggal_lahir | date}} )
-                                                </ui-select-choices>
-                                            </ui-select>
-                                            <span class="input-group-btn">
-                                                <button ng-click="form.customers = undefined" class="btn btn-default">
-                                                    <span class="glyphicon glyphicon-trash"></span>
-                                                </button>
-                                            </span>
-                                        </div>
+                        <div class="col-md-6 col-sm-12 img-thumbnail">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Customer</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <ui-select on-select="pilihCustomer(form, $item)" ng-model="form.customers" theme="bootstrap">
+                                            {{$select.selected.nama}}
+                                            <ui-select-match placeholder="Pilih atau Cari nama Customer">{{$select.selected.nama}}</ui-select-match>
+                                            <ui-select-choices refresh="cariCustomer($select.search)" repeat="val in results">
+                                                {{val.kode}} - {{val.nama}} ( {{val.tanggal_lahir| date}} )
+                                            </ui-select-choices>
+                                        </ui-select>
+                                        <span class="input-group-btn">
+                                            <button ng-click="form.customers = undefined" class="btn btn-default">
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </button>
+                                        </span>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">No. Reg.</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" ng-model="form.customers.kode" ng-disabled="true" >
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">No. Reg.</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="form.customers.kode" ng-disabled="true" >
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">No Telpon</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" ng-model="form.no_tlp" ng-disabled="true" >
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">No Telpon</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="form.no_tlp" ng-disabled="true" >
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Email</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" ng-model="form.email" ng-disabled="true" >
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Email</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="form.email" ng-disabled="true" >
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Alamat</label>
-                                    <div class="col-sm-9">
-                                        <textarea class="form-control" rows="4" ng-model="form.alamat" ng-disabled="true" ></textarea>
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Alamat</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" rows="4" ng-model="form.alamat" ng-disabled="true" ></textarea>
                                 </div>
-
                             </div>
                         </div>
                         <br>
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <h5 class="font-bold">- Detail Pesanan</h5> 
+                                <h5 class="font-bold">- Detail Penjualan</h5> 
                                 <table class="table table-bordered det-trans">
                                     <thead>
                                         <tr>

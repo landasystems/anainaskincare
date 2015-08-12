@@ -119,9 +119,6 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             });
         }
     };
-    Data.get('penjualan/customer').then(function (data) {
-        $scope.sCustomer = data.customer;
-    });
     Data.get('site/session').then(function (data) {
         $scope.sCabang = data.data.user.cabang;
     });

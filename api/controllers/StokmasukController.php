@@ -155,20 +155,13 @@ class StokmasukController extends Controller {
     }
 
     public function actionView($id) {
-
-//        $model = $this->findModel($id);
-//        $models = $model->attributes;
         $query = new Query;
-
         $query->from(['stok_masuk', 'm_cabang'])
                 ->where('stok_masuk.id="' . $id . '" and m_cabang.id = stok_masuk.cabang_id ')
                 ->select("stok_masuk.*,  m_cabang.nama as namacabang , m_cabang.alamat as alamat_cabang, m_cabang.no_tlp as telpcabang");
 
         $command = $query->createCommand();
         $models = $command->query()->read();
-//        $model = $models->attributes;
-
-
 
         $det = StokMasukDet::find()
                 ->with('barang')
@@ -226,6 +219,12 @@ class StokmasukController extends Controller {
         if ($model->save()) {
             $deleteDetail = StokMasukDet::deleteAll(['stok_masuk_id' => $model->id]);
             $detailSmasuk = $params['detailsmasuk'];
+
+            //hapus kartu stok
+            $keterangan = 'stok masuk';
+            $stok = new KartuStok();
+            $hapus = $stok->hapusKartu($keterangan, $model->id);
+
             foreach ($detailSmasuk as $val) {
                 $det = new StokMasukDet();
                 $det->attributes = $val;
@@ -234,9 +233,6 @@ class StokmasukController extends Controller {
                 $det->save();
 
                 //perbarui kartu stok
-                $keterangan = 'stok masuk';
-                $stok = new KartuStok();
-                $hapus = $stok->hapusKartu($keterangan, $model->id);
                 $update = $stok->process('in', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $id);
             }
             $this->setHeader(200);

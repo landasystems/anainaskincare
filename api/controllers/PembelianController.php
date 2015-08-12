@@ -234,6 +234,12 @@ class PembelianController extends Controller {
 
             $pembelianDet = $params['pembeliandet'];
             $id_det = array();
+
+            //hapus kartu stok
+            $keterangan = 'pembelian';
+            $stok = new KartuStok();
+            $hapus = $stok->hapusKartu($keterangan, $model->id);
+
             foreach ($pembelianDet as $val) {
                 $det = PembelianDet::findOne($val['id']);
                 if (empty($det)) {
@@ -246,9 +252,6 @@ class PembelianController extends Controller {
                 if ($det->save()) {
                     $id_det[] = $det->id;
                     if ($model->status == 'clear') {
-                        $keterangan = 'pembelian';
-                        $stok = new KartuStok();
-                        $hapus = $stok->hapusKartu($keterangan, $model->id);
                         $update = $stok->process('in', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
                     }
                 }

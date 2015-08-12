@@ -276,7 +276,6 @@ class PenjualanController extends Controller {
                     $pinjaman = Pinjaman::find()->where('penjualan_id=' . $model->id)->one();
                     if (empty($pinjaman)) {
                         $pinjaman = new Pinjaman();
-//                        $pinjaman->save();
                     }
 
                     $pinjaman->penjualan_id = $model->id;
@@ -287,6 +286,11 @@ class PenjualanController extends Controller {
                 }
             }
             $penjualanDet = $params['penjualandet'];
+
+            //hapus kartu stok
+            $keterangan = 'penjualan';
+            $stok = new \app\models\KartuStok();
+            $hapus = $stok->hapusKartu($keterangan, $model->id);
 
             foreach ($params['penjualandet'] as $val) {
                 $det = PenjualanDet::findOne($val['id']);
@@ -301,13 +305,9 @@ class PenjualanController extends Controller {
                 if ($det->save()) {
                     $id_det[] = $det->id;
                     if ($model->status == 'Selesai') {
-                        $keterangan = 'penjualan';
-                        $stok = new \app\models\KartuStok();
-                        $hapus = $stok->hapusKartu($keterangan, $model->id);
                         $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
                     }
                 }
-                //stok
             }
             $deleteDetail = PenjualanDet::deleteAll('id NOT IN (' . implode(',', $id_det) . ') AND penjualan_id=' . $model->id);
 

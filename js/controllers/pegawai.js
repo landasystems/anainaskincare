@@ -7,10 +7,10 @@ app.controller('pegawaiCtrl', function ($scope, Data, toaster) {
     $scope.is_edit = false;
     $scope.is_view = false;
     $scope.is_create = false;
-    Data.get('pegawai/klinik').then(function (data) {
-        $scope.office_place = data.office_place;
-    });
 
+    Data.get('site/session').then(function (data) {
+        $scope.office_place = data.data.user.cabang;
+    });
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
         $scope.isLoading = true;
@@ -47,6 +47,7 @@ app.controller('pegawaiCtrl', function ($scope, Data, toaster) {
         $scope.is_create = true;
         $scope.formtitle = "Form Tambah Karyawan";
         $scope.form = {};
+        $scope.form.is_deleted = '0';
     };
     $scope.update = function (form) {
         $scope.is_edit = true;

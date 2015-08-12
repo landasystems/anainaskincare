@@ -50,6 +50,7 @@
                             <th st-sort="nama">Nama</th>
                             <th st-sort="nama">No. Telp</th>
                             <th st-sort="nama">Alamat</th>
+                            <td></td>
                         </tr>
                     </thead>
                     <tbody ng-show="!isLoading">
@@ -70,13 +71,12 @@
                     </tbody>
                     <tbody ng-show="isLoading">
                         <tr>
-                            <td colspan="4" class="text-center">Loading ... </td>
+                            <td colspan="5" class="text-center">Loading ... </td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="6" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html">
-                            </td>
+                            <td colspan="5" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html"></td>
                         </tr>
                 </table>		
             </div>
@@ -139,9 +139,10 @@
                             </td>
                         </tr>
                     </table>
+                    <br><br>
                     <center style="width: 100%">
                         <div class="form-group">
-                            <div class="col-sm-4 col-sm-offset-2">
+                            <div class="col-sm-12">
                                 <button type="submit" class="btn btn-default fa fa-arrow-circle-o-left" ng-click="cancel(form)">&nbsp;Back</button>
                                 <button type="submit" class="btn btn-primary fa fa-save" ng-hide="is_view" ng-disabled="landaform.$invalid" ng-click="save(form)">&nbsp;Simpan Perubahan</button>
                             </div>

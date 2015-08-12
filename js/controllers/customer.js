@@ -48,6 +48,7 @@ app.controller('customerCtrl', function ($scope, Data, toaster) {
         $scope.formtitle = "Form Tambah Customer";
         $scope.form = {};
         $scope.form.tanggal_lahir = new Date();
+        $scope.form.is_deleted = '0';
     };
     $scope.update = function (form) {
         $scope.is_edit = true;

@@ -71,7 +71,7 @@
                     </tbody>
                     <tbody ng-show="isLoading">
                         <tr>
-                            <td colspan="4" class="text-center">Loading ... </td>
+                            <td colspan="6" class="text-center">Loading ... </td>
                         </tr>
                     </tbody>
                     <tfoot>
@@ -93,59 +93,58 @@
             </div>
             <div class="panel-body">
                 <form name="landaform" class="form-horizontal form-validation">
-                    <div class="col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Kode</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" ng-model="form.kode" ng-disabled="is_view" required>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Kode</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" ng-model="form.kode" ng-disabled="is_view" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Nama</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" ng-model="form.nama" ng-disabled="is_view" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Contact Person</label>
+                                <div class="col-sm-8">
+                                    <input type="test" class="form-control" ng-model="form.contact_person" ng-disabled="is_view">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Status</label>
+                                <div class="col-sm-8">
+                                    <div class="btn-group m-r">
+                                        <label class="btn btn-default" ng-model="form.is_deleted" btn-radio="'0'" required>Aktif</label>
+                                        <label class="btn btn-default" ng-model="form.is_deleted" btn-radio="'1'" required>Terhapus</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Nama</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" ng-model="form.nama" ng-disabled="is_view" required>
+                        <div class="col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Email</label>
+                                <div class="col-sm-8">
+                                    <input type="email" class="form-control" ng-model="form.email" ng-disabled="is_view">
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Contact Person</label>
-                            <div class="col-sm-8">
-                                <input type="test" class="form-control" ng-model="form.contact_person" ng-disabled="is_view">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">No. Telp</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.no_tlp" ng-disabled="is_view" required>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Status</label>
-                            <div class="col-sm-8">
-                                <div class="btn-group m-r">
-                                    <label class="btn btn-default" ng-model="form.is_deleted" btn-radio="'0'" required>Aktif</label>
-                                    <label class="btn btn-default" ng-model="form.is_deleted" btn-radio="'1'" required>Terhapus</label>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Alamat</label>
+                                <div class="col-sm-8">
+                                    <textarea class="form-control" rows="4" ng-model="form.alamat" ng-disabled="is_view" required></textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Email</label>
-                            <div class="col-sm-8">
-                                <input type="email" class="form-control" ng-model="form.email" ng-disabled="is_view">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">No. Telp</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" ng-pattern="/^[0-9]+$/" ng-model="form.no_tlp" ng-disabled="is_view" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Alamat</label>
-                            <div class="col-sm-8">
-                                <textarea class="form-control" rows="4" ng-model="form.alamat" ng-disabled="is_view" required></textarea>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-2 col-sm-12"></div>
-                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <br><br>
                     <div align="center">
                         <button type="submit" class="btn btn-default fa fa-arrow-circle-o-left" ng-click="cancel()">&nbsp;Back</button>
                         <button type="submit" class="btn btn-primary fa fa-save" ng-hide="is_view" ng-disabled="landaform.$invalid" ng-click="save(form)">&nbsp;Simpan Perubahan</button>
