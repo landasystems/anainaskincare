@@ -77,6 +77,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         $scope.formtitle = "Edit Data Penjualan : " + row.kode;
         $scope.selected(row.id);
         $scope.form = row;
+        $scope.form.tanggal = new Date(row.tanggal);
     
     };
     $scope.view = function(row) {

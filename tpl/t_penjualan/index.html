@@ -360,82 +360,90 @@
             <tbody>
                 <tr>
                     <td style="width:20%;vertical-align:midle;"><img src="img/logo.png"></td>
-                    <td style="vertical-align:midle;text-align:right;">
-                        <b style="font-size: 12pt;">{{form.cabang.nama| uppercase}} - {{form.cabang.alamat| uppercase}} <br>
-                            TELP. {{form.cabang.no_tlp| uppercase}}
+                    <td style="vertical-align:midle;text-align:left; font-family: monospace; ">
+                        <b style="font-size: 18pt; line-height: 22px; font-family: monospace; ">{{form.cabang.nama| uppercase}} </b>
+                        <br><span style="font-size: 14pt; font-family: monospace; ">{{form.cabang.alamat| uppercase}} <br>
+                        TELP. {{form.cabang.no_tlp| uppercase}}</span>
                         </b>
-                        <br><b>No. Nota <br>
-                            {{form.kode}}</b></td>
+                    </td>
                 </tr>
             </tbody>
         </table>
-        <br>
         <div style="border-top:1pt solid #000;margin:0px;width: 100%; line-height:2px">&nbsp;</div>
-        <br>
-
-        <table width="100%;line-height:5px;line-height:0px" class="print_dot">
+        <div style=margin:0px;width: 100%;">&nbsp;</div>
+        <table cellpadding="4" width="100%">
             <tbody>
                 <tr valign="top">
-                    <td width="33%;line-height:5px;line-height:0px">
-                        <table cellpadding="4" width="100%;line-height:5px;line-height:0px">
-                            <tbody>
-                                <tr valign="top">
-                                    <td id="print" style="width: 50px;text-align: left;vertical-align:top;">Tanggal</td>
-                                    <td id="print" style="text-align: left;vertical-align:top;">: {{form.tanggal| date}}</td>
-                                </tr>
-                                <tr valign="top">
-                                    <td id="print" style="width: 50px;text-align: left;vertical-align:top;"><span>Customer</span></td>
-                                    <td id="print" style="text-align: left;vertical-align:top;">: {{form.customers.nama}}</td>
-                                </tr>
-                                <tr valign="top">
-                                    <td id="print" style="width: 50px;text-align: left;vertical-align:top;"><span>No. Telp.</span></td>
-                                    <td id="print" style="text-align: left;vertical-align:top;">: {{form.customers.no_tlp}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
+                    <td id="print" style="width: 50px;text-align: left;vertical-align:top;">Nota</td>
+                    <td id="print" style="text-align: left;vertical-align:top;;">: {{form.kode}}</td>
+                </tr>
+                <tr valign="top">
+                    <td id="print" style="width: 50px;text-align: left;vertical-align:top;">Tanggal</td>
+                    <td id="print" style="text-align: left;vertical-align:top;">: {{form.tanggal| date}}</td>
+                </tr>
+                <tr valign="top">
+                    <td id="print" style="width: 50px;text-align: left;vertical-align:top;"><span>Customer</span></td>
+                    <td id="print" style="text-align: left;vertical-align:top;">: {{form.customers.nama}}</td>
+                </tr>
+                <tr valign="top">
+                    <td id="print" style="width: 50px;text-align: left;vertical-align:top;"><span>Telp.</span></td>
+                    <td id="print" style="text-align: left;vertical-align:top;">: {{form.customers.no_tlp}}</td>
                 </tr>
             </tbody>
         </table>
-        <br>
-        <table>
-            <thead>
+        <div style=margin:0px;width: 100%;">&nbsp;</div>
+        <table width="100%">
+            <tbody ng-repeat="detail in detPenjualan">
                 <tr>
-                    <th style="width:70%; text-align: left;">Barang</th>
-                    <th style="text-align: left;">Jumlah</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="detail in detPenjualan">
-                    <td>
+                    <td colspan="3" id="print">
                         {{detail.produk.nama| uppercase}} 
-                        <div ng-if="detail.type == 'Jasa'">
-                            <p style="margin:0px;padding: 0px;">-Terapis : {{detail.terapis.nama}}</p>
-                            <p style="margin:0px;padding: 0px;">-Dokter : {{detail.dokter.nama}}</p>
-                        </div>
-                    </td>
-                    <td style="text-align: right; vertical-align: 0px;">
-                        {{detail.jumlah}} x ({{detail.harga| number}})
-                        <div ng-if="detail.diskon > 0">
-                            <br>- {{detail.diskon * detail.jumlah}}
+                        <div ng-if="detail.type == 'Jasa'" id="print">
+                            <p id="print" style="margin:0px;padding: 0px;">-Terapis : {{detail.terapis.nama}}</p>
+                            <p id="print" style="margin:0px;padding: 0px;">-Dokter : {{detail.dokter.nama}}</p>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td align="right"><b>Total (Rp)</b></td>
-                    <td align="right">{{form.total| number}}</td>
+                    <td style="text-align: right; vertical-align: top;" id="print" align="right">
+                        {{detail.jumlah}} 
+                    </td>
+                    <td id="print" align="right">
+                        x {{detail.harga| number}}
+                        <div ng-if="detail.diskon > 0" id="print">
+                            <br>- Disc {{detail.diskon * detail.jumlah}}
+                        </div>
+                    </td>
+                    <td id="print" align="right">
+                        {{(detail.jumlah * detail.harga) - (detail.jumlah * detail.diskon) | number}}
+                    </td>
                 </tr>
             </tbody>
+            <tr>
+                <td align="right" id="print" colspan="2"><b>Total (Rp)</b></td>
+                <td align="right" id="print">{{form.total| number}}</td>
+            </tr>
+            <tr>
+                <td align="right" id="print" colspan="2"><b>Cash (Rp)</b></td>
+                <td align="right" id="print">{{form.cash| number}}</td>
+            </tr>
+            <tr ng-if="form.credit > 0">
+                <td align="right" id="print" colspan="2"><b>Credit (Rp)</b></td>
+                <td align="right" id="print">{{form.credit| number}}</td>
+            </tr>
+            <tr>
+                <td align="right" id="print" colspan="2"><b>Kembali (Rp)</b></td>
+                <td align="right" id="print">{{((form.cash * 1 + form.credit * 1) - form.total | number)}}</td>
+            </tr>
         </table>
 
         <br>
 
-        <table>
+        <table width="100%">
             <tr>
-                <td width="75%" valign="top" align="center">
-
+                <td width="75%" valign="top" align="left" id="print">
+                    <b>Terima Kasih !</b>
                 </td>
-                <td align="right" style="font-size: 12pt;">Petugas <br><br><br><br> {{user.nama}}</td>
+                <td align="right" style="font-size: 12pt;" id="print">Cashier<br><br> {{user.nama}}</td>
             </tr>
         </table>
 

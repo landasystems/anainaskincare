@@ -86,12 +86,13 @@ span.label{width: 180px;display: inline-table;}
     margin: 2px;
     padding:2px;
     line-height: 5px;
-    font-size: 10px;        
+    font-size: 12px;        
     /*font-family: monospace;*/
     page-break-after: avoid;
 }
 
 #print{        
-    font-size: 12px;        
-    /*font-family: monospace;*/        
+    font-size: 18px;        
+    line-height: 9px;
+    font-family: monospace;        
 }
