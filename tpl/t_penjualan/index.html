@@ -156,7 +156,7 @@
                                                 {{$select.selected.nama}}
                                                 <ui-select-match placeholder="Pilih atau Cari nama Customer">{{$select.selected.nama}}</ui-select-match>
                                                 <ui-select-choices refresh="cariCustomer($select.search)" repeat="val in results">
-                                                    {{val.nama}}
+                                                    {{val.kode}} - {{val.nama}} ( {{val.tanggal_lahir | date}} )
                                                 </ui-select-choices>
                                             </ui-select>
                                             <span class="input-group-btn">

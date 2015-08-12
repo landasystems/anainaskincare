@@ -18,7 +18,7 @@
                                     <ui-select ng-model="form.customer" theme="bootstrap">
                                         <ui-select-match placeholder="Pilih atau Cari nama Customer">{{$select.selected.nama}}</ui-select-match>
                                         <ui-select-choices refresh="cariCustomer($select.search)" repeat="val in results">
-                                            {{val.nama}}
+                                            {{val.kode}} - {{val.nama}} ( {{val.tanggal_lahir| date}} )
                                         </ui-select-choices>
                                     </ui-select>
                                     <span class="input-group-btn">
@@ -46,20 +46,20 @@
                         </div>
                     </center>	
                 </form>
-               
+
                 <div ng-show="detail_laporan" style="margin-top: 50px;" id="omset">
-                    <table width="100%">
-                        <tr>
-                            <td width="100"><img src="img/logo.png"></td>
-                            <td valign="top" align="left"><h3 style="margin-top: 0px;">KARTU STATUS</h3></td>
-                        </tr>
-                    </table>
-                    <table>
-                        <tr>
-                            <td>Nama</td>
-                            <td>: {{}}</td>
-                        </tr>
-                    </table>
+                    <!--                    <table width="100%">
+                                            <tr>
+                                                <td width="100"><img src="img/logo.png"></td>
+                                                <td valign="top" align="left"><h3 style="margin-top: 0px;">KARTU STATUS</h3></td>
+                                            </tr>
+                                        </table>
+                                        <table>
+                                            <tr>
+                                                <td>Nama</td>
+                                                <td>: {{}}</td>
+                                            </tr>
+                                        </table>-->
                     <center>
                         <h4>KARTU STATUS</h4>
                         <h5>NAMA : {{form.customer.nama}}</h5>

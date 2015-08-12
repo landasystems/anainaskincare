@@ -110,8 +110,8 @@ class BarangController extends Controller {
 
         $command = $query->createCommand();
         $models = $command->queryAll();
-//        $totalItems = $query->count();
-        $totalItems = 0;
+        $totalItems = $query->count();
+//        $totalItems = 0;
 
         $this->setHeader(200);
 
