@@ -13,30 +13,40 @@
             </div>
             <div collapse="isCollapsed" class="panel-body collapse" style="height: 0px;">
                 <div class="form-horizontal">
-                    <div class="form-group">
-                        <div class="control-group">
-                            <label class="col-sm-2 control-label">Kode</label>
-                            <div class="col-sm-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">No. Reg.</label>
+                            <div class="col-sm-9">
                                 <input st-search="kode" class="form-control"/>
                             </div>
                         </div>
-                        <div class="control-group">
-                            <label class="col-sm-2 control-label">Nama</label>
-                            <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Nama</label>
+                            <div class="col-sm-9">
                                 <input st-search="nama" class="form-control"/>
-
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">No. Telp</label>
+                            <div class="col-sm-9">
+                                <input st-search="no_tlp" class="form-control"/>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="control-group">
-                            <label class="col-sm-2 control-label">Status</label>
-                            <div class="col-sm-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Tanggal Lahir</label>
+                            <div class="col-sm-9">
+                                <input st-search="tanggal_lahir" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Status</label>
+                            <div class="col-sm-9">
                                 <select stInputEvent="change" st-search="is_deleted" class="form-control">
                                     <option value="0">Aktif</option>
                                     <option value="1">Terhapus</option>
                                 </select>
-
                             </div>
                         </div>
                     </div>
@@ -46,16 +56,18 @@
                 <table class="table table-striped table-hover" >
                     <thead>
                         <tr>
-                            <th st-sort="nama">Kode</th>
+                            <th st-sort="kode">No. Reg.</th>
                             <th st-sort="nama">Nama</th>
-                            <th st-sort="nama">No. Telp</th>
-                            <th st-sort="nama">Alamat</th>
+                            <th st-sort="taggal_lahir">Tanggal Lahir</th>
+                            <th st-sort="no_tlp">No. Telp</th>
+                            <th st-sort="alamat">Alamat</th>
                         </tr>
                     </thead>
                     <tbody ng-show="!isLoading">
                         <tr ng-repeat="row in displayed" ng-dblclick="view(row)">
                             <td>{{row.kode}}</td>
                             <td>{{row.nama}}</td>
+                            <td>{{row.tanggal_lahir| date }}</td>
                             <td>{{row.no_tlp}}</td>
                             <td>{{row.alamat}}</td>
                             <td>

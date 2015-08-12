@@ -157,7 +157,8 @@ class PenjualanController extends Controller {
             'nama' => $cus_nama,
             'no_tlp' => $no_tlp,
             'email' => $email,
-            'alamat' => $alamat
+            'alamat' => $alamat,
+            'kode' => (isset($cus->kode)) ? $cus->kode : '',
         ];
 
         $data['cabang'] = [
@@ -241,7 +242,7 @@ class PenjualanController extends Controller {
                 $det->penjualan_id = $model->id;
                 $det->produk_id = $data['produk']['id'];
                 $det->pegawai_terapis_id = isset($data['terapis']['id']) ? $data['terapis']['id'] : '';
-                $det->pegawai_dokter_id = isset($data['dokter']['id']) ? $data['terapis']['id'] : '';
+                $det->pegawai_dokter_id = isset($data['dokter']['id']) ? $data['dokter']['id'] : '';
 
                 if ($det->save()) {
                     if ($model->status == 'Selesai') {

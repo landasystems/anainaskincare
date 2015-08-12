@@ -221,7 +221,7 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="stok in listStok">
-                                            <td>{{stok.no}}</td>
+                                            <td>{{$index + 1}}</td>
                                             <td>{{stok.nama}}</td>
                                             <td style="width:100px;" ng-if='is_create == false'>{{stok.stok}}</td>
                                             <td style="margin:0px;padding:0px;width:100px;" ng-if="is_create"><input type='text' class="form-control" ng-model="stok.iStok" ng-keyup="subtotal()"></td>

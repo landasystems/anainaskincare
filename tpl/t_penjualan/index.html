@@ -168,6 +168,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-sm-3 control-label">No. Reg.</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" ng-model="form.customers.kode" ng-disabled="true" >
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-sm-3 control-label">No Telpon</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" ng-model="form.no_tlp" ng-disabled="true" >
@@ -363,7 +369,7 @@
                     <td style="vertical-align:midle;text-align:left; font-family: monospace; ">
                         <b style="font-size: 18pt; line-height: 22px; font-family: monospace; ">{{form.cabang.nama| uppercase}} </b>
                         <br><span style="font-size: 14pt; font-family: monospace; ">{{form.cabang.alamat| uppercase}} <br>
-                        TELP. {{form.cabang.no_tlp| uppercase}}</span>
+                            TELP. {{form.cabang.no_tlp| uppercase}}</span>
                         </b>
                     </td>
                 </tr>
@@ -376,6 +382,10 @@
                 <tr valign="top">
                     <td id="print" style="width: 50px;text-align: left;vertical-align:top;">Nota</td>
                     <td id="print" style="text-align: left;vertical-align:top;;">: {{form.kode}}</td>
+                </tr>
+                <tr valign="top">
+                    <td id="print" style="width: 50px;text-align: left;vertical-align:top;">No. Reg.</td>
+                    <td id="print" style="text-align: left;vertical-align:top;;">: {{form.customers.kode}}</td>
                 </tr>
                 <tr valign="top">
                     <td id="print" style="width: 50px;text-align: left;vertical-align:top;">Tanggal</td>
@@ -395,11 +405,11 @@
         <table width="100%">
             <tbody ng-repeat="detail in detPenjualan">
                 <tr>
-                    <td colspan="3" id="print">
+                    <td colspan="3" id="print" stlye="line-height: 22px;">
                         {{detail.produk.nama| uppercase}} 
-                        <div ng-if="detail.type == 'Jasa'" id="print">
-                            <p id="print" style="margin:0px;padding: 0px;">-Terapis : {{detail.terapis.nama}}</p>
-                            <p id="print" style="margin:0px;padding: 0px;">-Dokter : {{detail.dokter.nama}}</p>
+                        <div ng-if="detail.type == 'Jasa'" id="print" style="line-height: 9px;">
+                            <p id="print" style="line-height: 22px;margin:0px;padding: 0px;" ng-if="detail.terapis.nama != ''">-Terapis : {{detail.terapis.nama}}</p>
+                            <p id="print" style="line-height: 22px;margin:0px;padding: 0px;" ng-if="detail.dokter.nama != ''">-Dokter : {{detail.dokter.nama}}</p>
                         </div>
                     </td>
                 </tr>
@@ -443,7 +453,7 @@
                 <td width="75%" valign="top" align="left" id="print">
                     <b>Terima Kasih !</b>
                 </td>
-                <td align="right" style="font-size: 12pt;" id="print">Cashier<br><br> {{user.nama}}</td>
+                <td align="right" style="font-size: 12pt;" id="print">Kasir<br><br> {{user.nama}}</td>
             </tr>
         </table>
 
