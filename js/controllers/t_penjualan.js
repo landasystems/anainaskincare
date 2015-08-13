@@ -1,6 +1,4 @@
 app.controller('penjualanCtrl', function ($scope, Data, toaster) {
-
-
     //init data;
     var tableStateRef;
     var paramRef;
@@ -20,15 +18,6 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         $event.stopPropagation();
         $scope.opened1 = true;
     };
-    $scope.detPenjualan = [
-        {
-            type: '',
-            jumlah: '',
-            diskon: '',
-            fee_terapis: '',
-            fee_dokter: '',
-        }
-    ];
 
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
@@ -36,7 +25,6 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         var offset = tableState.pagination.start || 0;
         var limit = tableState.pagination.number || 10;
         var param = {offset: offset, limit: limit};
-
         if (tableState.sort.predicate) {
             param['sort'] = tableState.sort.predicate;
             param['order'] = tableState.sort.reverse;
@@ -49,9 +37,9 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             $scope.displayed = data.data;
             tableState.pagination.numberOfPages = Math.ceil(data.totalItems / limit);
         });
-
         $scope.isLoading = false;
     };
+    
     $scope.create = function (form) {
         $scope.is_create = true;
         $scope.is_edit = true;
@@ -59,13 +47,16 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         $scope.formtitle = "Form Tambah Data";
         $scope.form = {};
         $scope.form.credit = "0";
+        $scope.form.cash = "0";
         $scope.form.status = 'Selesai',
                 $scope.retrive = {};
         $scope.detPenjualan = [
             {
                 type: '',
-                jumlah: '',
-                diskon: '',
+                jumlah: '1',
+                diskon: '0',
+                harga: '0',
+                sub_total: '0',
             }];
         $scope.form.tanggal = new Date();
         $scope.form.is_deleted = 0;
@@ -85,7 +76,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         $scope.is_view = true;
         $scope.formtitle = "Lihat Data Penjualan : " + row.kode;
         $scope.selected(row.id);
-        $scope.form = row;
+//        $scope.form = row;
         $scope.form.tanggal = new Date(row.tanggal);
     };
     $scope.save = function (form, detail) {
@@ -98,8 +89,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             if (result.status == 0) {
                 toaster.pop('error', "Terjadi Kesalahan", result.errors);
             } else {
-                $scope.is_edit = false;
-                $scope.callServer(tableStateRef); //reload grid ulang
+                $scope.view(result.data);
                 toaster.pop('success', "Berhasil", "Data berhasil tersimpan");
             }
         });
@@ -137,7 +127,6 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             $scope.form.kode = data.kode;
             $scope.list_dokter = data.dokter;
             $scope.list_terapis = data.terapis;
-
         });
     };
     $scope.excel = function () {
@@ -168,11 +157,12 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         form.alamat = $item.alamat;
     }
     $scope.pilih = function (detail, $item) {
-        detail.harga = $item.harga_jual;
+        detail.harga = ($item.harga_jual != null) ? $item.harga_jual : 0;
         detail.type = $item.type;
-        detail.diskon = $item.diskon;
+        detail.diskon = ($item.diskon != null) ? $item.diskon : 0;
         detail.fee_dokter = $item.fee_dokter;
         detail.fee_terapis = $item.fee_terapis;
+        $scope.total();
     }
     $scope.getproduk = function (detail) {
         $scope.detail = detail;
@@ -199,7 +189,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             $scope.form.user = data.data.user;
             $scope.detPenjualan = data.detail;
             angular.forEach($scope.detPenjualan, function (detail) {
-                detail.diskon = (detail.diskon != undefined) ? detail.diskon : 0;
+                detail.diskon = (detail.diskon != null) ? detail.diskon : 0;
             })
             $scope.total();
         });
@@ -208,8 +198,10 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         var newDet = {
             id: '',
             type: '',
-            jumlah: '',
-            diskon: '',
+            jumlah: '1',
+            diskon: '0',
+            harga: '0',
+            sub_total: '0',
         }
         $scope.total();
         $scope.detPenjualan.unshift(newDet);
