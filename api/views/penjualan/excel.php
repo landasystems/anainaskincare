@@ -3,8 +3,8 @@
 use yii\db\Query;
 use yii\web\Session;
 
-//header("Content-type: application/vnd-ms-excel");
-//header("Content-Disposition: attachment; filename=excel-Transaksi-Penjualan.xls");
+header("Content-type: application/vnd-ms-excel");
+header("Content-Disposition: attachment; filename=excel-Transaksi-Penjualan.xls");
 if (isset($filter['cabang_id'])) {
     $selCabang = \app\models\Cabang::findOne(['id' => $filter['cabang_id']]);
     $cabang = $selCabang['nama'];
