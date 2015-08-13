@@ -204,7 +204,7 @@
                                             <td align="center">Harga</td>
                                             <td align="center">Diskon</td>
                                             <td align="center">Sub total</td>
-                                            <td ng-hide="is_view">#</td>
+                                            <td ng-hide="is_view" style="padding: 0px; width: 5px;"><button ng-click="addDetail()" class="btn btn-success" ng-disabled="is_view"><i class="fa fa-plus"></i></button></td>
                                         </tr>
                                     </thead>
                                     <tr ng-repeat="detail in detPenjualan">
@@ -265,7 +265,7 @@
                                 </table>
 
                                 </td>
-                                <td>
+                                <td style="width:90px;">
                                     <input type="text" class="form-control angka" ng-maxlength="4" ng-pattern="/^[0-9]+$/" ng-change="total()"  ng-model="detail.jumlah" ng-disabled="is_view" ng-readonly="is_create == false" required>
                                 </td>
                                 <td style="width:135px;">
@@ -290,8 +290,7 @@
                                     </div>
                                 </td>
                                 <td ng-hide="is_view">
-                                    <button ng-click="addDetail()" class="btn btn-success" ng-show="$index == 0" ng-disabled="is_view"><i class="fa fa-plus"></i></button>
-                                    <button ng-click="removeRow($index)" class="btn btn-danger" ng-show="$index > 0" ng-disabled="is_view"><i class="fa fa-trash-o"></i></button>
+                                    <button ng-click="removeRow($index)" class="btn btn-danger" ng-disabled="is_view"><i class="fa fa-trash-o"></i></button>
                                 </td>
                                 </tr>
                                 <tr>
@@ -362,14 +361,16 @@
         <table border="0" cellpadding="0" cellspacing="0" style="font-size: 13px" width="100%" class="print_dot">
             <tbody>
                 <tr>
-                    <td style="width:20%;vertical-align:midle;"><img src="img/logo.png"></td>
-                    <td style="vertical-align:midle;text-align:left; font-family: monospace; ">
-                        <b style="font-size: 18pt; line-height: 22px; font-family: monospace; ">{{form.cabang.nama| uppercase}} </b>
-                        <br><span style="font-size: 14pt; font-family: monospace; ">{{form.cabang.alamat| uppercase}} <br>
-                            TELP. {{form.cabang.no_tlp| uppercase}}</span>
-                        </b>
-                    </td>
-                </tr>
+                    <td style="width:20%;vertical-align:midle;" valign="top"><center><img src="img/logo.png" style="float:none;width:100px;"></center></td>
+            </tr>
+            <tr>
+                <td style="vertical-align:midle;text-align:center; font-family: monospace; ">
+                    <b style="font-size: 13pt; line-height: 22px; font-family: monospace; ">{{form.cabang.nama| uppercase}} </b>
+                    <br><span style="font-size: 13pt; font-family: monospace; ">{{form.cabang.alamat| uppercase}} <br>
+                        TELP. {{form.cabang.no_tlp| uppercase}}</span>
+                    </b>
+                </td>
+            </tr>
             </tbody>
         </table>
         <div style="border-top:1pt solid #000;margin:0px;width: 100%; line-height:2px">&nbsp;</div>
@@ -377,24 +378,29 @@
         <table cellpadding="4" width="100%">
             <tbody>
                 <tr valign="top">
-                    <td id="print" style="width: 50px;text-align: left;vertical-align:top;">Nota</td>
-                    <td id="print" style="text-align: left;vertical-align:top;;">: {{form.kode}}</td>
-                </tr>
-                <tr valign="top">
-                    <td id="print" style="width: 50px;text-align: left;vertical-align:top;">No. Reg.</td>
-                    <td id="print" style="text-align: left;vertical-align:top;;">: {{form.customers.kode}}</td>
+                    <td id="print" style="width: 50px;text-align: left;vertical-align:top; width:90px;">Nota</td>
+                    <td id="print" width="1">:</td>
+                    <td id="print" style="text-align: left;vertical-align:top;;">{{form.kode}}</td>
                 </tr>
                 <tr valign="top">
                     <td id="print" style="width: 50px;text-align: left;vertical-align:top;">Tanggal</td>
-                    <td id="print" style="text-align: left;vertical-align:top;">: {{form.tanggal| date}}</td>
+                    <td id="print" width="1">:</td>
+                    <td id="print" style="text-align: left;vertical-align:top;">{{form.tanggal| date}}</td>
+                </tr>
+                <tr valign="top">
+                    <td id="print" style="width: 50px;text-align: left;vertical-align:top;">No. Cus</td>
+                    <td id="print" width="1">:</td>
+                    <td id="print" style="text-align: left;vertical-align:top;;">{{form.customers.kode}}</td>
                 </tr>
                 <tr valign="top">
                     <td id="print" style="width: 50px;text-align: left;vertical-align:top;"><span>Customer</span></td>
-                    <td id="print" style="text-align: left;vertical-align:top;">: {{form.customers.nama}}</td>
+                    <td id="print" width="1">:</td>
+                    <td id="print" style="text-align: left;vertical-align:top;">{{form.customers.nama}}</td>
                 </tr>
                 <tr valign="top">
                     <td id="print" style="width: 50px;text-align: left;vertical-align:top;"><span>Telp.</span></td>
-                    <td id="print" style="text-align: left;vertical-align:top;">: {{form.customers.no_tlp}}</td>
+                    <td id="print" width="1">:</td>
+                    <td id="print" style="text-align: left;vertical-align:top;">{{form.customers.no_tlp}}</td>
                 </tr>
             </tbody>
         </table>
@@ -440,11 +446,12 @@
             </tr>
         </table>
 
-        <br>
+        <div style=margin:0px;width: 100%;">&nbsp;</div>
+        <div style="border-top:1pt solid #000;margin:0px;width: 100%; line-height:2px">&nbsp;</div>
 
         <table width="100%">
             <tr>
-                <td width="75%" valign="top" align="left" id="print">
+                <td width="50%" valign="top" align="left" id="print">
                     <i>Terima Kasih</i>
                 </td>
                 <td align="right" style="font-size: 12pt;" id="print">Kasir<br><br> {{form.user.nama}}</td>

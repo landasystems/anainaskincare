@@ -56,7 +56,8 @@ class CustomerController extends Controller {
         $query = new Query;
         $query->from('m_customer')
                 ->select("*")
-                ->andWhere(['like', 'nama', $params['nama']]);
+                ->andWhere(['like', 'nama', $params['nama']])
+                ->orWhere(['like','kode',$params['nama']]);
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -68,7 +69,7 @@ class CustomerController extends Controller {
         //init variable
         $params = $_REQUEST;
         $filter = array();
-        $sort = "m_customer.nama ASC";
+        $sort = "CAST(m_customer.kode AS UNSIGNED) ASC";
         $offset = 0;
         $limit = 10;
         //        Yii::error($params);

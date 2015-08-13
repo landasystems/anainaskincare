@@ -310,7 +310,7 @@ class LaporanController extends Controller {
             //detail produk
             $body[$pro->id]['title']['produk'] = $pro->nama;
             $body[$pro->id]['title']['kategori'] = $pro->kategori->nama;
-            $body[$pro->id]['title']['satuan'] = $pro->satuan->nama;
+            $body[$pro->id]['title']['satuan'] = isset($pro->satuan->nama) ? $pro->satuan->nama : '-';
 
             //saldo awal
             $body[$pro->id]['saldo_awal']['jumlah'] = $tempSaldo[$pro->id]['jumlah'];

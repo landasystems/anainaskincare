@@ -15,24 +15,24 @@
                 <div class="form-horizontal">
                     <div class="form-group"><label class="col-sm-2 control-label">Nama</label>
                         <div class="col-sm-3">
-                            <input st-search="nama" class="form-control"/>
+                            <input st-search="mp.nama" class="form-control"/>
                         </div>
                         <label class="col-sm-2 control-label">Kode</label>
                         <div class="col-sm-3">
-                            <input st-search="kode" class="form-control"/>
+                            <input st-search="mp.kode" class="form-control"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Status</label>
                         <div class="col-sm-3">
-                            <select stInputEvent="change" st-search="is_deleted" class="form-control">
+                            <select stInputEvent="change" st-search="mp.is_deleted" class="form-control">
                                 <option value="0">Aktif</option>
                                 <option value="1">Terhapus</option>
                             </select>
                         </div>
                         <label class="col-sm-2 control-label">Kategori</label>
                         <div class="col-sm-3">
-                            <select class="form-control m-b" st-search="kategori_id">
+                            <select class="form-control m-b" st-search="mp.kategori_id">
                                 <option value="">-- Pilih Kategori --</option>
                                 <option ng-repeat="kategori in sKategori" value="{{kategori.id}}">{{kategori.nama}}</option>
                             </select>
@@ -44,13 +44,13 @@
                 <table class="table table-striped table-hover" >
                     <thead>
                         <tr>
-                            <th st-sort="kode">Kode</th>
-                            <th st-sort="nama">Nama</th>
-                            <th st-sort="type">Type</th>
-                            <th st-sort="kategori">Kategori</th>
-                            <th st-sort="satuan">Satuan</th>
-                            <th st-sort="harga_beli_terakhir">Harga Beli</th>
-                            <th st-sort="harga_jual">Harga Jual</th>
+                            <th st-sort="mp.kode">Kode</th>
+                            <th st-sort="mp.nama">Nama</th>
+                            <th st-sort="mp.type">Type</th>
+                            <th st-sort="mk.nama">Kategori</th>
+                            <th st-sort="ms">Satuan</th>
+                            <th st-sort="mp.harga_beli_terakhir">Harga Beli</th>
+                            <th st-sort="mp.harga_jual">Harga Jual</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -107,7 +107,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Kode</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" ng-model="form.kode" ng-disabled="is_view" ng-readonly='is_create == false' required />
+                                            <input type="text" class="form-control" ng-model="form.kode" ng-disabled="is_view" ng-readonly='is_view == true' required />
                                         </div>
                                     </div>
                                     <div class="form-group">
