@@ -72,7 +72,8 @@ if (isset($filter['tanggal'])) {
             ->join('LEFT JOIN', 'm_produk', 'penjualan_det.produk_id = m_produk.id')
             ->join('LEFT JOIN', 'm_user', 'penjualan.created_by = m_user.id')
             ->orderBy('penjualan.kode ASC')
-            ->select('m_user.nama as kasir, penjualan.id as id_penjualan, penjualan.tanggal, penjualan.kode, m_cabang.nama as customer, m_produk.nama as produk, penjualan_det.jumlah, penjualan_det.harga, penjualan_det.diskon, penjualan_det.sub_total');
+            ->select('m_user.nama as kasir, penjualan.id as id_penjualan, penjualan.tanggal, penjualan.kode, m_customer.nama as customer, m_produk.nama as produk, penjualan_det.jumlah, penjualan_det.harga, penjualan_det.diskon, penjualan_det.sub_total')
+            ->where('m_produk.type = "Barang"');
     foreach ($filter as $key => $val) {
         if ($key == 'tanggal') {
             $value = explode(' - ', $val);

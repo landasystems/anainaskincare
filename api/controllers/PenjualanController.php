@@ -68,7 +68,7 @@ class PenjualanController extends Controller {
         //init variable
         $params = $_REQUEST;
         $filter = array();
-        $sort = "penjualan.id ASC";
+        $sort = "penjualan.id DESC";
         $offset = 0;
         $limit = 10;
 

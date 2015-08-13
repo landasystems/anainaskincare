@@ -38,6 +38,7 @@
                             <label class="col-sm-3 control-label">Tanggal Lahir</label>
                             <div class="col-sm-9">
                                 <input st-search="tanggal_lahir" class="form-control"/>
+                                <label>Format Pencarian : yyy/mm/dd <b>contoh </b> 1980-07-30</label>
                             </div>
                         </div>
                         <div class="form-group">
@@ -67,7 +68,7 @@
                         <tr ng-repeat="row in displayed" ng-dblclick="view(row)">
                             <td>{{row.kode}}</td>
                             <td>{{row.nama}}</td>
-                            <td>{{row.tanggal_lahir| date }}</td>
+                            <td>{{row.tanggal_lahir | date }}</td>
                             <td>{{row.no_tlp}}</td>
                             <td>{{row.alamat}}</td>
                             <td>

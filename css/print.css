@@ -92,7 +92,10 @@ span.label{width: 180px;display: inline-table;}
 }
 
 #print{        
+    padding-left: 0px;
     font-size: 18px;        
-    line-height: 9px;
+    /*line-height: 0px;*/
+    margin: 0px;
+    padding: 0px;
     font-family: monospace;        
 }
