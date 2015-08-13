@@ -411,11 +411,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="text-align: right; vertical-align: top;" id="print" align="right">
-                        {{detail.jumlah}} 
-                    </td>
-                    <td id="print" align="right">
-                        x {{detail.harga| number}}
+                    <td style="text-align: right; vertical-align: top;" id="print" align="right" colspan="2">
+                        {{detail.jumlah}} x {{detail.harga| number}}
                         <div ng-if="detail.diskon > 0" id="print">
                             <br>- Disc {{detail.diskon * detail.jumlah}}
                         </div>
@@ -448,7 +445,7 @@
         <table width="100%">
             <tr>
                 <td width="75%" valign="top" align="left" id="print">
-                    <b>Terima Kasih !</b>
+                    <i>Terima Kasih</i>
                 </td>
                 <td align="right" style="font-size: 12pt;" id="print">Kasir<br><br> {{form.user.nama}}</td>
             </tr>
