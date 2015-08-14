@@ -22,6 +22,11 @@ if (isset($filter['tanggal'])) {
 }else {
     $tgl = '';
 }
+if (isset($filter['m_produk.type'])) {
+    $tipe = 'TYPE PRODUK : <b>' . $filter['m_produk.type'] . '</b>';
+} else {
+    $tipe = '';
+}
 ?>
 <style>
     .tabel{
@@ -46,6 +51,7 @@ if (isset($filter['tanggal'])) {
 <center>
     <h3 style="margin: 0px;">LAPORAN NOTA PENJUALAN</h3>
     <p style="margin: 0px;"><?php echo $tgl ?></p>
+    <p style="margin: 0px;"><?php echo $tipe ?></p>
 </center>
 <br>
 <table width="100%" class="tabel">
