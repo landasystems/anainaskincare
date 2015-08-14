@@ -9,9 +9,9 @@ app.controller('l_penjualanCtrl', function($scope, Data, toaster) {
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
         $scope.isLoading = true;
-        var offset = tableState.pagination.start || 0;
-        var limit = tableState.pagination.number || 10;
-        var param = {offset: offset, limit: limit};
+//        var offset = tableState.pagination.start || 0;
+//        var limit = tableState.pagination.number || 10;
+        var param = {};
         if (tableState.sort.predicate) {
             param['sort'] = tableState.sort.predicate;
             param['order'] = tableState.sort.reverse;
@@ -23,7 +23,7 @@ app.controller('l_penjualanCtrl', function($scope, Data, toaster) {
         Data.get('laporanpenjualan/', param).then(function(data) {
             $scope.form = data.detail;
             $scope.displayed = data.data;
-            tableState.pagination.numberOfPages = Math.ceil(data.totalItems / limit);
+//            tableState.pagination.numberOfPages = Math.ceil(data.totalItems / limit);
         });
         $scope.isLoading = false;
     };
