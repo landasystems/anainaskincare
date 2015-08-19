@@ -105,6 +105,7 @@ class KategoriController extends Controller {
         $query = new Query;
         $query->from('m_kategori')
                 ->select("*")
+                ->orderBy('nama ASC')
                 ->where("is_deleted = 0");
 
         $command = $query->createCommand();

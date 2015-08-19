@@ -22,6 +22,12 @@ if (isset($filter['tanggal'])) {
 }else {
     $tgl = '';
 }
+if (isset($filter['m_produk.kategori_id'])) {
+    $kategori = \app\models\Kategori::findOne(['id' => $filter['m_produk.kategori_id']]);
+    $ktg = 'KATEGORI PRODUK : <b>' . strtoupper($kategori['nama']) . '</b>';
+} else {
+    $ktg = '';
+}
 ?>
 <style>
     .tabel{
@@ -46,6 +52,7 @@ if (isset($filter['tanggal'])) {
 <center>
     <h3 style="margin: 0px;">LAPORAN NOTA PENJUALAN</h3>
     <p style="margin: 0px;"><?php echo $tgl ?></p>
+    <p style="margin: 0px;"><?php echo $ktg ?></p>
 </center>
 <br>
 <table width="100%" class="tabel">
@@ -71,9 +78,9 @@ if (isset($filter['tanggal'])) {
             ->join('LEFT JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
             ->join('LEFT JOIN', 'm_produk', 'penjualan_det.produk_id = m_produk.id')
             ->join('LEFT JOIN', 'm_user', 'penjualan.created_by = m_user.id')
-            ->orderBy('penjualan.kode ASC')
-            ->select('m_user.nama as kasir, penjualan.id as id_penjualan, penjualan.tanggal, penjualan.kode, m_customer.nama as customer, m_produk.nama as produk, penjualan_det.jumlah, penjualan_det.harga, penjualan_det.diskon, penjualan_det.sub_total')
-            ->where('m_produk.type = "Barang"');
+            ->orderBy('penjualan.kode DESC')
+            ->select('m_user.nama as kasir, penjualan.id as id_penjualan, penjualan.tanggal, penjualan.kode, m_customer.nama as customer, m_produk.nama as produk, penjualan_det.jumlah, penjualan_det.harga, penjualan_det.diskon, penjualan_det.sub_total');
+
     foreach ($filter as $key => $val) {
         if ($key == 'tanggal') {
             $value = explode(' - ', $val);
@@ -84,10 +91,12 @@ if (isset($filter['tanggal'])) {
             $query->andFilterWhere(['like', $key, $val]);
         }
     }
+
     $command = $query->createCommand();
     $models = $command->queryAll();
     $data = array();
     $total = 0;
+
     foreach ($models as $key => $val) {
         $subTotal = ($val['harga'] * $val['jumlah']) - ($val['diskon'] * $val['jumlah']);
         $total += $subTotal;
