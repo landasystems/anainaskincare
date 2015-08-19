@@ -120,16 +120,17 @@ class BarangController extends Controller {
 
     public function actionGetstok($id) {
         $listStok = array();
-        $cabang = \app\models\Cabang::find()->where(['is_deleted' => 0])->all();
+        session_start();
+        $cabang = $_SESSION['user']['cabang'];
         $n = 1;
         $total = 0;
         foreach ($cabang as $vals) {
             $st = new Barang;
-            $stok = $st->stok($id, $vals->id);
+            $stok = $st->stok($id, $vals['id']);
 
             $listStok[$n]['no'] = $n;
-            $listStok[$n]['id'] = isset($vals->id) ? $vals->id : '-';
-            $listStok[$n]['nama'] = isset($vals->nama) ? $vals->nama : '-';
+            $listStok[$n]['id'] = isset($vals['id']) ? $vals['id'] : '-';
+            $listStok[$n]['nama'] = isset($vals['nama']) ? $vals['nama'] : '-';
             $listStok[$n]['stok'] = $stok;
             $total += $stok;
             $n++;
@@ -253,7 +254,7 @@ class BarangController extends Controller {
         $query = new Query;
         $query->from('m_produk')
                 ->select("m_produk.*")
-                ->where(['is_deleted' => 0,'type' => 'barang'])
+                ->where(['is_deleted' => 0, 'type' => 'barang'])
                 ->andWhere(['like', 'nama', $params['nama']])
                 ->orWhere(['like', 'kode', $params['nama']]);
         $command = $query->createCommand();
@@ -261,6 +262,7 @@ class BarangController extends Controller {
         $this->setHeader(200);
         echo json_encode(array('status' => 1, 'data' => $models));
     }
+
     public function actionCari() {
         $params = $_REQUEST;
         $query = new Query;
