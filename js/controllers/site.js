@@ -10,7 +10,7 @@ app.controller('siteCtrl', function ($scope, Data, toaster, $state) {
             } else {
                 //cek warna di session
                 Data.get('site/session').then(function (data) {
-                    if (typeof data.data.user != "undefined") {
+                    if (typeof data.data.user != "undefined" && data.data.user.settings!=null) {
                         $scope.app.settings = data.data.user.settings;
                     } else { //default warna jika tidak ada setingan
                         $scope.app.settings = {

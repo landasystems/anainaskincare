@@ -132,6 +132,7 @@ class CustomerController extends Controller {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = new Customer();
         $model->attributes = $params;
+        $model->tanggal_lahir = date('Y-m-d',strtotime($params['tanggal_lahir']));
 
         if ($model->save()) {
             $this->setHeader(200);
@@ -146,6 +147,7 @@ class CustomerController extends Controller {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
         $model->attributes = $params;
+        $model->tanggal_lahir = date('Y-m-d',strtotime($params['tanggal_lahir']));
 
         if ($model->save()) {
             $this->setHeader(200);
