@@ -16,6 +16,7 @@
     <ul class="nav navbar-nav">
         <li class="dropdown pos-stc" dropdown>
             <a href class="dropdown-toggle" dropdown-toggle>
+                <i class="glyphicon glyphicon-th-large icon text-info-lter"></i>
                 <span>Data Master</span> 
                 <span class="caret"></span>
             </a>
@@ -77,6 +78,7 @@
         </li>
         <li class="dropdown pos-stc" dropdown>
             <a href class="dropdown-toggle" dropdown-toggle>
+                <i class="glyphicon glyphicon-list-alt icon text-info-lter"></i> 
                 <span>Transaksi</span> 
                 <span class="caret"></span>
             </a>
@@ -137,6 +139,7 @@
         </li>
         <li class="dropdown pos-stc" dropdown>
             <a href class="dropdown-toggle" dropdown-toggle>
+                <i class="glyphicon glyphicon-print icon text-info-lter"></i> 
                 <span>Laporan</span> 
                 <span class="caret"></span>
             </a>
@@ -164,6 +167,9 @@
                                 <ul class="list-unstyled l-h-2x">
                                     <li ng-show="user.akses.laporan_penjualan">
                                         <a ui-sref='laporan.penjualan'><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Penjualan</a>
+                                    </li>
+                                    <li ng-show="user.akses.laporan_barang">
+                                        <a ui-sref='laporan.barang'><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Barang</a>
                                     </li>
                                 </ul>
                             </div>

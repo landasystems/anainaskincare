@@ -919,7 +919,8 @@ body {
 @media (min-width: 768px) {
     .app-aside,
     .navbar-header {
-        width: 200px;
+        width: auto;
+        padding-right: 5px;
     }
     .navbar-collapse,
     .app-content,

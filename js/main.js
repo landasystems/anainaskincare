@@ -46,7 +46,7 @@ angular.module('app')
                     }
                 }
                 $scope.pencarianDet = function ($query) {
-                    $state.go('master.barang', {form: $query});
+                    $state.go('laporan.barang', {form: $query});
                 }
 
                 $scope.logout = function () {
