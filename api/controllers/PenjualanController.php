@@ -222,6 +222,7 @@ class PenjualanController extends Controller {
             $detail[$key]['produk'] = ['id' => $val->produk_id, 'nama' => $namaBarang, 'harga_beli_terakhir' => $hargaBarang, 'harga_jual' => $jualBarang];
             $detail[$key]['terapis'] = ['id' => $val->pegawai_terapis_id, 'nama' => $terapis];
             $detail[$key]['dokter'] = ['id' => $val->pegawai_dokter_id, 'nama' => $dokter];
+            $detail[$key]['diskonpersen'] = ($val->diskon / $val->harga) * 100;
         }
 
 

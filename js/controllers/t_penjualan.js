@@ -39,7 +39,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         });
         $scope.isLoading = false;
     };
-    
+
     $scope.create = function (form) {
         $scope.is_create = true;
         $scope.is_edit = true;
@@ -223,6 +223,15 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         $scope.form.total_harga = total;
         $scope.detail.sub_total = (total - diskon);
     }
+
+    $scope.calcDiskonHarga = function (detail) {
+        detail.diskon = (parseInt(detail.diskonpersen) * parseInt(detail.harga)) / 100;
+    }
+    $scope.calcDiskonPersen = function (detail) {
+        detail.diskonpersen = (parseInt(detail.diskon) / parseInt(detail.harga)) * 100;
+    }
+
+
     $scope.removeRow = function (paramindex) {
         var comArr = eval($scope.detPenjualan);
         $scope.total();
