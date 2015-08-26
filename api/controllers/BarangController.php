@@ -21,6 +21,7 @@ class BarangController extends Controller {
                     'index' => ['get'],
                     'view' => ['get'],
                     'excel' => ['get'],
+                    'excellaporan' => ['get'],
                     'create' => ['post'],
                     'update' => ['post'],
                     'delete' => ['delete'],
@@ -341,6 +342,15 @@ class BarangController extends Controller {
         $command = $query->createCommand();
         $models = $command->queryAll();
         return $this->render("excel", ['models' => $models]);
+    }
+    public function actionExcellaporan() {
+        session_start();
+        $query = $_SESSION['query'];
+        $query->offset("");
+        $query->limit("");
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+        return $this->render("excellaporan", ['models' => $models]);
     }
 
 }

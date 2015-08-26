@@ -137,6 +137,9 @@ app.controller('rolesCtrl', function ($scope, Data, toaster, $state) {
             "laporan_kartustok": false,
             "laporan_bonuskaryawan": false,
             "laporan_labarugi": false,
+            "laporan_kartustatus": false,
+            "laporan_penjualan": false,
+            "laporan_barang": false,
         }
 
         angular.forEach(akses, function ($value, $key) {

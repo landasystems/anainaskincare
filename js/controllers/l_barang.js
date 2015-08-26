@@ -1,4 +1,4 @@
-app.controller('l_barangCtrl', function($scope, Data, toaster, FileUploader, $stateParams) {
+app.controller('l_barangCtrl', function($scope, Data, toaster,  $stateParams) {
 
     //init data;
     var tableStateRef;
@@ -45,7 +45,7 @@ app.controller('l_barangCtrl', function($scope, Data, toaster, FileUploader, $st
 
     $scope.excel = function() {
         Data.get('barang', paramRef).then(function(data) {
-            window.location = 'api/web/barang/excel';
+            window.location = 'api/web/barang/excellaporan';
         });
     }
 
@@ -63,26 +63,7 @@ app.controller('l_barangCtrl', function($scope, Data, toaster, FileUploader, $st
         });
     }
 
-    $scope.create = function (form) {
-        $scope.is_create = true;
-        $scope.is_edit = true;
-        $scope.is_view = false;
-        $scope.formtitle = "Form Tambah Data";
-        $scope.form = {};
-
-        Data.get('site/session').then(function (data) {
-            $scope.listStok = data.data.user.cabang;
-        });
-
-    };
-    $scope.update = function(form) {
-        $scope.is_create = false;
-        $scope.is_edit = true;
-        $scope.is_view = false;
-        $scope.formtitle = "Edit Data : " + form.nama;
-        $scope.form = form;
-        $scope.stok(form.id);
-    };
+    
     $scope.view = function(form) {
         $scope.is_create = false;
         $scope.is_edit = true;
@@ -90,30 +71,6 @@ app.controller('l_barangCtrl', function($scope, Data, toaster, FileUploader, $st
         $scope.formtitle = "Lihat Data : " + form.nama;
         $scope.form = form;
         $scope.stok(form.id);
-    };
-    $scope.save = function (form, stok) {
-        if ($scope.uploader.queue.length > 0) {
-            $scope.uploader.uploadAll();
-            form.foto = kode_unik + "-" + $scope.uploader.queue[0].file.name;
-        } else {
-            form.foto = '';
-        }
-
-        var data = {
-            form: form,
-            stok: stok,
-        }
-
-        var url = ($scope.is_create == true) ? 'barang/create/' : 'barang/update/' + form.id;
-        Data.post(url, data).then(function (result) {
-            if (result.status == 0) {
-                toaster.pop('error', "Terjadi Kesalahan", result.errors);
-            } else {
-                $scope.is_edit = false;
-                $scope.callServer(tableStateRef); //reload grid ulang
-                toaster.pop('success', "Berhasil", "Data berhasil tersimpan");
-            }
-        });
     };
     
     $scope.cancel = function () {

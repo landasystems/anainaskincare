@@ -1,4 +1,4 @@
-<div ng-controller="barangCtrl">
+<div ng-controller="l_barangCtrl">
     <div class="bg-light lter b-b wrapper-md">
         <h1 class="m-n font-thin h3">Laporan - List Barang</h1>
     </div>
@@ -182,7 +182,6 @@
                                 </div>
                                 <div class="col-md-4 col-sm-12">
                                     <img ng-src="img/{{(form.foto) ? 'barang/'+form.foto : 'noimage.jpg'}}" class="img-thumbnail">
-                                    <input type="file" nv-file-select="" uploader="uploader" />
                                 </div>
                                 <div class="line"></div>
                             </tab>
@@ -213,6 +212,9 @@
                                 </table>
                             </tab>
                         </tabset>
+                        <div align="center">
+                            <button type="submit" class="btn btn-default fa fa-arrow-circle-o-left" ng-click="cancel()">&nbsp;Back</button>
+                        </div>
                     </div>
                 </form>
             </div>
