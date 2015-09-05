@@ -33,6 +33,7 @@ class Customer extends \yii\db\ActiveRecord {
             [['alamat'], 'string'],
             [['is_deleted'], 'integer'],
             [['tanggal_lahir'], 'safe'],
+            [['kode'], 'unique'],
             [['kode', 'no_tlp'], 'string', 'max' => 25],
             [['nama', 'email'], 'string', 'max' => 45],
             [['jenis_kelamin'], 'string', 'max' => 15]
