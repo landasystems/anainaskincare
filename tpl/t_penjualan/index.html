@@ -215,6 +215,9 @@
                                                     <ui-select-choices refresh="cariProduk($select.search)" repeat="val in resultsProduk">
                                                         {{val.nama}}
                                                     </ui-select-choices>
+                                                    <ui-select-no-choice>
+                                                        <div style="text-align: center;">There is nothing to show</div>
+                                                    </ui-select-no-choice>
                                                 </ui-select>
                                                 <span class="input-group-btn">
                                                     <button ng-click="detail.produk = undefined" class="btn btn-default">
@@ -282,14 +285,16 @@
                                         <tr>
                                             <td width="40%">     
                                                 <div class="input-group " style="margin:0px;">
-                                                    <input type="text" class="form-control angka" ng-maxlength="2" ng-pattern="/^[0-9]+$/" ng-change="total();calcDiskonHarga(detail)"  ng-model="detail.diskonpersen"  ng-disabled="is_view" ng-readonly="is_create == false">
+                                                    <input type="text" class="form-control angka" ng-maxlength="2" ng-pattern="/^[0-9]+$/" ng-change="total();
+                                                                        calcDiskonHarga(detail)"  ng-model="detail.diskonpersen"  ng-disabled="is_view" ng-readonly="is_create == false">
                                                     <span class="input-group-addon">%</span>
                                                 </div>
                                             </td>
                                             <td width="60%">     
                                                 <div class="input-group " style="margin:0px;">
                                                     <span class="input-group-addon">Rp</span>
-                                                    <input type="text" class="form-control angka" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-change="total();calcDiskonPersen(detail)"  ng-model="detail.diskon"  ng-disabled="is_view" ng-readonly="is_create == false">
+                                                    <input type="text" class="form-control angka" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-change="total();
+                                                                        calcDiskonPersen(detail)"  ng-model="detail.diskon"  ng-disabled="is_view" ng-readonly="is_create == false">
                                                 </div>
                                             </td>
                                         </tr>

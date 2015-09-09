@@ -921,6 +921,7 @@ body {
     .navbar-header {
         width: auto;
         padding-right: 5px;
+        min-width: 200px;
     }
     .navbar-collapse,
     .app-content,

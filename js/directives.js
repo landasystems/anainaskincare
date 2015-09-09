@@ -83,7 +83,7 @@ function printDirective() {
     function printElement(elem) {
         var popupWin = window.open('', '_blank', 'width=1000,height=700');
         popupWin.document.open()
-        popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="css/print.css" /></head><body onload="window.print()">' + elem.innerHTML + '</html>');
+        popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="css/print.css" /></head><body onload="window.print();window.close();">' + elem.innerHTML + '</html>');
         popupWin.document.close();
     }
     return {
