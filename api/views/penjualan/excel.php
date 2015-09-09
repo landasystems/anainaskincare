@@ -11,11 +11,6 @@ $filter = $_SESSION['filter'];
 $start = date("Y-m-d", strtotime($filter['tanggal']['startDate']));
 $end = date("Y-m-d", strtotime($filter['tanggal']['endDate']));
 
-$kategori_id = array();
-foreach ($filter['kategori'] as $val) {
-    $kategori_id[] = $val['id'];
-}
-
 if (isset($filter['cabang'])) {
     $selCabang = \app\models\Cabang::findOne(['id' => $filter['cabang']]);
     $cabang = $selCabang['nama'];
@@ -37,6 +32,11 @@ if (isset($filter['tanggal'])) {
     $tgl = '';
 }
 if (isset($filter['kategori'])) {
+    $kategori_id = array();
+    foreach ($filter['kategori'] as $val) {
+        $kategori_id[] = $val['id'];
+    }
+
     $kategori = \app\models\Kategori::findAll(['id' => $kategori_id]);
     $nmKategori = array();
     foreach ($kategori as $val) {

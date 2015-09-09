@@ -24,6 +24,7 @@ class PenggunaController extends Controller {
                     'delete' => ['delete'],
                     'roles' => ['get'],
                     'profile' => ['get'],
+                    'listkasir' => ['get'],
                 ],
             ]
         ];
@@ -40,7 +41,6 @@ class PenggunaController extends Controller {
         }
         $verb = Yii::$app->getRequest()->getMethod();
         $allowed = array_map('strtoupper', $verbs);
-//        Yii::error($allowed);
 
         if (!in_array($verb, $allowed)) {
 
@@ -52,6 +52,25 @@ class PenggunaController extends Controller {
         return true;
     }
 
+    public function actionListkasir() {
+        //create query
+        $params = $_REQUEST;
+
+        $query = new Query;
+        $query->from('m_user')
+                ->join('JOIN', 'm_roles', 'm_roles.id = m_user.roles_id')
+                ->join('JOIN', 'm_akses_cabang', 'm_akses_cabang.roles_id = m_roles.id')
+                ->where('m_akses_cabang.cabang_id = "' . $params['cabang'] . '"')
+                ->select('m_user.nama, m_user.id');
+
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+
+        $this->setHeader(200);
+
+        echo json_encode(array('status' => 1, 'data' => $models), JSON_PRETTY_PRINT);
+    }
+
     public function actionIndex() {
         //init variable
         $params = $_REQUEST;
@@ -59,8 +78,6 @@ class PenggunaController extends Controller {
         $sort = "m_user.nama ASC";
         $offset = 0;
         $limit = 10;
-        //        Yii::error($params);
-        //limit & offset pagination
         if (isset($params['limit']))
             $limit = $params['limit'];
         if (isset($params['offset']))
@@ -81,7 +98,6 @@ class PenggunaController extends Controller {
         $query = new Query;
         $query->offset($offset)
                 ->limit($limit)
-//                ->select('m_user.id as id', 'm_roles.nama as roles')
                 ->from(['m_user', 'm_roles'])
                 ->where('m_user.roles_id = m_roles.id')
                 ->orderBy($sort)
@@ -110,20 +126,20 @@ class PenggunaController extends Controller {
 
         $model = $this->findModel($id);
         unset($model->password);
-        
+
         $this->setHeader(200);
         echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
     }
+
     public function actionProfile() {
         session_start();
         $id = $_SESSION['user']['id'];
         $model = $this->findModel($id);
         unset($model->password);
-        
+
         $this->setHeader(200);
         echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
     }
-    
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
@@ -146,10 +162,10 @@ class PenggunaController extends Controller {
         $model->attributes = $params;
         if (!empty($params['password'])) {
             $model->password = sha1($model['password']);
-        }else{
+        } else {
             unset($model->password);
         }
-        
+
         if (isset($params['settings'])) {
             $model->settings = json_encode($params['settings']);
         }

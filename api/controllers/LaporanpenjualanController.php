@@ -61,9 +61,18 @@ class LaporanpenjualanController extends Controller {
         $start = date("Y-m-d", strtotime($param['filter']['tanggal']['startDate']));
         $end = date("Y-m-d", strtotime($param['filter']['tanggal']['endDate']));
 
-        $kategori_id = array();
-        foreach ($param['filter']['kategori'] as $val) {
-            $kategori_id[] = $val['id'];
+        if (isset($param['filter']['kategori'])) {
+            $kategori_id = array();
+            foreach ($param['filter']['kategori'] as $val) {
+                $kategori_id[] = $val['id'];
+            }
+        }
+
+        if (isset($param['filter']['kasir'])) {
+            $kasir = array();
+            foreach ($param['filter']['kasir'] as $val) {
+                $kasir[] = $val['id'];
+            }
         }
 
         $query = new Query;
@@ -85,6 +94,8 @@ class LaporanpenjualanController extends Controller {
                     $query->andFilterWhere(['like', 'penjualan.cabang_id', $val]);
                 } else if ($key == 'kategori') {
                     $query->andFilterWhere(['m_produk.kategori_id' => $kategori_id]);
+                } else if ($key == 'kasir') {
+                    $query->andFilterWhere(['penjualan.created_by' => $kasir]);
                 }
             }
         }
@@ -152,8 +163,6 @@ class LaporanpenjualanController extends Controller {
 
         echo json_encode(array('status' => 1, 'detail' => $detail, 'data' => $data, 'totalItems' => $totalItems), JSON_PRETTY_PRINT);
     }
-
-    
 
     private function setHeader($status) {
 

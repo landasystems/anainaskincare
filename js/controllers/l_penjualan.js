@@ -13,6 +13,13 @@ app.controller('l_penjualanCtrl', function($scope, Data, toaster) {
         $scope.listkategori = data.data;
     });
 
+    $scope.listkasir = [];
+    $scope.getKasir = function(cabang_id) {
+        Data.get('pengguna/listkasir', {cabang: cabang_id}).then(function(data) {
+            $scope.listkasir = data.data;
+        });
+    }
+
     $scope.excel = function(form) {
         var param = {};
         param['filter'] = form;
