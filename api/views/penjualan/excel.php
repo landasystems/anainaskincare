@@ -5,16 +5,25 @@ use yii\web\Session;
 
 header("Content-type: application/vnd-ms-excel");
 header("Content-Disposition: attachment; filename=excel-Transaksi-Penjualan.xls");
-if (isset($filter['cabang_id'])) {
-    $selCabang = \app\models\Cabang::findOne(['id' => $filter['cabang_id']]);
+
+$filter = $_SESSION['filter'];
+
+$start = date("Y-m-d", strtotime($filter['tanggal']['startDate']));
+$end = date("Y-m-d", strtotime($filter['tanggal']['endDate']));
+
+if (isset($filter['cabang'])) {
+    $selCabang = \app\models\Cabang::findOne(['id' => $filter['cabang']]);
     $cabang = $selCabang['nama'];
+    $selCabang['alamat'] = '<h5 style="margin: 0px; font-weight: normal">' . $selCabang['alamat'] . '</h5>';
+    $selCabang['no_tlp'] = '<h5 style="margin: 0px; font-weight: normal">' . $selCabang['no_tlp'] . '</h5>';
 } else {
     $cabang = 'SEMUA CABANG';
+    $selCabang['alamat'] = '';
+    $selCabang['no_tlp'] = '';
 }
 if (isset($filter['tanggal'])) {
-    $value = explode(' - ', $filter['tanggal']);
-    $start = date("d-m-Y", strtotime($value[0]));
-    $end = date("d-m-Y", strtotime($value[1]));
+    $start = date("d-m-Y", strtotime($start));
+    $end = date("d-m-Y", strtotime($end));
     if ($start == $end)
         $tgl = 'TANGGAL : ' . $start;
     else
@@ -22,9 +31,19 @@ if (isset($filter['tanggal'])) {
 }else {
     $tgl = '';
 }
-if (isset($filter['m_produk.kategori_id'])) {
-    $kategori = \app\models\Kategori::findOne(['id' => $filter['m_produk.kategori_id']]);
-    $ktg = 'KATEGORI PRODUK : <b>' . strtoupper($kategori['nama']) . '</b>';
+if (isset($filter['kategori'])) {
+    $kategori_id = array();
+    foreach ($filter['kategori'] as $val) {
+        $kategori_id[] = $val['id'];
+    }
+
+    $kategori = \app\models\Kategori::findAll(['id' => $kategori_id]);
+    $nmKategori = array();
+    foreach ($kategori as $val) {
+        $nmKategori[] = strtoupper($val['nama']);
+    }
+    $nama = join(',', $nmKategori);
+    $ktg = 'KATEGORI PRODUK : <b>' . $nama . '</b>';
 } else {
     $ktg = '';
 }
@@ -71,31 +90,13 @@ if (isset($filter['m_produk.kategori_id'])) {
         <td align="center"><b>NO</b></td>
     </tr>
     <?php
-    $query = new Query;
-    $query->from('penjualan')
-            ->join('LEFT JOIN', 'penjualan_det', 'penjualan_det.penjualan_id = penjualan.id')
-            ->join('LEFT JOIN', 'm_cabang', 'penjualan.cabang_id = m_cabang.id')
-            ->join('LEFT JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
-            ->join('LEFT JOIN', 'm_produk', 'penjualan_det.produk_id = m_produk.id')
-            ->join('LEFT JOIN', 'm_user', 'penjualan.created_by = m_user.id')
-            ->orderBy('penjualan.kode DESC')
-            ->select('m_user.nama as kasir, penjualan.id as id_penjualan, penjualan.tanggal, penjualan.kode, m_customer.nama as customer, m_produk.nama as produk, penjualan_det.jumlah, penjualan_det.harga, penjualan_det.diskon, penjualan_det.sub_total');
+    $data = array();
+    $total = 0;
 
-    foreach ($filter as $key => $val) {
-        if ($key == 'tanggal') {
-            $value = explode(' - ', $val);
-            $start = date("Y-m-d", strtotime($value[0]));
-            $end = date("Y-m-d", strtotime($value[1]));
-            $query->andFilterWhere(['between', 'tanggal', $start, $end]);
-        } else {
-            $query->andFilterWhere(['like', $key, $val]);
-        }
-    }
+    $query = $_SESSION['query'];
 
     $command = $query->createCommand();
     $models = $command->queryAll();
-    $data = array();
-    $total = 0;
 
     foreach ($models as $key => $val) {
         $subTotal = ($val['harga'] * $val['jumlah']) - ($val['diskon'] * $val['jumlah']);

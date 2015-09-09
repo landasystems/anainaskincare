@@ -20,7 +20,7 @@ class LaporanpenjualanController extends Controller {
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'index' => ['get'],
+                    'laporan' => ['post'],
                 ],
             ]
         ];
@@ -48,34 +48,33 @@ class LaporanpenjualanController extends Controller {
         return true;
     }
 
-    public function actionIndex() {
+    public function actionLaporan() {
+
         session_start();
 
         //init variable
-        $params = $_REQUEST;
-        $filter = array();
-        $sort = "penjualan.id DESC";
-        $offset = 0;
-        $limit = 10;
+        $param = json_decode(file_get_contents("php://input"), true);
 
-        //limit & offset pagination
-        if (isset($params['limit']))
-            $limit = $params['limit'];
-        if (isset($params['offset']))
-            $offset = $params['offset'];
+        $filter = $param['filter'];
+        $_SESSION['filter'] = $param['filter'];
 
-        //sorting
-        if (isset($params['sort'])) {
-            $sort = $params['sort'];
-            if (isset($params['order'])) {
-                if ($params['order'] == "false")
-                    $sort.=" ASC";
-                else
-                    $sort.=" DESC";
+        $start = date("Y-m-d", strtotime($param['filter']['tanggal']['startDate']));
+        $end = date("Y-m-d", strtotime($param['filter']['tanggal']['endDate']));
+
+        if (isset($param['filter']['kategori'])) {
+            $kategori_id = array();
+            foreach ($param['filter']['kategori'] as $val) {
+                $kategori_id[] = $val['id'];
             }
         }
 
-        //create query
+        if (isset($param['filter']['kasir'])) {
+            $kasir = array();
+            foreach ($param['filter']['kasir'] as $val) {
+                $kasir[] = $val['id'];
+            }
+        }
+
         $query = new Query;
         $query->from('penjualan')
                 ->join('LEFT JOIN', 'penjualan_det', 'penjualan_det.penjualan_id = penjualan.id')
@@ -86,32 +85,30 @@ class LaporanpenjualanController extends Controller {
                 ->orderBy('penjualan.kode DESC')
                 ->select('m_user.nama as kasir, penjualan.id as id_penjualan, penjualan.tanggal, penjualan.kode, m_customer.nama as customer, m_produk.nama as produk, penjualan_det.jumlah, penjualan_det.harga, penjualan_det.diskon, penjualan_det.sub_total');
 
-        //filter
-        if (isset($params['filter'])) {
-            $filter = (array) json_decode($params['filter']);
+        if (isset($param['filter'])) {
+            $filter = $param['filter'];
             foreach ($filter as $key => $val) {
-                if ($key != 'm_produk.type') {
-                    if ($key == 'tanggal') {
-                        $value = explode(' - ', $val);
-                        $start = date("Y-m-d", strtotime($value[0]));
-                        $end = date("Y-m-d", strtotime($value[1]));
-                        $query->andFilterWhere(['between', 'tanggal', $start, $end]);
-                    } else {
-                        $query->andFilterWhere(['like', $key, $val]);
-                    }
+                if ($key == 'tanggal') {
+                    $query->andFilterWhere(['between', 'tanggal', $start, $end]);
+                } else if ($key == 'cabang') {
+                    $query->andFilterWhere(['like', 'penjualan.cabang_id', $val]);
+                } else if ($key == 'kategori') {
+                    $query->andFilterWhere(['m_produk.kategori_id' => $kategori_id]);
+                } else if ($key == 'kasir') {
+                    $query->andFilterWhere(['penjualan.created_by' => $kasir]);
                 }
             }
         }
 
-        $_SESSION['query'] = $filter;
+        $_SESSION['query'] = $query;
 
         $command = $query->createCommand();
         $models = $command->queryAll();
 
         $detail = array();
 
-        if (isset($filter['cabang_id'])) {
-            $selCabang = \app\models\Cabang::findOne(['id' => $filter['cabang_id']]);
+        if (isset($filter['cabang'])) {
+            $selCabang = \app\models\Cabang::findOne(['id' => $filter['cabang']]);
             $detail['cabang'] = $selCabang['nama'];
             $detail['alamat'] = '<h5 style="margin: 0px; font-weight: normal">' . $selCabang['alamat'] . '</h5>';
             $detail['no_tlp'] = '<h5 style="margin: 0px; font-weight: normal">' . $selCabang['no_tlp'] . '</h5>';
@@ -121,9 +118,8 @@ class LaporanpenjualanController extends Controller {
             $detail['no_tlp'] = '';
         }
         if (isset($filter['tanggal'])) {
-            $value = explode(' - ', $filter['tanggal']);
-            $start = date("d-m-Y", strtotime($value[0]));
-            $end = date("d-m-Y", strtotime($value[1]));
+            $start = date("d-m-Y", strtotime($start));
+            $end = date("d-m-Y", strtotime($end));
             if ($start == $end)
                 $detail['tgl'] = 'TANGGAL : ' . $start;
             else
@@ -131,9 +127,14 @@ class LaporanpenjualanController extends Controller {
         }else {
             $tgl = '';
         }
-        if (isset($filter['m_produk.kategori_id'])) {
-            $kategori = \app\models\Kategori::findOne(['id' => $filter['m_produk.kategori_id']]);
-            $detail['kategori'] = 'KATEGORI PRODUK : <b>' . $kategori['nama'] . '</b>';
+        if (isset($filter['kategori'])) {
+            $kategori = \app\models\Kategori::findAll(['id' => $kategori_id]);
+            $nmKategori = array();
+            foreach ($kategori as $val) {
+                $nmKategori[] = strtoupper($val['nama']);
+            }
+            $nama = join(',', $nmKategori);
+            $detail['kategori'] = 'KATEGORI PRODUK : <b>' . $nama . '</b>';
         } else {
             $detail['kategori'] = '';
         }
@@ -153,7 +154,7 @@ class LaporanpenjualanController extends Controller {
             $data[$val['id_penjualan']]['diskon'] = isset($data[$val['id_penjualan']]['diskon']) ? $data[$val['id_penjualan']]['diskon'] . '<br>' . $val['diskon'] : $val['diskon'];
             $data[$val['id_penjualan']]['sub_total'] = isset($data[$val['id_penjualan']]['sub_total']) ? $data[$val['id_penjualan']]['sub_total'] . '<br>' . $subTotal : $subTotal;
         }
-        
+
         $detail['total'] = $total;
 
         $totalItems = count($models);
@@ -161,12 +162,6 @@ class LaporanpenjualanController extends Controller {
         $this->setHeader(200);
 
         echo json_encode(array('status' => 1, 'detail' => $detail, 'data' => $data, 'totalItems' => $totalItems), JSON_PRETTY_PRINT);
-    }
-
-    public function actionExcel() {
-        session_start();
-        $filter = $_SESSION['query'];
-        return $this->render("excel", ['filter' => $filter]);
     }
 
     private function setHeader($status) {

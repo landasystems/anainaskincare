@@ -387,6 +387,16 @@ angular.module('app')
                                             }]
                                     }
                                 })
+//                                .state('laporan.penjualan', {
+//                                    url: '/lpenjualan',
+//                                    templateUrl: 'tpl/l_penjualan/index.html',
+//                                    resolve: {
+//                                        deps: ['$ocLazyLoad',
+//                                            function ($ocLazyLoad) {
+//                                                return $ocLazyLoad.load('js/controllers/l_penjualan.js');
+//                                            }]
+//                                    }
+//                                })
                                 .state('laporan.penjualan', {
                                     url: '/lpenjualan',
                                     templateUrl: 'tpl/l_penjualan/index.html',
