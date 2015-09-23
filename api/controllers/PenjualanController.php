@@ -99,7 +99,7 @@ class PenjualanController extends Controller {
                 ->join('LEFT JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
                 ->select('m_cabang.nama as cabang, m_customer.nama as customer, penjualan.kode as kode, penjualan.tanggal as tanggal,
                     penjualan.keterangan as keterangan, penjualan.total as total, penjualan.cash as cash, penjualan.credit as credit, penjualan.status as status,
-                    penjualan.kode as kode, penjualan.id as id,  penjualan.customer_id as customer_id, penjualan.cabang_id as cabang_id,
+                    penjualan.kode as kode, penjualan.id as id,  penjualan.customer_id as customer_id, penjualan.cabang_id as cabang_id,penjualan.atm,
                     m_customer.no_tlp as no_tlp, m_customer.email as email, m_customer.alamat as alamat')
                 ->where(['penjualan.cabang_id' => $_SESSION['user']['cabang_id']]);
 

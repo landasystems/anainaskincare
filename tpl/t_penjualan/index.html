@@ -333,6 +333,15 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th colspan="5" style="text-align: right;">ATM :&nbsp;</th>
+                                    <td colspan="2" style="width:135px;">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Rp</span>
+                                            <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" ng-model="form.atm" ng-disabled="is_view" required>
+                                        </div>  
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th colspan="5" style="text-align: right;">Cash :&nbsp;</th>
                                     <td colspan="2" style="width:135px;">
                                         <div class="input-group">
@@ -355,7 +364,7 @@
                                     <td colspan="2" style="width:135px;">
                                         <div class="input-group">
                                             <span class="input-group-addon">Rp</span>
-                                            <input type="text" class="form-control angka" ng-readonly="true" ng-disabled="is_view" value="{{((form.cash * 1 + form.credit * 1) - form.total) | number}}">
+                                            <input type="text" class="form-control angka" ng-readonly="true" ng-disabled="is_view" value="{{((form.cash * 1 + form.credit * 1 + form.atm *1) - form.total) | number}}">
                                         </div> 
                                     </td>
                                 </tr>
@@ -450,6 +459,10 @@
                 <td align="right" id="print">{{form.total| number}}</td>
             </tr>
             <tr>
+                <td align="right" id="print" colspan="2"><b>ATM (Rp)</b></td>
+                <td align="right" id="print">{{form.atm| number}}</td>
+            </tr>
+            <tr>
                 <td align="right" id="print" colspan="2"><b>Cash (Rp)</b></td>
                 <td align="right" id="print">{{form.cash| number}}</td>
             </tr>
@@ -459,7 +472,7 @@
             </tr>
             <tr>
                 <td align="right" id="print" colspan="2"><b>Kembali (Rp)</b></td>
-                <td align="right" id="print">{{((form.cash * 1 + form.credit * 1) - form.total | number)}}</td>
+                <td align="right" id="print">{{((form.cash * 1 + form.credit * 1 + form.atm * 1) - form.total | number)}}</td>
             </tr>
         </table>
 

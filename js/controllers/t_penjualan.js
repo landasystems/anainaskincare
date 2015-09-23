@@ -48,6 +48,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         $scope.form = {};
         $scope.form.credit = "0";
         $scope.form.cash = "0";
+        $scope.form.atm = "0";
         $scope.form.status = 'Selesai',
                 $scope.retrive = {};
         $scope.detPenjualan = [
