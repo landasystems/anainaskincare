@@ -82,8 +82,8 @@ class LaporanpenjualanController extends Controller {
                 ->join('LEFT JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
                 ->join('LEFT JOIN', 'm_produk', 'penjualan_det.produk_id = m_produk.id')
                 ->join('LEFT JOIN', 'm_user', 'penjualan.created_by = m_user.id')
-                ->orderBy('penjualan.kode DESC')
-                ->select('m_user.nama as kasir, penjualan.id as id_penjualan, penjualan.tanggal, penjualan.kode, m_customer.nama as customer, m_produk.nama as produk, penjualan_det.jumlah, penjualan_det.harga, penjualan_det.diskon, penjualan_det.sub_total');
+                ->orderBy('penjualan.kode')
+                ->select('m_user.nama as kasir, penjualan.id as id_penjualan, penjualan.tanggal, penjualan.kode, penjualan.cash, penjualan.credit, penjualan.atm, m_customer.nama as customer, m_produk.nama as produk, penjualan_det.jumlah, penjualan_det.harga, penjualan_det.diskon, penjualan_det.sub_total');
 
         if (isset($param['filter'])) {
             $filter = $param['filter'];
@@ -141,11 +141,27 @@ class LaporanpenjualanController extends Controller {
 
         $data = array();
         $total = 0;
+        $totalDiskon = 0;
+        $totalCash = 0;
+        $totalCredit = 0;
+        $totalAtm = 0;
+        $tempKode = '';
         foreach ($models as $key => $val) {
             $subTotal = ($val['harga'] * $val['jumlah']) - ($val['diskon'] * $val['jumlah']);
             $total += $subTotal;
+            $totalDiskon += $val['diskon'];
+            
+            if ($tempKode != $val['kode']) {
+                $totalCash += $val['cash'];
+                $totalCredit += $val['credit'];
+                $totalAtm += $val['atm'];
+                $tempKode = $val['kode'];
+            }
             $data[$val['id_penjualan']]['tanggal'] = date("d-m-Y", strtotime($val['tanggal']));
             $data[$val['id_penjualan']]['kode'] = $val['kode'];
+            $data[$val['id_penjualan']]['cash'] = $val['cash'];
+            $data[$val['id_penjualan']]['credit'] = $val['credit'];
+            $data[$val['id_penjualan']]['atm'] = $val['atm'];
             $data[$val['id_penjualan']]['customer'] = $val['customer'];
             $data[$val['id_penjualan']]['kasir'] = empty($val['kasir']) ? '-' : $val['kasir'];
             $data[$val['id_penjualan']]['produk'] = isset($data[$val['id_penjualan']]['produk']) ? $data[$val['id_penjualan']]['produk'] . '<br>' . strtoupper($val['produk']) : strtoupper($val['produk']);
@@ -155,7 +171,11 @@ class LaporanpenjualanController extends Controller {
             $data[$val['id_penjualan']]['sub_total'] = isset($data[$val['id_penjualan']]['sub_total']) ? $data[$val['id_penjualan']]['sub_total'] . '<br>' . $subTotal : $subTotal;
         }
 
+        $detail['totalCash'] = $totalCash;
+        $detail['totalCredit'] = $totalCredit;
+        $detail['totalAtm'] = $totalAtm;
         $detail['total'] = $total;
+        $detail['totalDiskon'] = $totalDiskon;
 
         $totalItems = count($models);
 

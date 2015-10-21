@@ -1,3 +1,19 @@
+/*export excel */
+var saveExcel = (function () {
+    var a = document.createElement("a");
+    document.body.appendChild(a);
+    a.style = "display: none";
+    return function (data, fileName) {
+        var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+        var url = window.URL.createObjectURL(blob);
+
+        a.href = url;
+        a.download = fileName;
+        a.click();
+        window.URL.revokeObjectURL(url);
+    };
+}());
+
 /* loader ajax */
 angular.module('app')
         .directive('uiButterbar', ['$rootScope', '$anchorScroll', function ($rootScope, $anchorScroll) {
@@ -26,6 +42,18 @@ angular.module('app')
                     return $sce.trustAsHtml(text);
                 };
             }]);
+
+/* datetime to date object */
+angular.module('app')
+        .filter("asDate", function () {
+            return function (input) {
+                if (input == "" || input == null) {
+                    return "";
+                } else {
+                    return new Date(input);
+                }
+            }
+        });
 
 /*pagination text*/
 angular.module('app')
