@@ -83,7 +83,7 @@ class LaporanpenjualanController extends Controller {
                 ->join('LEFT JOIN', 'm_produk', 'penjualan_det.produk_id = m_produk.id')
                 ->join('LEFT JOIN', 'm_user', 'penjualan.created_by = m_user.id')
                 ->orderBy('penjualan.tanggal ASC')
-                ->select('m_user.nama as kasir, penjualan.id as id_penjualan, penjualan.tanggal, penjualan.kode, m_customer.nama as customer, m_produk.nama as produk, penjualan_det.jumlah, penjualan_det.harga, penjualan_det.diskon, penjualan_det.sub_total');
+                ->select('m_user.nama as kasir, penjualan.id as id_penjualan, penjualan.tanggal, penjualan.kode, penjualan.cash, penjualan.credit, penjualan.atm, m_customer.nama as customer, m_produk.nama as produk, penjualan_det.jumlah, penjualan_det.harga, penjualan_det.diskon, penjualan_det.sub_total');
 
         if (isset($param['filter'])) {
             $filter = $param['filter'];
@@ -150,25 +150,25 @@ class LaporanpenjualanController extends Controller {
             $subTotal = ($val['harga'] * $val['jumlah']) - ($val['diskon'] * $val['jumlah']);
             $total += $subTotal;
             $totalDiskon += $val['diskon'];
-            
+
             if ($tempKode != $val['kode']) {
                 $totalCash += $val['cash'];
                 $totalCredit += $val['credit'];
                 $totalAtm += $val['atm'];
                 $tempKode = $val['kode'];
             }
-            $data[$val['id_penjualan']]['tanggal'] = date("d-m-Y", strtotime($val['tanggal']));
-            $data[$val['id_penjualan']]['kode'] = $val['kode'];
-            $data[$val['id_penjualan']]['cash'] = $val['cash'];
-            $data[$val['id_penjualan']]['credit'] = $val['credit'];
-            $data[$val['id_penjualan']]['atm'] = $val['atm'];
-            $data[$val['id_penjualan']]['customer'] = $val['customer'];
-            $data[$val['id_penjualan']]['kasir'] = empty($val['kasir']) ? '-' : $val['kasir'];
-            $data[$val['id_penjualan']]['produk'] = isset($data[$val['id_penjualan']]['produk']) ? $data[$val['id_penjualan']]['produk'] . '<br>' . strtoupper($val['produk']) : strtoupper($val['produk']);
-            $data[$val['id_penjualan']]['jumlah'] = isset($data[$val['id_penjualan']]['jumlah']) ? $data[$val['id_penjualan']]['jumlah'] . '<br>' . $val['jumlah'] : $val['jumlah'];
-            $data[$val['id_penjualan']]['harga'] = isset($data[$val['id_penjualan']]['harga']) ? $data[$val['id_penjualan']]['harga'] . '<br>' . $val['harga'] : $val['harga'];
-            $data[$val['id_penjualan']]['diskon'] = isset($data[$val['id_penjualan']]['diskon']) ? $data[$val['id_penjualan']]['diskon'] . '<br>' . $val['diskon'] : $val['diskon'];
-            $data[$val['id_penjualan']]['sub_total'] = isset($data[$val['id_penjualan']]['sub_total']) ? $data[$val['id_penjualan']]['sub_total'] . '<br>' . $subTotal : $subTotal;
+            $data[$key]['tanggal'] = date("d-m-Y", strtotime($val['tanggal']));
+            $data[$key]['kode'] = $val['kode'];
+            $data[$key]['cash'] = $val['cash'];
+            $data[$key]['credit'] = $val['credit'];
+            $data[$key]['atm'] = $val['atm'];
+            $data[$key]['customer'] = $val['customer'];
+            $data[$key]['kasir'] = empty($val['kasir']) ? '-' : $val['kasir'];
+            $data[$key]['produk'] = isset($data[$val['id_penjualan']]['produk']) ? $data[$val['id_penjualan']]['produk'] . '<br>' . strtoupper($val['produk']) : strtoupper($val['produk']);
+            $data[$key]['jumlah'] = isset($data[$val['id_penjualan']]['jumlah']) ? $data[$val['id_penjualan']]['jumlah'] . '<br>' . $val['jumlah'] : $val['jumlah'];
+            $data[$key]['harga'] = isset($data[$val['id_penjualan']]['harga']) ? $data[$val['id_penjualan']]['harga'] . '<br>' . $val['harga'] : $val['harga'];
+            $data[$key]['diskon'] = isset($data[$val['id_penjualan']]['diskon']) ? $data[$val['id_penjualan']]['diskon'] . '<br>' . $val['diskon'] : $val['diskon'];
+            $data[$key]['sub_total'] = isset($data[$val['id_penjualan']]['sub_total']) ? $data[$val['id_penjualan']]['sub_total'] . '<br>' . $subTotal : $subTotal;
         }
 
         $detail['totalCash'] = $totalCash;

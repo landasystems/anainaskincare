@@ -24,9 +24,52 @@ class CustomerController extends Controller {
                     'update' => ['post'],
                     'delete' => ['delete'],
                     'cari' => ['get'],
+                    'upload' => ['post'],
+                    'removegambar' => ['post'],
                 ],
             ]
         ];
+    }
+
+    public function actionUpload() {
+        if (!empty($_FILES)) {
+            $tempPath = $_FILES['file']['tmp_name'];
+            $newName = \Yii::$app->landa->urlParsing($_FILES['file']['name']);
+
+            $uploadPath = \Yii::$app->params['pathImg'] . $_GET['folder'] . DIRECTORY_SEPARATOR . $newName;
+
+            move_uploaded_file($tempPath, $uploadPath);
+            $a = \Yii::$app->landa->createImg($_GET['folder'] . '/', $newName, $_POST['kode']);
+
+            $answer = array('answer' => 'File transfer completed', 'name' => $newName);
+            if ($answer['answer'] == "File transfer completed") {
+                $customer = Customer::find()->where('kode = "' . $_POST['kode'] . '"')->one();
+                $foto = json_decode($customer->foto, true);
+                $foto[] = array('name' => $newName);
+                $customer->foto = json_encode($foto);
+                $customer->save();
+            }
+
+            echo json_encode($answer);
+        } else {
+            echo 'No files';
+        }
+    }
+
+    public function actionRemovegambar() {
+        $params = json_decode(file_get_contents("php://input"), true);
+        $customer = Customer::find()->where('kode = "' . $params['kode'] . '"')->one();
+        $foto = json_decode($customer->foto, true);
+        foreach ($foto as $key => $val) {
+            if ($val['name'] == $params['nama']) {
+                unset($foto[$key]);
+                \Yii::$app->landa->deleteImg('barang/', $params['kode'], $params['nama']);
+            }
+        }
+        $customer->foto = json_encode($foto);
+        $customer->save();
+
+        echo json_encode($foto);
     }
 
     public function beforeAction($event) {
@@ -50,14 +93,14 @@ class CustomerController extends Controller {
 
         return true;
     }
-    
+
     public function actionCari() {
         $params = $_REQUEST;
         $query = new Query;
         $query->from('m_customer')
                 ->select("*")
                 ->andWhere(['like', 'nama', $params['nama']])
-                ->orWhere(['like','kode',$params['nama']]);
+                ->orWhere(['like', 'kode', $params['nama']]);
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -107,7 +150,7 @@ class CustomerController extends Controller {
                 $query->andFilterWhere(['like', $key, $val]);
             }
         }
-        
+
         session_start();
         $_SESSION['query'] = $query;
 
@@ -115,9 +158,15 @@ class CustomerController extends Controller {
         $models = $command->queryAll();
         $totalItems = $query->count();
 
+        $data = array();
+        foreach ($models as $key => $val) {
+            $data[$key] = $val;
+            $data[$key]['foto'] = json_decode($val['foto'], true);
+        }
+
         $this->setHeader(200);
 
-        echo json_encode(array('status' => 1, 'data' => $models, 'totalItems' => $totalItems), JSON_PRETTY_PRINT);
+        echo json_encode(array('status' => 1, 'data' => $data, 'totalItems' => $totalItems), JSON_PRETTY_PRINT);
     }
 
     public function actionView($id) {
@@ -132,7 +181,7 @@ class CustomerController extends Controller {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = new Customer();
         $model->attributes = $params;
-        $model->tanggal_lahir = date('Y-m-d',strtotime($params['tanggal_lahir']));
+        $model->tanggal_lahir = date('Y-m-d', strtotime($params['tanggal_lahir']));
 
         if ($model->save()) {
             $this->setHeader(200);
@@ -147,7 +196,7 @@ class CustomerController extends Controller {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = $this->findModel($id);
         $model->attributes = $params;
-        $model->tanggal_lahir = date('Y-m-d',strtotime($params['tanggal_lahir']));
+        $model->tanggal_lahir = date('Y-m-d', strtotime($params['tanggal_lahir']));
 
         if ($model->save()) {
             $this->setHeader(200);
@@ -204,15 +253,15 @@ class CustomerController extends Controller {
         );
         return (isset($codes[$status])) ? $codes[$status] : '';
     }
-    
-     public function actionExcel() {
+
+    public function actionExcel() {
         session_start();
         $query = $_SESSION['query'];
         $query->offset("");
         $query->limit("");
         $command = $query->createCommand();
         $models = $command->queryAll();
-        return $this->render("excel", ['models'=>$models]);
+        return $this->render("excel", ['models' => $models]);
     }
 
 }

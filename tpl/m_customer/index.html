@@ -68,7 +68,7 @@
                         <tr ng-repeat="row in displayed" ng-dblclick="view(row)">
                             <td>{{row.kode}}</td>
                             <td>{{row.nama}}</td>
-                            <td>{{row.tanggal_lahir | date }}</td>
+                            <td>{{row.tanggal_lahir| date }}</td>
                             <td>{{row.no_tlp}}</td>
                             <td>{{row.alamat}}</td>
                             <td>
@@ -105,73 +105,177 @@
             </div>
             <div class="panel-body">
                 <form name="landaform" class="form-horizontal form-validation ">
-                    <table style="width: 100%">
-                        <tr>
-                            <td style="width:55%;">
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">No. Register</label>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control" ng-model="form.kode" ng-disabled="is_view" ng-readonly="is_create == false" required>
+                    <tabset class="tab-container">
+                        <tab>
+                            <tab-heading>
+                                Data Customer
+                            </tab-heading>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td style="width:55%;">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">No. Register</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" ng-model="form.kode" ng-disabled="is_view" ng-readonly="is_create == false" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Nama Customer</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" ng-model="form.nama" ng-disabled="is_view" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Tanggal Lahir</label>
+                                            <div class="col-sm-6">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="form.tanggal_lahir" is-open="opened1" ng-click="open1($event)"/>
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-calendar-o"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Jenis Kelamin</label>
+                                            <div class="col-sm-6">
+                                                <div class="btn-group m-r">
+                                                    <label class="btn btn-default" ng-model="form.jenis_kelamin" btn-radio="'laki-laki'" required>Laki-laki</label>
+                                                    <label class="btn btn-default" ng-model="form.jenis_kelamin" btn-radio="'perempuan'" required>Perempuan</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Alamat</label>
+                                            <div class="col-sm-6">
+                                                <textarea class="form-control" ng-model="form.alamat" ng-disabled="is_view"></textarea>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="vertical-align: top">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">No. Telepon</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control" ng-model="form.no_tlp" ng-disabled="is_view" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Email</label>
+                                            <div class="col-sm-7">
+                                                <input type="email" class="form-control" ng-model="form.email" ng-disabled="is_view">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Status</label>
+                                            <div class="col-sm-7">
+                                                <div class="btn-group m-r">
+                                                    <label class="btn btn-default" ng-model="form.is_deleted" btn-radio="'0'" required>Aktif</label>
+                                                    <label class="btn btn-default" ng-model="form.is_deleted" btn-radio="'1'" required>Terhapus</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </tab>
+                        <tab>
+                            <tab-heading>
+                                Foto Customer
+                            </tab-heading>
+                            <div class="hbox hbox-auto-xs hbox-auto-sm"nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
+                                <div class="row" ng-show="!is_view">
+                                    <div class="col-md-4">
+                                        <div class="wrapper-md dker b-b">
+                                            <h3 class="m-n font-thin">Select files</h3>
+                                        </div>
+                                        <div class="wrapper-md">      
+                                            <div ng-show="uploader.isHTML5" class="m-b-md">
+                                                <div class="b-a b-2x b-dashed wrapper-lg bg-white text-center m-b" nv-file-over="" over-class="b-info" uploader="uploader">
+                                                    Drop Gambar
+                                                </div>
+                                            </div>
+
+                                            <p>Pilih Gambar</p>
+                                            <input type="file" nv-file-select="" uploader="uploader" multiple  />
+
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Nama Customer</label>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control" ng-model="form.nama" ng-disabled="is_view" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Tanggal Lahir</label>
-                                    <div class="col-sm-6">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="form.tanggal_lahir" is-open="opened1" ng-click="open1($event)"/>
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-calendar-o"></i>
-                                            </span>
+                                    <div class="col-md-8">
+                                        <div class="wrapper-md">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="50%">Name</th>
+                                                        <th ng-show="uploader.isHTML5">Size</th>
+                                                        <th ng-show="uploader.isHTML5">Progress</th>
+                                                        <th>Status</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in uploader.queue">
+                                                        <td><strong>{{ item.file.name}}</strong></td>
+                                                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size / 1024 / 1024|number:2 }} MB</td>
+                                                        <td ng-show="uploader.isHTML5">
+                                                            <div class="progress progress-sm m-b-none m-t-xs">
+                                                                <div class="progress-bar bg-info" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span ng-show="item.isSuccess" class="text-success"><i class="glyphicon glyphicon-ok"></i></span>
+                                                            <span ng-show="item.isCancel" class="text-warning"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                                            <span ng-show="item.isError" class="text-danger"><i class="glyphicon glyphicon-remove"></i></span>
+                                                        </td>
+                                                        <td nowrap>
+                                                            <button type="button" class="btn btn-default btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                                                Upload
+                                                            </button>
+                                                            <button type="button" class="btn btn-default btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+                                                                Cancel
+                                                            </button>
+                                                            <button type="button" class="btn btn-default btn-xs" ng-click="item.remove()">
+                                                                Remove
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div>
+                                                <div>
+                                                    <p>Proses Upload:</p>
+                                                    <div class="progress bg-light dker" style="">
+                                                        <div class="progress-bar progress-bar-striped bg-info" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="btn btn-addon btn-success" ng-click="uploadGambar(form.kd_barang)" ng-disabled="!uploader.getNotUploadedItems().length">
+                                                    <i class="fa fa-arrow-circle-o-up"></i> Upload all
+                                                </button>
+                                                <button type="button" class="btn btn-addon btn-warning" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+                                                    <i class="fa fa-ban"></i> Cancel all
+                                                </button>
+                                                <button type="button" class="btn btn-addon btn-danger" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                                                    <i class="fa fa-trash-o"></i> Remove all
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Jenis Kelamin</label>
-                                    <div class="col-sm-6">
-                                        <div class="btn-group m-r">
-                                            <label class="btn btn-default" ng-model="form.jenis_kelamin" btn-radio="'laki-laki'" required>Laki-laki</label>
-                                            <label class="btn btn-default" ng-model="form.jenis_kelamin" btn-radio="'perempuan'" required>Perempuan</label>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="wrapper-md dker b-b" style="margin-bottom: 25px;">
+                                            <h3 class="m-n font-thin">Detail Foto</h3>
+                                        </div>
+                                        <div ng-repeat="slide in gambar" class="col-md-2 m-b repeat-animation hide-fade">
+                                            <a href="" ng-click="modal(form.kode, slide.name)"><img ng-src="img/customer/{{form.kode}}-150x150-{{slide.name}}" class="img-thumbnail"></a>
+                                            <p align="center" style="padding:10px;" ng-show="!is_view">
+                                                <a href="" ng-click="removeFoto($index, slide.name)"><i class="btn btn-danger fa fa-trash" title="Hapus"></i></a>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Alamat</label>
-                                    <div class="col-sm-6">
-                                        <textarea class="form-control" ng-model="form.alamat" ng-disabled="is_view"></textarea>
-                                    </div>
-                                </div>
-                            </td>
-                            <td style="vertical-align: top">
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">No. Telepon</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" ng-model="form.no_tlp" ng-disabled="is_view" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Email</label>
-                                    <div class="col-sm-7">
-                                        <input type="email" class="form-control" ng-model="form.email" ng-disabled="is_view">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Status</label>
-                                    <div class="col-sm-7">
-                                        <div class="btn-group m-r">
-                                            <label class="btn btn-default" ng-model="form.is_deleted" btn-radio="'0'" required>Aktif</label>
-                                            <label class="btn btn-default" ng-model="form.is_deleted" btn-radio="'1'" required>Terhapus</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
+                            </div>
+                        </tab>
+                    </tabset>
                     <br><br>
                     <center style="width: 100%">
                         <div class="form-group">

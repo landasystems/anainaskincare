@@ -4,6 +4,8 @@ app.factory("Data", ['$http', '$location',
 
         var obj = {};
 
+        obj.base = serviceBase;
+
         obj.get = function (q, object) {
             return $http.get(serviceBase + q, {
                 params: object

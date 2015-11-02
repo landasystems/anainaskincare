@@ -1,8 +1,7 @@
 <?php
 
-namespace common\components;
- 
- 
+namespace app\components;
+
 use Yii;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
@@ -18,7 +17,7 @@ class LandaCore extends Component {
         'ï¿½' => 'i', 'ï¿½' => 'o', 'ï¿½' => 'n', 'ï¿½' => 'o', 'ï¿½' => 'o', 'ï¿½' => 'o', 'ï¿½' => 'o', 'ï¿½' => 'o', 'ï¿½' => 'o', 'ï¿½' => 'u',
         'ï¿½' => 'u', 'ï¿½' => 'u', 'ï¿½' => 'u', 'ï¿½' => 'y', 'ï¿½' => 'y', 'ï¿½' => 'b', 'ï¿½' => 'y', 'ï¿½' => 'f'
     );
-    
+
     public function array_orderby() {
         $args = func_get_args();
         $data = array_shift($args);
@@ -57,19 +56,15 @@ class LandaCore extends Component {
         if (empty($filename) || empty($id)) {
             return array('small' => bu('img/150x150-noimage.jpg'), 'medium' => bu('img/350x350-noimage.jpg'), 'big' => bu('img/700x700-noimage.jpg'));
         } else {
-            return array('small' => bu('images/'.$path . $id . '-150x150-' . $filename), 'medium' => bu('images/'.$path . $id . '-350x350-' . $filename), 'big' => bu('images/'.$path . $id . '-700x700-' . $filename));
+            return array('small' => bu('images/' . $path . $id . '-150x150-' . $filename), 'medium' => bu('images/' . $path . $id . '-350x350-' . $filename), 'big' => bu('images/' . $path . $id . '-700x700-' . $filename));
         }
     }
 
-    public function createImg($path, $filename, $id, $crop = false) {
-        //trace(param('pathImg') . $path . $filename);
-        // create thumb image
-        Yii::import('common.extensions.image.Image');
-
+    public function createImg($path, $filename, $id, $proporsional = false) {
         $newFileName = $this->urlParsing($filename);
-        $small = param('pathImg') . $path . $id . '-150x150-' . $newFileName;
-        $medium = param('pathImg') . $path . $id . '-350x350-' . $newFileName;
-        $big = param('pathImg') . $path . $id . '-700x700-' . $newFileName;
+        $small = \Yii::$app->params['pathImg'] . $path . $id . '-150x150-' . $newFileName;
+        $medium = \Yii::$app->params['pathImg'] . $path . $id . '-350x350-' . $newFileName;
+        $big = \Yii::$app->params['pathImg'] . $path . $id . '-700x700-' . $newFileName;
         //delete file, if any
         if (file_exists($small))
             unlink($small);
@@ -78,41 +73,29 @@ class LandaCore extends Component {
         if (file_exists($big))
             unlink($big);
 
-        //Yii::log('images/' . $path . $id . '-700x700-' . $newFileName, 'info');
-        $image = new Image(param('pathImg') . $path . $filename);
-        $image->smart_resize(150, 150, $crop);
-        $image->save($small);
-        $image->smart_resize(350, 350, $crop);
-        $image->save($medium);
-//        $image->smart_resize(700,700);
-//        $image->save('images/' . $path . $id . '-700x700-' . $newFileName);
-        $image->resize(700, 700, Image::WIDTH)->quality(80);
-        $image->save($big);
-//        if ($crop) {
-//            $image->resize(450, 450, Image::AUTO)->quality(65);
-//            $image->crop(350, 350);
-//        } else {
-//            $image->resize(350, 350, Image::AUTO)->quality(65);
-//        }
-//        $image->save('images/' . $path . $id . '-350x350-' . $newFileName);
-//        if ($crop) {
-//            $image->resize(250, 250, Image::AUTO)->quality(50);
-//            $image->crop(150, 150);
-//        } else {
-//            $image->resize(150, 150, Image::AUTO)->quality(50);
-//        }
-//        $image->save('images/' . $path . $id . '-150x150-' . $newFileName);
-        //delete original file
-        unlink(param('pathImg') . $path . $filename);
+        $file = \Yii::$app->params['pathImg'] . $path . $filename;
+
+        $this->smart_resize_image($file, $small, 150, 150, $proporsional, 80);
+        $this->smart_resize_image($file, $medium, 350, 350, $proporsional, 80);
+        $this->smart_resize_image($file, $big, 700, 700, $proporsional, 80);
+
+        unlink(\Yii::$app->params['pathImg'] . $path . $filename);
+    }
+
+    public function deleteImg($path, $id, $fileName) {
+        $small = \Yii::$app->params['pathImg'] . $path . $id . '-150x150-' . $fileName;
+        $medium = \Yii::$app->params['pathImg'] . $path . $id . '-350x350-' . $fileName;
+        $big = \Yii::$app->params['pathImg'] . $path . $id . '-700x700-' . $fileName;
+        //delete file, if any
+        if (file_exists($small))
+            unlink($small);
+        if (file_exists($medium))
+            unlink($medium);
+        if (file_exists($big))
+            unlink($big);
     }
 
     public function registerAssetCss($file, $media = '') {
-        //trace(Yii::getPathOfAlias('common.extensions.landa.assets.css') . '/'.$file);
-//        Yii::app()->clientScript->registerCssFile(
-//                Yii::app()->assetManager->publish(
-//                        Yii::getPathOfAlias('common.extensions.landa.assets.css') . '/' . $file
-//                )
-//        );
         $assetUrl = app()->assetManager->publish(Yii::getPathOfAlias('common.extensions.landa.assets'));
         cs()->registerCssFile($assetUrl . '/css/' . $file, $media);
     }
@@ -152,7 +135,7 @@ class LandaCore extends Component {
     public function rp($price = 0, $prefix = true, $decimal = 0) {
         if (isset($_GET['xls'])) //jika export excel ada, landa rp tidak berlaku
             return $price;
-        
+
         if ($price === '-') {
             return '';
         } else {
@@ -160,6 +143,30 @@ class LandaCore extends Component {
                 return $price;
             } else {
                 $rp = ($prefix) ? 'Rp. ' : '';
+
+                if ($price < 0) {
+                    $price = (float) $price * -1;
+                    $result = '(' . $rp . number_format($price, $decimal, ",", ".") . ')';
+                } else {
+                    $price = (float) $price;
+                    $result = $rp . number_format($price, $decimal, ",", ".");
+                }
+                return $result;
+            }
+        }
+    }
+
+    public function price($price = 0, $prefix = true, $decimal = 0) {
+        if (isset($_GET['xls'])) //jika export excel ada, landa rp tidak berlaku
+            return $price;
+
+        if ($price === '-') {
+            return '';
+        } else {
+            if ($prefix === "-") {
+                return $price;
+            } else {
+                $rp = ($prefix) ? '' : '';
 
                 if ($price < 0) {
                     $price = (float) $price * -1;
@@ -508,8 +515,8 @@ class LandaCore extends Component {
     function loginRequired() {
         if (!isset(user()->id))
             app()->request->redirect(url('site/login'));
-            
     }
+
     function date2Ind($str) {
         setlocale(LC_TIME, 'id_ID');
         $date = strftime("%d %B %Y", strtotime($str));
@@ -517,6 +524,115 @@ class LandaCore extends Component {
             return '-';
         else
             return $date;
+    }
+
+    function smart_resize_image($file, $newName, $width = 0, $height = 0, $proportional = false, $quality = 100) {
+        $output = 'file';
+
+        if ($height <= 0 && $width <= 0)
+            return false;
+        if ($file === null)
+            return false;
+
+        # Setting defaults and meta
+        $info = getimagesize($file);
+        $image = '';
+        $final_width = 0;
+        $final_height = 0;
+        list($width_old, $height_old) = $info;
+        $cropHeight = $cropWidth = 0;
+
+        # Calculating proportionality
+        if ($proportional) {
+            if ($width == 0)
+                $factor = $height / $height_old;
+            elseif ($height == 0)
+                $factor = $width / $width_old;
+            else
+                $factor = min($width / $width_old, $height / $height_old);
+            $final_width = round($width_old * $factor);
+            $final_height = round($height_old * $factor);
+        }
+        else {
+            $final_width = ( $width <= 0 ) ? $width_old : $width;
+            $final_height = ( $height <= 0 ) ? $height_old : $height;
+            $widthX = $width_old / $width;
+            $heightX = $height_old / $height;
+
+            $x = min($widthX, $heightX);
+            $cropWidth = ($width_old - $width * $x) / 2;
+            $cropHeight = ($height_old - $height * $x) / 2;
+        }
+
+        # Loading image to memory according to type
+        switch ($info[2]) {
+            case IMAGETYPE_JPEG: $image = imagecreatefromjpeg($file);
+                break;
+            case IMAGETYPE_GIF: $image = imagecreatefromgif($file);
+                break;
+            case IMAGETYPE_PNG: $image = imagecreatefrompng($file);
+                break;
+            default: return false;
+        }
+
+
+        # This is the resizing/resampling/transparency-preserving magic
+        $image_resized = imagecreatetruecolor($final_width, $final_height);
+        if (($info[2] == IMAGETYPE_GIF) || ($info[2] == IMAGETYPE_PNG)) {
+            $transparency = imagecolortransparent($image);
+            $palletsize = imagecolorstotal($image);
+            if ($transparency >= 0 && $transparency < $palletsize) {
+                $transparent_color = imagecolorsforindex($image, $transparency);
+                $transparency = imagecolorallocate($image_resized, $transparent_color['red'], $transparent_color['green'], $transparent_color['blue']);
+                imagefill($image_resized, 0, 0, $transparency);
+                imagecolortransparent($image_resized, $transparency);
+            } elseif ($info[2] == IMAGETYPE_PNG) {
+                imagealphablending($image_resized, false);
+                $color = imagecolorallocatealpha($image_resized, 0, 0, 0, 127);
+                imagefill($image_resized, 0, 0, $color);
+                imagesavealpha($image_resized, true);
+            }
+        }
+        imagecopyresampled($image_resized, $image, 0, 0, $cropWidth, $cropHeight, $final_width, $final_height, $width_old - 2 * $cropWidth, $height_old - 2 * $cropHeight);
+
+
+        # Taking care of original, if needed
+//        if ($delete_original) {
+//            if ($use_linux_commands)
+//                exec('rm ' . $file);
+//            else
+//        unlink($file);
+//        }
+        # Preparing a method of providing result
+        switch (strtolower($output)) {
+            case 'browser':
+                $mime = image_type_to_mime_type($info[2]);
+                header("Content-type: $mime");
+                $output = NULL;
+                break;
+            case 'file':
+                $output = $newName;
+                break;
+            case 'return':
+                return $image_resized;
+                break;
+            default:
+                break;
+        }
+
+        # Writing image according to type to the output destination and image quality
+        switch ($info[2]) {
+            case IMAGETYPE_GIF: imagegif($image_resized, $output);
+                break;
+            case IMAGETYPE_JPEG: imagejpeg($image_resized, $output, $quality);
+                break;
+            case IMAGETYPE_PNG:
+                $quality = 9 - (int) ((0.9 * $quality) / 10.0);
+                imagepng($image_resized, $output, $quality);
+                break;
+            default: return false;
+        }
+        return true;
     }
 
 }

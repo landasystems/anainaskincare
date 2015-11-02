@@ -1,4 +1,4 @@
-app.controller('customerCtrl', function ($scope, Data, toaster) {
+app.controller('customerCtrl', function ($scope, Data, toaster, FileUploader, $modal) {
     //init data
     var tableStateRef;
     var paramRef;
@@ -55,6 +55,7 @@ app.controller('customerCtrl', function ($scope, Data, toaster) {
         $scope.is_view = false;
         $scope.formtitle = "Edit Customer : " + form.kode + " - " + form.nama;
         $scope.form = form;
+        $scope.gambar = ($scope.form.foto == null) ? [] : $scope.form.foto;
         $scope.form.tanggal_lahir = new Date(form.tanggal_lahir);
     };
     $scope.view = function (form) {
@@ -62,6 +63,7 @@ app.controller('customerCtrl', function ($scope, Data, toaster) {
         $scope.is_view = true;
         $scope.formtitle = "Lihat Customer : " + form.kode + " - " + form.nama;
         $scope.form = form;
+        $scope.gambar = ($scope.form.foto == null) ? [] : $scope.form.foto;
     };
     $scope.save = function (form) {
         var url = (form.id > 0) ? 'customer/update/' + form.id : 'customer/create';
@@ -105,6 +107,70 @@ app.controller('customerCtrl', function ($scope, Data, toaster) {
                 $scope.displayed.splice($scope.displayed.indexOf(row), 1);
             });
         }
+    };
+    //============================GAMBAR===========================//
+    var uploader = $scope.uploader = new FileUploader({
+        url: Data.base + 'customer/upload/?folder=customer',
+        formData: [],
+        removeAfterUpload: true,
+    });
+
+    $scope.uploadGambar = function (form) {
+        $scope.uploader.uploadAll();
+    };
+
+    uploader.filters.push({
+        name: 'imageFilter',
+        fn: function (item) {
+            var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+            var x = '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+            if (!x) {
+                toaster.pop('error', "Jenis gambar tidak sesuai");
+            }
+            return x;
+        }
+    });
+
+    uploader.filters.push({
+        name: 'sizeFilter',
+        fn: function (item) {
+            var xz = item.size < 2097152;
+            if (!xz) {
+                toaster.pop('error', "Ukuran gambar tidak boleh lebih dari 2 MB");
+            }
+            return xz;
+        }
+    });
+
+    $scope.gambar = [];
+
+    uploader.onSuccessItem = function (fileItem, response) {
+        if (response.answer == 'File transfer completed') {
+            $scope.gambar.unshift({name: response.name});
+            $scope.form.foto = $scope.gambar;
+        }
+    };
+
+    uploader.onBeforeUploadItem = function (item) {
+        item.formData.push({
+            kode: $scope.form.kode,
+        });
+    };
+
+    $scope.removeFoto = function (paramindex, namaFoto) {
+        var comArr = eval($scope.gambar);
+        Data.post('customer/removegambar', {kode: $scope.form.kode, nama: namaFoto}).then(function (data) {
+            $scope.gambar.splice(paramindex, 1);
+        });
+
+        $scope.form.foto = $scope.gambar;
+    };
+
+    $scope.modal = function (kd_customer, img) {
+        var modalInstance = $modal.open({
+            template: '<img src="img/customer/' + kd_customer + '-350x350-' + img + '" class="img-full" >',
+            size: 'md',
+        });
     };
 
 })

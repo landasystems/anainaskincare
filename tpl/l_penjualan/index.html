@@ -98,8 +98,8 @@
                                     </tr>
                                 </thead>
                                 <tbody ng-show="!isLoading">
-                                    <tr ng-repeat="row in displayed" ng-dblclick="view(row)">
-                                        <td>{{row.tanggal| date}}</td>
+                                    <tr ng-repeat="row in displayed" >
+                                        <td>{{row.tanggal| date:'dd/M/yy'}}</td>
                                         <td>{{row.kode}}</td>
                                         <td align="right">{{row.cash}}</td>
                                         <td align="right">{{row.atm}}</td>
