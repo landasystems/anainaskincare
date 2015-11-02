@@ -52,7 +52,6 @@ if (isset($filter['kategori'])) {
     .tabel{
         border-collapse: collapse;
     }
-
     .tabel th, td{
         border: 1px solid  #333;
     }
@@ -77,6 +76,7 @@ if (isset($filter['kategori'])) {
 <table width="100%" class="tabel">
     <tr>
         <td colspan="2" align="center"><b>FAKTUR</b></td>
+        <th colspan="3" align="center"><b>PEMBAYARAN</b></th>
         <td rowspan="2" align="center"><b>CUSTOMER</b></td>
         <td rowspan="2" align="center"><b>KASIR</b></td>
         <td rowspan="2" align="center"><b>NAMA BARANG</b></td>
@@ -88,10 +88,17 @@ if (isset($filter['kategori'])) {
     <tr>
         <td align="center"><b>TANGGAL</b></td>
         <td align="center"><b>NO</b></td>
+        <td align="center"><b>CASH</b></td>
+        <td align="center"><b>DEBIT</b></td>
+        <td align="center"><b>KREDIT</b></td>
     </tr>
     <?php
     $data = array();
     $total = 0;
+    $totalDiskon = 0;
+    $totalCash = 0;
+    $totalCredit = 0;
+    $totalAtm = 0;
 
     $query = $_SESSION['query'];
 
@@ -100,9 +107,12 @@ if (isset($filter['kategori'])) {
 
     foreach ($models as $key => $val) {
         $subTotal = ($val['harga'] * $val['jumlah']) - ($val['diskon'] * $val['jumlah']);
-        $total += $subTotal;
+        $totalDiskon += $val['diskon'];
         $data[$val['id_penjualan']]['tanggal'] = date("d-m-Y", strtotime($val['tanggal']));
         $data[$val['id_penjualan']]['kode'] = $val['kode'];
+        $data[$val['id_penjualan']]['cash'] = $val['cash'];
+        $data[$val['id_penjualan']]['credit'] = $val['credit'];
+        $data[$val['id_penjualan']]['atm'] = $val['atm'];
         $data[$val['id_penjualan']]['customer'] = $val['customer'];
         $data[$val['id_penjualan']]['kasir'] = empty($val['kasir']) ? '-' : $val['kasir'];
         $data[$val['id_penjualan']]['produk'] = isset($data[$val['id_penjualan']]['produk']) ? $data[$val['id_penjualan']]['produk'] . '<br>' . strtoupper($val['produk']) : strtoupper($val['produk']);
@@ -110,12 +120,20 @@ if (isset($filter['kategori'])) {
         $data[$val['id_penjualan']]['harga'] = isset($data[$val['id_penjualan']]['harga']) ? $data[$val['id_penjualan']]['harga'] . '<br>' . $val['harga'] : $val['harga'];
         $data[$val['id_penjualan']]['diskon'] = isset($data[$val['id_penjualan']]['diskon']) ? $data[$val['id_penjualan']]['diskon'] . '<br>' . $val['diskon'] : $val['diskon'];
         $data[$val['id_penjualan']]['sub_total'] = isset($data[$val['id_penjualan']]['sub_total']) ? $data[$val['id_penjualan']]['sub_total'] . '<br>' . $subTotal : $subTotal;
+        $total += $subTotal;
     }
 
     foreach ($data as $value) {
+        $totalCash += $value['cash'];
+        $totalAtm += $value['atm'];
+        $totalCredit += $value['credit'];
+        
         echo '<tr>';
         echo '<td valign="top">' . $value['tanggal'] . '</td>';
         echo '<td valign="top">' . $value['kode'] . '</td>';
+        echo '<td valign="top">' . $value['cash'] . '</td>
+              <td valign="top">' . $value['atm'] . '</td>
+              <td valign="top">' . $value['credit'] . '</td>';
         echo '<td valign="top">' . $value['customer'] . '</td>';
         echo '<td valign="top">' . $value['kasir'] . '</td>';
         echo '<td>' . $value['produk'] . '</td>';
@@ -126,8 +144,18 @@ if (isset($filter['kategori'])) {
         echo '</tr>';
     }
     ?>
-    <tr>
-        <td colspan="8" align="right"><b>TOTAL</b></td>
+    <tr>        
+        <td align="right"></td>
+        <td align="right"></td>
+        <td align="right"><?php echo $totalCash ?></td>
+        <td align="right"><?php echo $totalAtm ?></td>
+        <td align="right"><?php echo $totalCredit ?></td>
+        <td align="right"></td>
+        <td align="right"></td>
+        <td align="right"></td>
+        <td align="right"></td>
+        <td align="right"></td>
+        <td align="right"><?=$totalDiskon?></td>
         <td align="right"><?php echo $total ?></td>
     </tr>
 </table>
