@@ -33,6 +33,7 @@ class CustomerController extends Controller {
 
     public function actionUpload() {
         if (!empty($_FILES)) {
+
             $tempPath = $_FILES['file']['tmp_name'];
             $newName = \Yii::$app->landa->urlParsing($_FILES['file']['name']);
 
@@ -49,6 +50,7 @@ class CustomerController extends Controller {
                 $customer->foto = json_encode($foto);
                 $customer->save();
             }
+
             echo json_encode($answer);
         } else {
             echo 'No files';
