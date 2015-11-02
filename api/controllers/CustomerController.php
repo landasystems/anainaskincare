@@ -49,7 +49,6 @@ class CustomerController extends Controller {
                 $customer->foto = json_encode($foto);
                 $customer->save();
             }
-
             echo json_encode($answer);
         } else {
             echo 'No files';
