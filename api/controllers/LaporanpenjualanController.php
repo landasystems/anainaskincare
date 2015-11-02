@@ -82,7 +82,7 @@ class LaporanpenjualanController extends Controller {
                 ->join('LEFT JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
                 ->join('LEFT JOIN', 'm_produk', 'penjualan_det.produk_id = m_produk.id')
                 ->join('LEFT JOIN', 'm_user', 'penjualan.created_by = m_user.id')
-                ->orderBy('penjualan.kode DESC')
+                ->orderBy('penjualan.tanggal ASC')
                 ->select('m_user.nama as kasir, penjualan.id as id_penjualan, penjualan.tanggal, penjualan.kode, m_customer.nama as customer, m_produk.nama as produk, penjualan_det.jumlah, penjualan_det.harga, penjualan_det.diskon, penjualan_det.sub_total');
 
         if (isset($param['filter'])) {
