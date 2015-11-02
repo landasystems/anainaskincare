@@ -18,6 +18,28 @@ class LandaCore extends Component {
         'ï¿½' => 'i', 'ï¿½' => 'o', 'ï¿½' => 'n', 'ï¿½' => 'o', 'ï¿½' => 'o', 'ï¿½' => 'o', 'ï¿½' => 'o', 'ï¿½' => 'o', 'ï¿½' => 'o', 'ï¿½' => 'u',
         'ï¿½' => 'u', 'ï¿½' => 'u', 'ï¿½' => 'u', 'ï¿½' => 'y', 'ï¿½' => 'y', 'ï¿½' => 'b', 'ï¿½' => 'y', 'ï¿½' => 'f'
     );
+    
+    public function array_orderby() {
+        $args = func_get_args();
+        $data = array_shift($args);
+        if (!is_array($data)) {
+            return array();
+        }
+        $multisort_params = array();
+        foreach ($args as $n => $field) {
+            if (is_string($field)) {
+                $tmp = array();
+                foreach ($data as $row) {
+                    $tmp[] = $row[$field];
+                }
+                $args[$n] = $tmp;
+            }
+            $multisort_params[] = &$args[$n];
+        }
+        $multisort_params[] = &$data;
+        call_user_func_array('array_multisort', $multisort_params);
+        return end($multisort_params);
+    }
 
     public function urlParsing($string) {
         $arrDash = array("--", "---", "----", "-----");
