@@ -146,6 +146,8 @@ class LaporanpenjualanController extends Controller {
         $totalCredit = 0;
         $totalAtm = 0;
         $tempKode = '';
+        $tempId = '';
+        $indek = 0;
         foreach ($models as $key => $val) {
             $subTotal = ($val['harga'] * $val['jumlah']) - ($val['diskon'] * $val['jumlah']);
             $total += $subTotal;
@@ -157,18 +159,25 @@ class LaporanpenjualanController extends Controller {
                 $totalAtm += $val['atm'];
                 $tempKode = $val['kode'];
             }
-            $data[$key]['tanggal'] = date("d-m-Y", strtotime($val['tanggal']));
-            $data[$key]['kode'] = $val['kode'];
-            $data[$key]['cash'] = $val['cash'];
-            $data[$key]['credit'] = $val['credit'];
-            $data[$key]['atm'] = $val['atm'];
-            $data[$key]['customer'] = $val['customer'];
-            $data[$key]['kasir'] = empty($val['kasir']) ? '-' : $val['kasir'];
-            $data[$key]['produk'] = isset($data[$val['id_penjualan']]['produk']) ? $data[$val['id_penjualan']]['produk'] . '<br>' . strtoupper($val['produk']) : strtoupper($val['produk']);
-            $data[$key]['jumlah'] = isset($data[$val['id_penjualan']]['jumlah']) ? $data[$val['id_penjualan']]['jumlah'] . '<br>' . $val['jumlah'] : $val['jumlah'];
-            $data[$key]['harga'] = isset($data[$val['id_penjualan']]['harga']) ? $data[$val['id_penjualan']]['harga'] . '<br>' . $val['harga'] : $val['harga'];
-            $data[$key]['diskon'] = isset($data[$val['id_penjualan']]['diskon']) ? $data[$val['id_penjualan']]['diskon'] . '<br>' . $val['diskon'] : $val['diskon'];
-            $data[$key]['sub_total'] = isset($data[$val['id_penjualan']]['sub_total']) ? $data[$val['id_penjualan']]['sub_total'] . '<br>' . $subTotal : $subTotal;
+
+            if ($tempId != $val['id_penjualan']) {
+                $tempId = $val['id_penjualan'];
+                $indek ++;
+            }
+
+
+            $data[$indek]['tanggal'] = date("d-m-Y", strtotime($val['tanggal']));
+            $data[$indek]['kode'] = $val['kode'];
+            $data[$indek]['cash'] = $val['cash'];
+            $data[$indek]['credit'] = $val['credit'];
+            $data[$indek]['atm'] = $val['atm'];
+            $data[$indek]['customer'] = $val['customer'];
+            $data[$indek]['kasir'] = empty($val['kasir']) ? '-' : $val['kasir'];
+            $data[$indek]['produk'] = isset($data[$indek]['produk']) ? $data[$indek]['produk'] . '<br>' . strtoupper($val['produk']) : strtoupper($val['produk']);
+            $data[$indek]['jumlah'] = isset($data[$indek]['jumlah']) ? $data[$indek]['jumlah'] . '<br>' . $val['jumlah'] : $val['jumlah'];
+            $data[$indek]['harga'] = isset($data[$indek]['harga']) ? $data[$indek]['harga'] . '<br>' . $val['harga'] : $val['harga'];
+            $data[$indek]['diskon'] = isset($data[$indek]['diskon']) ? $data[$indek]['diskon'] . '<br>' . $val['diskon'] : $val['diskon'];
+            $data[$indek]['sub_total'] = isset($data[$indek]['sub_total']) ? $data[$indek]['sub_total'] . '<br>' . $subTotal : $subTotal;
         }
 
         $detail['totalCash'] = $totalCash;
