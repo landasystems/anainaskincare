@@ -128,17 +128,8 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             $scope.list_dokter = data.dokter;
             $scope.list_terapis = data.terapis;
         });
-
-        //== Hapus detil barang ==//
-        $scope.detPenjualan = [
-            {
-                type: '',
-                jumlah: '1',
-                diskon: '0',
-                harga: '0',
-                sub_total: '0',
-            }];
     };
+
     $scope.excel = function () {
         Data.get('penjualan', paramRef).then(function (data) {
             window.location = 'api/web/penjualan/excel';

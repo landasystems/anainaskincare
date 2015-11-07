@@ -35,9 +35,9 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
     Data.get('site/session').then(function (data) {
         $scope.sCabang = data.data.user.cabang;
     });
-    $scope.cariProduk = function ($query) {
+    $scope.cariProduk = function ($query, $cabang) {
         if ($query.length >= 3) {
-            Data.get('barang/caribarang', {nama: $query}).then(function (data) {
+            Data.get('barang/cari2', {nama: $query, cabang: $cabang.id}).then(function (data) {
                 $scope.listProduk = data.data;
                 angular.forEach($scope.listProduk, function (detail) {
                     detail.diskon = (detail.diskon != undefined) ? detail.diskon : 0;
@@ -88,6 +88,7 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
         $scope.formtitle = "Form Pembelian";
         $scope.form = {};
         $scope.form.tanggal = new Date();
+        $scope.form.status = 'clear';
         $scope.pembeliandet = [
             {
                 id: '',

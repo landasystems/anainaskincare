@@ -37,7 +37,7 @@
                         <div class="control-group">
                             <label class="col-sm-3 control-label">Cabang</label>
                             <div class="col-sm-9">
-                                <ui-select on_select="getkode_cabang(form,is_create)" ng-model="cabang" theme="bootstrap">
+                                <ui-select ng-model="cabang" theme="bootstrap">
                                     <ui-select-match placeholder="Cari Cabang">{{$select.selected.nama}}</ui-select-match>
                                     <ui-select-choices group-by="'group'" repeat="dokter in sCabang | filter: $select.search">
                                         <div ng-bind-html="dokter.nama | highlight: $select.search"></div>
@@ -207,7 +207,7 @@
                                             <div class="input-group">
                                                 <ui-select on-select="pilih(detail,$item)" ng-model="detail.barang" theme="bootstrap">
                                                     <ui-select-match>{{$select.selected.nama}}</ui-select-match>
-                                                    <ui-select-choices refresh="cariProduk($select.search,detail)" repeat="produk in listProduk">
+                                                    <ui-select-choices refresh="cariProduk($select.search, form.cabang)" repeat="produk in listProduk">
                                                         {{produk.nama}}
                                                     </ui-select-choices>
                                                 </ui-select>
