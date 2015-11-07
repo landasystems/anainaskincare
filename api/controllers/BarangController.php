@@ -29,8 +29,10 @@ class BarangController extends Controller {
                     'satuan' => ['get'],
                     'caribarang' => ['get'],
                     'cari' => ['get'],
+                    'cari2' => ['get'],
                     'carilagi' => ['post'],
                     'getstok' => ['get'],
+                    'getharga' => ['get'],
                 ],
             ]
         ];
@@ -47,7 +49,6 @@ class BarangController extends Controller {
         }
         $verb = Yii::$app->getRequest()->getMethod();
         $allowed = array_map('strtoupper', $verbs);
-//        Yii::error($allowed);
 
         if (!in_array($verb, $allowed)) {
 
@@ -112,7 +113,6 @@ class BarangController extends Controller {
         $command = $query->createCommand();
         $models = $command->queryAll();
         $totalItems = $query->count();
-//        $totalItems = 0;
 
         $this->setHeader(200);
 
@@ -138,6 +138,26 @@ class BarangController extends Controller {
         }
 
         echo json_encode(array('status' => 1, 'data' => $listStok, 'total' => $total), JSON_PRETTY_PRINT);
+    }
+
+    public function actionGetharga($id) {
+        $listHarga = array();
+        session_start();
+        $cabang = $_SESSION['user']['cabang'];
+        $n = 1;
+        foreach ($cabang as $vals) {
+            $harga = \app\models\Harga::find()->where('cabang_id = "' . $vals['id'] . '" and produk_id="' . $id . '" ')->one();
+
+            $listHarga[$n]['no'] = $n;
+            $listHarga[$n]['id'] = isset($vals['id']) ? $vals['id'] : '-';
+            $listHarga[$n]['nama'] = isset($vals['nama']) ? $vals['nama'] : '-';
+            $listHarga[$n]['harga_beli'] = isset($harga->harga_beli) ? $harga->harga_beli : 0;
+            $listHarga[$n]['harga_jual'] = isset($harga->harga_jual) ? $harga->harga_jual : 0;
+
+            $n++;
+        }
+
+        echo json_encode(array('status' => 1, 'data' => $listHarga), JSON_PRETTY_PRINT);
     }
 
     public function actionView($id) {
@@ -169,6 +189,16 @@ class BarangController extends Controller {
                         $kartu->created_at = date("Y-m-d H:i:s");
                         $kartu->save();
                     }
+                }
+
+                $sHarga = $params['harga'];
+                foreach ($sHarga as $vHarga) {
+                    $harga = new \app\models\Harga();
+                    $harga->cabang_id = $vHarga['id'];
+                    $harga->produk_id = $model->id;
+                    $harga->harga_beli = $vHarga['harga_beli'];
+                    $harga->harga_jual = $vHarga['harga_jual'];
+                    $harga->save();
                 }
             }
 
@@ -217,6 +247,16 @@ class BarangController extends Controller {
             $model->foto = $ft;
         }
 
+        $sHarga = $params['harga'];
+        foreach ($sHarga as $vHarga) {
+            $harga = \app\models\Harga::find()->where('id = ' . $vHarga['id'])->one();
+            if (!empty($harga)) {
+                $harga->harga_beli = $vHarga['harga_beli'];
+                $harga->harga_jual = $vHarga['harga_jual'];
+                $harga->save();
+            }
+        }
+
         if ($model->save()) {
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
@@ -229,6 +269,7 @@ class BarangController extends Controller {
     public function actionDelete($id) {
         $model = $this->findModel($id);
         $delKartu = \app\models\KartuStok::deleteAll('produk_id = ' . $id . ' and kode = "' . $model->kode . '"');
+        $delHarga = \app\models\Harga::deleteAll('produk_id = ' . $id);
         if ($model->delete()) {
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
@@ -248,6 +289,36 @@ class BarangController extends Controller {
             echo json_encode(array('status' => 0, 'error_code' => 400, 'message' => 'Bad request'), JSON_PRETTY_PRINT);
             exit;
         }
+    }
+
+    public function actionCari2() {
+        $params = $_REQUEST;
+        $query = new Query;
+        $query->from('m_produk')
+                ->join('LEFT JOIN', 'harga', 'harga.produk_id = m_produk.id')
+                ->select("m_produk.*, harga.harga_beli as harga_beli_cabang, harga.harga_jual as harga_jual_cabang")
+                ->where(['is_deleted' => 0, 'type' => 'barang'])
+                ->andWhere(['like', 'nama', $params['nama']])
+                ->orWhere(['like', 'kode', $params['nama']])
+                ->andWhere(['=','harga.cabang_id',$params['cabang']]);
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+        $this->setHeader(200);
+
+        $data = array();
+        foreach ($models as $key => $val) {
+            $data[$key] = $val;
+
+            if ($val['harga_beli_cabang'] > 0) {
+                $data[$key]['harga_beli_terakhir'] = $data[$key]['harga_beli_cabang'];
+            }
+
+            if ($val['harga_jual_cabang'] > 0) {
+                $data[$key]['harga_jual'] = $data[$key]['harga_jual_cabang'];
+            }
+        }
+
+        echo json_encode(array('status' => 1, 'data' => $data));
     }
 
     public function actionCaribarang() {
@@ -307,7 +378,6 @@ class BarangController extends Controller {
 
 
         $this->setHeader(200);
-//        echo 
         echo json_encode(array('status' => 1, 'data' => $data));
     }
 
@@ -343,6 +413,7 @@ class BarangController extends Controller {
         $models = $command->queryAll();
         return $this->render("excel", ['models' => $models]);
     }
+
     public function actionExcellaporan() {
         session_start();
         $query = $_SESSION['query'];

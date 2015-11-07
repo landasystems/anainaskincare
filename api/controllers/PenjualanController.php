@@ -232,7 +232,6 @@ class PenjualanController extends Controller {
 
     public function actionCreate() {
         $params = json_decode(file_get_contents("php://input"), true);
-        Yii::error($params);
         $model = new Penjualan();
         $model->attributes = $params['penjualan'];
         $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
@@ -250,6 +249,7 @@ class PenjualanController extends Controller {
                     $pinjaman->save();
                 }
             }
+            
             foreach ($params['penjualandet'] as $data) {
                 $det = new PenjualanDet();
                 $det->attributes = $data;
@@ -265,7 +265,7 @@ class PenjualanController extends Controller {
                         $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
                     }
                 }
-                // stock
+                
             }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);

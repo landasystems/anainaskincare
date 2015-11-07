@@ -49,8 +49,6 @@
                             <th st-sort="mp.type">Type</th>
                             <th st-sort="mk.nama">Kategori</th>
                             <th st-sort="ms">Satuan</th>
-                            <th st-sort="mp.harga_beli_terakhir">Harga Beli</th>
-                            <th st-sort="mp.harga_jual">Harga Jual</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -61,8 +59,6 @@
                             <td>{{row.type}}</td>
                             <td>{{row.kategori}}</td>
                             <td>{{row.satuan}}</td>
-                            <td style="text-align: right">{{row.harga_beli_terakhir|  currency:undefined:0}}</td>
-                            <td style="text-align: right">{{row.harga_jual|  currency:undefined:0}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ng-show="row.is_deleted == 0"></button>
@@ -75,13 +71,12 @@
                     </tbody>
                     <tbody ng-show="isLoading">
                         <tr>
-                            <td colspan="8" class="text-center">Loading ... </td>
+                            <td colspan="6" class="text-center">Loading ... </td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="8" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html">
-                            </td>
+                            <td colspan="6" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html"></td>
                         </tr>
                 </table>		
             </div>
@@ -149,7 +144,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-sm-12">
-                                    <div class="form-group" ng-show="form.type == 'Barang'">
+<!--                                    <div class="form-group" ng-show="form.type == 'Barang'">
                                         <label class="col-sm-5 control-label">Harga Beli Terakhir</label>
                                         <div class="col-sm-5">
                                             <div class="input-group">
@@ -157,8 +152,8 @@
                                                 <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" ng-model="form.harga_beli_terakhir" ng-disabled="is_view">
                                             </div>  
                                         </div>
-                                    </div>
-                                    <div class="form-group">
+                                    </div>-->
+<!--                                    <div class="form-group" ng-show="form.type == 'Jasa'">
                                         <label class="col-sm-5 control-label">Harga Jual</label>
                                         <div class="col-sm-5">
                                             <div class="input-group">
@@ -166,7 +161,7 @@
                                                 <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" ng-pattern="/^[0-9]+$/" ng-model="form.harga_jual" ng-disabled="is_view">
                                             </div>  
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <div class="form-group">
                                         <label class="col-sm-5 control-label">Diskon</label>
                                         <div class="col-sm-5">
@@ -207,6 +202,31 @@
                                 </div>
                                 <div class="line"></div>
                             </tab>
+                            <tab>
+                                <tab-heading>
+                                    Harga
+                                </tab-heading>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th width='25'>No</th>
+                                            <th>Cabang</th>
+                                            <th ng-show="form.type == 'Barang'">Harga Beli</th>
+                                            <th>Harga Jual</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="harga in listHarga">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{harga.nama}}</td>
+                                            <td style="width:100px;" ng-if='is_view && form.type == "Barang"'>{{harga.harga_beli}}</td>
+                                            <td style="margin:0px;padding:0px;width:100px;" ng-if="is_view == false && form.type == 'Barang'"><input type='text' class="form-control" ng-model="harga.harga_beli"></td>
+                                            <td style="width:100px;" ng-if='is_view'>{{harga.harga_jual}}</td>
+                                            <td style="margin:0px;padding:0px;width:100px;" ng-if="is_view == false"><input type='text' class="form-control" ng-model="harga.harga_jual"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </tab>
                             <tab ng-if="form.type == 'Barang'">
                                 <tab-heading>
                                     Kartu Stok
@@ -236,7 +256,7 @@
                         </tabset>
                         <div align="center">
                             <button type="submit" class="btn btn-default fa fa-arrow-circle-o-left" ng-click="cancel()">&nbsp;Back</button>
-                            <button type="submit" class="btn btn-primary fa fa-save" ng-hide="is_view" ng-disabled="landaform.$invalid" ng-click="save(form, listStok)">&nbsp;Simpan Perubahan</button>
+                            <button type="submit" class="btn btn-primary fa fa-save" ng-hide="is_view" ng-disabled="landaform.$invalid" ng-click="save(form, listStok, listHarga)">&nbsp;Simpan Perubahan</button>
                         </div>
                     </div>
                 </form>

@@ -212,7 +212,7 @@
                                             <div class="input-group">
                                                 <ui-select on-select="pilih(detail, $item)" ng-model="detail.produk" theme="bootstrap">
                                                     <ui-select-match placeholder="Pilih atau Cari nama produk">{{$select.selected.nama}}</ui-select-match>
-                                                    <ui-select-choices refresh="cariProduk($select.search)" repeat="val in resultsProduk">
+                                                    <ui-select-choices refresh="cariProduk($select.search, form.cabang)" repeat="val in resultsProduk">
                                                         {{val.nama}}
                                                     </ui-select-choices>
                                                     <ui-select-no-choice>

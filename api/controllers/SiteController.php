@@ -20,6 +20,7 @@ class SiteController extends Controller {
                     'login' => ['post'],
                     'logout' => ['get'],
                     'session' => ['get'],
+                    'coba' => ['get'],
                 ],
             ]
         ];
@@ -45,6 +46,21 @@ class SiteController extends Controller {
         }
 
         return true;
+    }
+
+    public function actionCoba() {
+        $produk = \app\models\Barang::find()->all();
+        foreach($produk as $val){
+            $cabang = \app\models\Cabang::find()->all();
+            foreach($cabang as $vCabang){
+                $new = new \app\models\Harga();
+                $new->cabang_id = $vCabang->id;
+                $new->produk_id = $val->id;
+                $new->harga_jual = $val->harga_jual;
+                $new->harga_beli = $val->harga_beli_terakhir;
+                $new->save();
+            }
+        }
     }
 
     public function actionSession() {
