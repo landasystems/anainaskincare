@@ -470,7 +470,7 @@ class PenjualanController extends Controller {
         $dokter = $command3->queryAll();
 
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'kode' => 'JUAL/' . $code . '/' . $kode, 'terapis' => $terapis, 'dokter' => $dokter));
+        echo json_encode(array('status' => 1, 'kode' => 'J/' . $code . '/' . $kode, 'terapis' => $terapis, 'dokter' => $dokter));
     }
 
     public function actionDet_produk($id) {
