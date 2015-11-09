@@ -259,18 +259,19 @@ class PenjualanController extends Controller {
                 $det->pegawai_dokter_id = isset($data['dokter']['id']) ? $data['dokter']['id'] : '';
 
                 if ($det->save()) {
+                    //======== AKTIFKAN JIKA HARGA PER CABANG BERBEDA ===========//
                     //======== SIMPAN HARGA JUAL BARU ============//
-                    $harga = \app\models\Harga::find()->where('cabang_id="' . $model->cabang_id . '" and produk_id="' . $det->produk_id . '"')->one();
-                    if (!empty($harga)) {
-                        $harga->harga_jual = $det->harga;
-                        $harga->save();
-                    } else {
-                        $harga = new \app\models\Harga();
-                        $harga->cabang_id = $model->cabang_id;
-                        $harga->produk_id = $modelDet->produk_id;
-                        $harga->harga_jual = $modelDet->harga;
-                        $harga->save();
-                    }
+//                    $harga = \app\models\Harga::find()->where('cabang_id="' . $model->cabang_id . '" and produk_id="' . $det->produk_id . '"')->one();
+//                    if (!empty($harga)) {
+//                        $harga->harga_jual = $det->harga;
+//                        $harga->save();
+//                    } else {
+//                        $harga = new \app\models\Harga();
+//                        $harga->cabang_id = $model->cabang_id;
+//                        $harga->produk_id = $modelDet->produk_id;
+//                        $harga->harga_jual = $modelDet->harga;
+//                        $harga->save();
+//                    }
 
                     if ($model->status == 'Selesai') {
                         $keterangan = 'penjualan';
@@ -330,18 +331,19 @@ class PenjualanController extends Controller {
                 $det->pegawai_dokter_id = isset($val['dokter']['id']) ? $val['dokter']['id'] : null;
                 $det->penjualan_id = $model->id;
                 if ($det->save()) {
+                    //======== AKTIFKAN JIKA HARGA PER CABANG BERBEDA ===========//
                     //======== SIMPAN HARGA JUAL BARU ============//
-                    $harga = \app\models\Harga::find()->where('cabang_id="' . $model->cabang_id . '" and produk_id="' . $det->produk_id . '"')->one();
-                    if (!empty($harga)) {
-                        $harga->harga_jual = $det->harga;
-                        $harga->save();
-                    } else {
-                        $harga = new \app\models\Harga();
-                        $harga->cabang_id = $model->cabang_id;
-                        $harga->produk_id = $modelDet->produk_id;
-                        $harga->harga_jual = $modelDet->harga;
-                        $harga->save();
-                    }
+//                    $harga = \app\models\Harga::find()->where('cabang_id="' . $model->cabang_id . '" and produk_id="' . $det->produk_id . '"')->one();
+//                    if (!empty($harga)) {
+//                        $harga->harga_jual = $det->harga;
+//                        $harga->save();
+//                    } else {
+//                        $harga = new \app\models\Harga();
+//                        $harga->cabang_id = $model->cabang_id;
+//                        $harga->produk_id = $modelDet->produk_id;
+//                        $harga->harga_jual = $modelDet->harga;
+//                        $harga->save();
+//                    }
 
                     $id_det[] = $det->id;
                     if ($model->status == 'Selesai') {

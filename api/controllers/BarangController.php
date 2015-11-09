@@ -32,7 +32,7 @@ class BarangController extends Controller {
                     'cari2' => ['get'],
                     'carilagi' => ['post'],
                     'getstok' => ['get'],
-                    'getharga' => ['get'],
+//                    'getharga' => ['get'], AKTIFKAN JIKA HARGA PER CABANG BERBEDA
                 ],
             ]
         ];
@@ -120,20 +120,20 @@ class BarangController extends Controller {
 
         $data = array();
         foreach ($models as $key => $val) {
-            $hargaJual = 0;
             $stok = 0;
 
             $cabang = isset($filter['cabang']) ? $filter['cabang'] : $_SESSION['user']['cabang'][0]['id'];
-//            if (isset($cabang)) {
+
             $st = new Barang;
             $stok = $st->stok($val['id'], $cabang);
 
-            $harga = \app\models\Harga::find()->where('cabang_id = "' . $cabang . '" and produk_id="' . $val['id'] . '" ')->one();
-            $hargaJual = isset($harga['harga_jual']) ? $harga['harga_jual'] : $val['harga_jual'];
-//            }
+            //============== AKTIFKAN JIKA HARGA PER CABANG BERBEDA ==========//
+//            $harga = \app\models\Harga::find()->where('cabang_id = "' . $cabang . '" and produk_id="' . $val['id'] . '" ')->one();
+//            $hargaJual = isset($harga['harga_jual']) ? $harga['harga_jual'] : $val['harga_jual'];
 
             $data[$key] = $val;
-            $data[$key]['harga_jual'] = $hargaJual;
+//            $data[$key]['harga_jual'] = $hargaJual; AKTIFKAN JIKA HARGA PER CABANG BERBEDA
+            $data[$key]['harga_jual'] = $val['harga_jual'];
             $data[$key]['stok'] = $stok;
         }
 
@@ -160,27 +160,28 @@ class BarangController extends Controller {
 
         echo json_encode(array('status' => 1, 'data' => $listStok, 'total' => $total), JSON_PRETTY_PRINT);
     }
-
-    public function actionGetharga($id) {
-        $listHarga = array();
-        session_start();
-        $cabang = $_SESSION['user']['cabang'];
-        $n = 1;
-        foreach ($cabang as $vals) {
-            $harga = \app\models\Harga::find()->where('cabang_id = "' . $vals['id'] . '" and produk_id="' . $id . '" ')->one();
-
-            $listHarga[$n]['no'] = $n;
-            $listHarga[$n]['cabang_id'] = isset($harga->cabang_id) ? $harga->cabang_id : 0;
-            $listHarga[$n]['id'] = isset($harga['id']) ? $harga['id'] : '-';
-            $listHarga[$n]['nama'] = isset($vals['nama']) ? $vals['nama'] : '-';
-            $listHarga[$n]['harga_beli'] = isset($harga->harga_beli) ? $harga->harga_beli : 0;
-            $listHarga[$n]['harga_jual'] = isset($harga->harga_jual) ? $harga->harga_jual : 0;
-
-            $n++;
-        }
-
-        echo json_encode(array('status' => 1, 'data' => $listHarga), JSON_PRETTY_PRINT);
-    }
+    
+//======== AKTIFKAN JIKA HARGA PER CABANG BERBEDA ===========//
+//    public function actionGetharga($id) {
+//        $listHarga = array();
+//        session_start();
+//        $cabang = $_SESSION['user']['cabang'];
+//        $n = 1;
+//        foreach ($cabang as $vals) {
+//            $harga = \app\models\Harga::find()->where('cabang_id = "' . $vals['id'] . '" and produk_id="' . $id . '" ')->one();
+//
+//            $listHarga[$n]['no'] = $n;
+//            $listHarga[$n]['cabang_id'] = isset($harga->cabang_id) ? $harga->cabang_id : 0;
+//            $listHarga[$n]['id'] = isset($harga['id']) ? $harga['id'] : '-';
+//            $listHarga[$n]['nama'] = isset($vals['nama']) ? $vals['nama'] : '-';
+//            $listHarga[$n]['harga_beli'] = isset($harga->harga_beli) ? $harga->harga_beli : 0;
+//            $listHarga[$n]['harga_jual'] = isset($harga->harga_jual) ? $harga->harga_jual : 0;
+//
+//            $n++;
+//        }
+//
+//        echo json_encode(array('status' => 1, 'data' => $listHarga), JSON_PRETTY_PRINT);
+//    }
 
     public function actionView($id) {
 
@@ -213,15 +214,16 @@ class BarangController extends Controller {
                     }
                 }
 
-                $sHarga = $params['harga'];
-                foreach ($sHarga as $vHarga) {
-                    $harga = new \app\models\Harga();
-                    $harga->cabang_id = $vHarga['id'];
-                    $harga->produk_id = $model->id;
-                    $harga->harga_beli = isset($vHarga['harga_beli']) ? $vHarga['harga_beli'] : 0;
-                    $harga->harga_jual = isset($vHarga['harga_jual']) ? $vHarga['harga_jual'] : 0;
-                    $harga->save();
-                }
+                //================ AKTIFKAN JIKA HARGA PER CABANG BERBEDA =============//
+//                $sHarga = $params['harga'];
+//                foreach ($sHarga as $vHarga) {
+//                    $harga = new \app\models\Harga();
+//                    $harga->cabang_id = $vHarga['id'];
+//                    $harga->produk_id = $model->id;
+//                    $harga->harga_beli = isset($vHarga['harga_beli']) ? $vHarga['harga_beli'] : 0;
+//                    $harga->harga_jual = isset($vHarga['harga_jual']) ? $vHarga['harga_jual'] : 0;
+//                    $harga->save();
+//                }
             }
 
             $this->setHeader(200);
@@ -269,18 +271,19 @@ class BarangController extends Controller {
             $model->foto = $ft;
         }
 
-        $sHarga = $params['harga'];
-        foreach ($sHarga as $vHarga) {
-            $harga = \app\models\Harga::find()->where('id = ' . $vHarga['id'])->one();
-            if (empty($harga)) {
-                $harga = new \app\models\Harga();
-            }
-            $harga->produk_id = $model->id;
-            $harga->cabang_id = isset($vHarga['cabang_id']) ? $vHarga['cabang_id'] : 0;
-            $harga->harga_beli = isset($vHarga['harga_beli']) ? $vHarga['harga_beli'] : 0;
-            $harga->harga_jual = isset($vHarga['harga_jual']) ? $vHarga['harga_jual'] : 0;
-            $harga->save();
-        }
+        //================ AKTIFKAN JIKA HARGA PER CABANG BERBEDA ===========//
+//        $sHarga = $params['harga'];
+//        foreach ($sHarga as $vHarga) {
+//            $harga = \app\models\Harga::find()->where('id = ' . $vHarga['id'])->one();
+//            if (empty($harga)) {
+//                $harga = new \app\models\Harga();
+//            }
+//            $harga->produk_id = $model->id;
+//            $harga->cabang_id = isset($vHarga['cabang_id']) ? $vHarga['cabang_id'] : 0;
+//            $harga->harga_beli = isset($vHarga['harga_beli']) ? $vHarga['harga_beli'] : 0;
+//            $harga->harga_jual = isset($vHarga['harga_jual']) ? $vHarga['harga_jual'] : 0;
+//            $harga->save();
+//        }
 
         if ($model->save()) {
             $this->setHeader(200);
@@ -294,7 +297,7 @@ class BarangController extends Controller {
     public function actionDelete($id) {
         $model = $this->findModel($id);
         $delKartu = \app\models\KartuStok::deleteAll('produk_id = ' . $id . ' and kode = "' . $model->kode . '"');
-        $delHarga = \app\models\Harga::deleteAll('produk_id = ' . $id);
+//        $delHarga = \app\models\Harga::deleteAll('produk_id = ' . $id); AKTIFKAN JIKA HARGA PER CABANG BERBEDA
         if ($model->delete()) {
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);

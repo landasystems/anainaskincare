@@ -139,7 +139,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
     //select2 product
     $scope.cariProduk = function ($query, $cabang) {
         if ($query.length >= 3) {
-            Data.get('barang/cari2', {nama: $query, cabang: $cabang.id}).then(function (data) {
+            Data.get('barang/cari', {nama: $query, cabang: $cabang.id}).then(function (data) {
                 $scope.resultsProduk = data.data;
             });
         }

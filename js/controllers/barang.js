@@ -76,12 +76,12 @@ app.controller('barangCtrl', function ($scope, Data, toaster, FileUploader, $sta
             $scope.totalStok = data.total;
         });
     }
-
-    $scope.harga = function (id) {
-        Data.get('barang/getharga/' + id).then(function (data) {
-            $scope.listHarga = data.data;
-        });
-    }
+//=========== AKTIFKAN JIKA HARGA CABANG BERBEDA =============//
+//    $scope.harga = function (id) {
+//        Data.get('barang/getharga/' + id).then(function (data) {
+//            $scope.listHarga = data.data;
+//        });
+//    }
 
     $scope.create = function (form) {
         $scope.is_create = true;
@@ -103,7 +103,7 @@ app.controller('barangCtrl', function ($scope, Data, toaster, FileUploader, $sta
         $scope.formtitle = "Edit Data : " + form.nama;
         $scope.form = form;
         $scope.stok(form.id);
-        $scope.harga(form.id);
+//        $scope.harga(form.id); AKTIFKAN JIKA HARGA PER CABANG BERBEDA
     };
     $scope.view = function (form) {
         $scope.is_create = false;
@@ -112,9 +112,11 @@ app.controller('barangCtrl', function ($scope, Data, toaster, FileUploader, $sta
         $scope.formtitle = "Lihat Data : " + form.nama;
         $scope.form = form;
         $scope.stok(form.id);
-        $scope.harga(form.id);
+//        $scope.harga(form.id); AKTIFKAN JIKA HARGA PER CABANG BERBEDA
     };
-    $scope.save = function (form, stok, harga) {
+//    AKTIFKAN JIKA HARGA PER CABANG BERBEDA
+//    $scope.save = function (form, stok, harga) {
+    $scope.save = function (form, stok) {
         if ($scope.uploader.queue.length > 0) {
             $scope.uploader.uploadAll();
             form.foto = kode_unik + "-" + $scope.uploader.queue[0].file.name;
@@ -125,7 +127,7 @@ app.controller('barangCtrl', function ($scope, Data, toaster, FileUploader, $sta
         var data = {
             form: form,
             stok: stok,
-            harga: harga,
+//            harga: harga, AKTIFKAN JIKA HARGA PER CABANG BERBEDA
         }
 
         var url = ($scope.is_create == true) ? 'barang/create/' : 'barang/update/' + form.id;
@@ -158,6 +160,7 @@ app.controller('barangCtrl', function ($scope, Data, toaster, FileUploader, $sta
             });
         }
     };
+    
     $scope.restore = function (row) {
         if (confirm("Apa anda yakin akan MERESTORE item ini ?")) {
             row.is_deleted = 0;
@@ -166,6 +169,7 @@ app.controller('barangCtrl', function ($scope, Data, toaster, FileUploader, $sta
             });
         }
     };
+    
     $scope.delete = function (row) {
         if (confirm("Apa anda yakin akan MENGHAPUS PERMANENT item ini ?")) {
             Data.delete('barang/delete/' + row.id).then(function (result) {

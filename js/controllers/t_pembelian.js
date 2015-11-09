@@ -37,7 +37,7 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
     });
     $scope.cariProduk = function ($query, $cabang) {
         if ($query.length >= 3) {
-            Data.get('barang/cari2', {nama: $query, cabang: $cabang.id}).then(function (data) {
+            Data.get('barang/cari', {nama: $query, cabang: $cabang.id}).then(function (data) {
                 $scope.listProduk = data.data;
                 angular.forEach($scope.listProduk, function (detail) {
                     detail.diskon = (detail.diskon != undefined) ? detail.diskon : 0;
