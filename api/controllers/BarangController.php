@@ -120,14 +120,17 @@ class BarangController extends Controller {
 
         $data = array();
         foreach ($models as $key => $val) {
-            $harga = \app\models\Harga::find()->where('cabang_id = "' . $val['id'] . '" and produk_id="' . $val['id'] . '" ')->one();
-            $hargaJual = isset($harga['harga_jual']) ? $harga['harga_jual'] : $val['harga_jual'];
-
+            $hargaJual = 0;
             $stok = 0;
-            if (isset($filter['cabang'])) {
-                $st = new Barang;
-                $stok = $st->stok($val['id'], $filter['cabang']);
-            }
+
+            $cabang = isset($filter['cabang']) ? $filter['cabang'] : $_SESSION['user']['cabang'][0]['id'];
+//            if (isset($cabang)) {
+            $st = new Barang;
+            $stok = $st->stok($val['id'], $cabang);
+
+            $harga = \app\models\Harga::find()->where('cabang_id = "' . $cabang . '" and produk_id="' . $val['id'] . '" ')->one();
+            $hargaJual = isset($harga['harga_jual']) ? $harga['harga_jual'] : $val['harga_jual'];
+//            }
 
             $data[$key] = $val;
             $data[$key]['harga_jual'] = $hargaJual;
