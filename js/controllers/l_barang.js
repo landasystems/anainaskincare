@@ -1,4 +1,4 @@
-app.controller('l_barangCtrl', function($scope, Data, toaster,  $stateParams) {
+app.controller('l_barangCtrl', function ($scope, Data, toaster, $stateParams) {
 
     //init data;
     var tableStateRef;
@@ -10,6 +10,10 @@ app.controller('l_barangCtrl', function($scope, Data, toaster,  $stateParams) {
     $scope.is_create = false;
     $scope.listStok = [];
     $scope.totalStok = 0;
+
+    Data.get('site/session').then(function (data) {
+        $scope.sCabang = data.data.user.cabang;
+    });
 
     $scope.subtotal = function () {
         var total = 0;
@@ -35,7 +39,7 @@ app.controller('l_barangCtrl', function($scope, Data, toaster,  $stateParams) {
             param['filter'] = tableState.search.predicateObject;
         }
         paramRef = param;
-        Data.get('barang', param).then(function(data) {
+        Data.get('barang', param).then(function (data) {
             $scope.displayed = data.data;
             tableState.pagination.numberOfPages = Math.ceil(data.totalItems / limit);
         });
@@ -43,16 +47,16 @@ app.controller('l_barangCtrl', function($scope, Data, toaster,  $stateParams) {
         $scope.isLoading = false;
     };
 
-    $scope.excel = function() {
-        Data.get('barang', paramRef).then(function(data) {
+    $scope.excel = function () {
+        Data.get('barang', paramRef).then(function (data) {
             window.location = 'api/web/barang/excellaporan';
         });
     }
 
-    Data.get('barang/kategori').then(function(data) {
+    Data.get('barang/kategori').then(function (data) {
         $scope.sKategori = data.kategori;
     });
-    Data.get('barang/satuan').then(function(data) {
+    Data.get('barang/satuan').then(function (data) {
         $scope.sSatuan = data.satuan;
     });
 
@@ -63,8 +67,8 @@ app.controller('l_barangCtrl', function($scope, Data, toaster,  $stateParams) {
         });
     }
 
-    
-    $scope.view = function(form) {
+
+    $scope.view = function (form) {
         $scope.is_create = false;
         $scope.is_edit = true;
         $scope.is_view = true;
@@ -72,7 +76,7 @@ app.controller('l_barangCtrl', function($scope, Data, toaster,  $stateParams) {
         $scope.form = form;
         $scope.stok(form.id);
     };
-    
+
     $scope.cancel = function () {
         if (!$scope.is_view) { //hanya waktu edit cancel, di load table lagi
             $scope.callServer(tableStateRef);

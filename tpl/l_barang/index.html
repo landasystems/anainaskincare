@@ -4,30 +4,27 @@
     </div>
     <div class="wrapper-md" ng-show="!is_edit">
         <div class="panel panel-default" st-pipe="callServer" st-table="displayed">
-            <div class="panel-heading">
-                <button class="btn btn-default btn-xs" ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed">Pencarian & Export Data</button>
-                <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
-                    <button type="button" class="btn btn-default fa fa-file-excel-o" ng-show="!isCollapsed" ng-click="excel();">&nbsp;Export Excel</button>
-                </div> 
+            <div class="panel-heading" style="text-align: right">
+                <button type="button" class="btn btn-default fa fa-file-excel-o" ng-click="excel();">&nbsp;Export Excel</button>
             </div>
-            <div collapse="isCollapsed" class="panel-body collapse" style="height: 0px;">
+            <div class="panel-body" style="height: 0px;">
                 <div class="form-horizontal">
-                    <div class="form-group"><label class="col-sm-2 control-label">Nama</label>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Nama</label>
                         <div class="col-sm-3">
                             <input st-search="mp.nama" class="form-control"/>
                         </div>
-                        <label class="col-sm-2 control-label">Kode</label>
+                        <label class="col-sm-2 control-label">Cabang</label>
                         <div class="col-sm-3">
-                            <input st-search="mp.kode" class="form-control"/>
+                            <select stInputEvent="change" st-search="cabang" class="form-control">
+                                <option value="{{cabang.id}}" ng-repeat="cabang in sCabang">{{cabang.nama}}</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Status</label>
+                        <label class="col-sm-2 control-label">Kode</label>
                         <div class="col-sm-3">
-                            <select stInputEvent="change" st-search="mp.is_deleted" class="form-control">
-                                <option value="0">Aktif</option>
-                                <option value="1">Terhapus</option>
-                            </select>
+                            <input st-search="mp.kode" class="form-control"/>
                         </div>
                         <label class="col-sm-2 control-label">Kategori</label>
                         <div class="col-sm-3">
@@ -48,16 +45,18 @@
                             <th st-sort="mp.type">Type</th>
                             <th st-sort="mk.nama">Kategori</th>
                             <th st-sort="ms">Satuan</th>
+                            <th>Stok</th>
                             <th st-sort="mp.harga_jual">Harga Jual</th>
                         </tr>
                     </thead>
                     <tbody ng-show="!isLoading">
-                        <tr ng-repeat="row in displayed" ng-dblclick="view(row)">
+                        <tr ng-repeat="row in displayed">
                             <td>{{row.kode}}</td>
                             <td>{{row.nama}}</td>
                             <td>{{row.type}}</td>
                             <td>{{row.kategori}}</td>
                             <td>{{row.satuan}}</td>
+                            <td>{{row.stok}}</td>
                             <td style="text-align: right">{{row.harga_jual|  currency:undefined:0}}</td>
                         </tr>
                     </tbody>

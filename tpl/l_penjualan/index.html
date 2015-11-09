@@ -101,16 +101,16 @@
                                     <tr ng-repeat="row in displayed" >
                                         <td>{{row.tanggal| date:'dd/M/yy'}}</td>
                                         <td>{{row.kode}}</td>
-                                        <td align="right">{{row.cash}}</td>
-                                        <td align="right">{{row.atm}}</td>
-                                        <td align="right">{{row.credit}}</td>
+                                        <td align="right">{{row.cash | number}}</td>
+                                        <td align="right">{{row.atm | number}}</td>
+                                        <td align="right">{{row.credit | number}}</td>
                                         <td>{{row.customer}}</td>
                                         <td>{{row.kasir}}</td>
                                         <td align="left"><div ng-bind-html="row.produk"></div></td>
                                         <td align="right"><div ng-bind-html="row.jumlah"></div></td>
-                                        <td align="right"><div ng-bind-html="row.harga"></div></td>
-                                        <td align="right"><div ng-bind-html="row.diskon"></div></td>
-                                        <td align="right"><div ng-bind-html="row.sub_total"></div></td>
+                                        <td align="right"><div ng-bind-html="row.harga | number"></div></td>
+                                        <td align="right"><div ng-bind-html="row.diskon | number"></div></td>
+                                        <td align="right"><div ng-bind-html="row.sub_total | number"></div></td>
                                     </tr>
                                     <tr>
                                         <td align="right"></td>
