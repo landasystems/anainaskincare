@@ -99,10 +99,12 @@ class BarangController extends Controller {
         if (isset($params['filter'])) {
             $filter = (array) json_decode($params['filter']);
             foreach ($filter as $key => $val) {
-                if ($key == 'is_deleted') {
-                    $query->andFilterWhere(['like', 'mp.' . $key, $val]);
-                } else {
-                    $query->andFilterWhere(['like', $key, $val]);
+                if ($key != "cabang") {
+                    if ($key == 'is_deleted') {
+                        $query->andFilterWhere(['like', 'mp.' . $key, $val]);
+                    } else {
+                        $query->andFilterWhere(['like', $key, $val]);
+                    }
                 }
             }
         }
@@ -116,7 +118,23 @@ class BarangController extends Controller {
 
         $this->setHeader(200);
 
-        echo json_encode(array('status' => 1, 'data' => $models, 'totalItems' => $totalItems), JSON_PRETTY_PRINT);
+        $data = array();
+        foreach ($models as $key => $val) {
+            $harga = \app\models\Harga::find()->where('cabang_id = "' . $val['id'] . '" and produk_id="' . $val['id'] . '" ')->one();
+            $hargaJual = isset($harga['harga_jual']) ? $harga['harga_jual'] : $val['harga_jual'];
+
+            $stok = 0;
+            if (isset($filter['cabang'])) {
+                $st = new Barang;
+                $stok = $st->stok($val['id'], $filter['cabang']);
+            }
+
+            $data[$key] = $val;
+            $data[$key]['harga_jual'] = $hargaJual;
+            $data[$key]['stok'] = $stok;
+        }
+
+        echo json_encode(array('status' => 1, 'data' => $data, 'totalItems' => $totalItems), JSON_PRETTY_PRINT);
     }
 
     public function actionGetstok($id) {
@@ -149,7 +167,8 @@ class BarangController extends Controller {
             $harga = \app\models\Harga::find()->where('cabang_id = "' . $vals['id'] . '" and produk_id="' . $id . '" ')->one();
 
             $listHarga[$n]['no'] = $n;
-            $listHarga[$n]['id'] = isset($vals['id']) ? $vals['id'] : '-';
+            $listHarga[$n]['cabang_id'] = isset($harga->cabang_id) ? $harga->cabang_id : 0;
+            $listHarga[$n]['id'] = isset($harga['id']) ? $harga['id'] : '-';
             $listHarga[$n]['nama'] = isset($vals['nama']) ? $vals['nama'] : '-';
             $listHarga[$n]['harga_beli'] = isset($harga->harga_beli) ? $harga->harga_beli : 0;
             $listHarga[$n]['harga_jual'] = isset($harga->harga_jual) ? $harga->harga_jual : 0;
@@ -196,8 +215,8 @@ class BarangController extends Controller {
                     $harga = new \app\models\Harga();
                     $harga->cabang_id = $vHarga['id'];
                     $harga->produk_id = $model->id;
-                    $harga->harga_beli = $vHarga['harga_beli'];
-                    $harga->harga_jual = $vHarga['harga_jual'];
+                    $harga->harga_beli = isset($vHarga['harga_beli']) ? $vHarga['harga_beli'] : 0;
+                    $harga->harga_jual = isset($vHarga['harga_jual']) ? $vHarga['harga_jual'] : 0;
                     $harga->save();
                 }
             }
@@ -250,11 +269,14 @@ class BarangController extends Controller {
         $sHarga = $params['harga'];
         foreach ($sHarga as $vHarga) {
             $harga = \app\models\Harga::find()->where('id = ' . $vHarga['id'])->one();
-            if (!empty($harga)) {
-                $harga->harga_beli = $vHarga['harga_beli'];
-                $harga->harga_jual = $vHarga['harga_jual'];
-                $harga->save();
+            if (empty($harga)) {
+                $harga = new \app\models\Harga();
             }
+            $harga->produk_id = $model->id;
+            $harga->cabang_id = isset($vHarga['cabang_id']) ? $vHarga['cabang_id'] : 0;
+            $harga->harga_beli = isset($vHarga['harga_beli']) ? $vHarga['harga_beli'] : 0;
+            $harga->harga_jual = isset($vHarga['harga_jual']) ? $vHarga['harga_jual'] : 0;
+            $harga->save();
         }
 
         if ($model->save()) {
@@ -301,7 +323,7 @@ class BarangController extends Controller {
 //                ->where(['is_deleted' => 0, 'type' => 'barang'])
                 ->andWhere(['like', 'nama', $params['nama']])
                 ->orWhere(['like', 'kode', $params['nama']])
-                ->andWhere(['=','harga.cabang_id',$params['cabang']]);
+                ->andWhere(['=', 'harga.cabang_id', $params['cabang']]);
         $command = $query->createCommand();
         $models = $command->queryAll();
         $this->setHeader(200);

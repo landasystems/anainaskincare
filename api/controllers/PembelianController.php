@@ -198,9 +198,17 @@ class PembelianController extends Controller {
                 $modelDet->pembelian_id = $model->id;
                 if ($modelDet->save()) {
                     //======== SIMPAN HARGA BELI BARU ============//
-                    $harga = \app\models\Harga::find()->where('cabang_id="' . $model->cabang_id . '" and produk_id="' . $modelDet->produk_id . '"')->one();
-                    $harga->harga_beli = $modelDet->harga;
-                    $harga->save();
+                    $harga = \app\models\Harga::find()->where('cabang_id="' . $model->cabang_id . '" and produk_id="' . $det->produk_id . '"')->one();
+                    if (!empty($harga)) {
+                        $harga->harga_beli = $det->harga;
+                        $harga->save();
+                    } else {
+                        $harga = new \app\models\Harga();
+                        $harga->cabang_id = $model->cabang_id;
+                        $harga->produk_id = $modelDet->produk_id;
+                        $harga->harga_beli = $modelDet->harga;
+                        $harga->save();
+                    }
 
                     if ($model->status == 'clear') {
                         $keterangan = 'pembelian';
@@ -258,8 +266,17 @@ class PembelianController extends Controller {
                 if ($det->save()) {
                     //======== SIMPAN HARGA BELI BARU ============//
                     $harga = \app\models\Harga::find()->where('cabang_id="' . $model->cabang_id . '" and produk_id="' . $det->produk_id . '"')->one();
-                    $harga->harga_beli = $det->harga;
-                    $harga->save();
+                    if (!empty($harga)) {
+                        $harga->harga_beli = $det->harga;
+                        $harga->save();
+                    } else {
+                        $harga = new \app\models\Harga();
+                        $harga->cabang_id = $model->cabang_id;
+                        $harga->produk_id = $det->produk_id;
+                        $harga->harga_beli = $det->harga;
+                        $harga->save();
+                    }
+
 
                     $id_det[] = $det->id;
                     if ($model->status == 'clear') {
