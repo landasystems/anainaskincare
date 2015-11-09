@@ -297,7 +297,8 @@ class BarangController extends Controller {
         $query->from('m_produk')
                 ->join('LEFT JOIN', 'harga', 'harga.produk_id = m_produk.id')
                 ->select("m_produk.*, harga.harga_beli as harga_beli_cabang, harga.harga_jual as harga_jual_cabang")
-                ->where(['is_deleted' => 0, 'type' => 'barang'])
+                ->where(['is_deleted' => 0])
+//                ->where(['is_deleted' => 0, 'type' => 'barang'])
                 ->andWhere(['like', 'nama', $params['nama']])
                 ->orWhere(['like', 'kode', $params['nama']])
                 ->andWhere(['=','harga.cabang_id',$params['cabang']]);
@@ -326,7 +327,8 @@ class BarangController extends Controller {
         $query = new Query;
         $query->from('m_produk')
                 ->select("m_produk.*")
-                ->where(['is_deleted' => 0, 'type' => 'barang'])
+//                ->where(['is_deleted' => 0, 'type' => 'barang'])
+                ->where(['is_deleted' => 0])
                 ->andWhere(['like', 'nama', $params['nama']])
                 ->orWhere(['like', 'kode', $params['nama']]);
         $command = $query->createCommand();
@@ -354,7 +356,8 @@ class BarangController extends Controller {
         $query = new Query;
         $query->from('m_produk')
                 ->select("m_produk.*")
-                ->where(['is_deleted' => 0, 'type' => 'Barang'])
+//                ->where(['is_deleted' => 0, 'type' => 'Barang'])
+                ->where(['is_deleted' => 0])
                 ->andWhere(['like', 'nama', $params['nama']]);
 
         $command = $query->createCommand();

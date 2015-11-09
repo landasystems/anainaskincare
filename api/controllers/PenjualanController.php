@@ -453,6 +453,7 @@ class PenjualanController extends Controller {
         $query2 = new Query;
         $query2->from('penjualan')
                 ->select('kode')
+                ->where('cabang_id="' . $id . '"')
                 ->orderBy('kode DESC')
                 ->limit(1);
 
