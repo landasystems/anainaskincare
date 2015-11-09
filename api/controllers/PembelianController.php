@@ -190,12 +190,18 @@ class PembelianController extends Controller {
                 $credit->tanggal_transaksi = $model->tanggal;
                 $credit->save();
             }
+
             foreach ($params['pembeliandet'] as $val) {
                 $modelDet = new PembelianDet();
                 $modelDet->attributes = $val;
                 $modelDet->produk_id = $val['barang']['id'];
                 $modelDet->pembelian_id = $model->id;
                 if ($modelDet->save()) {
+                    //======== SIMPAN HARGA BELI BARU ============//
+                    $harga = \app\models\Harga::find()->where('cabang_id="' . $model->cabang_id . '" and produk_id="' . $modelDet->produk_id . '"')->one();
+                    $harga->harga_beli = $modelDet->harga;
+                    $harga->save();
+
                     if ($model->status == 'clear') {
                         $keterangan = 'pembelian';
                         $stok = new KartuStok();
@@ -250,6 +256,11 @@ class PembelianController extends Controller {
                 $det->pembelian_id = $model->id;
 
                 if ($det->save()) {
+                    //======== SIMPAN HARGA BELI BARU ============//
+                    $harga = \app\models\Harga::find()->where('cabang_id="' . $model->cabang_id . '" and produk_id="' . $det->produk_id . '"')->one();
+                    $harga->harga_beli = $det->harga;
+                    $harga->save();
+
                     $id_det[] = $det->id;
                     if ($model->status == 'clear') {
                         $update = $stok->process('in', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
