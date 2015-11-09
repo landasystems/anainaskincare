@@ -99,7 +99,7 @@ class StokmasukController extends Controller {
         session_start();
         $params = $_REQUEST;
         $filter = array();
-        $sort = "stok_masuk.id ASC";
+        $sort = "stok_masuk.kode DESC";
         $offset = 0;
         $limit = 10;
 

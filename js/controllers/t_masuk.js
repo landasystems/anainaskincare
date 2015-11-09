@@ -62,7 +62,7 @@ app.controller('t_masukCtrl', function($scope, Data, toaster) {
             var hrg = parseInt(detail.harga) ? parseInt(detail.harga) : 0;
             sub_total += (jml * hrg);
             detail.sub_total = sub_total;
-            total += sub_total;
+            total += jml;
         })
         $scope.form.total = total;
     }
