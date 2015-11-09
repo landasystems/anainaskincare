@@ -285,16 +285,14 @@
                                         <tr>
                                             <td width="40%">     
                                                 <div class="input-group " style="margin:0px;">
-                                                    <input type="text" class="form-control angka" ng-maxlength="2" ng-pattern="/^[0-9]+$/" ng-change="total();
-                                                                        calcDiskonHarga(detail)"  ng-model="detail.diskonpersen"  ng-disabled="is_view" ng-readonly="is_create == false">
+                                                    <input type="text" class="form-control angka" ng-maxlength="2" ng-pattern="/^[0-9]+$/" ng-change="calcDiskonHarga(detail);total();"  ng-model="detail.diskonpersen"  ng-disabled="is_view" ng-readonly="is_create == false">
                                                     <span class="input-group-addon">%</span>
                                                 </div>
                                             </td>
                                             <td width="60%">     
                                                 <div class="input-group " style="margin:0px;">
                                                     <span class="input-group-addon">Rp</span>
-                                                    <input type="text" class="form-control angka" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-change="total();
-                                                                        calcDiskonPersen(detail)"  ng-model="detail.diskon"  ng-disabled="is_view" ng-readonly="is_create == false">
+                                                    <input type="text" class="form-control angka" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-change="calcDiskonPersen(detail);total();"  ng-model="detail.diskon"  ng-disabled="is_view" ng-readonly="is_create == false">
                                                 </div>
                                             </td>
                                         </tr>

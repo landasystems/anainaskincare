@@ -443,6 +443,7 @@ class PenjualanController extends Controller {
         $query2 = new Query;
         $query2->from('penjualan')
                 ->select('kode')
+                ->where('cabang_id="' . $id . '"')
                 ->orderBy('kode DESC')
                 ->limit(1);
 
@@ -470,7 +471,7 @@ class PenjualanController extends Controller {
         $dokter = $command3->queryAll();
 
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'kode' => 'J/' . $code . '/' . $kode, 'terapis' => $terapis, 'dokter' => $dokter));
+        echo json_encode(array('status' => 1, 'kode' => 'JUAL/' . $code . '/' . $kode, 'terapis' => $terapis, 'dokter' => $dokter));
     }
 
     public function actionDet_produk($id) {

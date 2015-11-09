@@ -212,10 +212,8 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         var total_diskon = 0;
         var total_harga = 0;
         angular.forEach($scope.detPenjualan, function (detail) {
-            diskon += detail.jumlah * detail.diskon;
-            total += detail.jumlah * detail.harga;
-            total_diskon += parseInt(detail.diskon);
-            total_harga += parseInt(detail.harga);
+            diskon += parseInt(detail.jumlah) * parseInt(detail.diskon);
+            total += parseInt(detail.jumlah) * parseInt(detail.harga);
         });
         $scope.form.total = (total - diskon);
         $scope.form.belanja = (total - diskon);

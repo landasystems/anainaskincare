@@ -100,8 +100,7 @@ class CustomerController extends Controller {
         $query = new Query;
         $query->from('m_customer')
                 ->select("*")
-                ->andWhere(['like', 'nama', $params['nama']])
-                ->orWhere(['like', 'kode', $params['nama']]);
+                ->where('is_deleted = "0" and (nama LIKE "%'.$params['nama'].'%" OR kode LIKE "%'.$params['nama'].'%")');
 
         $command = $query->createCommand();
         $models = $command->queryAll();
