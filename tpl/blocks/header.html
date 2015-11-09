@@ -137,66 +137,54 @@
                     </div>
                 </div>
         </li>
-        <li class="dropdown pos-stc" dropdown>
+        
+        <li class="dropdown" dropdown>
             <a href class="dropdown-toggle" dropdown-toggle>
                 <i class="glyphicon glyphicon-print icon text-info-lter"></i> 
                 <span>Laporan</span> 
                 <span class="caret"></span>
             </a>
-            <div class="dropdown-menu wrapper w-full bg-white">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <ul class="list-unstyled l-h-2x">
-                                    <li ng-show="user.akses.laporan_kartustok">
-                                        <a ui-sref='laporan.kartustok'><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Kartu Stok</a>
-                                    </li>
-                                    <li ng-show='user.akses.laporan_bonuskaryawan'>
-                                        <a ui-sref='laporan.bonuskaryawan'><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Bonus Karyawan</a>
-                                    </li>
-                                    <li ng-show='user.akses.laporan_labarugi'>
-                                        <a ui-sref='laporan.labarugi'><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Omset</a>
-                                    </li>
-                                    <li ng-show='user.akses.laporan_kartustatus'>
-                                        <a ui-sref='laporan.kartustatus'><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Kartu Status</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-xs-6">
-                                <ul class="list-unstyled l-h-2x">
-                                    <li ng-show="user.akses.laporan_penjualan">
-                                        <a ui-sref='laporan.penjualan'><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Penjualan</a>
-                                    </li>
-                                    <li ng-show="user.akses.laporan_barang">
-                                        <a ui-sref='laporan.barang'><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Barang</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+            <ul class="dropdown-menu" role="menu">
+                <li ng-show="user.akses.laporan_kartustok">
+                    <a ui-sref='laporan.kartustok'><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Kartu Stok</a>
+                </li>
+                <li ng-show='user.akses.laporan_bonuskaryawan'>
+                    <a ui-sref='laporan.bonuskaryawan'><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Bonus Karyawan</a>
+                </li>
+                <!--                                    <li ng-show='user.akses.laporan_labarugi'>
+                                                        <a ui-sref='laporan.labarugi'><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Omset</a>
+                                                    </li>-->
+                <li ng-show='user.akses.laporan_kartustatus'>
+                    <a ui-sref='laporan.kartustatus'><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Kartu Status</a>
+                </li>
+                <li ng-show="user.akses.laporan_penjualan">
+                    <a ui-sref='laporan.penjualan'><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Penjualan</a>
+                </li>
+                <li ng-show="user.akses.laporan_barang">
+                    <a ui-sref='laporan.barang'><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Barang</a>
+                </li>
+            </ul>
         </li>
     </ul>
     <!-- / link and dropdown -->
 
     <!-- search form -->
-    <form class="navbar-form navbar-form-sm navbar-left shift hidden-sm" id="pencarian">
-        <div class="form-group">
-            <div class="input-group">
-                <ui-select on-select="pencarianDet($item)" ng-model="cari">
-                    <ui-select-match placeholder="Pencarian barang...">{{$select.selected.nama}}</ui-select-match>
-                    <ui-select-choices refresh="pencarian($select.search)" repeat="val in results">
-                        {{val.nama}}
-                    </ui-select-choices>
-                </ui-select>
-                <span class="input-group-btn">
-                    <button type="submit" class="btn btn-sm bg-light rounded"><i class="fa fa-search"></i></button>
-                </span>
+    <!--    <form class="navbar-form navbar-form-sm navbar-left shift hidden-sm" id="pencarian">
+            <div class="form-group">
+                <div class="input-group">
+                    <ui-select on-select="pencarianDet($item)" ng-model="cari">
+                        <ui-select-match placeholder="Pencarian barang...">{{$select.selected.nama}}</ui-select-match>
+                        <ui-select-choices refresh="pencarian($select.search)" repeat="val in results">
+                            {{val.nama}}
+                        </ui-select-choices>
+                    </ui-select>
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-sm bg-light rounded"><i class="fa fa-search"></i></button>
+                    </span>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>-->
     <!-- / search form -->
 
     <!-- nabar right -->
