@@ -59,7 +59,11 @@ app.controller('cabangCtrl', function ($scope, Data, toaster) {
         var url = (form.id > 0) ? 'cabang/update/' + form.id : 'cabang/create';
         Data.post(url, form).then(function (result) {
             if (result.status == 0) {
-                toaster.pop('error', "Terjadi Kesalahan", result.errors);
+                var error = '';
+                angular.forEach(result.errors, function ($value, $key) {
+                    error = error + $value + "\n";
+                });
+                toaster.pop('error', "Terjadi Kesalahan", error);
             } else {
                 $scope.is_edit = false;
                 $scope.callServer(tableStateRef); //reload grid ulang

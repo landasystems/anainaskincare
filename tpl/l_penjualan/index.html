@@ -98,26 +98,26 @@
                                     </tr>
                                 </thead>
                                 <tbody ng-show="!isLoading">
-                                    <tr ng-repeat="row in displayed" >
-                                        <td>{{row.tanggal| date:'dd/M/yy'}}</td>
+                                    <tr ng-repeat="row in displayed">
+                                        <td>{{row.tanggal| date}}</td>
                                         <td>{{row.kode}}</td>
-                                        <td align="right">{{row.cash | number}}</td>
-                                        <td align="right">{{row.atm | number}}</td>
-                                        <td align="right">{{row.credit | number}}</td>
+                                        <td align="right">{{row.cash}}</td>
+                                        <td align="right">{{row.atm}}</td>
+                                        <td align="right">{{row.credit}}</td>
                                         <td>{{row.customer}}</td>
                                         <td>{{row.kasir}}</td>
                                         <td align="left"><div ng-bind-html="row.produk"></div></td>
                                         <td align="right"><div ng-bind-html="row.jumlah"></div></td>
-                                        <td align="right"><div ng-bind-html="row.harga | number"></div></td>
-                                        <td align="right"><div ng-bind-html="row.diskon | number"></div></td>
-                                        <td align="right"><div ng-bind-html="row.sub_total | number"></div></td>
+                                        <td align="right"><div ng-bind-html="row.harga"></div></td>
+                                        <td align="right"><div ng-bind-html="row.diskon"></div></td>
+                                        <td align="right"><div ng-bind-html="row.sub_total"></div></td>
                                     </tr>
                                     <tr>
                                         <td align="right"></td>
                                         <td align="right"></td>
                                         <td align="right">{{data.totalCash| currency:undefined:0}}</td>
-                                        <td align="right">{{data.totalAtm | currency:undefined:0}}</td>
-                                        <td align="right">{{data.totalCredit | currency:undefined:0}}</td>
+                                        <td align="right">{{data.totalAtm| currency:undefined:0}}</td>
+                                        <td align="right">{{data.totalCredit| currency:undefined:0}}</td>
                                         <td align="right"></td>
                                         <td align="right"></td>
                                         <td align="right"></td>

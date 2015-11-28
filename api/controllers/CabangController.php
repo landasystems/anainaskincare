@@ -41,7 +41,7 @@ class CabangController extends Controller {
         }
         $verb = Yii::$app->getRequest()->getMethod();
         $allowed = array_map('strtoupper', $verbs);
-        
+
         if (!in_array($verb, $allowed)) {
 
             $this->setHeader(400);
@@ -59,7 +59,7 @@ class CabangController extends Controller {
 
         $command = $query->createCommand();
         $models = $command->queryAll();
-        
+
         $this->setHeader(200);
         echo json_encode(array('status' => 1, 'data' => $models));
     }
@@ -74,7 +74,7 @@ class CabangController extends Controller {
 
         $command = $query->createCommand();
         $models = $command->queryAll();
-        
+
         $this->setHeader(200);
         echo json_encode(array('status' => 1, 'data' => $models));
     }
@@ -147,9 +147,14 @@ class CabangController extends Controller {
         $model = new Cabang();
         $model->attributes = $params;
 
-        if ($model->save()) {
-            $this->setHeader(200);
-            echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
+        if ($model->validate()) {
+            if ($model->save()) {
+                $this->setHeader(200);
+                echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
+            } else {
+                $this->setHeader(400);
+                echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $model->errors), JSON_PRETTY_PRINT);
+            }
         } else {
             $this->setHeader(400);
             echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $model->errors), JSON_PRETTY_PRINT);

@@ -168,16 +168,16 @@ class LaporanpenjualanController extends Controller {
 
             $data[$indek]['tanggal'] = date("d-m-Y", strtotime($val['tanggal']));
             $data[$indek]['kode'] = $val['kode'];
-            $data[$indek]['cash'] = $val['cash'];
-            $data[$indek]['credit'] = $val['credit'];
-            $data[$indek]['atm'] = $val['atm'];
+            $data[$indek]['cash'] = Yii::$app->landa->rp($val['cash'], false);
+            $data[$indek]['credit'] = Yii::$app->landa->rp($val['credit'], false);
+            $data[$indek]['atm'] = Yii::$app->landa->rp($val['atm'], false);
             $data[$indek]['customer'] = $val['customer'];
             $data[$indek]['kasir'] = empty($val['kasir']) ? '-' : $val['kasir'];
             $data[$indek]['produk'] = isset($data[$indek]['produk']) ? $data[$indek]['produk'] . '<br>' . strtoupper($val['produk']) : strtoupper($val['produk']);
             $data[$indek]['jumlah'] = isset($data[$indek]['jumlah']) ? $data[$indek]['jumlah'] . '<br>' . $val['jumlah'] : $val['jumlah'];
-            $data[$indek]['harga'] = isset($data[$indek]['harga']) ? $data[$indek]['harga'] . '<br>' . $val['harga'] : $val['harga'];
-            $data[$indek]['diskon'] = isset($data[$indek]['diskon']) ? $data[$indek]['diskon'] . '<br>' . $val['diskon'] : $val['diskon'];
-            $data[$indek]['sub_total'] = isset($data[$indek]['sub_total']) ? $data[$indek]['sub_total'] . '<br>' . $subTotal : $subTotal;
+            $data[$indek]['harga'] = isset($data[$indek]['harga']) ? $data[$indek]['harga'] . '<br>' . Yii::$app->landa->rp($val['harga'], false) : Yii::$app->landa->rp($val['harga'], false);
+            $data[$indek]['diskon'] = isset($data[$indek]['diskon']) ? $data[$indek]['diskon'] . '<br>' . Yii::$app->landa->rp($val['diskon'], false) : Yii::$app->landa->rp($val['diskon'], false);
+            $data[$indek]['sub_total'] = isset($data[$indek]['sub_total']) ? $data[$indek]['sub_total'] . '<br>' . Yii::$app->landa->rp($subTotal, false) : Yii::$app->landa->rp($subTotal, false);
         }
 
         $detail['totalCash'] = $totalCash;

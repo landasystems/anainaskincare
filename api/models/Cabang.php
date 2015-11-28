@@ -15,24 +15,24 @@ use Yii;
  * @property string $email
  * @property integer $is_deleted
  */
-class Cabang extends \yii\db\ActiveRecord
-{
+class Cabang extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'm_cabang';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['alamat'], 'string'],
-            [['is_deleted'], 'integer'],
+            [['kode'], 'unique'],
+            [['kode'], 'unique'],
+            [['kode','nama','alamat'], 'required'],
+            [['is_deleted','no_tlp'], 'integer'],
             [['kode', 'no_tlp'], 'string', 'max' => 25],
             [['nama', 'email'], 'string', 'max' => 45]
         ];
@@ -41,8 +41,7 @@ class Cabang extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'kode' => 'Kode',
@@ -53,4 +52,5 @@ class Cabang extends \yii\db\ActiveRecord
             'is_deleted' => 'Is Deleted',
         ];
     }
+
 }

@@ -49,6 +49,8 @@
                             <th st-sort="mp.type">Type</th>
                             <th st-sort="mk.nama">Kategori</th>
                             <th st-sort="ms">Satuan</th>
+                            <th st-sort="mp.harga_beli_terakhir">Harga Beli</th>
+                            <th st-sort="mp.harga_jual">Harga Jual</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -59,6 +61,8 @@
                             <td>{{row.type}}</td>
                             <td>{{row.kategori}}</td>
                             <td>{{row.satuan}}</td>
+                            <td>{{row.harga_beli_terakhir| currency}}</td>
+                            <td>{{row.harga_jual| currency}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ng-show="row.is_deleted == 0"></button>
@@ -71,12 +75,12 @@
                     </tbody>
                     <tbody ng-show="isLoading">
                         <tr>
-                            <td colspan="6" class="text-center">Loading ... </td>
+                            <td colspan="8" class="text-center">Loading ... </td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="6" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html"></td>
+                            <td colspan="8" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html"></td>
                         </tr>
                 </table>		
             </div>
@@ -203,31 +207,31 @@
                                 <div class="line"></div>
                             </tab>
                             <!-- Aktifkan Jika Harga Per Cabang Berbeda -->
-<!--                            <tab>
-                                <tab-heading>
-                                    Harga
-                                </tab-heading>
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th width='25'>No</th>
-                                            <th>Cabang</th>
-                                            <th ng-show="form.type == 'Barang'">Harga Beli</th>
-                                            <th>Harga Jual</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="harga in listHarga">
-                                            <td>{{$index + 1}}</td>
-                                            <td>{{harga.nama}}</td>
-                                            <td style="width:100px;" ng-if='is_view && form.type == "Barang"'>{{harga.harga_beli}}</td>
-                                            <td style="margin:0px;padding:0px;width:100px;" ng-if="is_view == false && form.type == 'Barang'"><input type='text' class="form-control" ng-model="harga.harga_beli"></td>
-                                            <td style="width:100px;" ng-if='is_view'>{{harga.harga_jual}}</td>
-                                            <td style="margin:0px;padding:0px;width:100px;" ng-if="is_view == false"><input type='text' class="form-control" ng-model="harga.harga_jual"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </tab>-->
+                            <!--                            <tab>
+                                                            <tab-heading>
+                                                                Harga
+                                                            </tab-heading>
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th width='25'>No</th>
+                                                                        <th>Cabang</th>
+                                                                        <th ng-show="form.type == 'Barang'">Harga Beli</th>
+                                                                        <th>Harga Jual</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="harga in listHarga">
+                                                                        <td>{{$index + 1}}</td>
+                                                                        <td>{{harga.nama}}</td>
+                                                                        <td style="width:100px;" ng-if='is_view && form.type == "Barang"'>{{harga.harga_beli}}</td>
+                                                                        <td style="margin:0px;padding:0px;width:100px;" ng-if="is_view == false && form.type == 'Barang'"><input type='text' class="form-control" ng-model="harga.harga_beli"></td>
+                                                                        <td style="width:100px;" ng-if='is_view'>{{harga.harga_jual}}</td>
+                                                                        <td style="margin:0px;padding:0px;width:100px;" ng-if="is_view == false"><input type='text' class="form-control" ng-model="harga.harga_jual"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </tab>-->
                             <tab ng-if="form.type == 'Barang'">
                                 <tab-heading>
                                     Kartu Stok
