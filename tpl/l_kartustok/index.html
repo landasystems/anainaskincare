@@ -14,7 +14,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Cabang</label>
                             <div class="col-sm-9">
-                                <select class="form-control" ng-model="form.cabang_id" style="width: 270px;">
+                                <select class="form-control" ng-model="form.cabang_id">
                                     <option value="">-Semua Cabang-</option>
                                     <option ng-repeat="cabang in listcabang" value="{{cabang.id}}">{{cabang.nama}}</option>
                                 </select>
@@ -23,10 +23,44 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Kategori</label>
                             <div class="col-sm-9">
-                                <select class="form-control" ng-model="form.kategori_id" style="width: 270px;">
-                                    <option value="">-Semua Kategori-</option>
-                                    <option ng-repeat="kategori in listkategori" value="{{kategori.id}}">{{kategori.nama}}</option>
-                                </select>
+                                <div class="input-group">
+                                    <ui-select on_select="cariProduk('',form.kategori_id)" ng-model="form.kategori_id" theme="bootstrap">
+                                        <ui-select-match placeholder="Cari Kategori">{{$select.selected.nama}}</ui-select-match>
+                                        <ui-select-choices group-by="'group'" repeat="kategori in listkategori | filter: $select.search">
+                                            {{kategori.nama}}
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-btn">
+                                        <button ng-click="form.kategori_id = undefined" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                                <!--                                <select class="form-control" ng-model="form.kategori_id" style="width: 270px;" ng-select="cariProduk('',form.kategori_id)">
+                                                                    <option value="">-Semua Kategori-</option>
+                                                                    <option ng-repeat="kategori in listkategori" value="{{kategori.id}}">{{kategori.nama}}</option>
+                                                                </select>-->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Produk</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <ui-select ng-model="form.produk" theme="bootstrap">
+                                        <ui-select-match placeholder="Pilih atau Cari nama produk">{{$select.selected.nama}}</ui-select-match>
+                                        <ui-select-choices refresh="cariProduk2($select.search, form.kategori_id)" repeat="val in resultsProduk">
+                                            {{val.nama}}
+                                        </ui-select-choices>
+                                        <ui-select-no-choice>
+                                            <div style="text-align: center;">There is nothing to show</div>
+                                        </ui-select-no-choice>
+                                    </ui-select>
+                                    <span class="input-group-btn">
+                                        <button ng-click="form.produk = undefined" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </button>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -50,7 +84,8 @@
                     <center>
                         <h4>KARTU STOK ANAINA SKIN CARE</h4>
                         <h5>CABANG : {{laporan.cabang}}</h5>
-                        <h5>KATEGORI PRODUK : {{laporan.kategori}}</h5>
+                        <h5>KATEGORI : {{laporan.kategori}}</h5>
+                        <h5>PRODUK : {{laporan.produk}}</h5>
                         <h5>PERIODE : {{laporan.start| date | uppercase}} s/d {{laporan.end| date | uppercase}} </h5>
                         <h5>METODE : FIFO</h5>
                         <center>
@@ -91,22 +126,22 @@
                                         <td style="border: none">{{laporan.tanggal_saldo| date}}</td>
                                         <td style="border: none">Saldo Awal</td>
                                         <td style="border: none" colspan="7"></td>
-                                        <td style="border: none">
-                                            <p ng-repeat="saldoJml in list.saldo_awal.jumlah">{{saldoJml}} {{list.title.satuan}}</p>
+                                        <td style="text-align: right; border: none">
+                                            <p ng-repeat="saldoJml in list.saldo_awal.jumlah">{{saldoJml}}</p>
                                         </td>
-                                        <td style="border: none">
+                                        <td style="text-align: right; border: none">
                                             <p ng-repeat="saldoHarga in list.saldo_awal.harga">{{saldoHarga| currency:undefined:0}} </p>
                                         </td>
-                                        <td style="border: none">
-                                            <p ng-repeat="saldoTotal in list.saldo_awal.sub_total">{{saldoTotal| currency:undefined:0}}</p>
+                                        <td style="text-align: right; border: none">
+                                            <p ng-repeat="saldoTotal in list.saldo_awal.sub_total" style="text-align: right">{{list.saldo_awal.harga[$index] * list.saldo_awal.jumlah[$index]| currency:undefined:0}}</p>
                                         </td>
                                     </tr>
                                     <tr ng-repeat="detail in list.body">
                                         <td style="border: none">{{detail.tanggal| date}}</td>
                                         <td style="border: none">{{detail.keterangan}}</td>
                                         <td style="border: none">{{detail.kode}}</td>
-                                        <td style="border: none">
-                                            <p ng-if="detail.masuk.jumlah !== 0">{{detail.masuk.jumlah}} {{list.title.satuan}}</p>
+                                        <td style="text-align: right; border: none">
+                                            <p ng-if="detail.masuk.jumlah !== 0">{{detail.masuk.jumlah}}</p>
                                         </td>
                                         <td style="text-align: right; border: none">
                                             <p ng-if="detail.masuk.harga !== 0">{{detail.masuk.harga|  currency:undefined:0}}</p>
@@ -114,8 +149,8 @@
                                         <td style="text-align: right; border: none">
                                             <p ng-if="detail.masuk.sub_total !== 0">{{detail.masuk.sub_total|  currency:undefined:0}}</p>
                                         </td>
-                                        <td style="border: none">
-                                            <p ng-repeat="jmlKeluar in detail.keluar.jumlah" >{{jmlKeluar}} {{list.title.satuan}}</p>
+                                        <td style="text-align: right; border: none">
+                                            <p ng-repeat="jmlKeluar in detail.keluar.jumlah" >{{jmlKeluar}}</p>
                                         </td>
                                         <td style="text-align: right; border: none">
                                             <p ng-repeat="hargaKeluar in detail.keluar.harga">{{hargaKeluar|  currency:undefined:0}}</p>
@@ -123,11 +158,11 @@
                                         <td style="text-align: right; border: none">
                                             <p ng-repeat="saldoKeluar in detail.keluar.sub_total">{{saldoKeluar|  currency:undefined:0}}</p>
                                         </td>
-                                        <td style="border: none">
-                                            <p ng-repeat="jmlSaldo in detail.saldo.jumlah">{{jmlSaldo}} {{list.title.satuan}}</p>
+                                        <td style="text-align: right; border: none">
+                                            <p ng-repeat="jmlSaldo in detail.saldo.jumlah">{{jmlSaldo}}</p>
                                         </td>
                                         <td style="text-align: right; border: none">
-                                            <p ng-repeat="hargaSaldo in detail.saldo.harga">{{hargaSaldo |  currency:undefined:0}}</p>
+                                            <p ng-repeat="hargaSaldo in detail.saldo.harga">{{hargaSaldo|  currency:undefined:0}}</p>
                                         </td>
                                         <td style="text-align: right; border: none">
                                             <p ng-repeat="subSaldo in detail.saldo.sub_total">{{subSaldo| currency:undefined:0}}</p>
@@ -135,14 +170,14 @@
                                     </tr>
                                     <tr>
                                         <td colspan="3" style="border: none"><b>Total</b></td>
-                                        <td style="border: none"><b>{{list.total.masuk.jumlah}}</b></td>
-                                        <td style="border: none"></td>
+                                        <td style="text-align: right; border: none"><b>{{list.total.masuk.jumlah}}</b></td>
+                                        <td style="text-align: right; border: none"></td>
                                         <td style="text-align: right; border: none"><b>{{list.total.masuk.harga|  currency:undefined:0}}</b></td>
-                                        <td style="border: none"><b>{{list.total.keluar.jumlah}}</b></td>
-                                        <td style="border: none"></td>
+                                        <td style="text-align: right; border: none"><b>{{list.total.keluar.jumlah}}</b></td>
+                                        <td style="text-align: right; border: none"></td>
                                         <td style="text-align: right; border: none"><b>{{list.total.keluar.harga|  currency:undefined:0}}</b></td>
-                                        <td style="border: none"><b>{{list.total.saldo.jumlah}}</b></td>
-                                        <td style="border: none"></td>
+                                        <td style="text-align: right; border: none"><b>{{list.total.saldo.jumlah}}</b></td>
+                                        <td style="text-align: right; border: none"></td>
                                         <td style="text-align: right; border: none"><b>{{list.total.saldo.harga|  currency:undefined:0}}</b></td>
                                     </tr>
                                 </tbody>

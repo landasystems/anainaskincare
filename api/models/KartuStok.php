@@ -260,9 +260,9 @@ class KartuStok extends \yii\db\ActiveRecord {
                 }
             }
 
-            $body[$val['produk_id']]['jumlah'] = $tmpSaldo['jumlah'];
-            $body[$val['produk_id']]['harga'] = $tmpSaldo['harga'];
-            $body[$val['produk_id']]['sub_total'] = $tmpSaldo['sub_total'];
+            $body[$val['produk_id']]['jumlah'] = isset($tmpSaldo['jumlah']) ? $tmpSaldo['jumlah'] : 0;
+            $body[$val['produk_id']]['harga'] = isset($tmpSaldo['harga']) ? $tmpSaldo['harga'] : 0;
+            $body[$val['produk_id']]['sub_total'] = isset($tmpSaldo['sub_total']) ? $tmpSaldo['sub_total'] : 0;
 
             $indeks++;
             $pr = $val['produk_id'];

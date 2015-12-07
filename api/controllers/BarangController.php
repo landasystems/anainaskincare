@@ -32,6 +32,7 @@ class BarangController extends Controller {
                     'cari2' => ['get'],
                     'carilagi' => ['post'],
                     'getstok' => ['get'],
+                    'perkategori' => ['post'],
 //                    'getharga' => ['get'], AKTIFKAN JIKA HARGA PER CABANG BERBEDA
                 ],
             ]
@@ -160,7 +161,7 @@ class BarangController extends Controller {
 
         echo json_encode(array('status' => 1, 'data' => $listStok, 'total' => $total), JSON_PRETTY_PRINT);
     }
-    
+
 //======== AKTIFKAN JIKA HARGA PER CABANG BERBEDA ===========//
 //    public function actionGetharga($id) {
 //        $listHarga = array();
@@ -348,6 +349,26 @@ class BarangController extends Controller {
         }
 
         echo json_encode(array('status' => 1, 'data' => $data));
+    }
+
+    public function actionPerkategori() {
+        $params = json_decode(file_get_contents("php://input"), true);
+        $query = new Query;
+        $query->from('m_produk')
+                ->select("m_produk.*")
+                ->where(['is_deleted' => 0])
+                ->andWhere(['like', 'nama', $params['nama']])
+                ->limit(10);
+
+        if (isset($params['kategori_id']) and !empty($params['kategori_id'])) {
+            $query->andWhere('kategori_id = "' . $params['kategori_id'] . '"')
+                    ->limit(null);
+        }
+
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+        $this->setHeader(200);
+        echo json_encode(array('status' => 1, 'data' => $models));
     }
 
     public function actionCaribarang() {
