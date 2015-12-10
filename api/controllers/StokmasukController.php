@@ -169,6 +169,7 @@ class StokmasukController extends Controller {
                 ->where(['stok_masuk_id' => $id])
                 ->all();
 
+        $detail = array();
         foreach ($det as $key => $val) {
             $detail[$key] = $val->attributes;
 
