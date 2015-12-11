@@ -245,11 +245,19 @@ class KartuStok extends \yii\db\ActiveRecord {
                         $tmpKeluar['sub_total'][$indeks] = $tmpKeluar['jumlah'][$indeks] * $tmpKeluar['harga'][$indeks];
                     }
 
-                    if ($valS['jumlah'] != 0) {
+                     if ($valS['jumlah'] != 0) {
                         //simpan stok saldo
-                        $tmpSaldo['jumlah'][$indeks] = (isset($tmpKeluar['jumlah'][$indeks]) and $tmpKeluar['jumlah'][$indeks] == $valS['jumlah']) ? 0 : $valS['jumlah'];
+
+                        $tmpSaldo['jumlah'][$indeks] = (isset($end) && $end == $valS['jumlah']) ? 0 : $valS['jumlah'];
                         $tmpSaldo['harga'][$indeks] = ($tmpSaldo['jumlah'][$indeks] == 0) ? 0 : $valS['harga'];
                         $tmpSaldo['sub_total'][$indeks] = $tmpSaldo['harga'][$indeks] * $tmpSaldo['jumlah'][$indeks];
+
+                        if (isset($tmpSaldo['jumlah'])) {
+                            $last_key = key($tmpSaldo['jumlah']);
+                            $end = $tmpSaldo['jumlah'][$last_key];
+
+                            $tmpSaldo['jumlah'][$indeks] = $end;
+                        }
 
                         $tmp[$indeks]['jumlah'] = $tmpSaldo['jumlah'][$indeks];
                         $tmp[$indeks]['harga'] = $tmpSaldo['harga'][$indeks];

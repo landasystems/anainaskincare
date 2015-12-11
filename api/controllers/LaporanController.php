@@ -249,7 +249,7 @@ class LaporanController extends Controller {
             $data['kategori'] = 'SEMUA KATEGORI';
             $kategori = '';
         }
-        
+
         //================ MENAMPILKAN PRODUK ==============//
         if (!empty($params['produk']['id'])) {
             $data['produk'] = strtoupper($params['produk']['nama']);
@@ -324,7 +324,6 @@ class LaporanController extends Controller {
             }
 
             //========== MENAMBAHKAN SALDO AWAL UNTUK DITAMPILKAN ============//
-            
             //detail produk
             $body[$pro->id]['title']['produk'] = $pro->nama;
             $body[$pro->id]['title']['kategori'] = $pro->kategori->nama;
@@ -339,7 +338,7 @@ class LaporanController extends Controller {
             $body[$pro->id]['total']['saldo']['jumlah'] = array_sum($tempSaldo[$pro->id]['jumlah']);
             $body[$pro->id]['total']['saldo']['harga'] = array_sum($tempSaldo[$pro->id]['sub_total']);
 
-            $body[$pro->id]['temp'] = $tempSaldo[$pro->id];
+//            $body[$pro->id]['temp'] = $tempSaldo[$pro->id];
             $pr = $pro->id;
             $indeks++;
         }
@@ -453,7 +452,9 @@ class LaporanController extends Controller {
                     $tmp[$indeks]['jumlah'] = $val['jumlah_masuk'];
                     $tmp[$indeks]['harga'] = $val['harga_masuk'];
                 }
+
                 foreach ($tmp as $valS) {
+
                     if ($first) {
                         unset($tmpSaldo);
                         unset($tmp);
@@ -485,9 +486,17 @@ class LaporanController extends Controller {
 
                     if ($valS['jumlah'] != 0) {
                         //simpan stok saldo
-                        $tmpSaldo['jumlah'][$indeks] = (isset($tmpKeluar['jumlah'][$indeks]) and $tmpKeluar['jumlah'][$indeks] == $valS['jumlah']) ? 0 : $valS['jumlah'];
+
+                        $tmpSaldo['jumlah'][$indeks] = (isset($end) && $end == $valS['jumlah']) ? 0 : $valS['jumlah'];
                         $tmpSaldo['harga'][$indeks] = ($tmpSaldo['jumlah'][$indeks] == 0) ? 0 : $valS['harga'];
                         $tmpSaldo['sub_total'][$indeks] = $tmpSaldo['harga'][$indeks] * $tmpSaldo['jumlah'][$indeks];
+
+                        if (isset($tmpSaldo['jumlah'])) {
+                            $last_key = key($tmpSaldo['jumlah']);
+                            $end = $tmpSaldo['jumlah'][$last_key];
+
+                            $tmpSaldo['jumlah'][$indeks] = $end;
+                        }
 
                         $tmp[$indeks]['jumlah'] = $tmpSaldo['jumlah'][$indeks];
                         $tmp[$indeks]['harga'] = $tmpSaldo['harga'][$indeks];
@@ -500,10 +509,10 @@ class LaporanController extends Controller {
             $totalJml['saldo'] += ($totalJml['masuk'] - $val['jumlah_keluar']);
             $totalHarga['saldo'] = 0;
 
-            if(isset($tmpSaldo['sub_total'])) {
-            foreach ($tmpSaldo['sub_total'] as $key => $vKeluar) {
-                $totalHarga['saldo'] += $vKeluar;
-            }
+            if (isset($tmpSaldo['sub_total'])) {
+                foreach ($tmpSaldo['sub_total'] as $key => $vKeluar) {
+                    $totalHarga['saldo'] += $vKeluar;
+                }
             }
 
             $body[$val['produk_id']]['body'][$i]['tanggal'] = date("Y-m-d", strtotime($val['created_at']));
@@ -522,7 +531,7 @@ class LaporanController extends Controller {
             $body[$val['produk_id']]['total']['masuk']['harga'] = $totalHarga['masuk'];
             $body[$val['produk_id']]['total']['keluar']['jumlah'] = $totalJml['keluar'];
             $body[$val['produk_id']]['total']['keluar']['harga'] = $totalHarga['keluar'];
-            $body[$val['produk_id']]['total']['saldo']['jumlah'] = array_sum($body[$val['produk_id']]['body'][$i]['saldo']['jumlah']);
+            $body[$val['produk_id']]['total']['saldo']['jumlah'] = $body[$val['produk_id']]['total']['masuk']['jumlah'] - $body[$val['produk_id']]['total']['keluar']['jumlah'] + array_sum($body[$val['produk_id']]['saldo_awal']['jumlah']);
             $body[$val['produk_id']]['total']['saldo']['harga'] = $totalHarga['saldo'];
 
             $indeks++;
