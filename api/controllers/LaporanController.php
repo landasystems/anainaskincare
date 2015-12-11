@@ -293,7 +293,7 @@ class LaporanController extends Controller {
             }
 
             //============= JIKA SALDO AWAL DITEMUKAN MASUKKAN KE VARIABLE BARU =============//
-            if (!empty($saldoAwal[$pro->id])) {
+            if (!empty($saldoAwal[$pro->id]['jumlah'])) {
                 //======== MASUKKAN JUMLAH BARANG ==========//
                 foreach ($saldoAwal[$pro->id]['jumlah'] as $key => $sAwal) {
                     if ($sAwal != 0) {

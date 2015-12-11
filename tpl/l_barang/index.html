@@ -36,42 +36,41 @@
                     </div>
                 </div>
             </div>
-            <div class="table-responsive">
-                <table class="table table-striped table-hover" >
-                    <thead>
-                        <tr>
-                            <th st-sort="mp.kode">Kode</th>
-                            <th st-sort="mp.nama">Nama</th>
-                            <th st-sort="mp.type">Type</th>
-                            <th st-sort="mk.nama">Kategori</th>
-                            <th st-sort="ms">Satuan</th>
-                            <th>Stok</th>
-                            <th st-sort="mp.harga_jual">Harga Jual</th>
-                        </tr>
-                    </thead>
-                    <tbody ng-show="!isLoading">
-                        <tr ng-repeat="row in displayed">
-                            <td>{{row.kode}}</td>
-                            <td>{{row.nama}}</td>
-                            <td>{{row.type}}</td>
-                            <td>{{row.kategori}}</td>
-                            <td>{{row.satuan}}</td>
-                            <td>{{row.stok}}</td>
-                            <td style="text-align: right">{{row.harga_jual|  currency:undefined:0}}</td>
-                        </tr>
-                    </tbody>
-                    <tbody ng-show="isLoading">
-                        <tr>
-                            <td colspan="8" class="text-center">Loading ... </td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="8" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html">
-                            </td>
-                        </tr>
-                </table>		
-            </div>
+            <div class="clearfix"></div>
+            <table class="table table-striped table-hover" >
+                <thead>
+                    <tr>
+                        <th st-sort="mp.kode">Kode</th>
+                        <th st-sort="mp.nama">Nama</th>
+                        <th st-sort="mp.type">Type</th>
+                        <th st-sort="mk.nama">Kategori</th>
+                        <th st-sort="ms">Satuan</th>
+                        <th>Stok</th>
+                        <th st-sort="mp.harga_jual">Harga Jual</th>
+                    </tr>
+                </thead>
+                <tbody ng-show="!isLoading">
+                    <tr ng-repeat="row in displayed">
+                        <td>{{row.kode}}</td>
+                        <td>{{row.nama}}</td>
+                        <td>{{row.type}}</td>
+                        <td>{{row.kategori}}</td>
+                        <td>{{row.satuan}}</td>
+                        <td>{{row.stok}}</td>
+                        <td style="text-align: right">{{row.harga_jual|  currency:undefined:0}}</td>
+                    </tr>
+                </tbody>
+                <tbody ng-show="isLoading">
+                    <tr>
+                        <td colspan="8" class="text-center">Loading ... </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="8" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html">
+                        </td>
+                    </tr>
+            </table>		
         </div>
     </div>
 
