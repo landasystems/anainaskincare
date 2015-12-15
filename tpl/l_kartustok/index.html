@@ -144,7 +144,7 @@
                                             <p ng-if="detail.masuk.jumlah !== 0">{{detail.masuk.jumlah}}</p>
                                         </td>
                                         <td style="text-align: right; border: none">
-                                            <p ng-if="detail.masuk.harga !== 0">{{detail.masuk.harga|  currency:undefined:0}}</p>
+                                            <p ng-if="detail.masuk.harga !== 0">{{detail.masuk.harga |  currency:undefined:0}}</p>
                                         </td>
                                         <td style="text-align: right; border: none">
                                             <p ng-if="detail.masuk.sub_total !== 0">{{detail.masuk.sub_total|  currency:undefined:0}}</p>
@@ -184,7 +184,7 @@
                                 <tfoot>
                                     <tr style="border: 1px solid #000">
                                         <td colspan="9" align="right"><b>Total Seluruh Stok</b></td>
-                                        <td><b>{{laporan.grandJml}}</b></td>
+                                        <td align="right"><b>{{laporan.grandJml}}</b></td>
                                         <td></td>
                                         <td style="text-align: right;"><b>{{laporan.grandHarga|  currency:undefined:0}}</b></td>
                                     </tr>

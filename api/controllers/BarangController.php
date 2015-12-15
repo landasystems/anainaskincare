@@ -360,7 +360,7 @@ class BarangController extends Controller {
                 ->andWhere(['like', 'nama', $params['nama']])
                 ->limit(10);
 
-        if (isset($params['kategori_id']) and !empty($params['kategori_id'])) {
+        if (isset($params['kategori_id']) and ! empty($params['kategori_id'])) {
             $query->andWhere('kategori_id = "' . $params['kategori_id'] . '"')
                     ->limit(null);
         }

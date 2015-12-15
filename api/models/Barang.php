@@ -54,7 +54,8 @@ class Barang extends \yii\db\ActiveRecord {
         $barang = Barang::findOne(['id' => $id]);
 
         $ks = new KartuStok();
-        $stok = $ks->saldo('today', $cabang, $barang->kategori_id, '', $barang->id);
+        $stok = $ks->saldo('today', '', array('kategori_id' => $barang->kategori_id, 'produk_id' => $barang->id, 'cabang' => $cabang));
+//        $stok = $ks->saldo('today', $cabang, $barang->kategori_id, '', $barang->id);
 
         $s = 0;
         if (isset($stok[$barang->id])) {
