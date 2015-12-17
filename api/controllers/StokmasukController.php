@@ -194,6 +194,7 @@ class StokmasukController extends Controller {
             foreach ($detailsmasuk as $val) {
                 $det = new StokMasukDet();
                 $det->attributes = $val;
+                 $det->harga = (!empty($val['harga'])) ? $val['harga'] : 0;
                 $det->produk_id = $val['produk']['id'];
                 $det->stok_masuk_id = $model->id;
                 $det->save();
@@ -229,6 +230,7 @@ class StokmasukController extends Controller {
             foreach ($detailSmasuk as $val) {
                 $det = new StokMasukDet();
                 $det->attributes = $val;
+                $det->harga = (!empty($val['harga'])) ? $val['harga'] : 0;
                 $det->produk_id = $val['produk']['id'];
                 $det->stok_masuk_id = $model->id;
                 $det->save();

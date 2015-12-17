@@ -195,6 +195,7 @@ class StokkeluarController extends Controller {
             foreach ($detailskeluar as $val) {
                 $det = new StokKeluarDet();
                 $det->attributes = $val;
+                $det->harga = (!empty($val['harga'])) ? $val['harga'] : 0;
                 $det->produk_id = $val['produk']['id'];
                 $det->stok_keluar_id = $model->id;
                 $det->save();
@@ -229,6 +230,7 @@ class StokkeluarController extends Controller {
             foreach ($detailSkeluar as $val) {
                 $det = new StokKeluarDet();
                 $det->attributes = $val;
+                 $det->harga = (!empty($val['harga'])) ? $val['harga'] : 0;
                 $det->produk_id = $val['produk']['id'];
                 $det->stok_keluar_id = $model->id;
                 $det->save();
