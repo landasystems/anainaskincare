@@ -797,9 +797,11 @@ class LaporanController extends Controller {
 
         $grandJml = 0;
         $grandHarga = 0;
-        foreach ($body as $val) {
-            $grandJml += isset($val['total']['saldo']['jumlah']) ? $val['total']['saldo']['jumlah'] : 0;
-            $grandHarga += isset($val['total']['saldo']['harga']) ? $val['total']['saldo']['harga'] : 0;
+        if(isset($body)) {
+            foreach ($body as $val) {
+                $grandJml += isset($val['total']['saldo']['jumlah']) ? $val['total']['saldo']['jumlah'] : 0;
+                $grandHarga += isset($val['total']['saldo']['harga']) ? $val['total']['saldo']['harga'] : 0;
+            }
         }
 
         $data['grandJml'] = $grandJml;
