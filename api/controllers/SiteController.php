@@ -49,18 +49,9 @@ class SiteController extends Controller {
     }
 
     public function actionCoba() {
-        $produk = \app\models\Barang::find()->all();
-        foreach($produk as $val){
-            $cabang = \app\models\Cabang::find()->all();
-            foreach($cabang as $vCabang){
-                $new = new \app\models\Harga();
-                $new->cabang_id = $vCabang->id;
-                $new->produk_id = $val->id;
-                $new->harga_jual = $val->harga_jual;
-                $new->harga_beli = $val->harga_beli_terakhir;
-                $new->save();
-            }
-        }
+        $tes = new \app\models\KartuStok();
+        $saldoAwal = $tes->saldo('balance', '2015-09-30', array('produk_id' => 158, 'cabang' => 1));
+        echo json_encode($saldoAwal);
     }
 
     public function actionSession() {

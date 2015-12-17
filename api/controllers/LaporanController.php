@@ -751,7 +751,7 @@ class LaporanController extends Controller {
                     $totalJml['keluar'] = (isset($totalJml['keluar']) ? $totalJml['keluar'] : 0) + $vKartu['jumlah_keluar'];
                     $totalHarga['keluar'] = (isset($totalHarga['keluar']) ? $totalHarga['keluar'] : 0) + ($vKartu['jumlah_keluar'] * $vKartu['harga_keluar']);
                 } else {
-                    $tmpSaldo[$vKartu['produk_id']]['jumlah'][] = 0 - $vKartu['jumlah_masuk'];
+                    $tmpSaldo[$vKartu['produk_id']]['jumlah'][] = 0 - $vKartu['jumlah_keluar'];
                     $tmpSaldo[$vKartu['produk_id']]['harga'][] = 0;
                 }
             }

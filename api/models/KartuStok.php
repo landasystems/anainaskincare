@@ -198,7 +198,7 @@ class KartuStok extends \yii\db\ActiveRecord {
                         }
                     }
                 } else {
-                    $tmpSaldo[$vKartu['produk_id']]['jumlah'][] = 0 - $vKartu['jumlah_masuk'];
+                    $tmpSaldo[$vKartu['produk_id']]['jumlah'][] = 0 - $vKartu['jumlah_keluar'];
                     $tmpSaldo[$vKartu['produk_id']]['harga'][] = 0;
                     $tmpSaldo[$vKartu['produk_id']]['sub_total'][] = 0;
                 }
