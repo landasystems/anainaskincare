@@ -381,8 +381,8 @@ class BarangController extends Controller {
                 ->andWhere(['like', 'nama', $params['nama']])
                 ->orWhere(['like', 'kode', $params['nama']]);
         
-        if(isset($params['kategori'])){
-            $query->andWhere(['=','kategori_id',$params['kategori']]);
+        if(isset($params['kategori']['id'])){
+            $query->andWhere(['=','kategori_id',$params['kategori']['id']]);
         }
         
         $command = $query->createCommand();
