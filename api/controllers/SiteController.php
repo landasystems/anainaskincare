@@ -50,8 +50,9 @@ class SiteController extends Controller {
 
     public function actionCoba() {
         $tes = new \app\models\KartuStok();
-        $saldoAwal = $tes->saldo('balance', '2015-09-30', array('produk_id' => 158, 'cabang' => 1));
-        echo json_encode($saldoAwal);
+        $saldoAwal = $tes->saldo('balance', '2015-05-30', array('produk_id' => 255, 'cabang' => 1));
+//        echo json_encode($saldoAwal);
+        echo date("Y-m-d", strtotime(1442408334));
     }
 
     public function actionSession() {

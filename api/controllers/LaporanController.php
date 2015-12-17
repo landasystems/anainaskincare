@@ -627,9 +627,9 @@ class LaporanController extends Controller {
         $query = new Query;
         $query->select("ks.*, mp.nama as nama, mk.nama as kategori, ms.nama as satuan")
                 ->from('m_produk as mp')
-                ->join('LEFT JOIN', 'kartu_stok as ks', 'ks.produk_id = mp.id and (date(ks.created_at) >= "' . $start . '" and date(ks.created_at) <= "' . $end . '")')
-                ->join('LEFT JOIN', 'm_satuan as ms', 'ms.id = mp.satuan_id')
-                ->join('LEFT JOIN', 'm_kategori as mk', 'mk.id = mp.kategori_id')
+                ->join('JOIN', 'kartu_stok as ks', 'ks.produk_id = mp.id and (date(ks.created_at) >= "' . $start . '" and date(ks.created_at) <= "' . $end . '")')
+                ->join('JOIN', 'm_satuan as ms', 'ms.id = mp.satuan_id')
+                ->join('JOIN', 'm_kategori as mk', 'mk.id = mp.kategori_id')
                 ->where("mp.is_deleted = 0 and mp.type = 'Barang'  $criteria")
                 ->orderBy("ks.produk_id, ks.created_at ASC");
 
@@ -662,9 +662,18 @@ class LaporanController extends Controller {
         $tmpKeluar = array();
         $vId = 0;
         foreach ($kartu as $kKartu => $vKartu) {
+
             if ($vId != $vKartu['produk_id']) {
                 $totalJml = array();
                 $totalHarga = array();
+
+                if (isset($body[$vKartu['produk_id']]['saldo_awal'])) {
+                    $body[$vKartu['produk_id']]['saldo_awal'] = $body[$vKartu['produk_id']]['saldo_awal'];
+                } else {
+                    $body[$pro->id]['saldo_awal']['jumlah'] = array(0 => 0);
+                    $body[$pro->id]['saldo_awal']['harga'] = array(0 => 0);
+                    $body[$pro->id]['saldo_awal']['sub_total'] = array(0 => 0);
+                }
             }
 
             $tmpKeluar = array();
@@ -780,7 +789,7 @@ class LaporanController extends Controller {
             $body[$vKartu['produk_id']]['total']['masuk']['harga'] = isset($totalHarga['masuk']) ? $totalHarga['masuk'] : 0;
             $body[$vKartu['produk_id']]['total']['keluar']['jumlah'] = isset($totalJml['keluar']) ? $totalJml['keluar'] : 0;
             $body[$vKartu['produk_id']]['total']['keluar']['harga'] = isset($totalHarga['keluar']) ? $totalHarga['keluar'] : 0;
-            $body[$vKartu['produk_id']]['total']['saldo']['jumlah'] = $body[$vKartu['produk_id']]['total']['masuk']['jumlah'] - $body[$vKartu['produk_id']]['total']['keluar']['jumlah'] + array_sum($body[$vKartu['produk_id']]['saldo_awal']['jumlah']);
+            $body[$vKartu['produk_id']]['total']['saldo']['jumlah'] = $body[$vKartu['produk_id']]['total']['masuk']['jumlah'] - $body[$vKartu['produk_id']]['total']['keluar']['jumlah'] ;
             $body[$vKartu['produk_id']]['total']['saldo']['harga'] = isset($totalHarga['saldo']) ? $totalHarga['saldo'] : 0;
 
             $vId = $vKartu['produk_id'];
@@ -789,13 +798,14 @@ class LaporanController extends Controller {
         $grandJml = 0;
         $grandHarga = 0;
         foreach ($body as $val) {
-            $grandJml += isset($val['total']['saldo']['jumlah'])?$val['total']['saldo']['jumlah']:0;
-            $grandHarga += isset($val['total']['saldo']['harga'])?$val['total']['saldo']['harga']:0;
+            $grandJml += isset($val['total']['saldo']['jumlah']) ? $val['total']['saldo']['jumlah'] : 0;
+            $grandHarga += isset($val['total']['saldo']['harga']) ? $val['total']['saldo']['harga'] : 0;
         }
-        
+
         $data['grandJml'] = $grandJml;
         $data['grandHarga'] = $grandHarga;
 
+//        echo json_encode($kartu);
         echo json_encode(array('status' => 1, 'data' => $data, 'detail' => $body), JSON_PRETTY_PRINT);
     }
 
