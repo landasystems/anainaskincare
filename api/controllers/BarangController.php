@@ -358,6 +358,7 @@ class BarangController extends Controller {
                 ->select("m_produk.*")
                 ->where(['is_deleted' => 0])
                 ->andWhere(['like', 'nama', $params['nama']])
+                ->orderBy('nama ASC')
                 ->limit(10);
 
         if (isset($params['kategori_id']) and ! empty($params['kategori_id'])) {
@@ -412,6 +413,7 @@ class BarangController extends Controller {
                 ->select("m_produk.*")
 //                ->where(['is_deleted' => 0, 'type' => 'Barang'])
                 ->where(['is_deleted' => 0])
+                ->orderBy('nama ASC')
                 ->andWhere(['like', 'nama', $params['nama']]);
 
         $command = $query->createCommand();
