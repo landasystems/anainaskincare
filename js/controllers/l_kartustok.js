@@ -23,15 +23,16 @@ app.controller('l_kartustokCtrl', function ($scope, Data, toaster) {
             nama: nama,
             kategori_id: kategori.id,
         }
-
+        $scope.resultsProduk = [];
         Data.post('barang/perkategori/', data).then(function (data) {
             $scope.resultsProduk = data.data;
         });
     }
 
-    $scope.cariProduk2 = function ($query) {
+    $scope.cariProduk2 = function ($query, $kategori) {
         if ($query.length >= 3) {
-            Data.get('barang/caribarang', {nama: $query}).then(function (data) {
+            $scope.resultsProduk = [];
+            Data.get('barang/caribarang', {nama: $query, kategori: $kategori}).then(function (data) {
                 $scope.resultsProduk = data.data;
             });
         }

@@ -380,6 +380,11 @@ class BarangController extends Controller {
                 ->where(['is_deleted' => 0])
                 ->andWhere(['like', 'nama', $params['nama']])
                 ->orWhere(['like', 'kode', $params['nama']]);
+        
+        if(isset($params['kategori'])){
+            $query->andWhere(['=','kategori_id',$params['kategori']]);
+        }
+        
         $command = $query->createCommand();
         $models = $command->queryAll();
         $this->setHeader(200);
