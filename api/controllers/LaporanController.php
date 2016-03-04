@@ -612,10 +612,13 @@ class LaporanController extends Controller {
             //===============MENCARI SALDO AWAL PER KATEGORI===================//
             $tes = new \app\models\KartuStok();
             $saldoAwal = $tes->saldo('balance', $start, array('produk_id' => $params['produk']['id'], 'cabang' => $cabang));
-        } else {
+        } else if (isset($params['kategori_id']['id'])) {
             //===============MENCARI SALDO AWAL PER KATEGORI===================//
             $tes = new \app\models\KartuStok();
             $saldoAwal = $tes->saldo('balance', $start, array('kategori_id' => $params['kategori_id']['id'], 'cabang' => $cabang));
+        } else {
+            $tes = new \app\models\KartuStok();
+            $saldoAwal = $tes->saldo('balance', $start, array('cabang' => $cabang));
         }
 
         //===============MENCARI SEMUA PRODUK PER KATEGORI=================//
@@ -797,7 +800,7 @@ class LaporanController extends Controller {
 
         $grandJml = 0;
         $grandHarga = 0;
-        if(isset($body)) {
+        if (isset($body)) {
             foreach ($body as $val) {
                 $grandJml += isset($val['total']['saldo']['jumlah']) ? $val['total']['saldo']['jumlah'] : 0;
                 $grandHarga += isset($val['total']['saldo']['harga']) ? $val['total']['saldo']['harga'] : 0;
