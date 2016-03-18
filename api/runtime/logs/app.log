@@ -183,3 +183,605 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1434877832.514
     'REQUEST_TIME' => 1434877832
 ]
+2016-03-18 14:47:16 [::1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined index: paket' in /var/www/anainaskincare/api/controllers/BarangController.php:231
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/BarangController.php(231): yii\base\ErrorHandler->handleError(8, 'Undefined index...', '/var/www/anaina...', 231, Array)
+#1 [internal function]: app\controllers\BarangController->actionCreate()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('create', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('barang/create/', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2016-03-18 14:47:16 [::1][-][-][info][application] $_POST = [
+    '{\"form\":{\"type\":\"Paket\",\"kode\":\"2\",\"nama\":\"2\",\"harga_jual\":\"2\",\"diskon\":\"2\",\"kategori_id\":\"17\",\"keterangan\":\"-\",\"foto\":\"\"},\"stok\":' => [
+        '{\"id\":\"5\",\"kode\":\"005\",\"nama\":\"APOTEK ANAINA\",\"alamat\":\"JL P. ROON 15\",\"no_tlp\":\"031-8532117\",\"email\":null,\"is_deleted\":\"0\"},{\"id\":\"4\",\"kode\":\"004\",\"nama\":\"ANAINA KANTOR\",\"alamat\":\"JL. ROON 15 SAWOTRATAP\",\"no_tlp\":\"031-8532217\",\"email\":null,\"is_deleted\":\"0\"},{\"id\":\"3\",\"kode\":\"003\",\"nama\":\"ANAINA SKINCARE MALANG\",\"alamat\":\"Perum Citra Graha No 1, Banjar Arum - Singosari - Malang\",\"no_tlp\":\"0341-459017\",\"email\":null,\"is_deleted\":\"0\"},{\"id\":\"2\",\"kode\":\"002\",\"nama\":\"ANAINA  GEDANGAN\",\"alamat\":\"Komp Ruko Central Square Blok B 10\\nJL. A. Yani No 41-43, Gedangan\",\"no_tlp\":\"-\",\"email\":\"\",\"is_deleted\":\"0\"},{\"id\":\"1\",\"kode\":\"001\",\"nama\":\"RUMAH CANTIK ANAINA TRATAP\",\"alamat\":\"JL. Roon 15, Sawotratap, Sdj\",\"no_tlp\":\"031-8532117\",\"email\":\"\",\"is_deleted\":\"0\"}' => ''
+    ]
+]
+
+$_COOKIE = [
+    'PHPSESSID' => 'mjpplc5ggn913qq4ud23sgmqo4'
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '888'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=mjpplc5ggn913qq4ud23sgmqo4; _csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '50428'
+    'REDIRECT_URL' => '/anainaskincare/api/web/barang/create/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/barang/create/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1458287236.572
+    'REQUEST_TIME' => 1458287236
+]
+2016-03-18 14:49:10 [::1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined variable: vMasuk' in /var/www/anainaskincare/api/controllers/BarangController.php:233
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/BarangController.php(233): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', '/var/www/anaina...', 233, Array)
+#1 [internal function]: app\controllers\BarangController->actionCreate()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('create', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('barang/create/', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2016-03-18 14:49:10 [::1][-][-][info][application] $_POST = [
+    '{\"form\":{\"type\":\"Paket\",\"kode\":\"PKT001\",\"nama\":\"Perawatan_Wajah\",\"kategori_id\":\"32\",\"keterangan\":\"-\",\"foto\":\"\"},\"stok\":' => [
+        '{\"id\":\"5\",\"kode\":\"005\",\"nama\":\"APOTEK ANAINA\",\"alamat\":\"JL P. ROON 15\",\"no_tlp\":\"031-8532117\",\"email\":null,\"is_deleted\":\"0\"},{\"id\":\"4\",\"kode\":\"004\",\"nama\":\"ANAINA KANTOR\",\"alamat\":\"JL. ROON 15 SAWOTRATAP\",\"no_tlp\":\"031-8532217\",\"email\":null,\"is_deleted\":\"0\"},{\"id\":\"3\",\"kode\":\"003\",\"nama\":\"ANAINA SKINCARE MALANG\",\"alamat\":\"Perum Citra Graha No 1, Banjar Arum - Singosari - Malang\",\"no_tlp\":\"0341-459017\",\"email\":null,\"is_deleted\":\"0\"},{\"id\":\"2\",\"kode\":\"002\",\"nama\":\"ANAINA  GEDANGAN\",\"alamat\":\"Komp Ruko Central Square Blok B 10\\nJL. A. Yani No 41-43, Gedangan\",\"no_tlp\":\"-\",\"email\":\"\",\"is_deleted\":\"0\"},{\"id\":\"1\",\"kode\":\"001\",\"nama\":\"RUMAH CANTIK ANAINA TRATAP\",\"alamat\":\"JL. Roon 15, Sawotratap, Sdj\",\"no_tlp\":\"031-8532117\",\"email\":\"\",\"is_deleted\":\"0\"}' => ''
+    ]
+]
+
+$_COOKIE = [
+    'PHPSESSID' => 'mjpplc5ggn913qq4ud23sgmqo4'
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '1675'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=mjpplc5ggn913qq4ud23sgmqo4; _csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '50454'
+    'REDIRECT_URL' => '/anainaskincare/api/web/barang/create/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/barang/create/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1458287350.121
+    'REQUEST_TIME' => 1458287350
+]
+2016-03-18 14:50:48 [::1][-][-][error][yii\base\UnknownPropertyException] exception 'yii\base\UnknownPropertyException' with message 'Setting unknown property: app\models\PaketDet::created_at' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Component.php:197
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/BaseActiveRecord.php(266): yii\base\Component->__set('created_at', '2016-03-18 14:5...')
+#1 /var/www/anainaskincare/api/controllers/BarangController.php(239): yii\db\BaseActiveRecord->__set('created_at', '2016-03-18 14:5...')
+#2 [internal function]: app\controllers\BarangController->actionCreate()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('create', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('barang/create/', Array)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#9 {main}
+2016-03-18 14:50:48 [::1][-][-][info][application] $_POST = [
+    '{\"form\":{\"type\":\"Paket\",\"kode\":\"PKT001\",\"nama\":\"Perawatan_Wajah\",\"kategori_id\":\"32\",\"keterangan\":\"-\",\"foto\":\"\"},\"stok\":' => [
+        '{\"id\":\"5\",\"kode\":\"005\",\"nama\":\"APOTEK ANAINA\",\"alamat\":\"JL P. ROON 15\",\"no_tlp\":\"031-8532117\",\"email\":null,\"is_deleted\":\"0\"},{\"id\":\"4\",\"kode\":\"004\",\"nama\":\"ANAINA KANTOR\",\"alamat\":\"JL. ROON 15 SAWOTRATAP\",\"no_tlp\":\"031-8532217\",\"email\":null,\"is_deleted\":\"0\"},{\"id\":\"3\",\"kode\":\"003\",\"nama\":\"ANAINA SKINCARE MALANG\",\"alamat\":\"Perum Citra Graha No 1, Banjar Arum - Singosari - Malang\",\"no_tlp\":\"0341-459017\",\"email\":null,\"is_deleted\":\"0\"},{\"id\":\"2\",\"kode\":\"002\",\"nama\":\"ANAINA  GEDANGAN\",\"alamat\":\"Komp Ruko Central Square Blok B 10\\nJL. A. Yani No 41-43, Gedangan\",\"no_tlp\":\"-\",\"email\":\"\",\"is_deleted\":\"0\"},{\"id\":\"1\",\"kode\":\"001\",\"nama\":\"RUMAH CANTIK ANAINA TRATAP\",\"alamat\":\"JL. Roon 15, Sawotratap, Sdj\",\"no_tlp\":\"031-8532117\",\"email\":\"\",\"is_deleted\":\"0\"}' => ''
+    ]
+]
+
+$_COOKIE = [
+    'PHPSESSID' => 'mjpplc5ggn913qq4ud23sgmqo4'
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '1675'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=mjpplc5ggn913qq4ud23sgmqo4; _csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '50457'
+    'REDIRECT_URL' => '/anainaskincare/api/web/barang/create/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/barang/create/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1458287448.814
+    'REQUEST_TIME' => 1458287448
+]
+2016-03-18 14:54:04 [::1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined index: paket' in /var/www/anainaskincare/api/controllers/BarangController.php:305
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/BarangController.php(305): yii\base\ErrorHandler->handleError(8, 'Undefined index...', '/var/www/anaina...', 305, Array)
+#1 [internal function]: app\controllers\BarangController->actionUpdate('1201')
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('update', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('barang/update', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2016-03-18 14:54:04 [::1][-][-][info][application] $_GET = [
+    'id' => '1201'
+]
+
+$_POST = [
+    '{\"id\":\"1201\",\"kode\":\"PKT001\",\"type\":\"Paket\",\"nama\":\"Perawatan_Wajah\",\"kategori_id\":\"32\",\"satuan_id\":null,\"keterangan\":\"-\",\"harga_beli_terakhir\":null,\"harga_jual\":null,\"diskon\":null,\"minimum_stok\":null,\"fee_terapis\":null,\"fee_dokter\":null,\"foto\":\"\",\"is_deleted\":1,\"created_at\":null,\"created_by\":null,\"modified_at\":null,\"modified_by\":null,\"satuan\":null,\"kategori\":\"MASKER\",\"stok\":0}' => ''
+]
+
+$_COOKIE = [
+    'PHPSESSID' => 'mjpplc5ggn913qq4ud23sgmqo4'
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '380'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=mjpplc5ggn913qq4ud23sgmqo4; _csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '50490'
+    'REDIRECT_URL' => '/anainaskincare/api/web/barang/update/1201'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/barang/update/1201'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1458287644.148
+    'REQUEST_TIME' => 1458287644
+]
+2016-03-18 15:05:33 [::1][-][-][error][yii\base\UnknownPropertyException] exception 'yii\base\UnknownPropertyException' with message 'Getting unknown property: yii\base\InlineAction::isValid' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Component.php:143
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/BarangController.php(49): yii\base\Component->__get('isValid')
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(149): app\controllers\BarangController->beforeAction(Object(yii\base\InlineAction))
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('getpaket', Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('barang/getpaket', Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#5 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#6 {main}
+2016-03-18 15:05:33 [::1][-][-][info][application] $_GET = [
+    'id' => '1203'
+]
+
+$_COOKIE = [
+    'PHPSESSID' => 'mjpplc5ggn913qq4ud23sgmqo4'
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=mjpplc5ggn913qq4ud23sgmqo4; _csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '50525'
+    'REDIRECT_URL' => '/anainaskincare/api/web/barang/getpaket/1203'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/barang/getpaket/1203'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1458288333.747
+    'REQUEST_TIME' => 1458288333
+]
+2016-03-18 15:06:17 [::1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined variable: key' in /var/www/anainaskincare/api/controllers/BarangController.php:178
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/BarangController.php(178): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', '/var/www/anaina...', 178, Array)
+#1 [internal function]: app\controllers\BarangController->actionGetpaket('1202')
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('getpaket', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('barang/getpaket', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2016-03-18 15:06:17 [::1][-][-][info][application] $_GET = [
+    'id' => '1202'
+]
+
+$_COOKIE = [
+    'PHPSESSID' => 'mjpplc5ggn913qq4ud23sgmqo4'
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=mjpplc5ggn913qq4ud23sgmqo4; _csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '50529'
+    'REDIRECT_URL' => '/anainaskincare/api/web/barang/getpaket/1202'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/barang/getpaket/1202'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1458288377.081
+    'REQUEST_TIME' => 1458288377
+]
+2016-03-18 15:08:33 [::1][-][-][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[42S02]: Base table or view not found: 1146 Table 'landa_anaina.am_produk' doesn't exist' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php:825
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(825): PDOStatement->execute()
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(349): yii\db\Command->queryInternal('fetchAll', NULL)
+#2 /var/www/anainaskincare/api/controllers/BarangController.php(175): yii\db\Command->queryAll()
+#3 [internal function]: app\controllers\BarangController->actionGetpaket('1203')
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('getpaket', Array)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('barang/getpaket', Array)
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#10 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[42S02]: Base table or view not found: 1146 Table 'landa_anaina.am_produk' doesn't exist
+The SQL being executed was: SELECT `mp`.`nama`, `mp`.`id`, `pd`.* FROM `am_produk` `mp` Left JOIN `paket_det` `pd` ON pd.barang_id = mp.id WHERE pd.paket_id = 1203' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php:595
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(840): yii\db\Schema->convertException(Object(PDOException), 'SELECT `mp`.`na...')
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(349): yii\db\Command->queryInternal('fetchAll', NULL)
+#2 /var/www/anainaskincare/api/controllers/BarangController.php(175): yii\db\Command->queryAll()
+#3 [internal function]: app\controllers\BarangController->actionGetpaket('1203')
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('getpaket', Array)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('barang/getpaket', Array)
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#10 {main}
+Additional Information:
+Array
+(
+    [0] => 42S02
+    [1] => 1146
+    [2] => Table 'landa_anaina.am_produk' doesn't exist
+)
+
+2016-03-18 15:08:33 [::1][-][-][info][application] $_GET = [
+    'id' => '1203'
+]
+
+$_COOKIE = [
+    'PHPSESSID' => 'mjpplc5ggn913qq4ud23sgmqo4'
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=mjpplc5ggn913qq4ud23sgmqo4; _csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '50569'
+    'REDIRECT_URL' => '/anainaskincare/api/web/barang/getpaket/1203'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/barang/getpaket/1203'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1458288513.422
+    'REQUEST_TIME' => 1458288513
+]
+2016-03-18 15:09:28 [::1][-][-][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[42S02]: Base table or view not found: 1146 Table 'landa_anaina.apaket_det' doesn't exist' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php:825
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(825): PDOStatement->execute()
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(349): yii\db\Command->queryInternal('fetchAll', NULL)
+#2 /var/www/anainaskincare/api/controllers/BarangController.php(175): yii\db\Command->queryAll()
+#3 [internal function]: app\controllers\BarangController->actionGetpaket('1203')
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('getpaket', Array)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('barang/getpaket', Array)
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#10 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[42S02]: Base table or view not found: 1146 Table 'landa_anaina.apaket_det' doesn't exist
+The SQL being executed was: SELECT `mp`.`nama`, `mp`.`id`, `pd`.* FROM `apaket_det` `pd` Left JOIN `m_produk` `mp` ON pd.barang_id = mp.id WHERE pd.paket_id = 1203' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php:595
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(840): yii\db\Schema->convertException(Object(PDOException), 'SELECT `mp`.`na...')
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(349): yii\db\Command->queryInternal('fetchAll', NULL)
+#2 /var/www/anainaskincare/api/controllers/BarangController.php(175): yii\db\Command->queryAll()
+#3 [internal function]: app\controllers\BarangController->actionGetpaket('1203')
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('getpaket', Array)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('barang/getpaket', Array)
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#10 {main}
+Additional Information:
+Array
+(
+    [0] => 42S02
+    [1] => 1146
+    [2] => Table 'landa_anaina.apaket_det' doesn't exist
+)
+
+2016-03-18 15:09:28 [::1][-][-][info][application] $_GET = [
+    'id' => '1203'
+]
+
+$_COOKIE = [
+    'PHPSESSID' => 'mjpplc5ggn913qq4ud23sgmqo4'
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=mjpplc5ggn913qq4ud23sgmqo4; _csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '50572'
+    'REDIRECT_URL' => '/anainaskincare/api/web/barang/getpaket/1203'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/barang/getpaket/1203'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1458288568.63
+    'REQUEST_TIME' => 1458288568
+]
+2016-03-18 15:19:09 [::1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined variable: vPaket' in /var/www/anainaskincare/api/controllers/BarangController.php:332
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/BarangController.php(332): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', '/var/www/anaina...', 332, Array)
+#1 [internal function]: app\controllers\BarangController->actionUpdate('1208')
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('update', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('barang/update', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2016-03-18 15:19:09 [::1][-][-][info][application] $_GET = [
+    'id' => '1208'
+]
+
+$_POST = [
+    '{\"form\":{\"id\":\"1208\",\"kode\":\"PKT01\",\"type\":\"Paket\",\"nama\":\"Perawatan_Wajah\",\"kategori_id\":\"19\",\"satuan_id\":null,\"keterangan\":\"-\",\"harga_beli_terakhir\":null,\"harga_jual\":1080000,\"diskon\":null,\"minimum_stok\":null,\"fee_terapis\":null,\"fee_dokter\":null,\"foto\":\"\",\"is_deleted\":\"0\",\"created_at\":null,\"created_by\":null,\"modified_at\":null,\"modified_by\":null,\"satuan\":null,\"kategori\":\"CREAM_MALAM_ACNE\",\"stok\":0},\"stok\":' => [
+        0 => ''
+    ]
+]
+
+$_COOKIE = [
+    'PHPSESSID' => 'mjpplc5ggn913qq4ud23sgmqo4'
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '1173'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=mjpplc5ggn913qq4ud23sgmqo4; _csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '50651'
+    'REDIRECT_URL' => '/anainaskincare/api/web/barang/update/1208'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/barang/update/1208'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1458289149.452
+    'REQUEST_TIME' => 1458289149
+]

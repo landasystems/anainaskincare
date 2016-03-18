@@ -45,7 +45,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-
+                                                return $ocLazyLoad.load('js/controllers/dashboard.js');
                                             }]
                                     }
                                 })
