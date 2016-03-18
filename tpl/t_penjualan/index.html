@@ -101,97 +101,89 @@
                         </div> 
                     </div>
                     <div class="panel-body">
-                        <div class="col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Kode</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" ng-model="form.kode" ng-readonly="true" ng-disabled="is_view" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Cabang</label>
-                                <div class="col-sm-9">
-                                    <ui-select on_select="getkode_cabang(form)"   ng-model="form.cabang" theme="bootstrap">
-                                        <ui-select-match placeholder="Cari Cabang">{{$select.selected.nama}}</ui-select-match>
-                                        <ui-select-choices group-by="'group'" repeat="dokter in sCabang | filter: $select.search">
-                                            <div ng-bind-html="dokter.nama | highlight: $select.search"></div>
+                        <div class="form-group">
+                            <label class="col-md-2 col-sm-3 control-label">Customer</label>
+                            <div class="col-md-4  col-sm-9">
+                                <div class="input-group">
+                                    <ui-select tagging="tagCustomer" tagging-label="false" on-select="pilihCustomer(form, $item)" ng-model="form.customers" theme="bootstrap">
+                                        {{$select.selected.nama}}
+                                        <ui-select-match placeholder="Pilih atau Cari nama Customer">{{$select.selected.nama}}</ui-select-match>
+                                        <ui-select-choices refresh="cariCustomer($select.search)" repeat="val in results">
+                                            {{val.kode}} - {{val.nama}} ( {{val.tanggal_lahir| date}} )
                                         </ui-select-choices>
                                     </ui-select>
+                                    <span class="input-group-btn">
+                                        <button ng-click="form.customers = undefined" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </button>
+                                    </span>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Tanggal</label>
-                                <div class="col-sm-9">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="form.tanggal" is-open="opened1" ng-click="open1($event)"/>
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-calendar-o"></i>
-                                        </span>
-                                    </div>
+                            <label class="col-md-2 col-sm-3 control-label">No. Reg.</label>
+                            <div class="col-md-4 col-sm-9">
+                                <input type="text" class="form-control" ng-model="form.kode_cust" ng-disabled="read" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 col-sm-3 control-label">Alamat</label>
+                            <div class="col-md-10 col-sm-9">
+                                <textarea class="form-control" rows="4" ng-model="form.alamat" ng-disabled="read" ></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 col-sm-3 control-label">No Telpon</label>
+                            <div class="col-md-4 col-sm-9">
+                                <input type="text" class="form-control" ng-model="form.no_tlp" ng-disabled="read" >
+                            </div>
+                            <label class="col-md-2 col-sm-3 control-label">Email</label>
+                            <div class="col-md-4 col-sm-9">
+                                <input type="text" class="form-control" ng-model="form.email" ng-disabled="read" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <h5 class="font-bold">- Data Penjualan</h5> 
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 col-sm-3 control-label">Cabang</label>
+                            <div class="col-md-3 col-sm-9">
+                                <ui-select on_select="getkode_cabang(form)"   ng-model="form.cabang" theme="bootstrap">
+                                    <ui-select-match placeholder="Cari Cabang">{{$select.selected.nama}}</ui-select-match>
+                                    <ui-select-choices group-by="'group'" repeat="dokter in sCabang | filter: $select.search">
+                                        <div ng-bind-html="dokter.nama | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 col-sm-3 control-label">Kode Penjualan</label>
+                            <div class="col-md-2 col-sm-9">
+                                <input type="text" class="form-control" ng-model="form.kode" ng-readonly="true" ng-disabled="is_view" required>
+                            </div>
+                            <label class="col-md-2 col-sm-3 control-label">Tanggal</label>
+                            <div class="col-md-2 col-sm-9">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="form.tanggal" is-open="opened1" ng-click="open1($event)"/>
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar-o"></i>
+                                    </span>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Status</label>
-                                <div class="col-sm-9">
-                                    <div class="btn-group">
-                                        <label class="btn btn-default" ng-model="form.status" btn-radio="'Pesan'">Pesan</label>
-                                        <label class="btn btn-default" ng-model="form.status" btn-radio="'Selesai'">Selesai</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Keterangan</label>
-                                <div class="col-sm-9">
-                                    <textarea class="form-control" rows="4" ng-model="form.keterangan" ng-disabled="is_view"></textarea> 
+                            <label class="col-md-2 col-sm-3 control-label">Status</label>
+                            <div class="col-md-2 col-sm-9">
+                                <div class="btn-group">
+                                    <label class="btn btn-default" ng-model="form.status" btn-radio="'Pesan'">Pesan</label>
+                                    <label class="btn btn-default" ng-model="form.status" btn-radio="'Selesai'">Selesai</label>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-sm-12 img-thumbnail">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Customer</label>
-                                <div class="col-sm-9">
-                                    <div class="input-group">
-                                        <ui-select on-select="pilihCustomer(form, $item)" ng-model="form.customers" theme="bootstrap">
-                                            {{$select.selected.nama}}
-                                            <ui-select-match placeholder="Pilih atau Cari nama Customer">{{$select.selected.nama}}</ui-select-match>
-                                            <ui-select-choices refresh="cariCustomer($select.search)" repeat="val in results">
-                                                {{val.kode}} - {{val.nama}} ( {{val.tanggal_lahir| date}} )
-                                            </ui-select-choices>
-                                        </ui-select>
-                                        <span class="input-group-btn">
-                                            <button ng-click="form.customers = undefined" class="btn btn-default">
-                                                <span class="glyphicon glyphicon-trash"></span>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">No. Reg.</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" ng-model="form.customers.kode" ng-disabled="true" >
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">No Telpon</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" ng-model="form.no_tlp" ng-disabled="true" >
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Email</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" ng-model="form.email" ng-disabled="true" >
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Alamat</label>
-                                <div class="col-sm-9">
-                                    <textarea class="form-control" rows="4" ng-model="form.alamat" ng-disabled="true" ></textarea>
-                                </div>
+                        <div class="form-group">
+                            <label class="col-md-2 col-sm-3 control-label">Keterangan</label>
+                            <div class="col-md-10 col-sm-9">
+                                <textarea class="form-control" rows="4" ng-model="form.keterangan" ng-disabled="is_view"></textarea> 
                             </div>
                         </div>
-                        <br>
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <h5 class="font-bold">- Detail Penjualan</h5> 
@@ -285,14 +277,16 @@
                                         <tr>
                                             <td width="40%">     
                                                 <div class="input-group " style="margin:0px;">
-                                                    <input type="text" class="form-control angka" ng-maxlength="2" ng-pattern="/^[0-9]+$/" ng-change="calcDiskonHarga(detail);total();"  ng-model="detail.diskonpersen"  ng-disabled="is_view" ng-readonly="is_create == false">
+                                                    <input type="text" class="form-control angka" ng-maxlength="2" ng-pattern="/^[0-9]+$/" ng-change="calcDiskonHarga(detail);
+                                                                        total();"  ng-model="detail.diskonpersen"  ng-disabled="is_view" ng-readonly="is_create == false">
                                                     <span class="input-group-addon">%</span>
                                                 </div>
                                             </td>
                                             <td width="60%">     
                                                 <div class="input-group " style="margin:0px;">
                                                     <span class="input-group-addon">Rp</span>
-                                                    <input type="text" class="form-control angka" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-change="calcDiskonPersen(detail);total();"  ng-model="detail.diskon"  ng-disabled="is_view" ng-readonly="is_create == false">
+                                                    <input type="text" class="form-control angka" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-change="calcDiskonPersen(detail);
+                                                                        total();"  ng-model="detail.diskon"  ng-disabled="is_view" ng-readonly="is_create == false">
                                                 </div>
                                             </td>
                                         </tr>
@@ -362,7 +356,7 @@
                                     <td colspan="2" style="width:135px;">
                                         <div class="input-group">
                                             <span class="input-group-addon">Rp</span>
-                                            <input type="text" class="form-control angka" ng-readonly="true" ng-disabled="is_view" value="{{((form.cash * 1 + form.credit * 1 + form.atm *1) - form.total) | number}}">
+                                            <input type="text" class="form-control angka" ng-readonly="true" ng-disabled="is_view" value="{{((form.cash * 1 + form.credit * 1 + form.atm * 1) - form.total) | number}}">
                                         </div> 
                                     </td>
                                 </tr>

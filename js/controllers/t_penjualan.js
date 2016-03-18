@@ -7,11 +7,21 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
     $scope.is_edit = false;
     $scope.is_view = false;
     $scope.is_create = false;
+    $scope.read = false;
+    $scope.tagCust = false;
     $scope.detail = [
         {
             type: ''
         }
     ];
+
+    $scope.tagCustomer = function (cust) {
+        var item = {
+            nama: cust,
+        };
+        $scope.tagCust = true;
+        return item;
+    };
 
     $scope.open1 = function ($event) {
         $event.preventDefault();
@@ -75,6 +85,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
     $scope.view = function (row) {
         $scope.is_edit = true;
         $scope.is_view = true;
+        $scope.read = true;
         $scope.formtitle = "Lihat Data Penjualan : " + row.kode;
         $scope.selected(row.id);
         $scope.form.tanggal = new Date(row.tanggal);
@@ -109,7 +120,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             });
         }
     };
-    
+
     Data.get('site/session').then(function (data) {
         $scope.sCabang = data.data.user.cabang;
     });
@@ -136,7 +147,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             window.location = 'api/web/penjualan/excel';
         });
     }
-    //select2 product
+    
     $scope.cariProduk = function ($query, $cabang) {
         if ($query.length >= 3) {
             Data.get('barang/cari', {nama: $query, cabang: $cabang.id}).then(function (data) {
@@ -153,9 +164,15 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
     }
     //retrive lebih dari 1 tabel
     $scope.pilihCustomer = function (form, $item) {
+        form.kode_cust = $item.kode;
         form.no_tlp = $item.no_tlp;
         form.email = $item.email;
         form.alamat = $item.alamat;
+          $scope.read = false;
+        if($scope.tagCust == true){
+            $scope.form.kode_cust = 'Generate Otomatis';
+            $scope.tagCust = false;
+        }
     }
     $scope.pilih = function (detail, $item) {
         detail.harga = ($item.harga_jual != null) ? $item.harga_jual : 0;
@@ -184,6 +201,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             $scope.list_terapis = data.terapis;
             $scope.form.cabang_id = data.data.cabang_id.id;
             $scope.form.no_tlp = data.data.customers.no_tlp;
+            $scope.form.kode = data.data.customers.kode;
             $scope.form.email = data.data.customers.email;
             $scope.form.alamat = data.data.customers.alamat;
             $scope.form.customers = data.data.customers;

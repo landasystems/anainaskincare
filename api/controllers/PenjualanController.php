@@ -222,7 +222,7 @@ class PenjualanController extends Controller {
             $detail[$key]['produk'] = ['id' => $val->produk_id, 'nama' => $namaBarang, 'harga_beli_terakhir' => $hargaBarang, 'harga_jual' => $jualBarang];
             $detail[$key]['terapis'] = ['id' => $val->pegawai_terapis_id, 'nama' => $terapis];
             $detail[$key]['dokter'] = ['id' => $val->pegawai_dokter_id, 'nama' => $dokter];
-            $detail[$key]['diskonpersen'] = ($val->harga==0) ? 0 : ($val->diskon / $val->harga) * 100;
+            $detail[$key]['diskonpersen'] = ($val->harga == 0) ? 0 : ($val->diskon / $val->harga) * 100;
         }
 
 
@@ -237,6 +237,21 @@ class PenjualanController extends Controller {
         $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
         $model->customer_id = isset($params['penjualan']['customers']['id']) ? $params['penjualan']['customers']['id'] : null;
         $model->cabang_id = $params['penjualan']['cabang']['id'];
+
+        if (isset($params['penjualan']['customers']['id'])) {
+            $cust = Customer::findOne($params['penjualan']['customers']['id']);
+        } else {
+            $cust = new Customer;
+        }
+
+        $cust->nama = $params['penjualan']['customers']['nama'];
+        $cust->kode = $params['penjualan']['kode_cust'];
+        $cust->alamat = $params['penjualan']['alamat'];
+        $cust->no_tlp = $params['penjualan']['no_tlp'];
+        $cust->email = $params['penjualan']['email'];
+        $cust->save();
+
+        $model->customer_id = $cust->id;
 
         if ($model->save()) {
             if ($model->status == "Pesan") {
@@ -297,6 +312,21 @@ class PenjualanController extends Controller {
         $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
         $model->customer_id = isset($params['penjualan']['customers']['id']) ? $params['penjualan']['customers']['id'] : null;
         $model->cabang_id = $params['penjualan']['cabang']['id'];
+
+        if (isset($params['penjualan']['customers']['id'])) {
+            $cust = Customer::findOne($params['penjualan']['customers']['id']);
+        } else {
+            $cust = new Customer;
+        }
+
+        $cust->nama = $params['penjualan']['customers']['nama'];
+        $cust->kode = $params['penjualan']['kode_cust'];
+        $cust->alamat = $params['penjualan']['alamat'];
+        $cust->no_tlp = $params['penjualan']['no_tlp'];
+        $cust->email = $params['penjualan']['email'];
+        $cust->save();
+
+        $model->customer_id = $cust->id;
 
         if ($model->save()) {
             if ($model->status == 'Selesai') {
