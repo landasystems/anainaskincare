@@ -7,6 +7,7 @@ $config = [
     'basePath' => dirname(__DIR__),
     //'bootstrap' => ['log'],
     'components' => [
+        'landa' => ['class' => 'app\components\LandaCore'],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'x6tjpI4ZMSaasW0-pamgdcCzrMWcFpgl',

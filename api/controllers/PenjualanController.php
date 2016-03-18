@@ -35,6 +35,7 @@ class PenjualanController extends Controller {
                     'cari' => ['get'],
                     'dokter' => ['post'],
                     'terapis' => ['post'],
+                    'saveprint' => ['post'],
                 ],
             ]
         ];
@@ -60,6 +61,16 @@ class PenjualanController extends Controller {
         }
 
         return true;
+    }
+
+    public function actionSaveprint() {
+        $params = json_decode(file_get_contents("php://input"), true);
+
+        $penjualan = Penjualan::findOne($params['id']);
+        if (!empty($penjualan)) {
+            $penjualan->print += 1;
+            $penjualan->save();
+        }
     }
 
     public function actionIndex() {
@@ -97,7 +108,7 @@ class PenjualanController extends Controller {
                 ->from('penjualan')
                 ->join('LEFT JOIN', 'm_cabang', 'penjualan.cabang_id = m_cabang.id')
                 ->join('LEFT JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
-                ->select('m_cabang.nama as cabang, m_customer.nama as customer, penjualan.kode as kode, penjualan.tanggal as tanggal,
+                ->select('m_cabang.nama as cabang, m_customer.nama as customer, penjualan.print, penjualan.kode as kode, penjualan.tanggal as tanggal,
                     penjualan.keterangan as keterangan, penjualan.total as total, penjualan.cash as cash, penjualan.credit as credit, penjualan.status as status,
                     penjualan.kode as kode, penjualan.id as id,  penjualan.customer_id as customer_id, penjualan.cabang_id as cabang_id,penjualan.atm,
                     m_customer.no_tlp as no_tlp, m_customer.email as email, m_customer.alamat as alamat')

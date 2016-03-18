@@ -29,6 +29,14 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         $scope.opened1 = true;
     };
 
+    $scope.savePrint = function (form) {
+        var url = 'penjualan/saveprint/';
+        Data.post(url, form).then(function (result) {
+
+        });
+        form.print = form.print * 1 + 1;
+    }
+
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
         $scope.isLoading = true;
@@ -77,8 +85,8 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         $scope.is_view = false;
         $scope.is_create = true;
         $scope.formtitle = "Edit Data Penjualan : " + row.kode;
-        $scope.selected(row.id);
         $scope.form = row;
+        $scope.selected(row.id);
         $scope.form.tanggal = new Date(row.tanggal);
 
     };
@@ -147,7 +155,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             window.location = 'api/web/penjualan/excel';
         });
     }
-    
+
     $scope.cariProduk = function ($query, $cabang) {
         if ($query.length >= 3) {
             Data.get('barang/cari', {nama: $query, cabang: $cabang.id}).then(function (data) {
@@ -168,8 +176,8 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         form.no_tlp = $item.no_tlp;
         form.email = $item.email;
         form.alamat = $item.alamat;
-          $scope.read = false;
-        if($scope.tagCust == true){
+        $scope.read = false;
+        if ($scope.tagCust == true) {
             $scope.form.kode_cust = 'Generate Otomatis';
             $scope.tagCust = false;
         }
@@ -201,7 +209,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             $scope.list_terapis = data.terapis;
             $scope.form.cabang_id = data.data.cabang_id.id;
             $scope.form.no_tlp = data.data.customers.no_tlp;
-            $scope.form.kode = data.data.customers.kode;
+            $scope.form.kode_cust = data.data.customers.kode;
             $scope.form.email = data.data.customers.email;
             $scope.form.alamat = data.data.customers.alamat;
             $scope.form.customers = data.data.customers;
