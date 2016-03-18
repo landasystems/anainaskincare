@@ -177,10 +177,10 @@ class BarangController extends Controller {
         $total = 0;
         foreach ($models as $key => $val) {
             $listPaket[$key] = $val;
-            $listPaket[$key]['harga'] = $val['harga_jual'];
+//            $listPaket[$key]['harga'] = $val['harga_jual'];
             $listPaket[$key]['produk'] = array('id' => $val['barang_id'], 'nama' => $val['nama']);
-            $listPaket[$key]['total'] = ($val['jml'] * $val['harga_jual']);
-            $total += ($val['jml'] * $val['harga_jual']);
+//            $listPaket[$key]['total'] = ($val['jml'] * $val['harga_jual']);
+//            $total += ($val['jml'] * $val['harga_jual']);
         }
 
         echo json_encode(array('status' => 1, 'data' => $listPaket, 'total' => $total), JSON_PRETTY_PRINT);
@@ -258,7 +258,7 @@ class BarangController extends Controller {
                         $paket = new \app\models\PaketDet();
                         $paket->barang_id = $vPaket['produk']['id'];
                         $paket->paket_id = $model->id;
-                        $paket->harga_jual = $vPaket['harga'];
+//                        $paket->harga_jual = $vPaket['harga'];
                         $paket->jml = $vPaket['jml'];
                         $paket->save();
                     }
@@ -333,7 +333,7 @@ class BarangController extends Controller {
                         $paket = new \app\models\PaketDet();
                         $paket->barang_id = $vPaket['produk']['id'];
                         $paket->paket_id = $model->id;
-                        $paket->harga_jual = $vPaket['harga'];
+//                        $paket->harga_jual = $vPaket['harga'];
                         $paket->jml = $vPaket['jml'];
                         $paket->save();
                     }

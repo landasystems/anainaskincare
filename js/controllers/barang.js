@@ -56,29 +56,29 @@ app.controller('barangCtrl', function ($scope, Data, toaster, FileUploader, $sta
         }
     }
 
-    $scope.hitung = function (paket) {
-        var jml = (paket.jml) ? parseInt(paket.jml) : 0;
-        var harga = (paket.harga) ? parseInt(paket.harga) : 0;
-        paket.total = parseFloat(jml) * parseInt(harga);
-        $scope.totalHarga = 0;
-        angular.forEach($scope.listPaket, function (detail) {
-            var jml = (detail.jml) ? parseInt(detail.jml) : 0;
-            var harga = (detail.harga) ? parseInt(detail.harga) : 0;
-            var total = parseFloat(jml) * parseInt(harga);
-            $scope.totalHarga = $scope.totalHarga + total * 1;
-        });
+//    $scope.hitung = function (paket) {
+//        var jml = (paket.jml) ? parseInt(paket.jml) : 0;
+//        var harga = (paket.harga) ? parseInt(paket.harga) : 0;
+//        paket.total = parseFloat(jml) * parseInt(harga);
+//        $scope.totalHarga = 0;
+//        angular.forEach($scope.listPaket, function (detail) {
+//            var jml = (detail.jml) ? parseInt(detail.jml) : 0;
+//            var harga = (detail.harga) ? parseInt(detail.harga) : 0;
+//            var total = parseFloat(jml) * parseInt(harga);
+//            $scope.totalHarga = $scope.totalHarga + total * 1;
+//        });
+//
+//        $scope.form.harga_jual = $scope.totalHarga;
+//    }
 
-        $scope.form.harga_jual = $scope.totalHarga;
-    }
-
-    $scope.subtotal = function () {
-        var total = 0;
-        angular.forEach($scope.listStok, function (detail) {
-            var jml = (detail.iStok) ? parseInt(detail.iStok) : 0;
-            total += jml;
-        })
-        $scope.totalStok = total;
-    }
+//    $scope.subtotal = function () {
+//        var total = 0;
+//        angular.forEach($scope.listStok, function (detail) {
+//            var jml = (detail.iStok) ? parseInt(detail.iStok) : 0;
+//            total += jml;
+//        })
+//        $scope.totalStok = total;
+//    }
 
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
