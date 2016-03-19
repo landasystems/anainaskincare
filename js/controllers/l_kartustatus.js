@@ -9,6 +9,10 @@ app.controller('l_kartustatusCtrl', function ($scope, Data, toaster) {
     $scope.detail_laporan = false;
     $scope.laporan = {};
     $scope.form = {};
+    $scope.form.tanggal = {
+        startDate: new Date(),
+        endDate: new Date()
+    };
 
     Data.get('site/session').then(function (data) {
         $scope.listcabang = data.data.user.cabang;
