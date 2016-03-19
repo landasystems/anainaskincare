@@ -58,6 +58,8 @@
                             <th st-sort="su.nama">Supplier</th>
                             <th st-sort="ca.nama">Cabang</th>
                             <th st-sort="rp.total">Total (Rp)</th>
+                            <th st-sort="m_user.nama">Petugas</th>
+                            <th st-sort="created_at">Dibuat</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -69,6 +71,8 @@
                             <td>{{row.nama_supplier}}</td>
                             <td>{{row.klinik}}</td>
                             <td style="text-align: right;">{{row.total|  currency:undefined:0}}</td>
+                            <td>{{row.petugas}}</td>
+                            <td>{{row.created_at * 1000| date:'medium'}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)"></button>
@@ -79,7 +83,7 @@
                     </tbody>
                     <tbody ng-show="isLoading">
                         <tr>
-                            <td colspan="4" class="text-center">Loading ... </td>
+                            <td colspan="9" class="text-center">Loading ... </td>
                         </tr>
                     </tbody>
                     <tfoot>

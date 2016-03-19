@@ -55,6 +55,9 @@
                             <th st-sort="m_cabang.nama">Klinik</th>
                             <th st-sort="debet">Total</th>
                             <th st-sort="pinjaman.status">Status</th>
+                            <th st-sort="m_user.nama">Petugas</th>
+                            <th st-sort="created_at">Dibuat</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody ng-show="!isLoading">
@@ -65,6 +68,8 @@
                             <td>{{row.klinik}}</td>
                             <td style="text-align: right;">{{row.debet|  currency:undefined:0}}</td>
                             <td>{{row.status}}</td>
+                            <td>{{row.petugas}}</td>
+                            <td>{{row.created_at * 1000| date:'medium'}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ng-show="row.status == 'Belum Lunas'" ></button>
@@ -75,12 +80,12 @@
                     </tbody>
                     <tbody ng-show="isLoading">
                         <tr>
-                            <td colspan="7" class="text-center">Loading ... </td>
+                            <td colspan="9" class="text-center">Loading ... </td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="7" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html"></td>
+                            <td colspan="9" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html"></td>
                         </tr>
                     </tfoot>
                 </table>		

@@ -1610,3 +1610,1016 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1458350499.976
     'REQUEST_TIME' => 1458350499
 ]
+2016-03-19 09:25:50 [::1][-][-][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'm_user.created_by' in 'where clause'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php:825
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(825): PDOStatement->execute()
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(349): yii\db\Command->queryInternal('fetchAll', NULL)
+#2 /var/www/anainaskincare/api/controllers/StokkeluarController.php(152): yii\db\Command->queryAll()
+#3 [internal function]: app\controllers\StokkeluarController->actionIndex()
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('', Array)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('stokkeluar/', Array)
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#10 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'm_user.created_by' in 'where clause'
+The SQL being executed was: SELECT `stok_keluar`.*, `m_user`.`nama` AS `petugas`, `m_cabang`.`nama` AS `cabang` FROM `stok_keluar`, `m_cabang`, `m_user` WHERE (m_user.created_by = m_user.id) AND (`stok_keluar`.`cabang_id` IN ('5', '4', '3', '2', '1')) ORDER BY `stok_keluar`.`kode` DESC LIMIT 10' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php:595
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(840): yii\db\Schema->convertException(Object(PDOException), 'SELECT `stok_ke...')
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(349): yii\db\Command->queryInternal('fetchAll', NULL)
+#2 /var/www/anainaskincare/api/controllers/StokkeluarController.php(152): yii\db\Command->queryAll()
+#3 [internal function]: app\controllers\StokkeluarController->actionIndex()
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('', Array)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('stokkeluar/', Array)
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#10 {main}
+Additional Information:
+Array
+(
+    [0] => 42S22
+    [1] => 1054
+    [2] => Unknown column 'm_user.created_by' in 'where clause'
+)
+
+2016-03-19 09:25:50 [::1][-][-][info][application] $_GET = [
+    'limit' => '10'
+    'offset' => '0'
+]
+
+$_COOKIE = [
+    'PHPSESSID' => 'mjpplc5ggn913qq4ud23sgmqo4'
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+]
+
+$_SESSION = [
+    'user' => [
+        'id' => 1
+        'username' => 'admin'
+        'nama' => 'administrator'
+        'akses' => stdClass#1
+        (
+            [master_roles] => true
+            [transaksi_stokmasuk] => true
+            [transaksi_stokkeluar] => true
+            [transaksi_pembelian] => true
+            [transaksi_bayarhutang] => true
+            [transaksi_returpembelian] => true
+            [transaksi_penjualan] => true
+            [transaksi_bayarpiutang] => true
+            [transaksi_returpenjualan] => true
+            [master_cabang] => true
+            [master_customer] => true
+            [master_supplier] => true
+            [master_pegawai] => true
+            [master_satuan] => true
+            [master_kategori] => true
+            [master_barang] => true
+            [master_user] => true
+            [laporan_kartustok] => true
+            [laporan_bonuskaryawan] => true
+            [laporan_labarugi] => true
+            [laporan_kartustatus] => true
+            [laporan_penjualan] => true
+            [laporan_barang] => true
+        )
+        'settings' => stdClass#2
+        (
+            [themeID] => '11'
+            [navbarHeaderColor] => 'bg-primary'
+            [navbarCollapseColor] => 'bg-primary'
+            [asideColor] => 'bg-dark'
+            [container] => false
+        )
+        'cabang' => [
+            0 => [
+                'id' => '5'
+                'kode' => '005'
+                'nama' => 'APOTEK ANAINA'
+                'alamat' => 'JL P. ROON 15'
+                'no_tlp' => '031-8532117'
+                'email' => null
+                'is_deleted' => '0'
+            ]
+            1 => [
+                'id' => '4'
+                'kode' => '004'
+                'nama' => 'ANAINA KANTOR'
+                'alamat' => 'JL. ROON 15 SAWOTRATAP'
+                'no_tlp' => '031-8532217'
+                'email' => null
+                'is_deleted' => '0'
+            ]
+            2 => [
+                'id' => '3'
+                'kode' => '003'
+                'nama' => 'ANAINA SKINCARE MALANG'
+                'alamat' => 'Perum Citra Graha No 1, Banjar Arum - Singosari - Malang'
+                'no_tlp' => '0341-459017'
+                'email' => null
+                'is_deleted' => '0'
+            ]
+            3 => [
+                'id' => '2'
+                'kode' => '002'
+                'nama' => 'ANAINA  GEDANGAN'
+                'alamat' => 'Komp Ruko Central Square Blok B 10
+JL. A. Yani No 41-43, Gedangan'
+                'no_tlp' => '-'
+                'email' => ''
+                'is_deleted' => '0'
+            ]
+            4 => [
+                'id' => '1'
+                'kode' => '001'
+                'nama' => 'RUMAH CANTIK ANAINA TRATAP'
+                'alamat' => 'JL. Roon 15, Sawotratap, Sdj'
+                'no_tlp' => '031-8532117'
+                'email' => ''
+                'is_deleted' => '0'
+            ]
+        ]
+        'cabang_id' => [
+            0 => '5'
+            1 => '4'
+            2 => '3'
+            3 => '2'
+            4 => '1'
+        ]
+    ]
+    'filter' => [
+        'cabang' => '3'
+        'tanggal' => [
+            'startDate' => '2016-03-17T17:00:00.000Z'
+            'endDate' => '2016-03-19T16:59:59.999Z'
+        ]
+    ]
+    'query' => yii\db\Query#3
+    (
+        [select] => [
+            0 => 'stok_keluar.*'
+            1 => 'm_user.nama as petugas'
+            2 => 'm_cabang.nama as cabang'
+        ]
+        [selectOption] => null
+        [distinct] => null
+        [from] => [
+            0 => 'stok_keluar'
+            1 => 'm_cabang'
+            2 => 'm_user'
+        ]
+        [groupBy] => null
+        [join] => null
+        [having] => null
+        [union] => null
+        [params] => []
+        [yii\base\Component:_events] => []
+        [yii\base\Component:_behaviors] => null
+        [where] => [
+            0 => 'and'
+            1 => 'm_user.created_by = m_user.id'
+            2 => [
+                'stok_keluar.cabang_id' => [
+                    0 => '5'
+                    1 => '4'
+                    2 => '3'
+                    3 => '2'
+                    4 => '1'
+                ]
+            ]
+        ]
+        [limit] => '10'
+        [offset] => '0'
+        [orderBy] => [
+            'stok_keluar.kode' => 3
+        ]
+        [indexBy] => null
+    )
+    '__flash' => []
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=mjpplc5ggn913qq4ud23sgmqo4; _csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '49637'
+    'REDIRECT_QUERY_STRING' => 'limit=10&offset=0'
+    'REDIRECT_URL' => '/anainaskincare/api/web/stokkeluar/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'limit=10&offset=0'
+    'REQUEST_URI' => '/anainaskincare/api/web/stokkeluar/?limit=10&offset=0'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1458354350.712
+    'REQUEST_TIME' => 1458354350
+]
+2016-03-19 09:25:51 [::1][-][-][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'm_user.created_by' in 'where clause'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php:825
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(825): PDOStatement->execute()
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(349): yii\db\Command->queryInternal('fetchAll', NULL)
+#2 /var/www/anainaskincare/api/controllers/StokkeluarController.php(152): yii\db\Command->queryAll()
+#3 [internal function]: app\controllers\StokkeluarController->actionIndex()
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('', Array)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('stokkeluar/', Array)
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#10 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'm_user.created_by' in 'where clause'
+The SQL being executed was: SELECT `stok_keluar`.*, `m_user`.`nama` AS `petugas`, `m_cabang`.`nama` AS `cabang` FROM `stok_keluar`, `m_cabang`, `m_user` WHERE (m_user.created_by = m_user.id) AND (`stok_keluar`.`cabang_id` IN ('5', '4', '3', '2', '1')) ORDER BY `stok_keluar`.`kode` DESC LIMIT 10' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php:595
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(840): yii\db\Schema->convertException(Object(PDOException), 'SELECT `stok_ke...')
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(349): yii\db\Command->queryInternal('fetchAll', NULL)
+#2 /var/www/anainaskincare/api/controllers/StokkeluarController.php(152): yii\db\Command->queryAll()
+#3 [internal function]: app\controllers\StokkeluarController->actionIndex()
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('', Array)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('stokkeluar/', Array)
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#10 {main}
+Additional Information:
+Array
+(
+    [0] => 42S22
+    [1] => 1054
+    [2] => Unknown column 'm_user.created_by' in 'where clause'
+)
+
+2016-03-19 09:25:51 [::1][-][-][info][application] $_GET = [
+    'filter' => '{}'
+    'limit' => '10'
+    'offset' => '0'
+]
+
+$_COOKIE = [
+    'PHPSESSID' => 'mjpplc5ggn913qq4ud23sgmqo4'
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+]
+
+$_SESSION = [
+    'user' => [
+        'id' => 1
+        'username' => 'admin'
+        'nama' => 'administrator'
+        'akses' => stdClass#1
+        (
+            [master_roles] => true
+            [transaksi_stokmasuk] => true
+            [transaksi_stokkeluar] => true
+            [transaksi_pembelian] => true
+            [transaksi_bayarhutang] => true
+            [transaksi_returpembelian] => true
+            [transaksi_penjualan] => true
+            [transaksi_bayarpiutang] => true
+            [transaksi_returpenjualan] => true
+            [master_cabang] => true
+            [master_customer] => true
+            [master_supplier] => true
+            [master_pegawai] => true
+            [master_satuan] => true
+            [master_kategori] => true
+            [master_barang] => true
+            [master_user] => true
+            [laporan_kartustok] => true
+            [laporan_bonuskaryawan] => true
+            [laporan_labarugi] => true
+            [laporan_kartustatus] => true
+            [laporan_penjualan] => true
+            [laporan_barang] => true
+        )
+        'settings' => stdClass#2
+        (
+            [themeID] => '11'
+            [navbarHeaderColor] => 'bg-primary'
+            [navbarCollapseColor] => 'bg-primary'
+            [asideColor] => 'bg-dark'
+            [container] => false
+        )
+        'cabang' => [
+            0 => [
+                'id' => '5'
+                'kode' => '005'
+                'nama' => 'APOTEK ANAINA'
+                'alamat' => 'JL P. ROON 15'
+                'no_tlp' => '031-8532117'
+                'email' => null
+                'is_deleted' => '0'
+            ]
+            1 => [
+                'id' => '4'
+                'kode' => '004'
+                'nama' => 'ANAINA KANTOR'
+                'alamat' => 'JL. ROON 15 SAWOTRATAP'
+                'no_tlp' => '031-8532217'
+                'email' => null
+                'is_deleted' => '0'
+            ]
+            2 => [
+                'id' => '3'
+                'kode' => '003'
+                'nama' => 'ANAINA SKINCARE MALANG'
+                'alamat' => 'Perum Citra Graha No 1, Banjar Arum - Singosari - Malang'
+                'no_tlp' => '0341-459017'
+                'email' => null
+                'is_deleted' => '0'
+            ]
+            3 => [
+                'id' => '2'
+                'kode' => '002'
+                'nama' => 'ANAINA  GEDANGAN'
+                'alamat' => 'Komp Ruko Central Square Blok B 10
+JL. A. Yani No 41-43, Gedangan'
+                'no_tlp' => '-'
+                'email' => ''
+                'is_deleted' => '0'
+            ]
+            4 => [
+                'id' => '1'
+                'kode' => '001'
+                'nama' => 'RUMAH CANTIK ANAINA TRATAP'
+                'alamat' => 'JL. Roon 15, Sawotratap, Sdj'
+                'no_tlp' => '031-8532117'
+                'email' => ''
+                'is_deleted' => '0'
+            ]
+        ]
+        'cabang_id' => [
+            0 => '5'
+            1 => '4'
+            2 => '3'
+            3 => '2'
+            4 => '1'
+        ]
+    ]
+    'filter' => [
+        'cabang' => '3'
+        'tanggal' => [
+            'startDate' => '2016-03-17T17:00:00.000Z'
+            'endDate' => '2016-03-19T16:59:59.999Z'
+        ]
+    ]
+    'query' => yii\db\Query#3
+    (
+        [select] => [
+            0 => 'stok_keluar.*'
+            1 => 'm_user.nama as petugas'
+            2 => 'm_cabang.nama as cabang'
+        ]
+        [selectOption] => null
+        [distinct] => null
+        [from] => [
+            0 => 'stok_keluar'
+            1 => 'm_cabang'
+            2 => 'm_user'
+        ]
+        [groupBy] => null
+        [join] => null
+        [having] => null
+        [union] => null
+        [params] => []
+        [yii\base\Component:_events] => []
+        [yii\base\Component:_behaviors] => null
+        [where] => [
+            0 => 'and'
+            1 => 'm_user.created_by = m_user.id'
+            2 => [
+                'stok_keluar.cabang_id' => [
+                    0 => '5'
+                    1 => '4'
+                    2 => '3'
+                    3 => '2'
+                    4 => '1'
+                ]
+            ]
+        ]
+        [limit] => '10'
+        [offset] => '0'
+        [orderBy] => [
+            'stok_keluar.kode' => 3
+        ]
+        [indexBy] => null
+    )
+    '__flash' => []
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=mjpplc5ggn913qq4ud23sgmqo4; _csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '49633'
+    'REDIRECT_QUERY_STRING' => 'filter=%7B%7D&limit=10&offset=0'
+    'REDIRECT_URL' => '/anainaskincare/api/web/stokkeluar/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'filter=%7B%7D&limit=10&offset=0'
+    'REQUEST_URI' => '/anainaskincare/api/web/stokkeluar/?filter=%7B%7D&limit=10&offset=0'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1458354351.178
+    'REQUEST_TIME' => 1458354351
+]
+2016-03-19 09:46:46 [::1][-][-][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'pembelian.created_by' in 'on clause'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php:825
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(825): PDOStatement->execute()
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(349): yii\db\Command->queryInternal('fetchAll', NULL)
+#2 /var/www/anainaskincare/api/controllers/PembelianController.php(132): yii\db\Command->queryAll()
+#3 [internal function]: app\controllers\PembelianController->actionIndex()
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('', Array)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('pembelian', Array)
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#10 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'pembelian.created_by' in 'on clause'
+The SQL being executed was: SELECT `m_user`.`nama` AS `petugas`, `pe`.*, `ca`.`nama` AS `klinik`, `su`.`nama` AS `nama_supplier`, `su`.`alamat` AS `alamat`, `su`.`no_tlp` AS `no_tlp`, `su`.`email` AS `email` FROM `pembelian` `pe` JOIN `m_supplier` `su` ON pe.supplier_id = su.id JOIN `m_cabang` `ca` ON pe.cabang_id= ca.id JOIN `m_user` ON m_user.id = pembelian.created_by WHERE `pe`.`cabang_id` IN ('5', '4', '3', '2', '1') ORDER BY `tanggal` DESC LIMIT 10' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php:595
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(840): yii\db\Schema->convertException(Object(PDOException), 'SELECT `m_user`...')
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(349): yii\db\Command->queryInternal('fetchAll', NULL)
+#2 /var/www/anainaskincare/api/controllers/PembelianController.php(132): yii\db\Command->queryAll()
+#3 [internal function]: app\controllers\PembelianController->actionIndex()
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('', Array)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('pembelian', Array)
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#10 {main}
+Additional Information:
+Array
+(
+    [0] => 42S22
+    [1] => 1054
+    [2] => Unknown column 'pembelian.created_by' in 'on clause'
+)
+
+2016-03-19 09:46:46 [::1][-][-][info][application] $_GET = [
+    'limit' => '10'
+    'offset' => '0'
+]
+
+$_COOKIE = [
+    'PHPSESSID' => 'mjpplc5ggn913qq4ud23sgmqo4'
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+]
+
+$_SESSION = [
+    'user' => [
+        'id' => 1
+        'username' => 'admin'
+        'nama' => 'administrator'
+        'akses' => stdClass#1
+        (
+            [master_roles] => true
+            [transaksi_stokmasuk] => true
+            [transaksi_stokkeluar] => true
+            [transaksi_pembelian] => true
+            [transaksi_bayarhutang] => true
+            [transaksi_returpembelian] => true
+            [transaksi_penjualan] => true
+            [transaksi_bayarpiutang] => true
+            [transaksi_returpenjualan] => true
+            [master_cabang] => true
+            [master_customer] => true
+            [master_supplier] => true
+            [master_pegawai] => true
+            [master_satuan] => true
+            [master_kategori] => true
+            [master_barang] => true
+            [master_user] => true
+            [laporan_kartustok] => true
+            [laporan_bonuskaryawan] => true
+            [laporan_labarugi] => true
+            [laporan_kartustatus] => true
+            [laporan_penjualan] => true
+            [laporan_barang] => true
+        )
+        'settings' => stdClass#2
+        (
+            [themeID] => '11'
+            [navbarHeaderColor] => 'bg-primary'
+            [navbarCollapseColor] => 'bg-primary'
+            [asideColor] => 'bg-dark'
+            [container] => false
+        )
+        'cabang' => [
+            0 => [
+                'id' => '5'
+                'kode' => '005'
+                'nama' => 'APOTEK ANAINA'
+                'alamat' => 'JL P. ROON 15'
+                'no_tlp' => '031-8532117'
+                'email' => null
+                'is_deleted' => '0'
+            ]
+            1 => [
+                'id' => '4'
+                'kode' => '004'
+                'nama' => 'ANAINA KANTOR'
+                'alamat' => 'JL. ROON 15 SAWOTRATAP'
+                'no_tlp' => '031-8532217'
+                'email' => null
+                'is_deleted' => '0'
+            ]
+            2 => [
+                'id' => '3'
+                'kode' => '003'
+                'nama' => 'ANAINA SKINCARE MALANG'
+                'alamat' => 'Perum Citra Graha No 1, Banjar Arum - Singosari - Malang'
+                'no_tlp' => '0341-459017'
+                'email' => null
+                'is_deleted' => '0'
+            ]
+            3 => [
+                'id' => '2'
+                'kode' => '002'
+                'nama' => 'ANAINA  GEDANGAN'
+                'alamat' => 'Komp Ruko Central Square Blok B 10
+JL. A. Yani No 41-43, Gedangan'
+                'no_tlp' => '-'
+                'email' => ''
+                'is_deleted' => '0'
+            ]
+            4 => [
+                'id' => '1'
+                'kode' => '001'
+                'nama' => 'RUMAH CANTIK ANAINA TRATAP'
+                'alamat' => 'JL. Roon 15, Sawotratap, Sdj'
+                'no_tlp' => '031-8532117'
+                'email' => ''
+                'is_deleted' => '0'
+            ]
+        ]
+        'cabang_id' => [
+            0 => '5'
+            1 => '4'
+            2 => '3'
+            3 => '2'
+            4 => '1'
+        ]
+    ]
+    'filter' => [
+        'cabang' => '3'
+        'tanggal' => [
+            'startDate' => '2016-03-17T17:00:00.000Z'
+            'endDate' => '2016-03-19T16:59:59.999Z'
+        ]
+    ]
+    'query' => yii\db\Query#3
+    (
+        [select] => [
+            0 => 'm_user.nama as petugas'
+            1 => 'pe.*'
+            2 => 'ca.nama as klinik'
+            3 => 'su.nama as nama_supplier'
+            4 => 'su.alamat as alamat'
+            5 => 'su.no_tlp as no_tlp'
+            6 => 'su.email as email'
+        ]
+        [selectOption] => null
+        [distinct] => null
+        [from] => [
+            0 => 'pembelian as pe'
+        ]
+        [groupBy] => null
+        [join] => [
+            0 => [
+                0 => 'JOIN'
+                1 => 'm_supplier as su'
+                2 => 'pe.supplier_id = su.id'
+            ]
+            1 => [
+                0 => 'JOIN'
+                1 => 'm_cabang as ca'
+                2 => 'pe.cabang_id= ca.id'
+            ]
+            2 => [
+                0 => 'JOIN'
+                1 => 'm_user'
+                2 => 'm_user.id = pembelian.created_by'
+            ]
+        ]
+        [having] => null
+        [union] => null
+        [params] => []
+        [yii\base\Component:_events] => []
+        [yii\base\Component:_behaviors] => null
+        [where] => [
+            'pe.cabang_id' => [
+                0 => '5'
+                1 => '4'
+                2 => '3'
+                3 => '2'
+                4 => '1'
+            ]
+        ]
+        [limit] => '10'
+        [offset] => '0'
+        [orderBy] => [
+            'tanggal' => 3
+        ]
+        [indexBy] => null
+    )
+    '__flash' => []
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=mjpplc5ggn913qq4ud23sgmqo4; _csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '49811'
+    'REDIRECT_QUERY_STRING' => 'limit=10&offset=0'
+    'REDIRECT_URL' => '/anainaskincare/api/web/pembelian'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'limit=10&offset=0'
+    'REQUEST_URI' => '/anainaskincare/api/web/pembelian?limit=10&offset=0'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1458355606.888
+    'REQUEST_TIME' => 1458355606
+]
+2016-03-19 09:46:47 [::1][-][-][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'pembelian.created_by' in 'on clause'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php:825
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(825): PDOStatement->execute()
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(349): yii\db\Command->queryInternal('fetchAll', NULL)
+#2 /var/www/anainaskincare/api/controllers/PembelianController.php(132): yii\db\Command->queryAll()
+#3 [internal function]: app\controllers\PembelianController->actionIndex()
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('', Array)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('pembelian', Array)
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#10 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'pembelian.created_by' in 'on clause'
+The SQL being executed was: SELECT `m_user`.`nama` AS `petugas`, `pe`.*, `ca`.`nama` AS `klinik`, `su`.`nama` AS `nama_supplier`, `su`.`alamat` AS `alamat`, `su`.`no_tlp` AS `no_tlp`, `su`.`email` AS `email` FROM `pembelian` `pe` JOIN `m_supplier` `su` ON pe.supplier_id = su.id JOIN `m_cabang` `ca` ON pe.cabang_id= ca.id JOIN `m_user` ON m_user.id = pembelian.created_by WHERE `pe`.`cabang_id` IN ('5', '4', '3', '2', '1') ORDER BY `tanggal` DESC LIMIT 10' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php:595
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(840): yii\db\Schema->convertException(Object(PDOException), 'SELECT `m_user`...')
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(349): yii\db\Command->queryInternal('fetchAll', NULL)
+#2 /var/www/anainaskincare/api/controllers/PembelianController.php(132): yii\db\Command->queryAll()
+#3 [internal function]: app\controllers\PembelianController->actionIndex()
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('', Array)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('pembelian', Array)
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#10 {main}
+Additional Information:
+Array
+(
+    [0] => 42S22
+    [1] => 1054
+    [2] => Unknown column 'pembelian.created_by' in 'on clause'
+)
+
+2016-03-19 09:46:47 [::1][-][-][info][application] $_GET = [
+    'filter' => '{}'
+    'limit' => '10'
+    'offset' => '0'
+]
+
+$_COOKIE = [
+    'PHPSESSID' => 'mjpplc5ggn913qq4ud23sgmqo4'
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+]
+
+$_SESSION = [
+    'user' => [
+        'id' => 1
+        'username' => 'admin'
+        'nama' => 'administrator'
+        'akses' => stdClass#1
+        (
+            [master_roles] => true
+            [transaksi_stokmasuk] => true
+            [transaksi_stokkeluar] => true
+            [transaksi_pembelian] => true
+            [transaksi_bayarhutang] => true
+            [transaksi_returpembelian] => true
+            [transaksi_penjualan] => true
+            [transaksi_bayarpiutang] => true
+            [transaksi_returpenjualan] => true
+            [master_cabang] => true
+            [master_customer] => true
+            [master_supplier] => true
+            [master_pegawai] => true
+            [master_satuan] => true
+            [master_kategori] => true
+            [master_barang] => true
+            [master_user] => true
+            [laporan_kartustok] => true
+            [laporan_bonuskaryawan] => true
+            [laporan_labarugi] => true
+            [laporan_kartustatus] => true
+            [laporan_penjualan] => true
+            [laporan_barang] => true
+        )
+        'settings' => stdClass#2
+        (
+            [themeID] => '11'
+            [navbarHeaderColor] => 'bg-primary'
+            [navbarCollapseColor] => 'bg-primary'
+            [asideColor] => 'bg-dark'
+            [container] => false
+        )
+        'cabang' => [
+            0 => [
+                'id' => '5'
+                'kode' => '005'
+                'nama' => 'APOTEK ANAINA'
+                'alamat' => 'JL P. ROON 15'
+                'no_tlp' => '031-8532117'
+                'email' => null
+                'is_deleted' => '0'
+            ]
+            1 => [
+                'id' => '4'
+                'kode' => '004'
+                'nama' => 'ANAINA KANTOR'
+                'alamat' => 'JL. ROON 15 SAWOTRATAP'
+                'no_tlp' => '031-8532217'
+                'email' => null
+                'is_deleted' => '0'
+            ]
+            2 => [
+                'id' => '3'
+                'kode' => '003'
+                'nama' => 'ANAINA SKINCARE MALANG'
+                'alamat' => 'Perum Citra Graha No 1, Banjar Arum - Singosari - Malang'
+                'no_tlp' => '0341-459017'
+                'email' => null
+                'is_deleted' => '0'
+            ]
+            3 => [
+                'id' => '2'
+                'kode' => '002'
+                'nama' => 'ANAINA  GEDANGAN'
+                'alamat' => 'Komp Ruko Central Square Blok B 10
+JL. A. Yani No 41-43, Gedangan'
+                'no_tlp' => '-'
+                'email' => ''
+                'is_deleted' => '0'
+            ]
+            4 => [
+                'id' => '1'
+                'kode' => '001'
+                'nama' => 'RUMAH CANTIK ANAINA TRATAP'
+                'alamat' => 'JL. Roon 15, Sawotratap, Sdj'
+                'no_tlp' => '031-8532117'
+                'email' => ''
+                'is_deleted' => '0'
+            ]
+        ]
+        'cabang_id' => [
+            0 => '5'
+            1 => '4'
+            2 => '3'
+            3 => '2'
+            4 => '1'
+        ]
+    ]
+    'filter' => [
+        'cabang' => '3'
+        'tanggal' => [
+            'startDate' => '2016-03-17T17:00:00.000Z'
+            'endDate' => '2016-03-19T16:59:59.999Z'
+        ]
+    ]
+    'query' => yii\db\Query#3
+    (
+        [select] => [
+            0 => 'm_user.nama as petugas'
+            1 => 'pe.*'
+            2 => 'ca.nama as klinik'
+            3 => 'su.nama as nama_supplier'
+            4 => 'su.alamat as alamat'
+            5 => 'su.no_tlp as no_tlp'
+            6 => 'su.email as email'
+        ]
+        [selectOption] => null
+        [distinct] => null
+        [from] => [
+            0 => 'pembelian as pe'
+        ]
+        [groupBy] => null
+        [join] => [
+            0 => [
+                0 => 'JOIN'
+                1 => 'm_supplier as su'
+                2 => 'pe.supplier_id = su.id'
+            ]
+            1 => [
+                0 => 'JOIN'
+                1 => 'm_cabang as ca'
+                2 => 'pe.cabang_id= ca.id'
+            ]
+            2 => [
+                0 => 'JOIN'
+                1 => 'm_user'
+                2 => 'm_user.id = pembelian.created_by'
+            ]
+        ]
+        [having] => null
+        [union] => null
+        [params] => []
+        [yii\base\Component:_events] => []
+        [yii\base\Component:_behaviors] => null
+        [where] => [
+            'pe.cabang_id' => [
+                0 => '5'
+                1 => '4'
+                2 => '3'
+                3 => '2'
+                4 => '1'
+            ]
+        ]
+        [limit] => '10'
+        [offset] => '0'
+        [orderBy] => [
+            'tanggal' => 3
+        ]
+        [indexBy] => null
+    )
+    '__flash' => []
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=mjpplc5ggn913qq4ud23sgmqo4; _csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '49814'
+    'REDIRECT_QUERY_STRING' => 'filter=%7B%7D&limit=10&offset=0'
+    'REDIRECT_URL' => '/anainaskincare/api/web/pembelian'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'filter=%7B%7D&limit=10&offset=0'
+    'REQUEST_URI' => '/anainaskincare/api/web/pembelian?filter=%7B%7D&limit=10&offset=0'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1458355607.338
+    'REQUEST_TIME' => 1458355607
+]
+2016-03-19 10:03:46 [::1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined variable: _SESSION' in /var/www/anainaskincare/api/controllers/PenjualanController.php:437
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/PenjualanController.php(437): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', '/var/www/anaina...', 437, Array)
+#1 [internal function]: app\controllers\PenjualanController->actionCari()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('cari', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('penjualan/cari', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2016-03-19 10:03:46 [::1][-][-][info][application] $_GET = [
+    'nama' => 'jua'
+]
+
+$_COOKIE = [
+    'PHPSESSID' => 'mjpplc5ggn913qq4ud23sgmqo4'
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=mjpplc5ggn913qq4ud23sgmqo4; _csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '49887'
+    'REDIRECT_QUERY_STRING' => 'nama=jua'
+    'REDIRECT_URL' => '/anainaskincare/api/web/penjualan/cari'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'nama=jua'
+    'REQUEST_URI' => '/anainaskincare/api/web/penjualan/cari?nama=jua'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1458356626.703
+    'REQUEST_TIME' => 1458356626
+]

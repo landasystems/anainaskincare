@@ -55,7 +55,10 @@
                             <th st-sort="m_customer.nama">Customer</th>
                             <th st-sort="tanggal">Tanggal</th>
                             <th st-sort="penjualan.total">Total</th>
-                            <th st-sort="status">Status</th>
+                            <th st-sort="status" style="text-align: center;">Status</th>
+                            <th st-sort="m_user.nama">Petugas</th>
+                            <th st-sort="created_at">Dibuat</th>
+                            <!--<th st-sort="print">Tercetak</th>-->
                         </tr>
                     </thead>
                     <tbody ng-show="!isLoading">
@@ -65,26 +68,36 @@
                             <td>{{(row.customer == null) ? "Umum" : row.customer}}</td>
                             <td>{{row.tanggal| date}}</td>
                             <td style="text-align: right;">{{row.total|  currency:undefined:0}}</td>
-                            <td>{{row.status}}</td>
+                            <td style="text-align: center;">
+                                <span class="badge bg-success" ng-show="row.status == 'Selesai'">{{row.status}}</span>
+                                <span class="badge bg-danger" ng-show="row.status == 'Pesan'">{{row.status}}</span>
+                            </td>
+                            <!--<td style="text-align: center; width: 20px;">{{row.print}} x</td>-->
+                            <td>{{row.petugas}}</td>
+                            <td>{{row.created_at * 1000| date:'medium'}}</td>
                             <td style="text-align: center">
-                                <div class="btn-group" role="group" style="margin-top: -3px;" ng-if="row.print == 0">
+                                <!--                                <div class="btn-group" role="group" style="margin-top: -3px;" ng-if="row.print == 0">
+                                                                    <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ></button>
+                                                                    <button type="button" class="btn btn-danger fa fa-minus-circle" ng-click="delete(row);" ></button>
+                                                                </div> 
+                                                                <div ng-if="row.print > 0">
+                                                                    <span class="badge bg-success">Already Printed</span>
+                                                                </div>-->
+                                <div class="btn-group" role="group" style="margin-top: -3px;">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ></button>
-                                    <button type="button" class="btn btn-danger fa fa-minus-circle" ng-click="delete(row);" ></button>
-                                </div> 
-                                <div ng-if="row.print > 0">
-                                    <span class="badge bg-success">Already Printed</span>
+                                    <button type="button" class="btn btn-danger fa fa-trash-o" ng-click="delete(row);" ></button>
                                 </div>
                             </td>
                         </tr>
                     </tbody>
                     <tbody ng-show="isLoading">
                         <tr>
-                            <td colspan="8" class="text-center">Loading ... </td>
+                            <td colspan="9" class="text-center">Loading ... </td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="8" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html"></td>
+                            <td colspan="9" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html"></td>
                         </tr>
                 </table>		
             </div>
@@ -100,8 +113,9 @@
                     <div class="panel-heading">
                         {{formtitle}}
                         <div class="btn-group pull-right" role="group" style="margin-top: -3px;" ng-hide="is_view == false">
-                            <span style="color:#F77A7A;float:left" ng-show="form.print >= 2"><i>Transaksi ini telah dicetak 2 kali &nbsp;&nbsp; </i></span>
-                            <button type="button" ng-show="form.status == 'Selesai'" ng-disabled="form.print >= 2" class="btn btn-primary fa fa-print" ng-print print-element-id="printArea" ng-click="savePrint(form)">&nbsp;Print</button>
+                            <span style="color:#F77A7A;float:left" ng-show="form.print >= 1"><i>Transaksi ini telah dicetak {{form.print}} kali &nbsp;&nbsp; </i></span>
+                            <!--<button type="button" ng-show="form.status == 'Selesai'" ng-disabled="form.print >= 2" class="btn btn-primary fa fa-print" ng-print print-element-id="printArea" ng-click="savePrint(form)">&nbsp;Print</button>-->
+                            <button type="button" ng-show="form.status == 'Selesai'" class="btn btn-primary fa fa-print" ng-print print-element-id="printArea" ng-click="savePrint(form)">&nbsp;Print</button>
                         </div> 
                     </div>
                     <div class="panel-body">
@@ -117,7 +131,7 @@
                                         </ui-select-choices>
                                     </ui-select>
                                     <span class="input-group-btn">
-                                        <button ng-click="form.customers = undefined" class="btn btn-default">
+                                        <button ng-disabled="is_view" ng-click="form.customers = undefined" class="btn btn-default">
                                             <span class="glyphicon glyphicon-trash"></span>
                                         </button>
                                     </span>
@@ -200,12 +214,12 @@
                                 <table class="table table-bordered det-trans">
                                     <thead>
                                         <tr>
-                                            <td align="center">Barang</td>
-                                            <td align="center">Jumlah</td>
-                                            <td align="center">Tipe</td>
-                                            <td align="center">Harga</td>
-                                            <td align="center">Diskon</td>
-                                            <td align="center">Sub total</td>
+                                            <td align="center"><b>Barang</b></td>
+                                            <td align="center"><b>Jumlah</b></td>
+                                            <td align="center"><b>Tipe</b></td>
+                                            <td align="center"><b>Harga</b></td>
+                                            <td align="center"><b>Diskon</b></td>
+                                            <td align="center"><b>Sub total</b></td>
                                             <td ng-hide="is_view" style="padding: 0px; width: 5px;"><button ng-click="addDetail()" class="btn btn-success" ng-disabled="is_view"><i class="fa fa-plus"></i></button></td>
                                         </tr>
                                     </thead>

@@ -98,8 +98,9 @@ class ReturpenjualanController extends Controller {
                 ->join('JOIN', 'penjualan', 'penjualan.id = r_penjualan.penjualan_id')
                 ->join('JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
                 ->join('JOIN', 'm_cabang', 'penjualan.cabang_id= m_cabang.id')
+                ->join('JOIN', 'm_user','r_penjualan.created_by = m_user.id')
                 ->orderBy($sort)
-                ->select("r_penjualan.*, penjualan.kode as kode_penjualan , penjualan.total as total_penjualan, m_cabang.nama as cabang, "
+                ->select("m_user.nama as petugas, r_penjualan.*, penjualan.kode as kode_penjualan , penjualan.total as total_penjualan, m_cabang.nama as cabang, "
                         . "m_customer.nama as nama_customer, penjualan.customer_id as customer_id,penjualan.cabang_id as cabang_id");
 
         //filter

@@ -48,6 +48,8 @@
                             <th st-sort="stok_keluar.kode">Kode</th>
                             <th st-sort="tanggal">Tanggal</th>
                             <th st-sort="m_cabang.nama">Cabang</th>
+                            <th st-sort="m_user.nama">Petugas</th>
+                            <th st-sort="created_at">Dibuat</th>
                             <th style="text-align: center;">Action</th>
                         </tr>
                     </thead>
@@ -56,6 +58,8 @@
                             <td>{{row.kode}}</td>
                             <td>{{row.tanggal| date}}</td>
                             <td>{{row.cabang}}</td>
+                            <td>{{row.petugas}}</td>
+                            <td>{{row.created_at * 1000| date:'medium'}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)"></button>
@@ -66,12 +70,12 @@
                     </tbody>
                     <tbody ng-show="isLoading">
                         <tr>
-                            <td colspan="4" class="text-center">Loading ... </td>
+                            <td colspan="6" class="text-center">Loading ... </td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="4" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html">
+                            <td colspan="6" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html">
                             </td>
                         </tr>
                     </tfoot>

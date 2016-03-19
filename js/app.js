@@ -12,6 +12,5 @@ angular.module('app', [
     'ui.select',
     'angular-loading-bar',
     'highcharts-ng',
-    'firebase'
 ]);
 
