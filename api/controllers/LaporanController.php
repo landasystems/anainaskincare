@@ -576,6 +576,7 @@ class LaporanController extends Controller {
         $data['end'] = $end;
 
         $criteria = '';
+        $body = array();
 
         //=========== MENAMPILKAN CABANG =============//
         if (!empty($params['cabang_id'])) {

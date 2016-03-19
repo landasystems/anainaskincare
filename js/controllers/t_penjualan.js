@@ -83,7 +83,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
     $scope.update = function (row) {
         $scope.is_edit = true;
         $scope.is_view = false;
-        $scope.is_create = true;
+        $scope.is_create = false;
         $scope.formtitle = "Edit Data Penjualan : " + row.kode;
         $scope.form = row;
         $scope.selected(row.id);
@@ -189,6 +189,12 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         detail.fee_dokter = $item.fee_dokter;
         detail.fee_terapis = $item.fee_terapis;
         $scope.total();
+
+        if (detail.type == 'Paket' && $scope.is_create == true) {
+            Data.get('barang/getpaket/' + $item.id).then(function (data) {
+                $scope.listPaket = data.data;
+            });
+        }
     }
     $scope.getproduk = function (detail) {
         $scope.detail = detail;
@@ -217,10 +223,15 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             $scope.detPenjualan = data.detail;
             angular.forEach($scope.detPenjualan, function (detail) {
                 detail.diskon = (detail.diskon != null) ? detail.diskon : 0;
-            })
+                if (detail.type == 'Paket') {
+                    Data.get('barang/getpaket/' + detail.produk_id).then(function (data) {
+                        $scope.listPaket = data.data;
+                    });
+                }
+            });
             $scope.total();
         });
-    }
+    };
     $scope.addDetail = function () {
         var newDet = {
             id: '',
@@ -247,7 +258,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         $scope.form.total_diskon = diskon;
         $scope.form.total_harga = total;
         $scope.detail.sub_total = (total - diskon);
-    }
+    };
 
     $scope.calcDiskonHarga = function (detail) {
         detail.diskon = (parseInt(detail.diskonpersen) * parseInt(detail.harga)) / 100;

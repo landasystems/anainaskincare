@@ -109,7 +109,7 @@
                             <label class="col-md-2 col-sm-3 control-label">Customer</label>
                             <div class="col-md-4  col-sm-9">
                                 <div class="input-group">
-                                    <ui-select tagging="tagCustomer" tagging-label="false" on-select="pilihCustomer(form, $item)" ng-model="form.customers" theme="bootstrap">
+                                    <ui-select ng-disabled="is_view" tagging="tagCustomer" tagging-label="false" on-select="pilihCustomer(form, $item)" ng-model="form.customers" theme="bootstrap">
                                         {{$select.selected.nama}}
                                         <ui-select-match placeholder="Pilih atau Cari nama Customer">{{$select.selected.nama}}</ui-select-match>
                                         <ui-select-choices refresh="cariCustomer($select.search)" repeat="val in results">
@@ -152,7 +152,7 @@
                         <div class="form-group">
                             <label class="col-md-2 col-sm-3 control-label">Cabang</label>
                             <div class="col-md-3 col-sm-9">
-                                <ui-select on_select="getkode_cabang(form)"   ng-model="form.cabang" theme="bootstrap">
+                                <ui-select ng-disabled="is_view" on_select="getkode_cabang(form)"   ng-model="form.cabang" theme="bootstrap">
                                     <ui-select-match placeholder="Cari Cabang">{{$select.selected.nama}}</ui-select-match>
                                     <ui-select-choices group-by="'group'" repeat="dokter in sCabang | filter: $select.search">
                                         <div ng-bind-html="dokter.nama | highlight: $select.search"></div>
@@ -168,7 +168,7 @@
                             <label class="col-md-2 col-sm-3 control-label">Tanggal</label>
                             <div class="col-md-2 col-sm-9">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="form.tanggal" is-open="opened1" ng-click="open1($event)"/>
+                                    <input ng-disabled="is_view" type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="form.tanggal" is-open="opened1" ng-click="open1($event)"/>
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar-o"></i>
                                     </span>
@@ -212,7 +212,7 @@
                                     <tr ng-repeat="detail in detPenjualan">
                                         <td>
                                             <div class="input-group">
-                                                <ui-select on-select="pilih(detail, $item)" ng-model="detail.produk" theme="bootstrap">
+                                                <ui-select ng-disabled="is_view" on-select="pilih(detail, $item);" ng-model="detail.produk" theme="bootstrap">
                                                     <ui-select-match placeholder="Pilih atau Cari nama produk">{{$select.selected.nama}}</ui-select-match>
                                                     <ui-select-choices refresh="cariProduk($select.search, form.cabang)" repeat="val in resultsProduk">
                                                         {{val.nama}}
@@ -222,7 +222,7 @@
                                                     </ui-select-no-choice>
                                                 </ui-select>
                                                 <span class="input-group-btn">
-                                                    <button ng-click="detail.produk = undefined" class="btn btn-default">
+                                                    <button ng-disabled="is_view" ng-click="detail.produk = undefined" class="btn btn-default">
                                                         <span class="glyphicon glyphicon-trash"></span>
                                                     </button>
                                                 </span>
@@ -231,7 +231,7 @@
                                             <table style="margin-top: 4px;" ng-show="detail.type == 'Jasa'" class="det-trans">
                                                 <tr>
                                                     <td width="65%">                                       
-                                                <ui-select  ng-model="detail.dokter" theme="bootstrap">
+                                                <ui-select ng-disabled="is_view" ng-model="detail.dokter" theme="bootstrap">
                                                     <ui-select-match placeholder="Cari nama atau nip Dokter">{{$select.selected.nama}}</ui-select-match>
                                                     <ui-select-choices group-by="'group'" repeat="dokter in list_dokter | filter: $select.search">
                                                         <div ng-bind-html="dokter.nama | highlight: $select.search"></div>
@@ -244,13 +244,13 @@
                                         <td style="width:135px;">
                                             <div class="input-group ">
                                                 <span class="input-group-addon">Rp</span>
-                                                <input type="text" class="form-control angka" ng-maxlength="15" ng-pattern="/^[0-9]+$/"   ng-model="detail.fee_dokter">
+                                                <input type="text" ng-disabled="is_view" class="form-control angka" ng-maxlength="15" ng-pattern="/^[0-9]+$/"   ng-model="detail.fee_dokter">
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                    <ui-select ng-model="detail.terapis" theme="bootstrap">
+                                    <ui-select ng-disabled="is_view" ng-model="detail.terapis" theme="bootstrap">
                                         <ui-select-match placeholder="Cari nama atau nip Terapis">{{$select.selected.nama}}</ui-select-match>
                                         <ui-select-choices group-by="'group'" repeat="terapis in list_terapis | filter: $select.search">
                                             <div ng-bind-html="terapis.nama | highlight: $select.search"></div>
@@ -263,15 +263,20 @@
                                     <td style="width:135px;">
                                         <div class="input-group " style="width:135px; margin-bottom: 1px;margin-top: 2px;">
                                             <span class="input-group-addon">Rp</span>
-                                            <input type="text" class="form-control angka" ng-maxlength="15" ng-pattern="/^[0-9]+$/"  ng-model="detail.fee_terapis">
+                                            <input type="text" ng-disabled="is_view" class="form-control angka" ng-maxlength="15" ng-pattern="/^[0-9]+$/"  ng-model="detail.fee_terapis">
                                         </div> 
                                     </td>
                                     </tr>
                                 </table>
-
+                                <ul ng-if="detail.type == 'Paket'" style="margin-top: 10px;">
+                                    <li ng-repeat="paket in listPaket" >{{paket.nama}}</li>
+                                </ul>
                                 </td>
                                 <td style="width:90px;">
                                     <input type="text" class="form-control angka" ng-maxlength="4" ng-pattern="/^[0-9]+$/" ng-change="total()"  ng-model="detail.jumlah" ng-disabled="is_view" ng-readonly="is_create == false" required>
+                                    <ul ng-if="detail.type == 'Paket'" style="margin-top: 10px; list-style: none">
+                                        <li ng-repeat="paket in listPaket">{{paket.jml * detail.jumlah}}</li>
+                                    </ul>
                                 </td>
                                 <td style="width:135px;">
                                     <input type="text" class="form-control" ng-maxlength="8"  ng-model="detail.type"  ng-disabled="true" ng-readonly="is_create == false" required>

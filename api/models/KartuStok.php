@@ -152,8 +152,8 @@ class KartuStok extends \yii\db\ActiveRecord {
                 if (isset($tmpSaldo[$vKartu['produk_id']]['harga'])) {
                     //=== MENCARI HARGA YANG SAMA PADA SALDO ===//
                     $key = array_search($vKartu['harga_masuk'], $tmpSaldo[$vKartu['produk_id']]['harga']);
-                    if ($key !== false) {
-                        //=== JIKA ADA HARGA SAMA STOK DITAMBAHKAN KE SALDO YANG SUDAH ADA====//
+                    if ($key != false && isset($tmpSaldo[$vKartu['produk_id']]['jumlah'][$key])) {
+                       //=== JIKA ADA HARGA SAMA STOK DITAMBAHKAN KE SALDO YANG SUDAH ADA====//
                         $tmpSaldo[$vKartu['produk_id']]['jumlah'][$key] += $vKartu['jumlah_masuk'];
                         $tmpSaldo[$vKartu['produk_id']]['harga'][$key] = (double) $vKartu['harga_masuk'];
                         $tmpSaldo[$vKartu['produk_id']]['sub_total'][$key] = (double) ($vKartu['harga_masuk'] * $tmpSaldo[$vKartu['produk_id']]['jumlah'][$key]);

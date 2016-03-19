@@ -223,17 +223,18 @@ class PenjualanController extends Controller {
         $detail = array();
 
         foreach ($det as $key => $val) {
-            $detail[$key] = $val->attributes;
-
-            $namaBarang = (isset($val->barang->nama)) ? $val->barang->nama : '';
-            $hargaBarang = (isset($val->barang->harga_beli_terakhir)) ? $val->barang->harga_beli_terakhir : '';
-            $jualBarang = (isset($val->barang->harga_jual)) ? $val->barang->harga_jual : '';
-            $dokter = (isset($val->dokter->nama)) ? $val->dokter->nama : '';
-            $terapis = (isset($val->terapis->nama)) ? $val->terapis->nama : '';
-            $detail[$key]['produk'] = ['id' => $val->produk_id, 'nama' => $namaBarang, 'harga_beli_terakhir' => $hargaBarang, 'harga_jual' => $jualBarang];
-            $detail[$key]['terapis'] = ['id' => $val->pegawai_terapis_id, 'nama' => $terapis];
-            $detail[$key]['dokter'] = ['id' => $val->pegawai_dokter_id, 'nama' => $dokter];
-            $detail[$key]['diskonpersen'] = ($val->harga == 0) ? 0 : ($val->diskon / $val->harga) * 100;
+            if ($val['harga'] > 0 or ( $val['harga'] > 0 and ! empty($val['paket_id']))) {
+                $detail[$key] = $val->attributes;
+                $namaBarang = (isset($val->barang->nama)) ? $val->barang->nama : '';
+                $hargaBarang = (isset($val->barang->harga_beli_terakhir)) ? $val->barang->harga_beli_terakhir : '';
+                $jualBarang = (isset($val->barang->harga_jual)) ? $val->barang->harga_jual : '';
+                $dokter = (isset($val->dokter->nama)) ? $val->dokter->nama : '';
+                $terapis = (isset($val->terapis->nama)) ? $val->terapis->nama : '';
+                $detail[$key]['produk'] = ['id' => $val->produk_id, 'nama' => $namaBarang, 'harga_beli_terakhir' => $hargaBarang, 'harga_jual' => $jualBarang];
+                $detail[$key]['terapis'] = ['id' => $val->pegawai_terapis_id, 'nama' => $terapis];
+                $detail[$key]['dokter'] = ['id' => $val->pegawai_dokter_id, 'nama' => $dokter];
+                $detail[$key]['diskonpersen'] = ($val->harga == 0) ? 0 : ($val->diskon / $val->harga) * 100;
+            }
         }
 
 
@@ -284,7 +285,32 @@ class PenjualanController extends Controller {
                 $det->pegawai_terapis_id = isset($data['terapis']['id']) ? $data['terapis']['id'] : '';
                 $det->pegawai_dokter_id = isset($data['dokter']['id']) ? $data['dokter']['id'] : '';
 
+                if ($det->type == "Paket") {
+                    $det->paket_id = $data['produk']['id'];
+                }
+
                 if ($det->save()) {
+
+                    if ($det->type == 'Paket') {
+                        $sPaket = \app\models\PaketDet::find()->where('paket_id=' . $det->produk_id)->all();
+                        foreach ($sPaket as $vPaket) {
+                            $detPaket = new PenjualanDet();
+                            $detPaket->penjualan_id = $model->id;
+                            $detPaket->produk_id = $vPaket->barang_id;
+                            $detPaket->jumlah = $vPaket->jml;
+                            $detPaket->type = 'Paket';
+                            $detPaket->harga = 0;
+                            $detPaket->paket_id = $data['produk']['id'];
+                            $detPaket->save();
+
+                            if ($model->status == 'Selesai') {
+                                $keterangan = 'penjualan';
+                                $stok = new \app\models\KartuStok();
+                                $update = $stok->process('out', $model->tanggal, $model->kode, $detPaket->produk_id, $detPaket->jumlah, $model->cabang_id, $detPaket->harga, $keterangan, $model->id);
+                            }
+                        }
+                    }
+
                     //======== AKTIFKAN JIKA HARGA PER CABANG BERBEDA ===========//
                     //======== SIMPAN HARGA JUAL BARU ============//
 //                    $harga = \app\models\Harga::find()->where('cabang_id="' . $model->cabang_id . '" and produk_id="' . $det->produk_id . '"')->one();
