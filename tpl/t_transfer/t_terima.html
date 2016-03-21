@@ -1,0 +1,237 @@
+<div ng-controller="terimaCtrl">
+    <div class="bg-light lter b-b wrapper-md">
+        <h1 class="m-n font-thin h3">Transfer - Terima Barang</h1>
+    </div>
+    <div class="wrapper-md" ng-show="!is_edit">
+        <div class="panel panel-default" st-pipe="callServer" st-table="displayed">
+            <div class="panel-heading">
+                <button class="btn btn-default btn-xs" ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed">Pencarian</button>
+                <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
+                    <button type="button" class="btn btn-primary fa fa-plus-square-o" ng-click="create();">&nbsp;Tambah Data</button>
+                </div> 
+            </div>
+            <div collapse="isCollapsed" class="panel-body collapse" style="height: 0px;">
+                <div class="form-horizontal">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Nota</label>
+                            <div class="col-sm-9">
+                                <input st-search="nota" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Periode</label>
+                            <div class="col-sm-9">
+                                <input st-search="tgl_transfer" class="form-control" date-range-picker ng-model="tanggal">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Asal Barang</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" st-search="kirim.id">
+                                    <option value="">.: Pilih Asal Barang :.</option>
+                                    <option value="c.id" ng-repeat="c in sCabang">{{c.nama}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Tujuan Barang</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" st-search="terima.id">
+                                    <option value="">.: Pilih Tujuan Barang :.</option>
+                                    <option value="l.id" ng-repeat="l in lCabang">{{l.nama}}</option>
+                                </select> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover" >
+                    <thead>
+                        <tr>
+                            <th st-sort="kode">Kode</th>
+                            <th st-sort="kirim.nama">Gudang</th>
+                            <th st-sort="terima.nama">Cabang Tujuan</th>
+                            <th st-sort="tgl_transfer">Tanggal Transfer</th>
+                            <th st-sort="m_user.nama">Petugas</th>
+                            <th st-sort="tgl_terima">Tanggal Konfirmasi</th>
+                            <th st-sort="penerima.nama">Konfirmasi Oleh</th>
+                            <th st-sort="status">Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody ng-show="!isLoading">
+                        <tr ng-repeat="row in displayed" ng-dblclick="view(row)">
+                            <td>{{row.nota}}</td>
+                            <td>{{row.gudang}}</td>
+                            <td>{{row.cabang}}</td>
+                            <td>{{row.tgl_transfer| date:'medium'}}</td>
+                            <td>{{row.pengirim}}</td>
+                            <td ng-if="row.tgl_terima != '0000-00-00 00:00:00'">{{row.tgl_terima| date:'medium'}}</td>
+                            <td ng-if="row.tgl_terima == '0000-00-00 00:00:00'">{{'-'}}</td>
+                            <td>{{row.penerima}}</td>
+                            <td>
+                                <span class="badge bg-success" ng-if="row.status == 'accept'">Accepted</span>
+                                <span class="badge bg-info" ng-if="row.status == 'pending'">Pending</span>
+                                <span class="badge bg-danger" ng-if="row.status == 'reject'">Rejected</span>
+                            </td>
+                            <td>
+                                <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
+                                    <button type="button" class="btn btn-success fa fa-check" ng-click="update(row)" ng-show="row.status == 'pending'"></button>
+                                </div> 
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-show="isLoading">
+                        <tr>
+                            <td colspan="9" class="text-center">Loading ... </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="9" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html"></td>
+                        </tr>
+                </table>		
+            </div>
+        </div>
+    </div>
+
+    <!--FORM-->
+
+    <div class="wrapper-md" ng-show="is_edit">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {{formtitle}} 
+            </div>
+            <div class="panel-body">
+                <form name="landaform" class="form-horizontal form-validation" novalidate>
+                    <div class="row">
+                        <div class='col-md-12'>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Nota</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" ng-model="form.nota" ng-disabled="true" required>
+                                </div>
+                                <label class="col-md-2 control-label">Tanggal Transfer</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <input ng-disabled="true" type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="form.tgl_transfer" is-open="opened1" ng-click="open1($event)"/>
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar-o"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Asal Barang</label>
+                                <div class="col-sm-4">
+                                    <ui-select ng-disabled="true" ng-model="form.gudang" theme="bootstrap">
+                                        <ui-select-match placeholder="Cari Cabang">{{$select.selected.nama}}</ui-select-match>
+                                        <ui-select-choices group-by="'group'" repeat="cabang in sCabang | filter: $select.search">
+                                            <div ng-bind-html="cabang.nama | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>  
+                                </div>
+                                <label class="col-sm-2 control-label">Tujuan Barang</label>
+                                <div class="col-sm-4">
+                                    <ui-select ng-disabled="true" ng-model="form.tujuan" theme="bootstrap">
+                                        <ui-select-match placeholder="Cari Cabang">{{$select.selected.nama}}</ui-select-match>
+                                        <ui-select-choices group-by="'group'" repeat="cabang in lCabang | filter: $select.search">
+                                            <div ng-bind-html="cabang.nama | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>   
+                                </div>
+                            </div>
+                            <div ng-if='form.status != "pending"'>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Konfirmasi Oleh</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" ng-model="form.konfirmasi" ng-disabled="true" required>
+                                    </div>
+                                    <label class="col-sm-1 control-label">Tanggal</label>
+                                    <div class="col-sm-3">
+                                        <div class="input-group">
+                                            <input ng-disabled="true" type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="form.tgl_terima" is-open="opened1" ng-click="open1($event)"/>
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-calendar-o"></i>
+                                            </span>
+                                        </div> 
+                                    </div>
+                                    <label class="col-sm-1 control-label">Status</label>
+                                    <div class="col-sm-1">
+                                        <label class="btn btn-success" ng-model="form.status" ng-if="form.status == 'accept'" ng-disabled='true'>Accept</label>
+                                        <label class="btn btn-info" ng-model="form.status" ng-if="form.status == 'pending'" ng-disabled='true'>Pending</label>
+                                        <label class="btn btn-danger" ng-model="form.status" ng-if="form.status == 'reject'" ng-disabled='true'>Reject</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5 class="font-bold">- Detail Barang</h5> 
+                            <table class="table table-bordered det-trans">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center;">Barang</th>
+                                        <th style="text-align: center; width: 50px;">Jumlah</th>
+                                        <th style="text-align: center; width: 150px;">Harga</th>
+                                        <th style="text-align: center; width: 200px;">Total</th>
+                                        <th style="text-align: center; width:20px; padding:0px;" ng-hide="true">
+                                            <button ng-click="addDetail()" class="btn btn-success" ng-disabled="true" style="width: 100%">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="detail in detTransfer" style="margin:0px;padding:0px;">
+                                        <td>
+                                            <div class="input-group">
+                                                <ui-select ng-disabled="true" ng-model="detail.produk" on-select="detail.harga = detail.produk.harga_jual" theme="bootstrap">
+                                                    <ui-select-match>{{$select.selected.nama}}</ui-select-match>
+                                                    <ui-select-choices refresh="cariProduk($select.search)" repeat="val in results">
+                                                        {{val.nama}}
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                                <span class="input-group-btn">
+                                                    <button ng-click="detail.produk = undefined" class="btn btn-default" ng-disabled="true">
+                                                        <span class="glyphicon glyphicon-trash"></span>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td style="width:50px">
+                                            <input type="text" class="form-control angka" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="subtotal()"  ng-model="detail.jumlah" ng-disabled="true" ng-readonly="is_create == false" required>
+                                        </td>
+                                        <th style="text-align: right">{{detail.harga| number}}</th>
+                                        <th style="text-align: right">{{detail.harga * detail.jumlah| number}}</th>
+                                        <td style="width:20px;text-align: center; margin:0px;" ng-hide="true">
+                                            <button ng-click="removeRow($index)" title="Hapus Data" class="btn btn-danger" ng-disabled="true" style="width: 100%"><i class="fa fa-trash-o"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align: right;" colspan="3">Total :&nbsp;</th>
+                                        <th style="text-align: right">
+                                            {{form.total| number}}
+                                        </th>
+                                        <td ng-hide="true"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div align="center">
+                        <button type="submit" class="btn btn-default  fa fa-arrow-circle-o-left" ng-click="cancel()">&nbsp;Back</button>
+                        <button type="submit" class="btn btn-success  fa fa-check" ng-hide="is_view" ng-click="save(form, detTransfer, 'accept')">&nbsp;Accept</button>
+                        <button type="submit" class="btn btn-danger  fa fa-times" ng-hide="is_view" ng-click="save(form, detTransfer, 'reject')">&nbsp;reject</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

@@ -76,6 +76,8 @@ class KartuStok extends \yii\db\ActiveRecord {
             $criteria .= ' and r_penjualan_id = ' . $trans_id;
         } elseif ($keterangan == "r_pembelian") {
             $criteria .= ' and r_pembelian_id = ' . $trans_id;
+        } elseif ($keterangan == "transfer") {
+            $criteria .= ' and transfer_id = ' . $trans_id;
         }
 
         KartuStok::deleteAll("keterangan = '" . $keterangan . "' $criteria");
@@ -96,6 +98,8 @@ class KartuStok extends \yii\db\ActiveRecord {
             $sv->r_penjualan_id = $trans_id;
         } elseif ($keterangan == "r_pembelian") {
             $sv->r_pembelian_id = $trans_id;
+        } elseif ($keterangan == "transfer") {
+            $sv->transfer_id = $trans_id;
         }
 
         $sv->created_at = $date . " " . date("H:i:s");
@@ -153,7 +157,7 @@ class KartuStok extends \yii\db\ActiveRecord {
                     //=== MENCARI HARGA YANG SAMA PADA SALDO ===//
                     $key = array_search($vKartu['harga_masuk'], $tmpSaldo[$vKartu['produk_id']]['harga']);
                     if ($key != false && isset($tmpSaldo[$vKartu['produk_id']]['jumlah'][$key])) {
-                       //=== JIKA ADA HARGA SAMA STOK DITAMBAHKAN KE SALDO YANG SUDAH ADA====//
+                        //=== JIKA ADA HARGA SAMA STOK DITAMBAHKAN KE SALDO YANG SUDAH ADA====//
                         $tmpSaldo[$vKartu['produk_id']]['jumlah'][$key] += $vKartu['jumlah_masuk'];
                         $tmpSaldo[$vKartu['produk_id']]['harga'][$key] = (double) $vKartu['harga_masuk'];
                         $tmpSaldo[$vKartu['produk_id']]['sub_total'][$key] = (double) ($vKartu['harga_masuk'] * $tmpSaldo[$vKartu['produk_id']]['jumlah'][$key]);

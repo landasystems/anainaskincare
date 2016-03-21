@@ -135,9 +135,25 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-sm-4">
+                    <div class="m-l-xs m-t-xs m-b-xs font-bold">Transfer Barang</div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <ul class="list-unstyled l-h-2x">
+                                <li ng-show="user.akses.transaksi_kirimbarang">
+                                    <a ui-sref='transaksi.kirimbarang'><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Kirim Barang</a>
+                                </li>
+                                <li ng-show="user.akses.transaksi_terimabarang">
+                                    <a ui-sref='transaksi.terimabarang'><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Terima Barang</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
+                </div>
+            </div>
         </li>
-        
+
         <li class="dropdown" dropdown>
             <a href class="dropdown-toggle" dropdown-toggle>
                 <i class="glyphicon glyphicon-print icon text-info-lter"></i> 

@@ -107,7 +107,7 @@
     <!--FORM-->
 
     <div class="wrapper-md" ng-if="is_edit">
-        <form name="landaform" class="form-horizontal form-validation ">
+        <form name="landaform" class="form-horizontal form-validation">
             <div class="col-sm-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -166,7 +166,7 @@
                         <div class="form-group">
                             <label class="col-md-2 col-sm-3 control-label">Cabang</label>
                             <div class="col-md-3 col-sm-9">
-                                <ui-select ng-disabled="is_view" on_select="getkode_cabang(form)"   ng-model="form.cabang" theme="bootstrap">
+                                <ui-select ng-disabled="is_view" on-select="getkode_cabang(form)"   ng-model="form.cabang" theme="bootstrap">
                                     <ui-select-match placeholder="Cari Cabang">{{$select.selected.nama}}</ui-select-match>
                                     <ui-select-choices group-by="'group'" repeat="dokter in sCabang | filter: $select.search">
                                         <div ng-bind-html="dokter.nama | highlight: $select.search"></div>
