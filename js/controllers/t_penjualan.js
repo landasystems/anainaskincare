@@ -35,7 +35,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
 
         });
         form.print = form.print * 1 + 1;
-    }
+    };
 
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
@@ -80,6 +80,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         $scope.form.tanggal = new Date();
         $scope.form.is_deleted = 0;
     };
+    
     $scope.update = function (row) {
         $scope.is_edit = true;
         $scope.is_view = false;
@@ -88,8 +89,8 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         $scope.form = row;
         $scope.selected(row.id);
         $scope.form.tanggal = new Date(row.tanggal);
-
     };
+    
     $scope.view = function (row) {
         $scope.is_edit = true;
         $scope.is_view = true;
@@ -154,7 +155,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         Data.get('penjualan', paramRef).then(function (data) {
             window.location = 'api/web/penjualan/excel';
         });
-    }
+    };
 
     $scope.cariProduk = function ($query, $cabang) {
         if ($query.length >= 3) {
@@ -162,14 +163,14 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
                 $scope.resultsProduk = data.data;
             });
         }
-    }
+    };
     $scope.cariCustomer = function ($query) {
         if ($query.length >= 3) {
             Data.get('customer/cari', {nama: $query}).then(function (data) {
                 $scope.results = data.data;
             });
         }
-    }
+    };
     //retrive lebih dari 1 tabel
     $scope.pilihCustomer = function (form, $item) {
         form.kode_cust = $item.kode;
@@ -181,7 +182,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             $scope.form.kode_cust = 'Generate Otomatis';
             $scope.tagCust = false;
         }
-    }
+    };
     $scope.pilih = function (detail, $item) {
         detail.harga = ($item.harga_jual != null) ? $item.harga_jual : 0;
         detail.type = $item.type;
@@ -192,10 +193,10 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
 
         if (detail.type == 'Paket' && $scope.is_create == true) {
             Data.get('barang/getpaket/' + $item.id).then(function (data) {
-                $scope.listPaket = data.data;
+                detail.listPaket = data.data;
             });
         }
-    }
+    };
     $scope.getproduk = function (detail) {
         $scope.detail = detail;
         Data.get('penjualan/det_produk/' + detail.produk_id).then(function (data) {
@@ -225,7 +226,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
                 detail.diskon = (detail.diskon != null) ? detail.diskon : 0;
                 if (detail.type == 'Paket') {
                     Data.get('barang/getpaket/' + detail.produk_id).then(function (data) {
-                        $scope.listPaket = data.data;
+                        detail.listPaket = data.data;
                     });
                 }
             });

@@ -238,9 +238,28 @@ class PenjualanController extends Controller {
             }
         }
 
+        $query = new Query;
+        $query->from('penjualan_det as pd')
+                ->join('Left JOIN', 'm_produk as mp', 'pd.produk_id = mp.id')
+                ->select('mp.nama, mp.id as barang_id, pd.*')
+                ->orderBy('pd.id ASC')
+                ->andWhere('pd.penjualan_id = ' . $id);
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+
+        foreach ($models as $key => $val) {
+            $listPaket[$key] = $val;
+            if ($val['type'] == "Paket" and empty($val['harga'])) {
+                $nama = ' - ' . $val['nama'];
+            } else {
+                $nama = $val['nama'];
+            }
+            $listPaket[$key]['produk'] = array('id' => $val['barang_id'], 'nama' => $nama);
+        }
+
 
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'data' => $data, 'detail' => $detail, 'terapis' => $listterapis, 'dokter' => $listdokter), JSON_PRETTY_PRINT);
+        echo json_encode(array('status' => 1, 'data' => $data, 'detail' => $detail, 'terapis' => $listterapis, 'dokter' => $listdokter, 'detailPaket' => $listPaket), JSON_PRETTY_PRINT);
     }
 
     public function actionCreate() {
