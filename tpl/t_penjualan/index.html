@@ -283,13 +283,13 @@
                                     </tr>
                                 </table>
                                 <ul ng-if="detail.type == 'Paket'" style="margin-top: 10px;">
-                                    <li ng-repeat="paket in listPaket" >{{paket.nama}}</li>
+                                    <li ng-repeat="paket in detail.listPaket" >{{paket.nama}}</li>
                                 </ul>
                                 </td>
                                 <td style="width:90px;">
                                     <input type="text" class="form-control angka" ng-maxlength="4" ng-pattern="/^[0-9]+$/" ng-change="total()"  ng-model="detail.jumlah" ng-disabled="is_view" ng-readonly="is_create == false" required>
                                     <ul ng-if="detail.type == 'Paket'" style="margin-top: 10px; list-style: none">
-                                        <li ng-repeat="paket in listPaket">{{paket.jml * detail.jumlah}}</li>
+                                        <li ng-repeat="paket in detail.listPaket">{{paket.jml * detail.jumlah}}</li>
                                     </ul>
                                 </td>
                                 <td style="width:135px;">
@@ -458,8 +458,13 @@
                     <td colspan="3" id="print" stlye="line-height: 22px;">
                         {{detail.produk.nama| uppercase}} 
                         <div ng-if="detail.type == 'Jasa'" id="print" style="line-height: 9px;">
-                            <p id="print" style="line-height: 22px;margin:0px;padding: 0px;" ng-if="detail.terapis.nama != ''">-Terapis : {{detail.terapis.nama}}</p>
-                            <p id="print" style="line-height: 22px;margin:0px;padding: 0px;" ng-if="detail.dokter.nama != ''">-Dokter : {{detail.dokter.nama}}</p>
+                            <p id="print" style="line-height: 22px;margin:0px;padding: 0px;" ng-if="detail.terapis.nama != ''">- Terapis : {{detail.terapis.nama}}</p>
+                            <p id="print" style="line-height: 22px;margin:0px;padding: 0px;" ng-if="detail.dokter.nama != ''">- Dokter : {{detail.dokter.nama}}</p>
+                        </div>
+                        <div ng-if="detail.type == 'Paket'" id="print" style="margin: 0px;padding: 0px">
+                            <ul ng-if="detail.type == 'Paket'" style="margin: 0px;padding: 0px; list-style: none">
+                                <li ng-repeat="paket in detail.listPaket" >- {{paket.nama}} ({{paket.jml}})</li>
+                            </ul>
                         </div>
                     </td>
                 </tr>

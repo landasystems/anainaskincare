@@ -76,8 +76,6 @@ class KartuStok extends \yii\db\ActiveRecord {
             $criteria .= ' and r_penjualan_id = ' . $trans_id;
         } elseif ($keterangan == "r_pembelian") {
             $criteria .= ' and r_pembelian_id = ' . $trans_id;
-        } elseif ($keterangan == "transfer") {
-            $criteria .= ' and transfer_id = ' . $trans_id;
         }
 
         KartuStok::deleteAll("keterangan = '" . $keterangan . "' $criteria");
@@ -98,8 +96,6 @@ class KartuStok extends \yii\db\ActiveRecord {
             $sv->r_penjualan_id = $trans_id;
         } elseif ($keterangan == "r_pembelian") {
             $sv->r_pembelian_id = $trans_id;
-        } elseif ($keterangan == "transfer") {
-            $sv->transfer_id = $trans_id;
         }
 
         $sv->created_at = $date . " " . date("H:i:s");
@@ -155,23 +151,23 @@ class KartuStok extends \yii\db\ActiveRecord {
                 //========= AMBIL ARRAY SALDO SEBELUMNYA JIKA ADA ======//
                 if (isset($tmpSaldo[$vKartu['produk_id']]['harga'])) {
                     //=== MENCARI HARGA YANG SAMA PADA SALDO ===//
-                    $key = array_search($vKartu['harga_masuk'], $tmpSaldo[$vKartu['produk_id']]['harga']);
-                    if ($key != false && isset($tmpSaldo[$vKartu['produk_id']]['jumlah'][$key])) {
+                    $key3 = array_search($vKartu['harga_masuk'], $tmpSaldo[$vKartu['produk_id']]['harga']);
+                    if ($key) {
                         //=== JIKA ADA HARGA SAMA STOK DITAMBAHKAN KE SALDO YANG SUDAH ADA====//
-                        $tmpSaldo[$vKartu['produk_id']]['jumlah'][$key] += $vKartu['jumlah_masuk'];
-                        $tmpSaldo[$vKartu['produk_id']]['harga'][$key] = (double) $vKartu['harga_masuk'];
-                        $tmpSaldo[$vKartu['produk_id']]['sub_total'][$key] = (double) ($vKartu['harga_masuk'] * $tmpSaldo[$vKartu['produk_id']]['jumlah'][$key]);
+                        $tmpSaldo[$vKartu['produk_id']]['jumlah'][$key3] += $vKartu['jumlah_masuk'];
+                        $tmpSaldo[$vKartu['produk_id']]['harga'][$key3] = (double) $vKartu['harga_masuk'];
+                        $tmpSaldo[$vKartu['produk_id']]['sub_total'][$key3] = (double) ($vKartu['harga_masuk'] * $tmpSaldo[$vKartu['produk_id']]['jumlah'][$key3]);
                     } else {
                         //=== JIKA TIDAK ADA HARGA YANG SAMA SALDO DITAMBAHKAN ===//
                         $tmpSaldo[$vKartu['produk_id']]['jumlah'][] = (double) $vKartu['jumlah_masuk'];
                         $tmpSaldo[$vKartu['produk_id']]['harga'][] = (double) $vKartu['harga_masuk'];
-                        $tmpSaldo[$vKartu['produk_id']]['harga'][] = (double) ($vKartu['harga_masuk'] * $vKartu['jumlah_masuk']);
+                        $tmpSaldo[$vKartu['produk_id']]['sub_total'][] = (double) ($vKartu['harga_masuk'] * $vKartu['jumlah_masuk']);
                     }
                 } else {
                     //=== JIKA TIDAK ADA SALDO SEBELUMNYA BUAT SALDO BARU ===//
                     $tmpSaldo[$vKartu['produk_id']]['jumlah'][] = (double) $vKartu['jumlah_masuk'];
                     $tmpSaldo[$vKartu['produk_id']]['harga'][] = (double) $vKartu['harga_masuk'];
-                    $tmpSaldo[$vKartu['produk_id']]['harga'][] = (double) ($vKartu['harga_masuk'] * $vKartu['jumlah_masuk']);
+                    $tmpSaldo[$vKartu['produk_id']]['sub_total'][] = (double) ($vKartu['harga_masuk'] * $vKartu['jumlah_masuk']);
                 }
             } else {
                 if (isset($tmpSaldo[$vKartu['produk_id']])) {
@@ -211,7 +207,7 @@ class KartuStok extends \yii\db\ActiveRecord {
 
             $body[$vKartu['produk_id']]['jumlah'] = isset($tmpSaldo[$vKartu['produk_id']]['jumlah']) ? $tmpSaldo[$vKartu['produk_id']]['jumlah'] : array();
             $body[$vKartu['produk_id']]['harga'] = isset($tmpSaldo[$vKartu['produk_id']]['harga']) ? $tmpSaldo[$vKartu['produk_id']]['harga'] : array();
-            $body[$vKartu['produk_id']]['harga'] = isset($tmpSaldo[$vKartu['produk_id']]['sub_total']) ? $tmpSaldo[$vKartu['produk_id']]['sub_total'] : array();
+            $body[$vKartu['produk_id']]['sub_total'] = isset($tmpSaldo[$vKartu['produk_id']]['sub_total']) ? $tmpSaldo[$vKartu['produk_id']]['sub_total'] : array();
         }
 
         return $body;

@@ -36,9 +36,41 @@ class PenjualanController extends Controller {
                     'dokter' => ['post'],
                     'terapis' => ['post'],
                     'saveprint' => ['post'],
+                    'getpaket' => ['post'],
                 ],
             ]
         ];
+    }
+
+    public function actionGetpaket() {
+        $listPaket = array();
+        $params = json_decode(file_get_contents("php://input"), true);
+        $id = isset($params['paket_id']) ? $params['paket_id'] : '';
+        $penjualan = isset($params['penjualan_id']) ? $params['penjualan_id'] : '';
+
+        $query = new Query;
+        $query->from('penjualan_det as pd')
+                ->join('Left JOIN', 'm_produk as mp', 'pd.produk_id = mp.id')
+                ->select('mp.nama, mp.id as barang_id, pd.*')
+                ->where('pd.paket_id = ' . $id)
+                ->orderBy('pd.id ASC')
+                ->andWhere('pd.penjualan_id = ' . $penjualan);
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+
+        $total = 0;
+        $jml = 1;
+        foreach ($models as $key => $val) {
+            if (empty($val['harga'])) {
+                $listPaket[$key] = $val;
+                $listPaket[$key]['produk'] = array('id' => $val['barang_id'], 'nama' => $val['nama']);
+                $listPaket[$key]['jml'] = $val['jumlah'] / $jml;
+            } else {
+                $jml = $val['jumlah'];
+            }
+        }
+
+        echo json_encode(array('status' => 1, 'data' => $listPaket, 'total' => $total), JSON_PRETTY_PRINT);
     }
 
     public function beforeAction($event) {
@@ -220,7 +252,6 @@ class PenjualanController extends Controller {
                 ->where(['penjualan_id' => $model['id']])
                 ->all();
 
-
         $detail = array();
 
         foreach ($det as $key => $val) {
@@ -238,28 +269,27 @@ class PenjualanController extends Controller {
             }
         }
 
-        $query = new Query;
-        $query->from('penjualan_det as pd')
-                ->join('Left JOIN', 'm_produk as mp', 'pd.produk_id = mp.id')
-                ->select('mp.nama, mp.id as barang_id, pd.*')
-                ->orderBy('pd.id ASC')
-                ->andWhere('pd.penjualan_id = ' . $id);
-        $command = $query->createCommand();
-        $models = $command->queryAll();
-
-        foreach ($models as $key => $val) {
-            $listPaket[$key] = $val;
-            if ($val['type'] == "Paket" and empty($val['harga'])) {
-                $nama = ' - ' . $val['nama'];
-            } else {
-                $nama = $val['nama'];
-            }
-            $listPaket[$key]['produk'] = array('id' => $val['barang_id'], 'nama' => $nama);
-        }
-
+//        $query = new Query;
+//        $query->from('penjualan_det as pd')
+//                ->join('Left JOIN', 'm_produk as mp', 'pd.produk_id = mp.id')
+//                ->select('mp.nama, mp.id as barang_id, pd.*')
+//                ->orderBy('pd.id ASC')
+//                ->andWhere('pd.penjualan_id = ' . $id);
+//        $command = $query->createCommand();
+//        $models = $command->queryAll();
+//
+//        foreach ($models as $key => $val) {
+//            $listPaket[$key] = $val;
+//            if ($val['type'] == "Paket" and empty($val['harga'])) {
+//                $nama = ' - ' . $val['nama'];
+//            } else {
+//                $nama = $val['nama'];
+//            }
+//            $listPaket[$key]['produk'] = array('id' => $val['barang_id'], 'nama' => $nama);
+//        }
 
         $this->setHeader(200);
-        echo json_encode(array('status' => 1, 'data' => $data, 'detail' => $detail, 'terapis' => $listterapis, 'dokter' => $listdokter, 'detailPaket' => $listPaket), JSON_PRETTY_PRINT);
+        echo json_encode(array('status' => 1, 'data' => $data, 'detail' => $detail, 'terapis' => $listterapis, 'dokter' => $listdokter), JSON_PRETTY_PRINT);
     }
 
     public function actionCreate() {
@@ -317,7 +347,7 @@ class PenjualanController extends Controller {
                             $detPaket = new PenjualanDet();
                             $detPaket->penjualan_id = $model->id;
                             $detPaket->produk_id = $vPaket->barang_id;
-                            $detPaket->jumlah = $vPaket->jml;
+                            $detPaket->jumlah = $vPaket->jml * $det->jumlah;
                             $detPaket->type = 'Paket';
                             $detPaket->harga = 0;
                             $detPaket->paket_id = $data['produk']['id'];
@@ -418,6 +448,27 @@ class PenjualanController extends Controller {
                 $det->pegawai_dokter_id = isset($val['dokter']['id']) ? $val['dokter']['id'] : null;
                 $det->penjualan_id = $model->id;
                 if ($det->save()) {
+                    if ($det->type == 'Paket') {
+                        $delDet = PenjualanDet::deleteAll('penjualan_id = ' . $model->id . ' and paket_id = ' . $det->produk_id . ' and harga > 0');
+                        $sPaket = \app\models\PaketDet::find()->where('paket_id=' . $det->produk_id)->all();
+                        foreach ($sPaket as $vPaket) {
+                            $detPaket = new PenjualanDet();
+                            $detPaket->penjualan_id = $model->id;
+                            $detPaket->produk_id = $vPaket->barang_id;
+                            $detPaket->jumlah = $vPaket->jml * $det->jumlah;
+                            $detPaket->type = 'Paket';
+                            $detPaket->harga = 0;
+                            $detPaket->paket_id = $data['produk']['id'];
+                            $detPaket->save();
+
+                            if ($model->status == 'Selesai') {
+                                $keterangan = 'penjualan';
+                                $stok = new \app\models\KartuStok();
+                                $update = $stok->process('out', $model->tanggal, $model->kode, $detPaket->produk_id, $detPaket->jumlah, $model->cabang_id, $detPaket->harga, $keterangan, $model->id);
+                            }
+                        }
+                    }
+
                     //======== AKTIFKAN JIKA HARGA PER CABANG BERBEDA ===========//
                     //======== SIMPAN HARGA JUAL BARU ============//
 //                    $harga = \app\models\Harga::find()->where('cabang_id="' . $model->cabang_id . '" and produk_id="' . $det->produk_id . '"')->one();

@@ -80,7 +80,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         $scope.form.tanggal = new Date();
         $scope.form.is_deleted = 0;
     };
-    
+
     $scope.update = function (row) {
         $scope.is_edit = true;
         $scope.is_view = false;
@@ -90,7 +90,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         $scope.selected(row.id);
         $scope.form.tanggal = new Date(row.tanggal);
     };
-    
+
     $scope.view = function (row) {
         $scope.is_edit = true;
         $scope.is_view = true;
@@ -225,7 +225,11 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             angular.forEach($scope.detPenjualan, function (detail) {
                 detail.diskon = (detail.diskon != null) ? detail.diskon : 0;
                 if (detail.type == 'Paket') {
-                    Data.get('barang/getpaket/' + detail.produk_id).then(function (data) {
+                    var data = {
+                        paket_id: detail.paket_id,
+                        penjualan_id: id,
+                    }
+                    Data.post('penjualan/getpaket/', data).then(function (data) {
                         detail.listPaket = data.data;
                     });
                 }

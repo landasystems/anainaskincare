@@ -82,7 +82,7 @@ class LaporanpenjualanController extends Controller {
                 ->join('LEFT JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
                 ->join('LEFT JOIN', 'm_produk', 'penjualan_det.produk_id = m_produk.id')
                 ->join('LEFT JOIN', 'm_user', 'penjualan.created_by = m_user.id')
-                ->orderBy('penjualan.tanggal ASC, penjualan_det.paket_id ASC, penjualan_det.harga DESC')
+                ->orderBy('penjualan.tanggal ASC, penjualan_det.id ASC')
                 ->select('m_user.nama as kasir, penjualan.id as id_penjualan, penjualan.tanggal, penjualan.kode, penjualan.cash, penjualan.credit, penjualan.atm, m_customer.nama as customer, m_produk.nama as produk, penjualan_det.jumlah, penjualan_det.harga, penjualan_det.diskon, penjualan_det.sub_total, penjualan_det.type');
 
         if (isset($param['filter'])) {
@@ -175,7 +175,7 @@ class LaporanpenjualanController extends Controller {
             $data[$indek]['kasir'] = empty($val['kasir']) ? '-' : $val['kasir'];
 
             if ($val['type'] == "Paket" && $val['harga'] == 0) {
-                $produk = '- '.strtoupper($val['produk']);
+                $produk = ' &nbsp;&nbsp - ' . strtoupper($val['produk']);
                 $harga = '';
                 $diskon = '';
                 $subT = '';
