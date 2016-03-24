@@ -1,59 +1,767 @@
-2015-06-19 10:33:11 [127.0.0.1][-][-][error][application] [
-    'id' => '4099',
-    'nama' => ' Lubabah ',
-    'is_deleted' => 1,
-]
-    in /var/www/anainaskincare/api/controllers/RolesController.php:132
-2015-06-19 10:33:11 [127.0.0.1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Trying to get property of non-object' in /var/www/anainaskincare/api/controllers/RolesController.php:133
+2015-12-09 08:53:20 [127.0.0.1][-][-][error][yii\base\ErrorException:2] exception 'yii\base\ErrorException' with message 'Invalid argument supplied for foreach()' in /var/www/anainaskincare/api/controllers/LaporanController.php:298
 Stack trace:
-#0 /var/www/anainaskincare/api/controllers/RolesController.php(133): yii\base\ErrorHandler->handleError(8, 'Trying to get p...', '/var/www/anaina...', 133, Array)
-#1 [internal function]: app\controllers\RolesController->actionUpdate('4099')
+#0 /var/www/anainaskincare/api/controllers/LaporanController.php(298): yii\base\ErrorHandler->handleError(2, 'Invalid argumen...', '/var/www/anaina...', 298, Array)
+#1 [internal function]: app\controllers\LaporanController->actionKartustok()
 #2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
 #3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
-#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('update', Array)
-#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('roles/update', Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('kartustok', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('laporan/kartust...', Array)
 #6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
 #7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
 #8 {main}
-2015-06-19 10:33:11 [127.0.0.1][-][-][info][application] $_GET = [
-    'id' => '4099'
+2015-12-09 08:53:20 [127.0.0.1][-][-][info][application] $_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    'PHPSESSID' => 'chp6f4cfqfieq845ka1fkg2571'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '539'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.73 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; PHPSESSID=chp6f4cfqfieq845ka1fkg2571'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '58300'
+    'REDIRECT_URL' => '/anainaskincare/api/web/laporan/kartustok/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/laporan/kartustok/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1449626000.336
+    'REQUEST_TIME' => 1449626000
+]
+2015-12-09 09:04:00 [127.0.0.1][-][-][error][yii\base\ErrorException:2] exception 'yii\base\ErrorException' with message 'Invalid argument supplied for foreach()' in /var/www/anainaskincare/api/controllers/LaporanController.php:298
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/LaporanController.php(298): yii\base\ErrorHandler->handleError(2, 'Invalid argumen...', '/var/www/anaina...', 298, Array)
+#1 [internal function]: app\controllers\LaporanController->actionKartustok()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('kartustok', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('laporan/kartust...', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2015-12-09 09:04:00 [127.0.0.1][-][-][info][application] $_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    'PHPSESSID' => 'chp6f4cfqfieq845ka1fkg2571'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '539'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.73 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; PHPSESSID=chp6f4cfqfieq845ka1fkg2571'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '58340'
+    'REDIRECT_URL' => '/anainaskincare/api/web/laporan/kartustok/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/laporan/kartustok/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1449626640.749
+    'REQUEST_TIME' => 1449626640
+]
+2015-12-17 10:38:27 [127.0.0.1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined index: kategori_id' in /var/www/anainaskincare/api/controllers/LaporanController.php:618
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/LaporanController.php(618): yii\base\ErrorHandler->handleError(8, 'Undefined index...', '/var/www/anaina...', 618, Array)
+#1 [internal function]: app\controllers\LaporanController->actionKartustok()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('kartustok', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('laporan/kartust...', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2015-12-17 10:38:27 [127.0.0.1][-][-][info][application] $_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    'PHPSESSID' => 'chp6f4cfqfieq845ka1fkg2571'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '105'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; PHPSESSID=chp6f4cfqfieq845ka1fkg2571'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '53267'
+    'REDIRECT_URL' => '/anainaskincare/api/web/laporan/kartustok/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/laporan/kartustok/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1450323507.201
+    'REQUEST_TIME' => 1450323507
+]
+2015-12-17 10:39:51 [127.0.0.1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined index: supplier' in /var/www/anainaskincare/api/controllers/PembelianController.php:180
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/PembelianController.php(180): yii\base\ErrorHandler->handleError(8, 'Undefined index...', '/var/www/anaina...', 180, Array)
+#1 [internal function]: app\controllers\PembelianController->actionCreate()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('create', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('pembelian/creat...', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2015-12-17 10:39:51 [127.0.0.1][-][-][info][application] $_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    'PHPSESSID' => 'chp6f4cfqfieq845ka1fkg2571'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '779'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; PHPSESSID=chp6f4cfqfieq845ka1fkg2571'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '53280'
+    'REDIRECT_URL' => '/anainaskincare/api/web/pembelian/create'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/pembelian/create'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1450323591.712
+    'REQUEST_TIME' => 1450323591
+]
+2015-12-17 13:56:48 [127.0.0.1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined variable: body' in /var/www/anainaskincare/api/controllers/LaporanController.php:800
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/LaporanController.php(800): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', '/var/www/anaina...', 800, Array)
+#1 [internal function]: app\controllers\LaporanController->actionKartustok()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('kartustok', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('laporan/kartust...', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2015-12-17 13:56:48 [127.0.0.1][-][-][info][application] $_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    'PHPSESSID' => 'chp6f4cfqfieq845ka1fkg2571'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '519'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; PHPSESSID=chp6f4cfqfieq845ka1fkg2571'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '56016'
+    'REDIRECT_URL' => '/anainaskincare/api/web/laporan/kartustok/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/laporan/kartustok/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1450335408.287
+    'REQUEST_TIME' => 1450335408
+]
+2015-12-17 13:57:22 [127.0.0.1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined variable: body' in /var/www/anainaskincare/api/controllers/LaporanController.php:800
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/LaporanController.php(800): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', '/var/www/anaina...', 800, Array)
+#1 [internal function]: app\controllers\LaporanController->actionKartustok()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('kartustok', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('laporan/kartust...', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2015-12-17 13:57:22 [127.0.0.1][-][-][info][application] $_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    'PHPSESSID' => 'chp6f4cfqfieq845ka1fkg2571'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '519'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; PHPSESSID=chp6f4cfqfieq845ka1fkg2571'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '56026'
+    'REDIRECT_URL' => '/anainaskincare/api/web/laporan/kartustok/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/laporan/kartustok/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1450335442.338
+    'REQUEST_TIME' => 1450335442
+]
+2015-12-17 13:57:39 [127.0.0.1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined variable: body' in /var/www/anainaskincare/api/controllers/LaporanController.php:800
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/LaporanController.php(800): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', '/var/www/anaina...', 800, Array)
+#1 [internal function]: app\controllers\LaporanController->actionKartustok()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('kartustok', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('laporan/kartust...', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2015-12-17 13:57:39 [127.0.0.1][-][-][info][application] $_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    'PHPSESSID' => 'chp6f4cfqfieq845ka1fkg2571'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '519'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; PHPSESSID=chp6f4cfqfieq845ka1fkg2571'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '56028'
+    'REDIRECT_URL' => '/anainaskincare/api/web/laporan/kartustok/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/laporan/kartustok/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1450335459.562
+    'REQUEST_TIME' => 1450335459
+]
+2015-12-17 14:58:28 [127.0.0.1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined variable: body' in /var/www/anainaskincare/api/controllers/LaporanController.php:811
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/LaporanController.php(811): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', '/var/www/anaina...', 811, Array)
+#1 [internal function]: app\controllers\LaporanController->actionKartustok()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('kartustok', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('laporan/kartust...', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2015-12-17 14:58:28 [127.0.0.1][-][-][info][application] $_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    'PHPSESSID' => 'chp6f4cfqfieq845ka1fkg2571'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '519'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; PHPSESSID=chp6f4cfqfieq845ka1fkg2571'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '57712'
+    'REDIRECT_URL' => '/anainaskincare/api/web/laporan/kartustok/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/laporan/kartustok/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1450339108.249
+    'REQUEST_TIME' => 1450339108
+]
+2015-12-17 14:59:10 [127.0.0.1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined variable: body' in /var/www/anainaskincare/api/controllers/LaporanController.php:811
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/LaporanController.php(811): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', '/var/www/anaina...', 811, Array)
+#1 [internal function]: app\controllers\LaporanController->actionKartustok()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('kartustok', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('laporan/kartust...', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2015-12-17 14:59:10 [127.0.0.1][-][-][info][application] $_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    'PHPSESSID' => 'chp6f4cfqfieq845ka1fkg2571'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '518'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; PHPSESSID=chp6f4cfqfieq845ka1fkg2571'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '57719'
+    'REDIRECT_URL' => '/anainaskincare/api/web/laporan/kartustok/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/laporan/kartustok/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1450339150.545
+    'REQUEST_TIME' => 1450339150
+]
+2015-12-17 14:59:21 [192.168.5.7][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined variable: body' in /var/www/anainaskincare/api/controllers/LaporanController.php:811
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/LaporanController.php(811): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', '/var/www/anaina...', 811, Array)
+#1 [internal function]: app\controllers\LaporanController->actionKartustok()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('kartustok', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('laporan/kartust...', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2015-12-17 14:59:21 [192.168.5.7][-][-][info][application] $_COOKIE = [
+    'PHPSESSID' => '5o6c4utgu2hcpeb737bl1ffa23'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => '192.168.5.1'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '503'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://192.168.5.1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/47.0.2526.73 Chrome/47.0.2526.73 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://192.168.5.1/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=5o6c4utgu2hcpeb737bl1ffa23'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at 192.168.5.1 Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => '192.168.5.1'
+    'SERVER_ADDR' => '192.168.5.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '192.168.5.7'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '50147'
+    'REDIRECT_URL' => '/anainaskincare/api/web/laporan/kartustok/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/laporan/kartustok/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1450339161.121
+    'REQUEST_TIME' => 1450339161
+]
+2015-12-17 15:17:34 [127.0.0.1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined variable: body' in /var/www/anainaskincare/api/controllers/LaporanController.php:811
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/LaporanController.php(811): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', '/var/www/anaina...', 811, Array)
+#1 [internal function]: app\controllers\LaporanController->actionKartustok()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('kartustok', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('laporan/kartust...', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2015-12-17 15:17:34 [127.0.0.1][-][-][info][application] $_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    'PHPSESSID' => 'chp6f4cfqfieq845ka1fkg2571'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '518'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; PHPSESSID=chp6f4cfqfieq845ka1fkg2571'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '58063'
+    'REDIRECT_URL' => '/anainaskincare/api/web/laporan/kartustok/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/laporan/kartustok/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1450340254.011
+    'REQUEST_TIME' => 1450340254
+]
+2015-12-17 15:17:42 [127.0.0.1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined variable: body' in /var/www/anainaskincare/api/controllers/LaporanController.php:811
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/LaporanController.php(811): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', '/var/www/anaina...', 811, Array)
+#1 [internal function]: app\controllers\LaporanController->actionKartustok()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('kartustok', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('laporan/kartust...', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2015-12-17 15:17:42 [127.0.0.1][-][-][info][application] $_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    'PHPSESSID' => 'chp6f4cfqfieq845ka1fkg2571'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '518'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; PHPSESSID=chp6f4cfqfieq845ka1fkg2571'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '58064'
+    'REDIRECT_URL' => '/anainaskincare/api/web/laporan/kartustok/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/laporan/kartustok/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1450340262.929
+    'REQUEST_TIME' => 1450340262
+]
+2015-12-17 15:17:48 [127.0.0.1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined variable: body' in /var/www/anainaskincare/api/controllers/LaporanController.php:811
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/LaporanController.php(811): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', '/var/www/anaina...', 811, Array)
+#1 [internal function]: app\controllers\LaporanController->actionKartustok()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('kartustok', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('laporan/kartust...', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2015-12-17 15:17:48 [127.0.0.1][-][-][info][application] $_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    'PHPSESSID' => 'chp6f4cfqfieq845ka1fkg2571'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '518'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; PHPSESSID=chp6f4cfqfieq845ka1fkg2571'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '58065'
+    'REDIRECT_URL' => '/anainaskincare/api/web/laporan/kartustok/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/laporan/kartustok/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1450340268.639
+    'REQUEST_TIME' => 1450340268
+]
+2015-12-17 15:28:08 [127.0.0.1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined variable: _SESSION' in /var/www/anainaskincare/api/controllers/PenjualanController.php:369
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/PenjualanController.php(369): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', '/var/www/anaina...', 369, Array)
+#1 [internal function]: app\controllers\PenjualanController->actionCari()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('cari', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('penjualan/cari', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2015-12-17 15:28:08 [127.0.0.1][-][-][info][application] $_GET = [
+    'nama' => 'JUAL/001/03266'
 ]
 
 $_COOKIE = [
-    'YII_CSRF_TOKEN' => '758df5367ebf5f0120fe5fe75ab08caad09943cb'
-    'dfced3b8ef8245f626640a33bb1d908f' => 'cto4oi0chee3a0okacj5ccm4k4'
-    '1a65e11ded1b1048c7856b49f82e2a9c' => '5n7g91hiqt9l1kokcls3sbmvb3'
-    '3c98b924c318bf1f4d2eb11cd153a170' => 'j4hh2du1igtrf4b4lmllgf52g0'
-    '8f232df25f09fd57312f2877c19ec2c2' => '45jgm80pi1t17o13bgqj72uh43'
-    '5b7cb4fe1bc443bc7a504d8a837a38bc' => '48rvm9bb1mejmtjdi8f7mnuhj4'
-    '3202924ab10201a1801b33d1b89bad8e' => '3qjgl2cmg461a0vm6i1ka5o1t1'
-    'olfsk' => 'olfsk6695355179253966'
-    '_okbk' => 'cd4=true,vi5=0,vi4=1425450183605,vi3=active,vi2=false,vi1=false,cd8=chat,cd6=0,cd5=away,cd3=false,cd2=0,cd1=0,'
-    '_ok' => '4703-250-10-2597'
-    'wcsid' => '9FqYCz5fyuFAl5qf7x21P162DID002MF'
-    'hblid' => 'e7cL0LfV8exCAdiL7x21P532DIp2CLAB'
-    '_okac' => 'b5fde98bf788c648a72b6a30b3d33ee6'
-    '_okla' => '1'
-    '_oklv' => '1425450407376,9FqYCz5fyuFAl5qf7x21P162DID002MF'
-    '_csrf' => 'b07c1325d2b8bc2d5cedc1f23bd9b9b1b092aab3d748776a33dfc78a6c283285s:32:\"FYDIuWJQc17lYoVXg_ieTc0vSljuBkfY\";'
-    'PHPSESSID' => 'efm8skvj26pko1ake0b68p8df1'
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    'PHPSESSID' => 'chp6f4cfqfieq845ka1fkg2571'
 ]
 
 $_SERVER = [
     'REDIRECT_STATUS' => '200'
     'HTTP_HOST' => 'localhost'
     'HTTP_CONNECTION' => 'keep-alive'
-    'CONTENT_LENGTH' => '47'
     'HTTP_PRAGMA' => 'no-cache'
     'HTTP_CACHE_CONTROL' => 'no-cache'
     'HTTP_ACCEPT' => 'application/json, text/plain, */*'
-    'HTTP_ORIGIN' => 'http://localhost'
-    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/43.0.2357.81 Chrome/43.0.2357.81 Safari/537.36'
-    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36'
     'HTTP_REFERER' => 'http://localhost/anainaskincare/'
-    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
     'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
-    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=758df5367ebf5f0120fe5fe75ab08caad09943cb; dfced3b8ef8245f626640a33bb1d908f=cto4oi0chee3a0okacj5ccm4k4; 1a65e11ded1b1048c7856b49f82e2a9c=5n7g91hiqt9l1kokcls3sbmvb3; 3c98b924c318bf1f4d2eb11cd153a170=j4hh2du1igtrf4b4lmllgf52g0; 8f232df25f09fd57312f2877c19ec2c2=45jgm80pi1t17o13bgqj72uh43; 5b7cb4fe1bc443bc7a504d8a837a38bc=48rvm9bb1mejmtjdi8f7mnuhj4; 3202924ab10201a1801b33d1b89bad8e=3qjgl2cmg461a0vm6i1ka5o1t1; olfsk=olfsk6695355179253966; _okbk=cd4%3Dtrue%2Cvi5%3D0%2Cvi4%3D1425450183605%2Cvi3%3Dactive%2Cvi2%3Dfalse%2Cvi1%3Dfalse%2Ccd8%3Dchat%2Ccd6%3D0%2Ccd5%3Daway%2Ccd3%3Dfalse%2Ccd2%3D0%2Ccd1%3D0%2C; _ok=4703-250-10-2597; wcsid=9FqYCz5fyuFAl5qf7x21P162DID002MF; hblid=e7cL0LfV8exCAdiL7x21P532DIp2CLAB; _okac=b5fde98bf788c648a72b6a30b3d33ee6; _okla=1; _oklv=1425450407376%2C9FqYCz5fyuFAl5qf7x21P162DID002MF; _csrf=b07c1325d2b8bc2d5cedc1f23bd9b9b1b092aab3d748776a33dfc78a6c283285s%3A32%3A%22FYDIuWJQc17lYoVXg_ieTc0vSljuBkfY%22%3B; PHPSESSID=efm8skvj26pko1ake0b68p8df1'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; PHPSESSID=chp6f4cfqfieq845ka1fkg2571'
     'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
     'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
 '
@@ -68,95 +776,51 @@ $_SERVER = [
     'CONTEXT_DOCUMENT_ROOT' => '/var/www'
     'SERVER_ADMIN' => 'webmaster@localhost'
     'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
-    'REMOTE_PORT' => '56865'
-    'REDIRECT_URL' => '/anainaskincare/api/web/roles/update/4099'
+    'REMOTE_PORT' => '58163'
+    'REDIRECT_QUERY_STRING' => 'nama=JUAL%2F001%2F03266'
+    'REDIRECT_URL' => '/anainaskincare/api/web/penjualan/cari'
     'GATEWAY_INTERFACE' => 'CGI/1.1'
     'SERVER_PROTOCOL' => 'HTTP/1.1'
-    'REQUEST_METHOD' => 'POST'
-    'QUERY_STRING' => ''
-    'REQUEST_URI' => '/anainaskincare/api/web/roles/update/4099'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'nama=JUAL%2F001%2F03266'
+    'REQUEST_URI' => '/anainaskincare/api/web/penjualan/cari?nama=JUAL%2F001%2F03266'
     'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
     'PHP_SELF' => '/anainaskincare/api/web/index.php'
-    'REQUEST_TIME_FLOAT' => 1434684791.713
-    'REQUEST_TIME' => 1434684791
+    'REQUEST_TIME_FLOAT' => 1450340888.818
+    'REQUEST_TIME' => 1450340888
 ]
-2015-06-21 16:10:32 [127.0.0.1][-][-][error][yii\db\IntegrityException] exception 'PDOException' with message 'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'd' for key 'nama'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php:771
+2015-12-17 15:28:18 [127.0.0.1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined variable: _SESSION' in /var/www/anainaskincare/api/controllers/PenjualanController.php:369
 Stack trace:
-#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(771): PDOStatement->execute()
-#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(415): yii\db\Command->execute()
-#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveRecord.php(457): yii\db\Schema->insert('m_roles', Array)
-#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveRecord.php(422): yii\db\ActiveRecord->insertInternal(NULL)
-#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/BaseActiveRecord.php(589): yii\db\ActiveRecord->insert(true, NULL)
-#5 /var/www/anainaskincare/api/controllers/RolesController.php(116): yii\db\BaseActiveRecord->save()
-#6 [internal function]: app\controllers\RolesController->actionCreate()
-#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
-#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
-#9 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('create', Array)
-#10 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('roles/create', Array)
-#11 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
-#12 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
-#13 {main}
+#0 /var/www/anainaskincare/api/controllers/PenjualanController.php(369): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', '/var/www/anaina...', 369, Array)
+#1 [internal function]: app\controllers\PenjualanController->actionCari()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('cari', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('penjualan/cari', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2015-12-17 15:28:18 [127.0.0.1][-][-][info][application] $_GET = [
+    'nama' => 'JUAL/001/0326'
+]
 
-Next exception 'yii\db\IntegrityException' with message 'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'd' for key 'nama'
-The SQL being executed was: INSERT INTO `m_roles` (`nama`, `is_deleted`) VALUES ('d', 0)' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php:595
-Stack trace:
-#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(779): yii\db\Schema->convertException(Object(PDOException), 'INSERT INTO `m_...')
-#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(415): yii\db\Command->execute()
-#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveRecord.php(457): yii\db\Schema->insert('m_roles', Array)
-#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveRecord.php(422): yii\db\ActiveRecord->insertInternal(NULL)
-#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/BaseActiveRecord.php(589): yii\db\ActiveRecord->insert(true, NULL)
-#5 /var/www/anainaskincare/api/controllers/RolesController.php(116): yii\db\BaseActiveRecord->save()
-#6 [internal function]: app\controllers\RolesController->actionCreate()
-#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
-#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
-#9 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('create', Array)
-#10 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('roles/create', Array)
-#11 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
-#12 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
-#13 {main}
-Additional Information:
-Array
-(
-    [0] => 23000
-    [1] => 1062
-    [2] => Duplicate entry 'd' for key 'nama'
-)
-
-2015-06-21 16:10:32 [127.0.0.1][-][-][info][application] $_COOKIE = [
-    'YII_CSRF_TOKEN' => '758df5367ebf5f0120fe5fe75ab08caad09943cb'
-    'dfced3b8ef8245f626640a33bb1d908f' => 'cto4oi0chee3a0okacj5ccm4k4'
-    '1a65e11ded1b1048c7856b49f82e2a9c' => '5n7g91hiqt9l1kokcls3sbmvb3'
-    '3c98b924c318bf1f4d2eb11cd153a170' => 'j4hh2du1igtrf4b4lmllgf52g0'
-    '8f232df25f09fd57312f2877c19ec2c2' => '45jgm80pi1t17o13bgqj72uh43'
-    '5b7cb4fe1bc443bc7a504d8a837a38bc' => '48rvm9bb1mejmtjdi8f7mnuhj4'
-    '3202924ab10201a1801b33d1b89bad8e' => '3qjgl2cmg461a0vm6i1ka5o1t1'
-    'olfsk' => 'olfsk6695355179253966'
-    '_okbk' => 'cd4=true,vi5=0,vi4=1425450183605,vi3=active,vi2=false,vi1=false,cd8=chat,cd6=0,cd5=away,cd3=false,cd2=0,cd1=0,'
-    '_ok' => '4703-250-10-2597'
-    'wcsid' => '9FqYCz5fyuFAl5qf7x21P162DID002MF'
-    'hblid' => 'e7cL0LfV8exCAdiL7x21P532DIp2CLAB'
-    '_okac' => 'b5fde98bf788c648a72b6a30b3d33ee6'
-    '_okla' => '1'
-    '_oklv' => '1425450407376,9FqYCz5fyuFAl5qf7x21P162DID002MF'
-    '_csrf' => '7a1141f1433613bc7d5f6a5a79ca023a12d89fc3f4085820722cf94ba6b517fba:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"ESkx76Q-lj-3lNGk5HtkJ6VtoqP3qbv7\";}'
-    'PHPSESSID' => 'f0brlgaahbq8038l2mc3uj3mt0'
+$_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    'PHPSESSID' => 'chp6f4cfqfieq845ka1fkg2571'
 ]
 
 $_SERVER = [
     'REDIRECT_STATUS' => '200'
     'HTTP_HOST' => 'localhost'
     'HTTP_CONNECTION' => 'keep-alive'
-    'CONTENT_LENGTH' => '29'
     'HTTP_PRAGMA' => 'no-cache'
     'HTTP_CACHE_CONTROL' => 'no-cache'
     'HTTP_ACCEPT' => 'application/json, text/plain, */*'
-    'HTTP_ORIGIN' => 'http://localhost'
-    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/43.0.2357.81 Chrome/43.0.2357.81 Safari/537.36'
-    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36'
     'HTTP_REFERER' => 'http://localhost/anainaskincare/'
-    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
     'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
-    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=758df5367ebf5f0120fe5fe75ab08caad09943cb; dfced3b8ef8245f626640a33bb1d908f=cto4oi0chee3a0okacj5ccm4k4; 1a65e11ded1b1048c7856b49f82e2a9c=5n7g91hiqt9l1kokcls3sbmvb3; 3c98b924c318bf1f4d2eb11cd153a170=j4hh2du1igtrf4b4lmllgf52g0; 8f232df25f09fd57312f2877c19ec2c2=45jgm80pi1t17o13bgqj72uh43; 5b7cb4fe1bc443bc7a504d8a837a38bc=48rvm9bb1mejmtjdi8f7mnuhj4; 3202924ab10201a1801b33d1b89bad8e=3qjgl2cmg461a0vm6i1ka5o1t1; olfsk=olfsk6695355179253966; _okbk=cd4%3Dtrue%2Cvi5%3D0%2Cvi4%3D1425450183605%2Cvi3%3Dactive%2Cvi2%3Dfalse%2Cvi1%3Dfalse%2Ccd8%3Dchat%2Ccd6%3D0%2Ccd5%3Daway%2Ccd3%3Dfalse%2Ccd2%3D0%2Ccd1%3D0%2C; _ok=4703-250-10-2597; wcsid=9FqYCz5fyuFAl5qf7x21P162DID002MF; hblid=e7cL0LfV8exCAdiL7x21P532DIp2CLAB; _okac=b5fde98bf788c648a72b6a30b3d33ee6; _okla=1; _oklv=1425450407376%2C9FqYCz5fyuFAl5qf7x21P162DID002MF; _csrf=7a1141f1433613bc7d5f6a5a79ca023a12d89fc3f4085820722cf94ba6b517fba%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22ESkx76Q-lj-3lNGk5HtkJ6VtoqP3qbv7%22%3B%7D; PHPSESSID=f0brlgaahbq8038l2mc3uj3mt0'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; PHPSESSID=chp6f4cfqfieq845ka1fkg2571'
     'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
     'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
 '
@@ -171,15 +835,193 @@ $_SERVER = [
     'CONTEXT_DOCUMENT_ROOT' => '/var/www'
     'SERVER_ADMIN' => 'webmaster@localhost'
     'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
-    'REMOTE_PORT' => '35154'
-    'REDIRECT_URL' => '/anainaskincare/api/web/roles/create'
+    'REMOTE_PORT' => '58164'
+    'REDIRECT_QUERY_STRING' => 'nama=JUAL%2F001%2F0326'
+    'REDIRECT_URL' => '/anainaskincare/api/web/penjualan/cari'
     'GATEWAY_INTERFACE' => 'CGI/1.1'
     'SERVER_PROTOCOL' => 'HTTP/1.1'
-    'REQUEST_METHOD' => 'POST'
-    'QUERY_STRING' => ''
-    'REQUEST_URI' => '/anainaskincare/api/web/roles/create'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'nama=JUAL%2F001%2F0326'
+    'REQUEST_URI' => '/anainaskincare/api/web/penjualan/cari?nama=JUAL%2F001%2F0326'
     'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
     'PHP_SELF' => '/anainaskincare/api/web/index.php'
-    'REQUEST_TIME_FLOAT' => 1434877832.514
-    'REQUEST_TIME' => 1434877832
+    'REQUEST_TIME_FLOAT' => 1450340898.01
+    'REQUEST_TIME' => 1450340898
+]
+2015-12-17 15:28:20 [127.0.0.1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined variable: _SESSION' in /var/www/anainaskincare/api/controllers/PenjualanController.php:369
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/PenjualanController.php(369): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', '/var/www/anaina...', 369, Array)
+#1 [internal function]: app\controllers\PenjualanController->actionCari()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('cari', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('penjualan/cari', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2015-12-17 15:28:20 [127.0.0.1][-][-][info][application] $_GET = [
+    'nama' => 'JUAL/001/03266'
+]
+
+$_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    'PHPSESSID' => 'chp6f4cfqfieq845ka1fkg2571'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; PHPSESSID=chp6f4cfqfieq845ka1fkg2571'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '58165'
+    'REDIRECT_QUERY_STRING' => 'nama=JUAL%2F001%2F03266'
+    'REDIRECT_URL' => '/anainaskincare/api/web/penjualan/cari'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'nama=JUAL%2F001%2F03266'
+    'REQUEST_URI' => '/anainaskincare/api/web/penjualan/cari?nama=JUAL%2F001%2F03266'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1450340900.167
+    'REQUEST_TIME' => 1450340900
+]
+2015-12-17 15:28:29 [127.0.0.1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined variable: _SESSION' in /var/www/anainaskincare/api/controllers/PenjualanController.php:369
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/PenjualanController.php(369): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', '/var/www/anaina...', 369, Array)
+#1 [internal function]: app\controllers\PenjualanController->actionCari()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('cari', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('penjualan/cari', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2015-12-17 15:28:29 [127.0.0.1][-][-][info][application] $_GET = [
+    'nama' => 'JUAL/001/0326'
+]
+
+$_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    'PHPSESSID' => 'chp6f4cfqfieq845ka1fkg2571'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; PHPSESSID=chp6f4cfqfieq845ka1fkg2571'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '58166'
+    'REDIRECT_QUERY_STRING' => 'nama=JUAL%2F001%2F0326'
+    'REDIRECT_URL' => '/anainaskincare/api/web/penjualan/cari'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'nama=JUAL%2F001%2F0326'
+    'REQUEST_URI' => '/anainaskincare/api/web/penjualan/cari?nama=JUAL%2F001%2F0326'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1450340909.292
+    'REQUEST_TIME' => 1450340909
+]
+2015-12-17 15:28:47 [127.0.0.1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined variable: _SESSION' in /var/www/anainaskincare/api/controllers/PenjualanController.php:369
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/PenjualanController.php(369): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', '/var/www/anaina...', 369, Array)
+#1 [internal function]: app\controllers\PenjualanController->actionCari()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('cari', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('penjualan/cari', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2015-12-17 15:28:47 [127.0.0.1][-][-][info][application] $_GET = [
+    'nama' => 'JUAL/001/03266'
+]
+
+$_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    'PHPSESSID' => 'chp6f4cfqfieq845ka1fkg2571'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; PHPSESSID=chp6f4cfqfieq845ka1fkg2571'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '58173'
+    'REDIRECT_QUERY_STRING' => 'nama=JUAL%2F001%2F03266'
+    'REDIRECT_URL' => '/anainaskincare/api/web/penjualan/cari'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'nama=JUAL%2F001%2F03266'
+    'REQUEST_URI' => '/anainaskincare/api/web/penjualan/cari?nama=JUAL%2F001%2F03266'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1450340927.184
+    'REQUEST_TIME' => 1450340927
 ]
