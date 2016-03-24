@@ -93,8 +93,9 @@ class ReturpembelianController extends Controller {
                 ->join('LEFT JOIN', 'pembelian as pe', 'rp.pembelian_id = pe.id')
                 ->join('LEFT JOIN', 'm_supplier as su', 'pe.supplier_id = su.id')
                 ->join('LEFT JOIN', 'm_cabang as ca', 'pe.cabang_id = ca.id')
+                ->join('LEFT JOIN', 'm_user','m_user.id = rp.created_by')
                 ->orderBy($sort)
-                ->select("rp.*,pe.kode as kode_pembelian,su.nama as nama_supplier,ca.nama as klinik,ca.id as cabang_id");
+                ->select("m_user.nama as petugas, rp.*,pe.kode as kode_pembelian,su.nama as nama_supplier,ca.nama as klinik,ca.id as cabang_id");
 
         //filter
         if (isset($params['filter'])) {

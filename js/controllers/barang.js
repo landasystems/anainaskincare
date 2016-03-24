@@ -23,16 +23,62 @@ app.controller('barangCtrl', function ($scope, Data, toaster, FileUploader, $sta
     $scope.is_view = false;
     $scope.is_create = false;
     $scope.listStok = [];
+    $scope.listPaket = [];
     $scope.totalStok = 0;
+    $scope.totalHarga = 0;
 
-    $scope.subtotal = function () {
-        var total = 0;
-        angular.forEach($scope.listStok, function (detail) {
-            var jml = (detail.iStok) ? parseInt(detail.iStok) : 0;
-            total += jml;
-        })
-        $scope.totalStok = total;
+    $scope.addDetail = function () {
+        var dat = {
+            produk: '',
+            jml: '',
+            harga: '',
+        };
+        $scope.listPaket.unshift(dat);
     }
+
+    $scope.removeDetail = function (paket) {
+        var index = -1;
+        var comArr = eval($scope.listPaket);
+        for (var i = 0; i < comArr.length; i++) {
+            if (comArr[i] === paket) {
+                index = i;
+                break;
+            }
+        }
+        $scope.listPaket.splice(index, 1);
+    }
+
+    $scope.cariProduk = function ($query) {
+        if ($query.length >= 3) {
+            Data.get('barang/caribarang', {nama: $query}).then(function (data) {
+                $scope.resultsProduk = data.data;
+            });
+        }
+    }
+
+//    $scope.hitung = function (paket) {
+//        var jml = (paket.jml) ? parseInt(paket.jml) : 0;
+//        var harga = (paket.harga) ? parseInt(paket.harga) : 0;
+//        paket.total = parseFloat(jml) * parseInt(harga);
+//        $scope.totalHarga = 0;
+//        angular.forEach($scope.listPaket, function (detail) {
+//            var jml = (detail.jml) ? parseInt(detail.jml) : 0;
+//            var harga = (detail.harga) ? parseInt(detail.harga) : 0;
+//            var total = parseFloat(jml) * parseInt(harga);
+//            $scope.totalHarga = $scope.totalHarga + total * 1;
+//        });
+//
+//        $scope.form.harga_jual = $scope.totalHarga;
+//    }
+
+//    $scope.subtotal = function () {
+//        var total = 0;
+//        angular.forEach($scope.listStok, function (detail) {
+//            var jml = (detail.iStok) ? parseInt(detail.iStok) : 0;
+//            total += jml;
+//        })
+//        $scope.totalStok = total;
+//    }
 
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
@@ -76,6 +122,13 @@ app.controller('barangCtrl', function ($scope, Data, toaster, FileUploader, $sta
             $scope.totalStok = data.total;
         });
     }
+
+    $scope.paket = function (id) {
+        Data.get('barang/getpaket/' + id).then(function (data) {
+            $scope.listPaket = data.data;
+            $scope.totalHarga = data.total;
+        });
+    }
 //=========== AKTIFKAN JIKA HARGA CABANG BERBEDA =============//
 //    $scope.harga = function (id) {
 //        Data.get('barang/getharga/' + id).then(function (data) {
@@ -102,7 +155,11 @@ app.controller('barangCtrl', function ($scope, Data, toaster, FileUploader, $sta
         $scope.is_view = false;
         $scope.formtitle = "Edit Data : " + form.nama;
         $scope.form = form;
-        $scope.stok(form.id);
+        if (form.type == "Barang")
+            $scope.stok(form.id);
+
+        if (form.type == "Paket")
+            $scope.paket(form.id);
 //        $scope.harga(form.id); AKTIFKAN JIKA HARGA PER CABANG BERBEDA
     };
     $scope.view = function (form) {
@@ -111,12 +168,17 @@ app.controller('barangCtrl', function ($scope, Data, toaster, FileUploader, $sta
         $scope.is_view = true;
         $scope.formtitle = "Lihat Data : " + form.nama;
         $scope.form = form;
-        $scope.stok(form.id);
+        if (form.type == "Barang")
+            $scope.stok(form.id);
+
+        if (form.type == "Paket")
+            $scope.paket(form.id);
+
 //        $scope.harga(form.id); AKTIFKAN JIKA HARGA PER CABANG BERBEDA
     };
 //    AKTIFKAN JIKA HARGA PER CABANG BERBEDA
-//    $scope.save = function (form, stok, harga) {
-    $scope.save = function (form, stok) {
+//    $scope.save = function (form, stok, paket, harga) {
+    $scope.save = function (form, stok, paket) {
         if ($scope.uploader.queue.length > 0) {
             $scope.uploader.uploadAll();
             form.foto = kode_unik + "-" + $scope.uploader.queue[0].file.name;
@@ -127,6 +189,7 @@ app.controller('barangCtrl', function ($scope, Data, toaster, FileUploader, $sta
         var data = {
             form: form,
             stok: stok,
+            paket: paket
 //            harga: harga, AKTIFKAN JIKA HARGA PER CABANG BERBEDA
         }
 
@@ -140,10 +203,10 @@ app.controller('barangCtrl', function ($scope, Data, toaster, FileUploader, $sta
                 toaster.pop('success', "Berhasil", "Data berhasil tersimpan");
             }
         });
-    }
-    ;
+    };
+
     $scope.cancel = function () {
-        if (!$scope.is_view) { //hanya waktu edit cancel, di load table lagi
+        if (!$scope.is_view) {
             $scope.callServer(tableStateRef);
         }
         $scope.totalStok = 0;
@@ -160,7 +223,7 @@ app.controller('barangCtrl', function ($scope, Data, toaster, FileUploader, $sta
             });
         }
     };
-    
+
     $scope.restore = function (row) {
         if (confirm("Apa anda yakin akan MERESTORE item ini ?")) {
             row.is_deleted = 0;
@@ -169,7 +232,7 @@ app.controller('barangCtrl', function ($scope, Data, toaster, FileUploader, $sta
             });
         }
     };
-    
+
     $scope.delete = function (row) {
         if (confirm("Apa anda yakin akan MENGHAPUS PERMANENT item ini ?")) {
             Data.delete('barang/delete/' + row.id).then(function (result) {

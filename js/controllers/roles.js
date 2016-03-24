@@ -56,7 +56,7 @@ app.controller('rolesCtrl', function ($scope, Data, toaster, $state) {
         $scope.form = form;
         $scope.form.akses = JSON.parse($scope.form.akses);
         Data.get('cabang/akses/' + form.id).then(function (data) {
-           $scope.form.cabang = data.data;
+            $scope.form.cabang = data.data;
         });
     };
     $scope.view = function (form) {
@@ -66,7 +66,7 @@ app.controller('rolesCtrl', function ($scope, Data, toaster, $state) {
         $scope.form = form;
         $scope.form.akses = JSON.parse($scope.form.akses);
         Data.get('cabang/akses/' + form.id).then(function (data) {
-           $scope.form.cabang = data.data;
+            $scope.form.cabang = data.data;
         });
     };
     $scope.save = function (form) {
@@ -134,6 +134,8 @@ app.controller('rolesCtrl', function ($scope, Data, toaster, $state) {
             "transaksi_penjualan": false,
             "transaksi_bayarpiutang": false,
             "transaksi_returpenjualan": false,
+            "transaksi_terimabarang": false,
+            "transaksi_kirimbarang": false,
             "laporan_kartustok": false,
             "laporan_bonuskaryawan": false,
             "laporan_labarugi": false,

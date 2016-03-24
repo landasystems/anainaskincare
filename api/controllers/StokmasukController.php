@@ -122,11 +122,13 @@ class StokmasukController extends Controller {
         $query = new Query;
         $query->offset($offset)
                 ->limit($limit)
-                ->from(['stok_masuk', 'm_cabang'])
+                ->from('stok_masuk')
                 ->orderBy($sort)
-                ->select("stok_masuk.*,  m_cabang.nama as cabang")
-                ->where('m_cabang.id = stok_masuk.cabang_id')
-                ->andWhere(['stok_masuk.cabang_id' => $_SESSION['user']['cabang_id']]);
+                ->join('LEFT JOIN', 'm_cabang', 'm_cabang.id = stok_masuk.cabang_id')
+                ->join('LEFT JOIN', 'm_user', 'm_user.id = stok_masuk.created_by')
+                ->select("stok_masuk.*,  m_cabang.nama as cabang, m_user.nama as petugas")
+//                ->where('m_cabang.id = stok_masuk.cabang_id')
+                ->Where(['stok_masuk.cabang_id' => $_SESSION['user']['cabang_id']]);
 
         //filter
         if (isset($params['filter'])) {
@@ -194,7 +196,7 @@ class StokmasukController extends Controller {
             foreach ($detailsmasuk as $val) {
                 $det = new StokMasukDet();
                 $det->attributes = $val;
-                 $det->harga = (!empty($val['harga'])) ? $val['harga'] : 0;
+                $det->harga = (!empty($val['harga'])) ? $val['harga'] : 0;
                 $det->produk_id = $val['produk']['id'];
                 $det->stok_masuk_id = $model->id;
                 $det->save();

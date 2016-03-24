@@ -12,13 +12,15 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         $event.stopPropagation();
         $scope.opened1 = true;
     };
+    
     $scope.cariProduk = function ($query, cabang) {
         if ($query.length >= 3) {
             Data.post('barang/carilagi', {nama: $query, cabang: cabang}).then(function (data) {
                 $scope.results = data.data;
             });
         }
-    }
+    };
+    
     $scope.detskeluar = [
         {
             stok_keluar_id: '',

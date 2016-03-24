@@ -32,6 +32,7 @@ class BarangController extends Controller {
                     'cari2' => ['get'],
                     'carilagi' => ['post'],
                     'getstok' => ['get'],
+                    'getpaket' => ['get'],
                     'perkategori' => ['post'],
 //                    'getharga' => ['get'], AKTIFKAN JIKA HARGA PER CABANG BERBEDA
                 ],
@@ -162,6 +163,29 @@ class BarangController extends Controller {
         echo json_encode(array('status' => 1, 'data' => $listStok, 'total' => $total), JSON_PRETTY_PRINT);
     }
 
+    public function actionGetpaket($id) {
+        $listPaket = array();
+
+        $query = new Query;
+        $query->from('paket_det as pd')
+                ->join('Left JOIN', 'm_produk as mp', 'pd.barang_id = mp.id')
+                ->select('mp.nama, mp.id as barang_id, pd.*')
+                ->where('pd.paket_id = ' . $id);
+        $command = $query->createCommand();
+        $models = $command->queryAll();
+
+        $total = 0;
+        foreach ($models as $key => $val) {
+            $listPaket[$key] = $val;
+//            $listPaket[$key]['harga'] = $val['harga_jual'];
+            $listPaket[$key]['produk'] = array('id' => $val['barang_id'], 'nama' => $val['nama']);
+//            $listPaket[$key]['total'] = ($val['jml'] * $val['harga_jual']);
+//            $total += ($val['jml'] * $val['harga_jual']);
+        }
+
+        echo json_encode(array('status' => 1, 'data' => $listPaket, 'total' => $total), JSON_PRETTY_PRINT);
+    }
+
 //======== AKTIFKAN JIKA HARGA PER CABANG BERBEDA ===========//
 //    public function actionGetharga($id) {
 //        $listHarga = array();
@@ -227,6 +251,20 @@ class BarangController extends Controller {
 //                }
             }
 
+            if ($model->type == 'Paket' and isset($params['paket'])) {
+                $sPaket = $params['paket'];
+                foreach ($sPaket as $vPaket) {
+                    if (isset($vPaket['jml']) and $vPaket['jml'] > 0) {
+                        $paket = new \app\models\PaketDet();
+                        $paket->barang_id = $vPaket['produk']['id'];
+                        $paket->paket_id = $model->id;
+//                        $paket->harga_jual = $vPaket['harga'];
+                        $paket->jml = $vPaket['jml'];
+                        $paket->save();
+                    }
+                }
+            }
+
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -287,6 +325,20 @@ class BarangController extends Controller {
 //        }
 
         if ($model->save()) {
+            if ($model->type == 'Paket' and isset($params['paket'])) {
+                $sPaket = $params['paket'];
+                $delPaketDet = \app\models\PaketDet::deleteAll("paket_id=" . $model->id);
+                foreach ($sPaket as $vPaket) {
+                    if (isset($vPaket['jml']) and $vPaket['jml'] > 0) {
+                        $paket = new \app\models\PaketDet();
+                        $paket->barang_id = $vPaket['produk']['id'];
+                        $paket->paket_id = $model->id;
+//                        $paket->harga_jual = $vPaket['harga'];
+                        $paket->jml = $vPaket['jml'];
+                        $paket->save();
+                    }
+                }
+            }
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
         } else {
@@ -297,8 +349,12 @@ class BarangController extends Controller {
 
     public function actionDelete($id) {
         $model = $this->findModel($id);
+        $delPaketDet = \app\models\PaketDet::deleteAll("paket_id=" . $model->id);
         $delKartu = \app\models\KartuStok::deleteAll('produk_id = ' . $id . ' and kode = "' . $model->kode . '"');
 //        $delHarga = \app\models\Harga::deleteAll('produk_id = ' . $id); AKTIFKAN JIKA HARGA PER CABANG BERBEDA
+//        if ($model->type == "Paket")
+
+
         if ($model->delete()) {
             $this->setHeader(200);
             echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
@@ -381,11 +437,11 @@ class BarangController extends Controller {
                 ->where(['is_deleted' => 0])
                 ->andWhere(['like', 'nama', $params['nama']])
                 ->orWhere(['like', 'kode', $params['nama']]);
-        
-        if(isset($params['kategori']['id'])){
-            $query->andWhere(['=','kategori_id',$params['kategori']['id']]);
+
+        if (isset($params['kategori']['id'])) {
+            $query->andWhere(['=', 'kategori_id', $params['kategori']['id']]);
         }
-        
+
         $command = $query->createCommand();
         $models = $command->queryAll();
         $this->setHeader(200);

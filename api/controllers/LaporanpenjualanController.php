@@ -82,8 +82,8 @@ class LaporanpenjualanController extends Controller {
                 ->join('LEFT JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
                 ->join('LEFT JOIN', 'm_produk', 'penjualan_det.produk_id = m_produk.id')
                 ->join('LEFT JOIN', 'm_user', 'penjualan.created_by = m_user.id')
-                ->orderBy('penjualan.tanggal ASC')
-                ->select('m_user.nama as kasir, penjualan.id as id_penjualan, penjualan.tanggal, penjualan.kode, penjualan.cash, penjualan.credit, penjualan.atm, m_customer.nama as customer, m_produk.nama as produk, penjualan_det.jumlah, penjualan_det.harga, penjualan_det.diskon, penjualan_det.sub_total');
+                ->orderBy('penjualan.tanggal ASC, penjualan_det.id ASC')
+                ->select('m_user.nama as kasir, penjualan.id as id_penjualan, penjualan.tanggal, penjualan.kode, penjualan.cash, penjualan.credit, penjualan.atm, m_customer.nama as customer, m_produk.nama as produk, penjualan_det.jumlah, penjualan_det.harga, penjualan_det.diskon, penjualan_det.sub_total, penjualan_det.type');
 
         if (isset($param['filter'])) {
             $filter = $param['filter'];
@@ -173,11 +173,24 @@ class LaporanpenjualanController extends Controller {
             $data[$indek]['atm'] = Yii::$app->landa->rp($val['atm'], false);
             $data[$indek]['customer'] = $val['customer'];
             $data[$indek]['kasir'] = empty($val['kasir']) ? '-' : $val['kasir'];
-            $data[$indek]['produk'] = isset($data[$indek]['produk']) ? $data[$indek]['produk'] . '<br>' . strtoupper($val['produk']) : strtoupper($val['produk']);
+
+            if ($val['type'] == "Paket" && $val['harga'] == 0) {
+                $produk = ' &nbsp;&nbsp - ' . strtoupper($val['produk']);
+                $harga = '';
+                $diskon = '';
+                $subT = '';
+            } else {
+                $produk = strtoupper($val['produk']);
+                $harga = Yii::$app->landa->rp($val['harga'], false);
+                $diskon = Yii::$app->landa->rp($val['diskon'], false);
+                $subT = Yii::$app->landa->rp($subTotal, false);
+            }
+
+            $data[$indek]['produk'] = isset($data[$indek]['produk']) ? $data[$indek]['produk'] . '<br>' . $produk : $produk;
             $data[$indek]['jumlah'] = isset($data[$indek]['jumlah']) ? $data[$indek]['jumlah'] . '<br>' . $val['jumlah'] : $val['jumlah'];
-            $data[$indek]['harga'] = isset($data[$indek]['harga']) ? $data[$indek]['harga'] . '<br>' . Yii::$app->landa->rp($val['harga'], false) : Yii::$app->landa->rp($val['harga'], false);
-            $data[$indek]['diskon'] = isset($data[$indek]['diskon']) ? $data[$indek]['diskon'] . '<br>' . Yii::$app->landa->rp($val['diskon'], false) : Yii::$app->landa->rp($val['diskon'], false);
-            $data[$indek]['sub_total'] = isset($data[$indek]['sub_total']) ? $data[$indek]['sub_total'] . '<br>' . Yii::$app->landa->rp($subTotal, false) : Yii::$app->landa->rp($subTotal, false);
+            $data[$indek]['harga'] = isset($data[$indek]['harga']) ? $data[$indek]['harga'] . '<br>' . $harga : $harga;
+            $data[$indek]['diskon'] = isset($data[$indek]['diskon']) ? $data[$indek]['diskon'] . '<br>' . $diskon : $diskon;
+            $data[$indek]['sub_total'] = isset($data[$indek]['sub_total']) ? $data[$indek]['sub_total'] . '<br>' . $subT : $subT;
         }
 
         $detail['totalCash'] = $totalCash;

@@ -6,6 +6,7 @@ use Yii;
 use yii\db\ActiveRecord;
 use yii\behaviors\SluggableBehavior;
 use yii\behaviors\BlameableBehavior;
+
 /**
  * This is the model class for table "penjualan".
  *
@@ -41,7 +42,7 @@ class Penjualan extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['cabang_id', 'total', 'cash', 'credit','atm', 'created_at', 'created_by', 'modified_at', 'modified_by'], 'integer'],
+            [['cabang_id', 'total', 'cash', 'credit', 'atm', 'created_at', 'created_by', 'modified_at', 'modified_by'], 'integer'],
             [['tanggal', 'customer_id'], 'safe'],
             [['keterangan'], 'string'],
             [['kode'], 'string', 'max' => 25],
@@ -85,22 +86,22 @@ class Penjualan extends \yii\db\ActiveRecord {
     public function customers() {
         return $this->hasOne(Customer::className(), ['id' => 'customer_id']);
     }
-    public function behaviors()
-         {
-             return [
-                 [
-                     'class' => BlameableBehavior::className(),
-                     'createdByAttribute' => 'created_by',
-                     'updatedByAttribute' => 'modified_by',
-                 ],
-                 'timestamp' => [
-                     'class' => 'yii\behaviors\TimestampBehavior',
-                     'attributes' => [
-                         ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'modified_at'],
-                         ActiveRecord::EVENT_BEFORE_UPDATE => ['modified_at'],
-                     ],
-                 ],
-             ];
-         }
+
+    public function behaviors() {
+        return [
+            [
+                'class' => BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'modified_by',
+            ],
+            'timestamp' => [
+                'class' => 'yii\behaviors\TimestampBehavior',
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'modified_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['modified_at'],
+                ],
+            ],
+        ];
+    }
 
 }

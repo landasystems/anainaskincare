@@ -13,7 +13,7 @@ angular.module('app')
                 // config
                 $scope.app = {
                     name: 'POS Anaina',
-                    version: '1.1',
+                    version: '2.0',
                 }
 
                 //cek warna di session

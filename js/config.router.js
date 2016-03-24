@@ -45,7 +45,7 @@ angular.module('app')
                                     resolve: {
                                         deps: ['$ocLazyLoad',
                                             function ($ocLazyLoad) {
-
+                                                return $ocLazyLoad.load('js/controllers/dashboard.js');
                                             }]
                                     }
                                 })
@@ -329,8 +329,35 @@ angular.module('app')
                                             }]
                                     }
                                 })
-
-                                // Transaksi
+                                .state('transaksi.kirimbarang', {
+                                    url: '/kirim',
+                                    templateUrl: 'tpl/t_transfer/t_kirim.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load(['daterangepicker']).then(
+                                                        function () {
+                                                            return $ocLazyLoad.load('js/controllers/t_kirim.js');
+                                                        }
+                                                );
+                                            }]
+                                    }
+                                })
+                                .state('transaksi.terimabarang', {
+                                    url: '/terima',
+                                    templateUrl: 'tpl/t_transfer/t_terima.html',
+                                    resolve: {
+                                        deps: ['$ocLazyLoad',
+                                            function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load(['daterangepicker']).then(
+                                                        function () {
+                                                            return $ocLazyLoad.load('js/controllers/t_terima.js');
+                                                        }
+                                                );
+                                            }]
+                                    }
+                                })
+                                // Laporan
                                 .state('laporan', {
                                     url: '/laporan',
                                     templateUrl: 'tpl/app.html'

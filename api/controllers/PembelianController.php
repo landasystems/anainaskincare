@@ -109,8 +109,9 @@ class PembelianController extends Controller {
                 ->from('pembelian as pe')
                 ->join('JOIN', 'm_supplier as su', 'pe.supplier_id = su.id')
                 ->join('JOIN', 'm_cabang as ca', 'pe.cabang_id= ca.id')
+                ->join('JOIN', 'm_user', 'm_user.id = pe.created_by')
                 ->orderBy($sort)
-                ->select("pe.*,ca.nama as klinik, su.nama as nama_supplier,su.alamat as alamat, su.no_tlp as no_tlp,su.email as email")
+                ->select("m_user.nama as petugas, pe.*,ca.nama as klinik, su.nama as nama_supplier,su.alamat as alamat, su.no_tlp as no_tlp,su.email as email")
                 ->andWhere(['pe.cabang_id' => $_SESSION['user']['cabang_id']]);
         $_SESSION['query'] = $query;
         //filter

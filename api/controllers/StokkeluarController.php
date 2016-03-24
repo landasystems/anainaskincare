@@ -124,11 +124,13 @@ class StokkeluarController extends Controller {
         $query = new Query;
         $query->offset($offset)
                 ->limit($limit)
-                ->from(['stok_keluar', 'm_cabang'])
+//                ->from(['stok_keluar', 'm_cabang', 'm_user'])
+                ->from('stok_keluar')
+                ->join('LEFT JOIN', 'm_cabang','m_cabang.id = stok_keluar.cabang_id')
+                ->join('LEFT JOIN', 'm_user','m_user.id = stok_keluar.created_by')
                 ->orderBy($sort)
-                ->select("stok_keluar.id, stok_keluar.kode, stok_keluar.tanggal, m_cabang.nama as cabang, stok_keluar.keterangan, stok_keluar.total")
-                ->where('m_cabang.id = stok_keluar.cabang_id')
-                ->andWhere(['stok_keluar.cabang_id' => $_SESSION['user']['cabang_id']]);
+                ->select("stok_keluar.*, m_user.nama as petugas, m_cabang.nama as cabang")
+                ->where(['in', 'stok_keluar.cabang_id', $_SESSION['user']['cabang_id']]);
 
         //filter
         if (isset($params['filter'])) {
@@ -225,12 +227,12 @@ class StokkeluarController extends Controller {
             $keterangan = 'stok keluar';
             $stok = new KartuStok();
             $hapus = $stok->hapusKartu($keterangan, $model->id);
-            
+
             $detailSkeluar = $params['detailskeluar'];
             foreach ($detailSkeluar as $val) {
                 $det = new StokKeluarDet();
                 $det->attributes = $val;
-                 $det->harga = (!empty($val['harga'])) ? $val['harga'] : 0;
+                $det->harga = (!empty($val['harga'])) ? $val['harga'] : 0;
                 $det->produk_id = $val['produk']['id'];
                 $det->stok_keluar_id = $model->id;
                 $det->save();

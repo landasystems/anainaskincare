@@ -7,6 +7,11 @@ app.controller('l_penjualanCtrl', function($scope, Data, toaster) {
     Data.get('site/session').then(function(data) {
         $scope.sCabang = data.data.user.cabang;
     });
+    
+    $scope.form.tanggal = {
+        startDate: new Date(),
+        endDate: new Date()
+    };
 
     $scope.listkategori = [];
     Data.get('kategori/listkategori').then(function(data) {

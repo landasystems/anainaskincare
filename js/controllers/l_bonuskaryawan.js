@@ -9,7 +9,11 @@ app.controller('l_bonuskaryawanCtrl', function($scope, Data, toaster) {
     $scope.detail_laporan = false;
     $scope.form = {};
     $scope.list_detail = '';
-    $scope.tanggal = {startDate: null, endDate: null};
+    
+    $scope.form.tanggal = {
+        startDate: new Date(),
+        endDate: new Date()
+    };
 
     Data.get('site/session').then(function(data) {
         $scope.listcabang = data.data.user.cabang;

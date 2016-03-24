@@ -8,6 +8,11 @@ app.controller('l_kartustokCtrl', function ($scope, Data, toaster) {
 
     $scope.detail_laporan = false;
     $scope.form = {};
+    $scope.form.tanggal = {
+        startDate: new Date(),
+        endDate: new Date()
+    };
+
     $scope.laporan = '';
 
     Data.get('site/session').then(function (data) {
