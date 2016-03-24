@@ -306,11 +306,11 @@ class PenjualanController extends Controller {
             $cust = new Customer;
         }
 
-        $cust->nama = $params['penjualan']['customers']['nama'];
-        $cust->kode = $params['penjualan']['kode_cust'];
-        $cust->alamat = $params['penjualan']['alamat'];
-        $cust->no_tlp = $params['penjualan']['no_tlp'];
-        $cust->email = $params['penjualan']['email'];
+        $cust->nama = isset($params['penjualan']['customers']['nama']) ? $params['penjualan']['customers']['nama'] : '-';
+        $cust->kode = isset($params['penjualan']['kode_cust']) ? $params['penjualan']['kode_cust'] : '-';
+        $cust->alamat = isset($params['penjualan']['alamat']) ? $params['penjualan']['alamat'] : '-';
+        $cust->no_tlp = isset($params['penjualan']['no_tlp']) ? $params['penjualan']['no_tlp'] : '-';
+        $cust->email = isset($params['penjualan']['email']) ? $params['penjualan']['email'] : '-';
         $cust->save();
 
         $model->customer_id = $cust->id;
@@ -406,12 +406,11 @@ class PenjualanController extends Controller {
             $cust = new Customer;
         }
 
-        $cust->nama = $params['penjualan']['customers']['nama'];
-        $cust->kode = $params['penjualan']['kode_cust'];
-        $cust->alamat = $params['penjualan']['alamat'];
-        $cust->no_tlp = $params['penjualan']['no_tlp'];
-        $cust->email = $params['penjualan']['email'];
-        $cust->save();
+        $cust->nama = isset($params['penjualan']['customers']['nama']) ? $params['penjualan']['customers']['nama'] : '-';
+        $cust->kode = isset($params['penjualan']['kode_cust']) ? $params['penjualan']['kode_cust'] : '-';
+        $cust->alamat = isset($params['penjualan']['alamat']) ? $params['penjualan']['alamat'] : '-';
+        $cust->no_tlp = isset($params['penjualan']['no_tlp']) ? $params['penjualan']['no_tlp'] : '-';
+        $cust->email = isset($params['penjualan']['email']) ? $params['penjualan']['email'] : '-';
 
         $model->customer_id = $cust->id;
 

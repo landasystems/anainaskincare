@@ -4268,3 +4268,852 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1458637199.956
     'REQUEST_TIME' => 1458637199
 ]
+2016-03-24 09:53:18 [::1][-][-][error][application] [
+    [
+        'petugas' => 'dok Ina',
+        'id' => '7',
+        'kode' => 'BELI/003/00007',
+        'cabang_id' => '3',
+        'supplier_id' => '8',
+        'tanggal' => '2015-10-31',
+        'keterangan' => 'mlg',
+        'total' => '1500000',
+        'cash' => '0',
+        'credit' => '1500000',
+        'status' => 'puchase_order',
+        'created_at' => '1446960907',
+        'created_by' => '22',
+        'modified_at' => '1446960956',
+        'modified_by' => '22',
+        'klinik' => 'ANAINA SKINCARE MALANG',
+        'nama_supplier' => 'PT. I Tech Lafacos',
+        'alamat' => 'jkt',
+        'no_tlp' => '0214255593',
+        'email' => null,
+    ],
+    [
+        'petugas' => 'dok Ina',
+        'id' => '5',
+        'kode' => 'BELI/003/00005',
+        'cabang_id' => '3',
+        'supplier_id' => '7',
+        'tanggal' => '2015-10-30',
+        'keterangan' => null,
+        'total' => '1260000',
+        'cash' => '0',
+        'credit' => '1260000',
+        'status' => 'puchase_order',
+        'created_at' => '1446550590',
+        'created_by' => '22',
+        'modified_at' => '1446550894',
+        'modified_by' => '22',
+        'klinik' => 'ANAINA SKINCARE MALANG',
+        'nama_supplier' => 'SPN mlg',
+        'alamat' => 'sda',
+        'no_tlp' => '0',
+        'email' => '',
+    ],
+    [
+        'petugas' => 'dok Ina',
+        'id' => '6',
+        'kode' => 'BELI/003/00006',
+        'cabang_id' => '3',
+        'supplier_id' => '6',
+        'tanggal' => '2015-10-29',
+        'keterangan' => null,
+        'total' => '630000',
+        'cash' => '0',
+        'credit' => '0',
+        'status' => 'puchase_order',
+        'created_at' => '1446960268',
+        'created_by' => '22',
+        'modified_at' => '1446960268',
+        'modified_by' => '22',
+        'klinik' => 'ANAINA SKINCARE MALANG',
+        'nama_supplier' => 'PT.SANDRICA BHASWARA DERMA',
+        'alamat' => 'JKT',
+        'no_tlp' => '0',
+        'email' => null,
+    ],
+    [
+        'petugas' => 'dok Ina',
+        'id' => '3',
+        'kode' => 'BELI/003/00003',
+        'cabang_id' => '3',
+        'supplier_id' => '5',
+        'tanggal' => '2015-09-07',
+        'keterangan' => null,
+        'total' => '1548000',
+        'cash' => '0',
+        'credit' => null,
+        'status' => 'clear',
+        'created_at' => '1441781227',
+        'created_by' => '22',
+        'modified_at' => '1441781367',
+        'modified_by' => '22',
+        'klinik' => 'ANAINA SKINCARE MALANG',
+        'nama_supplier' => 'PT.KITOSHINDO INT BIOTECH',
+        'alamat' => 'DARMO PERMAI TIMUR XIII/32 SBY',
+        'no_tlp' => '0317327081',
+        'email' => null,
+    ],
+    [
+        'petugas' => 'dok Ina',
+        'id' => '4',
+        'kode' => 'BELI/003/00004',
+        'cabang_id' => '3',
+        'supplier_id' => '5',
+        'tanggal' => '2015-09-07',
+        'keterangan' => 'SI-KIB-1509104',
+        'total' => '400000',
+        'cash' => '0',
+        'credit' => '0',
+        'status' => 'clear',
+        'created_at' => '1441789262',
+        'created_by' => '22',
+        'modified_at' => '1441789262',
+        'modified_by' => '22',
+        'klinik' => 'ANAINA SKINCARE MALANG',
+        'nama_supplier' => 'PT.KITOSHINDO INT BIOTECH',
+        'alamat' => 'DARMO PERMAI TIMUR XIII/32 SBY',
+        'no_tlp' => '0317327081',
+        'email' => null,
+    ],
+    [
+        'petugas' => 'dok Ina',
+        'id' => '2',
+        'kode' => 'BELI/003/00001',
+        'cabang_id' => '3',
+        'supplier_id' => '6',
+        'tanggal' => '2015-09-02',
+        'keterangan' => 'SUNSCREEN ANTI AGING 25PCS',
+        'total' => '620000',
+        'cash' => '0',
+        'credit' => '620000',
+        'status' => 'clear',
+        'created_at' => '1441781008',
+        'created_by' => '22',
+        'modified_at' => '1441781266',
+        'modified_by' => '22',
+        'klinik' => 'ANAINA SKINCARE MALANG',
+        'nama_supplier' => 'PT.SANDRICA BHASWARA DERMA',
+        'alamat' => 'JKT',
+        'no_tlp' => '0',
+        'email' => null,
+    ],
+]
+    in /var/www/anainaskincare/api/controllers/PembelianController.php:358
+2016-03-24 09:53:18 [::1][-][-][info][application] $_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SESSION = [
+    'user' => [
+        'id' => 1
+        'username' => 'admin'
+        'nama' => 'administrator'
+        'akses' => stdClass#1
+        (
+            [master_roles] => true
+            [transaksi_stokmasuk] => true
+            [transaksi_stokkeluar] => true
+            [transaksi_pembelian] => true
+            [transaksi_bayarhutang] => true
+            [transaksi_returpembelian] => true
+            [transaksi_penjualan] => true
+            [transaksi_bayarpiutang] => true
+            [transaksi_returpenjualan] => true
+            [master_cabang] => true
+            [master_customer] => true
+            [master_supplier] => true
+            [master_pegawai] => true
+            [master_satuan] => true
+            [master_kategori] => true
+            [master_barang] => true
+            [master_user] => true
+            [laporan_kartustok] => true
+            [laporan_bonuskaryawan] => true
+            [laporan_labarugi] => true
+            [laporan_kartustatus] => true
+            [laporan_penjualan] => true
+            [laporan_barang] => true
+            [transaksi_terimabarang] => true
+            [transaksi_kirimbarang] => true
+        )
+        'settings' => stdClass#2
+        (
+            [themeID] => '11'
+            [navbarHeaderColor] => 'bg-primary'
+            [navbarCollapseColor] => 'bg-primary'
+            [asideColor] => 'bg-dark'
+            [container] => false
+        )
+        'cabang' => [
+            0 => [
+                'id' => '1'
+                'kode' => '001'
+                'nama' => 'RUMAH CANTIK ANAINA TRATAP'
+                'alamat' => 'JL. Roon 15, Sawotratap, Sdj'
+                'no_tlp' => '031-8532117'
+                'email' => ''
+                'is_deleted' => '0'
+            ]
+            1 => [
+                'id' => '2'
+                'kode' => '002'
+                'nama' => 'ANAINA  GEDANGAN'
+                'alamat' => 'Komp Ruko Central Square Blok B 10
+JL. A. Yani No 41-43, Gedangan'
+                'no_tlp' => '-'
+                'email' => ''
+                'is_deleted' => '0'
+            ]
+            2 => [
+                'id' => '3'
+                'kode' => '003'
+                'nama' => 'ANAINA SKINCARE MALANG'
+                'alamat' => 'Perum Citra Graha No 1, Banjar Arum - Singosari - Malang'
+                'no_tlp' => '0341-459017'
+                'email' => null
+                'is_deleted' => '0'
+            ]
+            3 => [
+                'id' => '4'
+                'kode' => '004'
+                'nama' => 'ANAINA KANTOR'
+                'alamat' => 'JL. ROON 15 SAWOTRATAP'
+                'no_tlp' => '031-8532217'
+                'email' => null
+                'is_deleted' => '0'
+            ]
+            4 => [
+                'id' => '5'
+                'kode' => '005'
+                'nama' => 'APOTEK ANAINA'
+                'alamat' => 'JL P. ROON 15'
+                'no_tlp' => '031-8532117'
+                'email' => null
+                'is_deleted' => '0'
+            ]
+        ]
+        'cabang_id' => [
+            0 => '1'
+            1 => '2'
+            2 => '3'
+            3 => '4'
+            4 => '5'
+        ]
+    ]
+    'query' => yii\db\Query#3
+    (
+        [select] => [
+            0 => 'm_user.nama as petugas'
+            1 => 'pe.*'
+            2 => 'ca.nama as klinik'
+            3 => 'su.nama as nama_supplier'
+            4 => 'su.alamat as alamat'
+            5 => 'su.no_tlp as no_tlp'
+            6 => 'su.email as email'
+        ]
+        [selectOption] => null
+        [distinct] => null
+        [from] => [
+            0 => 'pembelian as pe'
+        ]
+        [groupBy] => null
+        [join] => [
+            0 => [
+                0 => 'JOIN'
+                1 => 'm_supplier as su'
+                2 => 'pe.supplier_id = su.id'
+            ]
+            1 => [
+                0 => 'JOIN'
+                1 => 'm_cabang as ca'
+                2 => 'pe.cabang_id= ca.id'
+            ]
+            2 => [
+                0 => 'JOIN'
+                1 => 'm_user'
+                2 => 'm_user.id = pe.created_by'
+            ]
+        ]
+        [having] => null
+        [union] => null
+        [params] => []
+        [yii\base\Component:_events] => []
+        [yii\base\Component:_behaviors] => null
+        [where] => [
+            'pe.cabang_id' => [
+                0 => '1'
+                1 => '2'
+                2 => '3'
+                3 => '4'
+                4 => '5'
+            ]
+        ]
+        [limit] => ''
+        [offset] => ''
+        [orderBy] => [
+            'tanggal' => 3
+        ]
+        [indexBy] => null
+    )
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '59655'
+    'REDIRECT_URL' => '/anainaskincare/api/web/pembelian/excel'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/pembelian/excel'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1458787998.112
+    'REQUEST_TIME' => 1458787998
+]
+2016-03-24 10:30:33 [::1][-][-][error][application] [
+    [
+        'petugas' => 'dok Ina',
+        'id' => '7',
+        'kode' => 'BELI/003/00007',
+        'cabang_id' => '3',
+        'supplier_id' => '8',
+        'tanggal' => '2015-10-31',
+        'keterangan' => 'mlg',
+        'total' => '1500000',
+        'cash' => '0',
+        'credit' => '1500000',
+        'status' => 'puchase_order',
+        'created_at' => '1446960907',
+        'created_by' => '22',
+        'modified_at' => '1446960956',
+        'modified_by' => '22',
+        'klinik' => 'ANAINA SKINCARE MALANG',
+        'nama_supplier' => 'PT. I Tech Lafacos',
+        'alamat' => 'jkt',
+        'no_tlp' => '0214255593',
+        'email' => null,
+    ],
+    [
+        'petugas' => 'dok Ina',
+        'id' => '5',
+        'kode' => 'BELI/003/00005',
+        'cabang_id' => '3',
+        'supplier_id' => '7',
+        'tanggal' => '2015-10-30',
+        'keterangan' => null,
+        'total' => '1260000',
+        'cash' => '0',
+        'credit' => '1260000',
+        'status' => 'puchase_order',
+        'created_at' => '1446550590',
+        'created_by' => '22',
+        'modified_at' => '1446550894',
+        'modified_by' => '22',
+        'klinik' => 'ANAINA SKINCARE MALANG',
+        'nama_supplier' => 'SPN mlg',
+        'alamat' => 'sda',
+        'no_tlp' => '0',
+        'email' => '',
+    ],
+    [
+        'petugas' => 'dok Ina',
+        'id' => '6',
+        'kode' => 'BELI/003/00006',
+        'cabang_id' => '3',
+        'supplier_id' => '6',
+        'tanggal' => '2015-10-29',
+        'keterangan' => null,
+        'total' => '630000',
+        'cash' => '0',
+        'credit' => '0',
+        'status' => 'puchase_order',
+        'created_at' => '1446960268',
+        'created_by' => '22',
+        'modified_at' => '1446960268',
+        'modified_by' => '22',
+        'klinik' => 'ANAINA SKINCARE MALANG',
+        'nama_supplier' => 'PT.SANDRICA BHASWARA DERMA',
+        'alamat' => 'JKT',
+        'no_tlp' => '0',
+        'email' => null,
+    ],
+    [
+        'petugas' => 'dok Ina',
+        'id' => '3',
+        'kode' => 'BELI/003/00003',
+        'cabang_id' => '3',
+        'supplier_id' => '5',
+        'tanggal' => '2015-09-07',
+        'keterangan' => null,
+        'total' => '1548000',
+        'cash' => '0',
+        'credit' => null,
+        'status' => 'clear',
+        'created_at' => '1441781227',
+        'created_by' => '22',
+        'modified_at' => '1441781367',
+        'modified_by' => '22',
+        'klinik' => 'ANAINA SKINCARE MALANG',
+        'nama_supplier' => 'PT.KITOSHINDO INT BIOTECH',
+        'alamat' => 'DARMO PERMAI TIMUR XIII/32 SBY',
+        'no_tlp' => '0317327081',
+        'email' => null,
+    ],
+    [
+        'petugas' => 'dok Ina',
+        'id' => '4',
+        'kode' => 'BELI/003/00004',
+        'cabang_id' => '3',
+        'supplier_id' => '5',
+        'tanggal' => '2015-09-07',
+        'keterangan' => 'SI-KIB-1509104',
+        'total' => '400000',
+        'cash' => '0',
+        'credit' => '0',
+        'status' => 'clear',
+        'created_at' => '1441789262',
+        'created_by' => '22',
+        'modified_at' => '1441789262',
+        'modified_by' => '22',
+        'klinik' => 'ANAINA SKINCARE MALANG',
+        'nama_supplier' => 'PT.KITOSHINDO INT BIOTECH',
+        'alamat' => 'DARMO PERMAI TIMUR XIII/32 SBY',
+        'no_tlp' => '0317327081',
+        'email' => null,
+    ],
+    [
+        'petugas' => 'dok Ina',
+        'id' => '2',
+        'kode' => 'BELI/003/00001',
+        'cabang_id' => '3',
+        'supplier_id' => '6',
+        'tanggal' => '2015-09-02',
+        'keterangan' => 'SUNSCREEN ANTI AGING 25PCS',
+        'total' => '620000',
+        'cash' => '0',
+        'credit' => '620000',
+        'status' => 'clear',
+        'created_at' => '1441781008',
+        'created_by' => '22',
+        'modified_at' => '1441781266',
+        'modified_by' => '22',
+        'klinik' => 'ANAINA SKINCARE MALANG',
+        'nama_supplier' => 'PT.SANDRICA BHASWARA DERMA',
+        'alamat' => 'JKT',
+        'no_tlp' => '0',
+        'email' => null,
+    ],
+]
+    in /var/www/anainaskincare/api/controllers/PembelianController.php:358
+2016-03-24 10:30:33 [::1][-][-][info][application] $_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SESSION = [
+    'user' => [
+        'id' => 1
+        'username' => 'admin'
+        'nama' => 'administrator'
+        'akses' => stdClass#1
+        (
+            [master_roles] => true
+            [transaksi_stokmasuk] => true
+            [transaksi_stokkeluar] => true
+            [transaksi_pembelian] => true
+            [transaksi_bayarhutang] => true
+            [transaksi_returpembelian] => true
+            [transaksi_penjualan] => true
+            [transaksi_bayarpiutang] => true
+            [transaksi_returpenjualan] => true
+            [master_cabang] => true
+            [master_customer] => true
+            [master_supplier] => true
+            [master_pegawai] => true
+            [master_satuan] => true
+            [master_kategori] => true
+            [master_barang] => true
+            [master_user] => true
+            [laporan_kartustok] => true
+            [laporan_bonuskaryawan] => true
+            [laporan_labarugi] => true
+            [laporan_kartustatus] => true
+            [laporan_penjualan] => true
+            [laporan_barang] => true
+            [transaksi_terimabarang] => true
+            [transaksi_kirimbarang] => true
+        )
+        'settings' => stdClass#2
+        (
+            [themeID] => '11'
+            [navbarHeaderColor] => 'bg-primary'
+            [navbarCollapseColor] => 'bg-primary'
+            [asideColor] => 'bg-dark'
+            [container] => false
+        )
+        'cabang' => [
+            0 => [
+                'id' => '1'
+                'kode' => '001'
+                'nama' => 'RUMAH CANTIK ANAINA TRATAP'
+                'alamat' => 'JL. Roon 15, Sawotratap, Sdj'
+                'no_tlp' => '031-8532117'
+                'email' => ''
+                'is_deleted' => '0'
+            ]
+            1 => [
+                'id' => '2'
+                'kode' => '002'
+                'nama' => 'ANAINA  GEDANGAN'
+                'alamat' => 'Komp Ruko Central Square Blok B 10
+JL. A. Yani No 41-43, Gedangan'
+                'no_tlp' => '-'
+                'email' => ''
+                'is_deleted' => '0'
+            ]
+            2 => [
+                'id' => '3'
+                'kode' => '003'
+                'nama' => 'ANAINA SKINCARE MALANG'
+                'alamat' => 'Perum Citra Graha No 1, Banjar Arum - Singosari - Malang'
+                'no_tlp' => '0341-459017'
+                'email' => null
+                'is_deleted' => '0'
+            ]
+            3 => [
+                'id' => '4'
+                'kode' => '004'
+                'nama' => 'ANAINA KANTOR'
+                'alamat' => 'JL. ROON 15 SAWOTRATAP'
+                'no_tlp' => '031-8532217'
+                'email' => null
+                'is_deleted' => '0'
+            ]
+            4 => [
+                'id' => '5'
+                'kode' => '005'
+                'nama' => 'APOTEK ANAINA'
+                'alamat' => 'JL P. ROON 15'
+                'no_tlp' => '031-8532117'
+                'email' => null
+                'is_deleted' => '0'
+            ]
+        ]
+        'cabang_id' => [
+            0 => '1'
+            1 => '2'
+            2 => '3'
+            3 => '4'
+            4 => '5'
+        ]
+    ]
+    'query' => yii\db\Query#3
+    (
+        [select] => [
+            0 => 'm_user.nama as petugas'
+            1 => 'pe.*'
+            2 => 'ca.nama as klinik'
+            3 => 'su.nama as nama_supplier'
+            4 => 'su.alamat as alamat'
+            5 => 'su.no_tlp as no_tlp'
+            6 => 'su.email as email'
+        ]
+        [selectOption] => null
+        [distinct] => null
+        [from] => [
+            0 => 'pembelian as pe'
+        ]
+        [groupBy] => null
+        [join] => [
+            0 => [
+                0 => 'JOIN'
+                1 => 'm_supplier as su'
+                2 => 'pe.supplier_id = su.id'
+            ]
+            1 => [
+                0 => 'JOIN'
+                1 => 'm_cabang as ca'
+                2 => 'pe.cabang_id= ca.id'
+            ]
+            2 => [
+                0 => 'JOIN'
+                1 => 'm_user'
+                2 => 'm_user.id = pe.created_by'
+            ]
+        ]
+        [having] => null
+        [union] => null
+        [params] => []
+        [yii\base\Component:_events] => []
+        [yii\base\Component:_behaviors] => null
+        [where] => [
+            'pe.cabang_id' => [
+                0 => '1'
+                1 => '2'
+                2 => '3'
+                3 => '4'
+                4 => '5'
+            ]
+        ]
+        [limit] => ''
+        [offset] => ''
+        [orderBy] => [
+            'tanggal' => 3
+        ]
+        [indexBy] => null
+    )
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '59898'
+    'REDIRECT_URL' => '/anainaskincare/api/web/pembelian/excel'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/pembelian/excel'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1458790233.853
+    'REQUEST_TIME' => 1458790233
+]
+2016-03-24 11:07:53 [::1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined index: id' in /var/www/anainaskincare/api/controllers/PembelianController.php:181
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/PembelianController.php(181): yii\base\ErrorHandler->handleError(8, 'Undefined index...', '/var/www/anaina...', 181, Array)
+#1 [internal function]: app\controllers\PembelianController->actionCreate()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('create', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('pembelian/creat...', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2016-03-24 11:07:53 [::1][-][-][info][application] $_POST = [
+    '{\"pembelian\":{\"tanggal\":\"2016-03-24T04:05:57_165Z\",\"status\":\"clear\",\"cash\":\"630000\",\"credit\":0,\"kembalian\":0,\"supplier\":{\"nama\":\"PT_INDOMAKEUP\"},\"kode_cust\":\"001\",\"no_tlp\":\"0341447821\",\"email\":\"indomakeup@gmail_com\",\"alamat\":\"Jl_Perusahaan_Malang_Selatan\",\"cabang\":{\"id\":\"3\",\"kode\":\"003\",\"nama\":\"ANAINA_SKINCARE_MALANG\",\"alamat\":\"Perum_Citra_Graha_No_1,_Banjar_Arum_-_Singosari_-_Malang\",\"no_tlp\":\"0341-459017\",\"email\":null,\"is_deleted\":\"0\"},\"kode\":\"BELI/003/00008\",\"cabang_id\":\"3\",\"keterangan\":\"Dikirim_Via_POS\",\"total\":630000,\"total_belanja\":640000,\"diskon\":10000},\"pembeliandet\":' => [
+        '{\"id\":\"\",\"barang\":{\"id\":\"1119\",\"kode\":\"BT0197\",\"type\":\"Barang\",\"nama\":\"MASKER HIPERSENSITIF\",\"kategori_id\":\"32\",\"satuan_id\":\"9\",\"keterangan\":null,\"harga_beli_terakhir\":\"320000\",\"harga_jual\":null,\"diskon\":0,\"minimum_stok\":null,\"fee_terapis\":null,\"fee_dokter\":null,\"foto\":\"\",\"is_deleted\":\"0\",\"created_at\":null,\"created_by\":null,\"modified_at\":null,\"modified_by\":null},\"jumlah\":\"2\",\"harga\":\"320000\",\"diskon\":\"5000\",\"sub_total\":630000}' => ''
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '1015'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '60070'
+    'REDIRECT_URL' => '/anainaskincare/api/web/pembelian/create'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/pembelian/create'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1458792473.374
+    'REQUEST_TIME' => 1458792473
+]
+2016-03-24 11:08:55 [::1][-][-][error][yii\base\ErrorException:1] exception 'yii\base\ErrorException' with message 'Class 'app\controllers\Customer' not found' in /var/www/anainaskincare/api/controllers/PembelianController.php:186
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleFatalError()
+#1 {main}
+2016-03-24 11:08:55 [::1][-][-][info][application] $_POST = [
+    '{\"pembelian\":{\"tanggal\":\"2016-03-24T04:05:57_165Z\",\"status\":\"clear\",\"cash\":\"630000\",\"credit\":0,\"kembalian\":0,\"supplier\":{\"nama\":\"PT_INDOMAKEUP\"},\"kode_cust\":\"001\",\"no_tlp\":\"0341447821\",\"email\":\"indomakeup@gmail_com\",\"alamat\":\"Jl_Perusahaan_Malang_Selatan\",\"cabang\":{\"id\":\"3\",\"kode\":\"003\",\"nama\":\"ANAINA_SKINCARE_MALANG\",\"alamat\":\"Perum_Citra_Graha_No_1,_Banjar_Arum_-_Singosari_-_Malang\",\"no_tlp\":\"0341-459017\",\"email\":null,\"is_deleted\":\"0\"},\"kode\":\"BELI/003/00008\",\"cabang_id\":\"3\",\"keterangan\":\"Dikirim_Via_POS\",\"total\":630000,\"total_belanja\":640000,\"diskon\":10000},\"pembeliandet\":' => [
+        '{\"id\":\"\",\"barang\":{\"id\":\"1119\",\"kode\":\"BT0197\",\"type\":\"Barang\",\"nama\":\"MASKER HIPERSENSITIF\",\"kategori_id\":\"32\",\"satuan_id\":\"9\",\"keterangan\":null,\"harga_beli_terakhir\":\"320000\",\"harga_jual\":null,\"diskon\":0,\"minimum_stok\":null,\"fee_terapis\":null,\"fee_dokter\":null,\"foto\":\"\",\"is_deleted\":\"0\",\"created_at\":null,\"created_by\":null,\"modified_at\":null,\"modified_by\":null},\"jumlah\":\"2\",\"harga\":\"320000\",\"diskon\":\"5000\",\"sub_total\":630000}' => ''
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '1015'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '60071'
+    'REDIRECT_URL' => '/anainaskincare/api/web/pembelian/create'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/pembelian/create'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1458792535.062
+    'REQUEST_TIME' => 1458792535
+]
+2016-03-24 11:09:28 [::1][-][-][error][yii\base\UnknownPropertyException] exception 'yii\base\UnknownPropertyException' with message 'Setting unknown property: app\models\Pembelian::customer_id' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Component.php:197
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/BaseActiveRecord.php(266): yii\base\Component->__set('customer_id', NULL)
+#1 /var/www/anainaskincare/api/controllers/PembelianController.php(195): yii\db\BaseActiveRecord->__set('customer_id', NULL)
+#2 [internal function]: app\controllers\PembelianController->actionCreate()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('create', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('pembelian/creat...', Array)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#9 {main}
+2016-03-24 11:09:28 [::1][-][-][info][application] $_POST = [
+    '{\"pembelian\":{\"tanggal\":\"2016-03-24T04:05:57_165Z\",\"status\":\"clear\",\"cash\":\"630000\",\"credit\":0,\"kembalian\":0,\"supplier\":{\"nama\":\"PT_INDOMAKEUP\"},\"kode_cust\":\"001\",\"no_tlp\":\"0341447821\",\"email\":\"indomakeup@gmail_com\",\"alamat\":\"Jl_Perusahaan_Malang_Selatan\",\"cabang\":{\"id\":\"3\",\"kode\":\"003\",\"nama\":\"ANAINA_SKINCARE_MALANG\",\"alamat\":\"Perum_Citra_Graha_No_1,_Banjar_Arum_-_Singosari_-_Malang\",\"no_tlp\":\"0341-459017\",\"email\":null,\"is_deleted\":\"0\"},\"kode\":\"BELI/003/00008\",\"cabang_id\":\"3\",\"keterangan\":\"Dikirim_Via_POS\",\"total\":630000,\"total_belanja\":640000,\"diskon\":10000},\"pembeliandet\":' => [
+        '{\"id\":\"\",\"barang\":{\"id\":\"1119\",\"kode\":\"BT0197\",\"type\":\"Barang\",\"nama\":\"MASKER HIPERSENSITIF\",\"kategori_id\":\"32\",\"satuan_id\":\"9\",\"keterangan\":null,\"harga_beli_terakhir\":\"320000\",\"harga_jual\":null,\"diskon\":0,\"minimum_stok\":null,\"fee_terapis\":null,\"fee_dokter\":null,\"foto\":\"\",\"is_deleted\":\"0\",\"created_at\":null,\"created_by\":null,\"modified_at\":null,\"modified_by\":null},\"jumlah\":\"2\",\"harga\":\"320000\",\"diskon\":\"5000\",\"sub_total\":630000}' => ''
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '1015'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '60072'
+    'REDIRECT_URL' => '/anainaskincare/api/web/pembelian/create'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/pembelian/create'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1458792568.935
+    'REQUEST_TIME' => 1458792568
+]
