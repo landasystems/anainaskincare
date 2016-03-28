@@ -21,9 +21,70 @@ class SiteController extends Controller {
                     'logout' => ['get'],
                     'session' => ['get'],
                     'coba' => ['get'],
+                    'penjualan' => ['post'],
                 ],
             ]
         ];
+    }
+
+    public function actionPenjualan() {
+        $month = 02;
+        $year = 2016;
+        session_start();
+        $pen = \app\models\Penjualan::find()
+                ->joinWith('cabang')
+                ->where('month(tanggal) = "' . $month . '" and year(tanggal) = "' . $year . '"')
+                ->andWhere(['IN', 'cabang_id', $_SESSION['user']['cabang_id']])
+                ->all();
+
+        $dt = array();
+        foreach ($pen as $val) {
+            $dt[$val->cabang_id] = $val->cabang->nama;
+            $dt[$val->tanggal][$val->cabang_id]['total'] = (isset($dt[$val->tanggal][$val->cabang_id]) ? $dt[$val->tanggal][$val->cabang_id]['total'] : 0 ) + $val->total;
+        }
+
+        $bts = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        $awal = $year . '-' . $month . '-01';
+        $akhir = $year . '-' . $month . '-' . $bts;
+
+        $start = new \DateTime($awal);
+        $end = new \DateTime($akhir);
+        $end = $end->modify('+1 day');
+
+        $interval = new \DateInterval('P1D');
+        $daterange = new \DatePeriod($start, $interval, $end);
+
+        $data = array();
+        foreach ($daterange as $date) {
+
+            $dy = $date->format('d');
+            $mn = $date->format('m');
+            $yr = $date->format('Y');
+
+            $tgl = mktime(0, 0, 0, $mn, $dy, $yr);
+            $tanggal = date("Y-m-d", $tgl);
+
+            if (isset($dt[$tanggal])) {
+                foreach ($dt[$tanggal] as $key => $val) {
+                    if (isset($dt[$tanggal][$key])) {
+                        $data[$key]['data'][] = $dt[$tanggal][$key]['total'];
+                        $data[$key]['name'] = isset($dt[$key]) ? $dt[$key] : '-';
+                    } else {
+                        $data[$key]['data'] = 0;
+                        $data[$key]['name'] = isset($dt[$key]) ? $dt[$key] : '-';
+                    }
+                }
+            } else {
+                foreach ($_SESSION['user']['cabang'] as $val) {
+                    $data[$val['id']]['data'][] = 0;
+                    $data[$val['id']]['name'] = $val['nama'];
+                }
+            }
+
+            $title = 'Penjualan Bulan ' . date('m', $tgl) . ' Tahun ' . date("Y", $tgl);
+            $kategori[] = date("d M y", $tgl);
+        }
+        echo json_encode(array('data' => $data, 'kategori' => $kategori, 'title' => $title));
     }
 
     public function beforeAction($event) {

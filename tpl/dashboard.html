@@ -1,42 +1,12 @@
-<div class="bg-light lter b-b wrapper-md">
-    <h1 class="m-n font-thin h3">Selamat Datang - Area Administrator</h1>
-</div>
-<!--<div class="wrapper-md" ng-controller="dashboardCtrl">
-    <div class="panel panel-default">
-        <div class="panel-heading">Chat</div>
-        <div class="panel-body">
-            <div ng-repeat =" message in messages">
-                <div class="m-b">
-                    <a href="" class="pull-left thumb-sm avatar">
-                        <img src="img/a0.jpg" alt="...">
-                    </a>
-                    <div class="m-l-xxl">
-                        <div class="pos-rlt wrapper b b-light r r-2x">
-                            <span class="arrow left pull-up"></span>
-                            <p><i>{{message.username}}</i></p>
-                            <p class="m-b-none">{{ message.text}}</p>
-                        </div>
-                        <small class="text-muted">
-                            <i class="fa fa-ok text-success"></i> 
-                            {{message.tgl|date}}
-                        </small>
-                    </div>
-                </div>
-            </div>                          
-        </div>
-        <footer class="panel-footer">
-             chat form 
-            <div>
-                <a class="pull-left thumb-xs avatar"><img src="img/a0.jpg" class="img-circle" alt="..."></a>
-                <form class="m-b-none m-l-xl ng-pristine ng-valid">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Say something" ng-model="newMessageText">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" ng-click="addMessage()">SEND</button>
-                        </span>
-                    </div>
-                </form>
+<div ng-controller="dashboardCtrl">
+    <div class="bg-light lter b-b wrapper-md">
+        <h1 class="m-n font-thin h3">Selamat Datang - Area Administrator</h1>
+    </div>
+    <div class="wrapper-md">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <highchart id="chart1" config="penjualan" class="span5"></highchart>
             </div>
-        </footer>
-    </div>-->
+        </div>
+    </div>
 </div>

@@ -86,6 +86,10 @@ class Penjualan extends \yii\db\ActiveRecord {
     public function customers() {
         return $this->hasOne(Customer::className(), ['id' => 'customer_id']);
     }
+    
+    public function getcabang() {
+        return $this->hasOne(Cabang::className(), ['id' => 'cabang_id']);
+    }
 
     public function behaviors() {
         return [

@@ -7302,3 +7302,700 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1459132172.057
     'REQUEST_TIME' => 1459132172
 ]
+2016-03-28 10:29:15 [::1][-][-][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[42S02]: Base table or view not found: 1146 Table 'landa_anaina_v2.cabang' doesn't exist' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php:825
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(825): PDOStatement->execute()
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(349): yii\db\Command->queryInternal('fetchAll', NULL)
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(206): yii\db\Command->queryAll()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(130): yii\db\Query->all(NULL)
+#4 /var/www/anainaskincare/api/controllers/SiteController.php(34): yii\db\ActiveQuery->all()
+#5 [internal function]: app\controllers\SiteController->actionPenjualan()
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('penjualan', Array)
+#9 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/penjualan', Array)
+#10 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#11 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#12 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[42S02]: Base table or view not found: 1146 Table 'landa_anaina_v2.cabang' doesn't exist
+The SQL being executed was: SELECT `penjualan`.* FROM `penjualan` LEFT JOIN `cabang` ON cabang.id =  penjualan.cabang_id WHERE month(tanggal) = "03" and year(tanggal) = "16"' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php:595
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(840): yii\db\Schema->convertException(Object(PDOException), 'SELECT `penjual...')
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(349): yii\db\Command->queryInternal('fetchAll', NULL)
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(206): yii\db\Command->queryAll()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(130): yii\db\Query->all(NULL)
+#4 /var/www/anainaskincare/api/controllers/SiteController.php(34): yii\db\ActiveQuery->all()
+#5 [internal function]: app\controllers\SiteController->actionPenjualan()
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('penjualan', Array)
+#9 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/penjualan', Array)
+#10 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#11 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#12 {main}
+Additional Information:
+Array
+(
+    [0] => 42S02
+    [1] => 1146
+    [2] => Table 'landa_anaina_v2.cabang' doesn't exist
+)
+
+2016-03-28 10:29:15 [::1][-][-][info][application] $_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '0'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '48674'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/penjualan'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/penjualan'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459135755.376
+    'REQUEST_TIME' => 1459135755
+]
+2016-03-28 10:30:53 [::1][-][-][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[42000]: Syntax error or access violation: 1305 FUNCTION landa_anaina_v2.montha does not exist' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php:825
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(825): PDOStatement->execute()
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(349): yii\db\Command->queryInternal('fetchAll', NULL)
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(206): yii\db\Command->queryAll()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(130): yii\db\Query->all(NULL)
+#4 /var/www/anainaskincare/api/controllers/SiteController.php(34): yii\db\ActiveQuery->all()
+#5 [internal function]: app\controllers\SiteController->actionPenjualan()
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('penjualan', Array)
+#9 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/penjualan', Array)
+#10 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#11 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#12 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[42000]: Syntax error or access violation: 1305 FUNCTION landa_anaina_v2.montha does not exist
+The SQL being executed was: SELECT * FROM `penjualan` WHERE montha(tanggal) = "03" and year(tanggal) = "16"' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php:595
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(840): yii\db\Schema->convertException(Object(PDOException), 'SELECT * FROM `...')
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(349): yii\db\Command->queryInternal('fetchAll', NULL)
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(206): yii\db\Command->queryAll()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(130): yii\db\Query->all(NULL)
+#4 /var/www/anainaskincare/api/controllers/SiteController.php(34): yii\db\ActiveQuery->all()
+#5 [internal function]: app\controllers\SiteController->actionPenjualan()
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('penjualan', Array)
+#9 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/penjualan', Array)
+#10 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#11 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#12 {main}
+Additional Information:
+Array
+(
+    [0] => 42000
+    [1] => 1305
+    [2] => FUNCTION landa_anaina_v2.montha does not exist
+)
+
+2016-03-28 10:30:53 [::1][-][-][info][application] $_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '0'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '48706'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/penjualan'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/penjualan'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459135853.156
+    'REQUEST_TIME' => 1459135853
+]
+2016-03-28 10:32:17 [::1][-][-][error][yii\base\InvalidParamException] exception 'yii\base\UnknownMethodException' with message 'Calling unknown method: app\models\Penjualan::getcabang()' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Component.php:285
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/BaseActiveRecord.php(1111): yii\base\Component->__call('getcabang', Array)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/BaseActiveRecord.php(1111): app\models\Penjualan->getcabang()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(457): yii\db\BaseActiveRecord->getRelation('cabang')
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(372): yii\db\ActiveQuery->joinWithRelations(Object(app\models\Penjualan), Array, 'LEFT JOIN')
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(143): yii\db\ActiveQuery->buildJoinWith()
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/QueryBuilder.php(88): yii\db\ActiveQuery->prepare(Object(yii\db\mysql\QueryBuilder))
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(309): yii\db\QueryBuilder->build(Object(yii\db\ActiveQuery))
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(206): yii\db\ActiveQuery->createCommand(NULL)
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(130): yii\db\Query->all(NULL)
+#9 /var/www/anainaskincare/api/controllers/SiteController.php(35): yii\db\ActiveQuery->all()
+#10 [internal function]: app\controllers\SiteController->actionPenjualan()
+#11 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#12 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('penjualan', Array)
+#14 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/penjualan', Array)
+#15 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#16 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#17 {main}
+
+Next exception 'yii\base\InvalidParamException' with message 'app\models\Penjualan has no relation named "cabang".' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/BaseActiveRecord.php:1114
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(457): yii\db\BaseActiveRecord->getRelation('cabang')
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(372): yii\db\ActiveQuery->joinWithRelations(Object(app\models\Penjualan), Array, 'LEFT JOIN')
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(143): yii\db\ActiveQuery->buildJoinWith()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/QueryBuilder.php(88): yii\db\ActiveQuery->prepare(Object(yii\db\mysql\QueryBuilder))
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(309): yii\db\QueryBuilder->build(Object(yii\db\ActiveQuery))
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(206): yii\db\ActiveQuery->createCommand(NULL)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(130): yii\db\Query->all(NULL)
+#7 /var/www/anainaskincare/api/controllers/SiteController.php(35): yii\db\ActiveQuery->all()
+#8 [internal function]: app\controllers\SiteController->actionPenjualan()
+#9 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#10 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#11 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('penjualan', Array)
+#12 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/penjualan', Array)
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#14 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#15 {main}
+2016-03-28 10:32:17 [::1][-][-][info][application] $_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '0'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '48729'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/penjualan'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/penjualan'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459135937.674
+    'REQUEST_TIME' => 1459135937
+]
+2016-03-28 10:39:13 [::1][-][-][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[42S02]: Base table or view not found: 1051 Unknown table 't'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php:825
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(825): PDOStatement->execute()
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(349): yii\db\Command->queryInternal('fetchAll', NULL)
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(206): yii\db\Command->queryAll()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(130): yii\db\Query->all(NULL)
+#4 /var/www/anainaskincare/api/controllers/SiteController.php(35): yii\db\ActiveQuery->all()
+#5 [internal function]: app\controllers\SiteController->actionPenjualan()
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('penjualan', Array)
+#9 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/penjualan', Array)
+#10 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#11 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#12 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[42S02]: Base table or view not found: 1051 Unknown table 't'
+The SQL being executed was: SELECT `t`.*, sum(t.total), `cabang`.`nama` AS `cabang` FROM `penjualan` LEFT JOIN `m_cabang` ON `penjualan`.`cabang_id` = `m_cabang`.`id` WHERE month(tanggal) = "03" and year(tanggal) = "2016"' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php:595
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(840): yii\db\Schema->convertException(Object(PDOException), 'SELECT `t`.*, s...')
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(349): yii\db\Command->queryInternal('fetchAll', NULL)
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(206): yii\db\Command->queryAll()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(130): yii\db\Query->all(NULL)
+#4 /var/www/anainaskincare/api/controllers/SiteController.php(35): yii\db\ActiveQuery->all()
+#5 [internal function]: app\controllers\SiteController->actionPenjualan()
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('penjualan', Array)
+#9 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/penjualan', Array)
+#10 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#11 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#12 {main}
+Additional Information:
+Array
+(
+    [0] => 42S02
+    [1] => 1051
+    [2] => Unknown table 't'
+)
+
+2016-03-28 10:39:13 [::1][-][-][info][application] $_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '0'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '48827'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/penjualan'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/penjualan'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459136353.119
+    'REQUEST_TIME' => 1459136353
+]
+2016-03-28 10:39:31 [::1][-][-][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'cabang.nama' in 'field list'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php:825
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(825): PDOStatement->execute()
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(349): yii\db\Command->queryInternal('fetchAll', NULL)
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(206): yii\db\Command->queryAll()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(130): yii\db\Query->all(NULL)
+#4 /var/www/anainaskincare/api/controllers/SiteController.php(35): yii\db\ActiveQuery->all()
+#5 [internal function]: app\controllers\SiteController->actionPenjualan()
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('penjualan', Array)
+#9 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/penjualan', Array)
+#10 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#11 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#12 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'cabang.nama' in 'field list'
+The SQL being executed was: SELECT `penjualan`.*, sum(penjualan.total), `cabang`.`nama` AS `cabang` FROM `penjualan` LEFT JOIN `m_cabang` ON `penjualan`.`cabang_id` = `m_cabang`.`id` WHERE month(tanggal) = "03" and year(tanggal) = "2016"' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php:595
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(840): yii\db\Schema->convertException(Object(PDOException), 'SELECT `penjual...')
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(349): yii\db\Command->queryInternal('fetchAll', NULL)
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(206): yii\db\Command->queryAll()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(130): yii\db\Query->all(NULL)
+#4 /var/www/anainaskincare/api/controllers/SiteController.php(35): yii\db\ActiveQuery->all()
+#5 [internal function]: app\controllers\SiteController->actionPenjualan()
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('penjualan', Array)
+#9 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/penjualan', Array)
+#10 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#11 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#12 {main}
+Additional Information:
+Array
+(
+    [0] => 42S22
+    [1] => 1054
+    [2] => Unknown column 'cabang.nama' in 'field list'
+)
+
+2016-03-28 10:39:31 [::1][-][-][info][application] $_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '0'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '48839'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/penjualan'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/penjualan'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459136371.05
+    'REQUEST_TIME' => 1459136371
+]
+2016-03-28 10:56:09 [::1][-][-][error][yii\base\ErrorException:1] exception 'yii\base\ErrorException' with message 'Unsupported operand types' in /var/www/anainaskincare/api/controllers/SiteController.php:39
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleFatalError()
+#1 {main}
+2016-03-28 10:56:09 [::1][-][-][info][application] $_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '0'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '48897'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/penjualan'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/penjualan'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459137369.611
+    'REQUEST_TIME' => 1459137369
+]
+2016-03-28 10:56:45 [::1][-][-][error][Exception] exception 'Exception' with message 'DatePeriod::__construct(): This constructor accepts either (DateTimeInterface, DateInterval, int) OR (DateTimeInterface, DateInterval, DateTime) OR (string) as arguments.' in /var/www/anainaskincare/api/controllers/SiteController.php:47
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/SiteController.php(47): DatePeriod->__construct('2016-03-01', Object(DateInterval), '2016-03-31')
+#1 [internal function]: app\controllers\SiteController->actionPenjualan()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('penjualan', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/penjualan', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2016-03-28 10:56:45 [::1][-][-][info][application] $_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '0'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '48900'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/penjualan'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/penjualan'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459137405.586
+    'REQUEST_TIME' => 1459137405
+]
+2016-03-28 11:10:01 [::1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined offset: 1' in /var/www/anainaskincare/api/controllers/SiteController.php:64
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/SiteController.php(64): yii\base\ErrorHandler->handleError(8, 'Undefined offse...', '/var/www/anaina...', 64, Array)
+#1 [internal function]: app\controllers\SiteController->actionPenjualan()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('penjualan', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/penjualan', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2016-03-28 11:10:01 [::1][-][-][info][application] $_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '0'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '48995'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/penjualan'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/penjualan'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459138201.039
+    'REQUEST_TIME' => 1459138201
+]
+2016-03-28 11:10:38 [::1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined index: 2016-03-01' in /var/www/anainaskincare/api/controllers/SiteController.php:62
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/SiteController.php(62): yii\base\ErrorHandler->handleError(8, 'Undefined index...', '/var/www/anaina...', 62, Array)
+#1 [internal function]: app\controllers\SiteController->actionPenjualan()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('penjualan', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/penjualan', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2016-03-28 11:10:37 [::1][-][-][info][application] $_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '0'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '49004'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/penjualan'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/penjualan'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459138237.462
+    'REQUEST_TIME' => 1459138237
+]
+2016-03-28 11:11:21 [::1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined index: 2016-03-01' in /var/www/anainaskincare/api/controllers/SiteController.php:62
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/SiteController.php(62): yii\base\ErrorHandler->handleError(8, 'Undefined index...', '/var/www/anaina...', 62, Array)
+#1 [internal function]: app\controllers\SiteController->actionPenjualan()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('penjualan', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/penjualan', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2016-03-28 11:11:20 [::1][-][-][info][application] $_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '0'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '49008'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/penjualan'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/penjualan'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459138280.998
+    'REQUEST_TIME' => 1459138280
+]
