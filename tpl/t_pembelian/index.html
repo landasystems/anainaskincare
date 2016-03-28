@@ -113,14 +113,14 @@
                         <label class="col-md-2 col-sm-3 control-label">Supplier</label>
                         <div class="col-md-4  col-sm-9">
                             <div class="input-group">
-                                <ui-select tagging="tagSupplier" tagging-label="false" on-select="pilihSupplier(form,$item)" ng-model="form.supplier" theme="bootstrap">
+                                <ui-select tagging="tagSupplier" tagging-label="false" on-select="pilihSupplier(form,$item)" ng-disabled="is_view" ng-model="form.supplier" theme="bootstrap">
                                     <ui-select-match>{{$select.selected.nama}}</ui-select-match>
                                     <ui-select-choices refresh="cariSupplier($select.search,form)" repeat="supp in listSupplier">
                                         {{supp.nama}}
                                     </ui-select-choices>
                                 </ui-select>
                                 <span class="input-group-btn">
-                                    <button ng-click="form.supplier = undefined" class="btn btn-default">
+                                    <button ng-disabled="is_view" ng-click="form.supplier = undefined" class="btn btn-default">
                                         <span class="glyphicon glyphicon-trash"></span>
                                     </button>
                                 </span>
@@ -134,17 +134,17 @@
                     <div class="form-group">
                         <label class="col-md-2 col-sm-3 control-label">Alamat</label>
                         <div class="col-md-10 col-sm-9">
-                            <input type="text" class="form-control" ng-model="form.alamat" ng-disabled="read" >
+                            <input type="text" class="form-control" ng-model="form.alamat" ng-disabled="is_view" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-2 col-sm-3 control-label">No Telpon</label>
                         <div class="col-md-4 col-sm-9">
-                            <input type="text" class="form-control" ng-model="form.no_tlp" ng-disabled="read" >
+                            <input type="text" class="form-control" ng-model="form.no_tlp" ng-disabled="is_view" >
                         </div>
                         <label class="col-md-2 col-sm-3 control-label">Email</label>
                         <div class="col-md-4 col-sm-9">
-                            <input type="text" class="form-control" ng-model="form.email" ng-disabled="read" >
+                            <input type="text" class="form-control" ng-model="form.email" ng-disabled="is_view" >
                         </div>
                     </div>
                     <div class="form-group">
@@ -155,7 +155,7 @@
                     <div class="form-group">
                         <label class="col-md-2 col-sm-3 control-label">Cabang</label>
                         <div class="col-md-3 col-sm-9">
-                            <ui-select on_select="getkode_cabang(form,is_create)" ng-model="form.cabang" theme="bootstrap">
+                            <ui-select on_select="getkode_cabang(form,is_create)" ng-model="form.cabang" theme="bootstrap" ng-disabled="is_view">
                                 <ui-select-match placeholder="Cari Cabang">{{$select.selected.nama}}</ui-select-match>
                                 <ui-select-choices group-by="'group'" repeat="dokter in sCabang | filter: $select.search">
                                     <div ng-bind-html="dokter.nama | highlight: $select.search"></div>
@@ -171,7 +171,7 @@
                         <label class="col-md-2 col-sm-3 control-label">Tanggal</label>
                         <div class="col-md-2 col-sm-9">
                             <div class="input-group">
-                                <input type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="form.tanggal" is-open="opened1" ng-click="open1($event)"/>
+                                <input type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="form.tanggal" is-open="opened1" ng-click="open1($event)" ng-disabled="is_view"/>
                                 <span class="input-group-addon">
                                     <i class="fa fa-calendar-o"></i>
                                 </span>
@@ -224,7 +224,7 @@
                                                     </ui-select-choices>
                                                 </ui-select>
                                                 <span class="input-group-btn">
-                                                    <button ng-click="detail.barang = undefined" class="btn btn-default">
+                                                    <button ng-click="detail.barang = undefined" ng-disabled="is_view" class="btn btn-default">
                                                         <span class="glyphicon glyphicon-trash"></span>
                                                     </button>
                                                 </span>

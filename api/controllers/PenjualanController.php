@@ -499,12 +499,14 @@ class PenjualanController extends Controller {
     }
 
     public function actionCari() {
+        session_start();
         $params = $_REQUEST;
         $query = new Query;
         $query->from('penjualan')
                 ->select("penjualan.*")
                 ->where(['penjualan.cabang_id' => $_SESSION['user']['cabang_id']])
-                ->andWhere(['like', 'kode', $params['nama']]);
+                ->andWhere(['like', 'kode', $params['nama']])
+                ->limit(10);
         $command = $query->createCommand();
         $models = $command->queryAll();
         $this->setHeader(200);

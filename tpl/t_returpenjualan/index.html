@@ -74,7 +74,7 @@
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ></button>
-                                    <button type="button" class="btn btn-danger fa fa-minus-circle" ng-click="delete(row);"></button>
+                                    <button type="button" class="btn btn-danger fa fa-trash-o" ng-click="delete(row);"></button>
                                 </div> 
                             </td>
                         </tr>
@@ -108,129 +108,111 @@
                         </div> 
                     </div>
                     <div class="panel-body">
-                        <div class="col-sm-12">
-                            <div class="col-md-4 col-sm-12">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Kode</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" ng-model="form.kode" ng-disabled="true">
-                                    </div>
-                                </div>
+                        <div class="form-group">
+                            <label class="col-md-1 col-sm-3 control-label">Kode</label>
+                            <div class="col-md-3 col-sm-9">
+                                <input type="text" class="form-control" ng-model="form.kode" ng-disabled="true">
                             </div>
-                            <div class="col-md-4 col-sm-12">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Tanggal</label>
-                                    <div class="col-sm-9">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-model="form.tanggal" is-open="opened1" ng-click="open1($event)"/>
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-calendar-o"></i>
-                                            </span>
-                                        </div>
-                                    </div>
+                            <label class="col-md-1 col-sm-3 control-label">Tanggal</label>
+                            <div class="col-md-3 col-sm-9">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" datepicker-popup="dd-MM-yyyy" ng-disabled="is_view" ng-model="form.tanggal" is-open="opened1" ng-click="open1($event)"/>
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar-o"></i>
+                                    </span>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 col-sm-12">
-                            <p class="text-muted font-bold">Detail Customer</p>
-                            <div class="form-group"  >
-                                <label class="col-sm-3 control-label">Kode Penjualan</label>
-                                <div class="col-sm-9">
-                                    <ui-select on-select="getkodepenjualan(penjualan)" ng-model="penjualan" theme="bootstrap">
-                                        {{$select.selected.nama}}
-                                        <ui-select-match placeholder="Cari Kode Penjualan">{{$select.selected.kode}}</ui-select-match>
-                                        <ui-select-choices refresh="cariKode($select.search)" repeat="val in results">
-                                            {{val.kode}}
-                                        </ui-select-choices>
-                                    </ui-select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">No Telpon</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" ng-model="penjualan.no_tlp" ng-disabled="true" >
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Email</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" ng-model="penjualan.email" ng-disabled="true" >
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Alamat</label>
-                                <div class="col-sm-9">
-                                    <textarea class="form-control" rows="4" ng-model="penjualan.alamat" ng-disabled="true" ></textarea>
-                                </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <h5 class="font-bold">- Data Penjualan</h5> 
                             </div>
                         </div>
-                        <div class="col-md-4 col-sm-12">
-                            <p class="text-muted font-bold">Detail Cabang</p>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Cabang</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" ng-model="penjualan.klinik" ng-disabled="true" >
-                                </div>
+                        <div class="form-group">
+                            <label class="col-md-1 col-sm-3 control-label">Kode</label>
+                            <div class="col-md-3 col-sm-9">
+                                <ui-select on-select="getkodepenjualan(penjualan)" ng-model="penjualan" ng-disabled="is_view" theme="bootstrap">
+                                    {{$select.selected.nama}}
+                                    <ui-select-match placeholder="Cari Kode Penjualan">{{$select.selected.kode}}</ui-select-match>
+                                    <ui-select-choices refresh="cariKode($select.search)" repeat="val in results">
+                                        {{val.kode}}
+                                    </ui-select-choices>
+                                </ui-select>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Keterangan</label>
-                                <div class="col-sm-9">
-                                    <textarea class="form-control" rows="4" ng-model="penjualan.keterangan" ng-disabled="true" ></textarea> 
-                                </div>
+                            <label class="col-md-1 col-sm-3 control-label">Tanggal</label>
+                            <div class="col-md-3 col-sm-9">
+                                <input type="text" class="form-control" value="{{penjualan.tanggal|date}}" ng-disabled="true" >
                             </div>
-                        </div>
-                        <div class="col-md-4 col-sm-12">
-                            <p class="text-muted font-bold">Pembayaran</p>
-                            <div class="form-group">
-                                <label class="col-sm-5 control-label">Total</label>
-                                <div class="col-sm-7">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" ng-model="penjualan.total" ng-disabled="true" >
-                                    </div>  
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-5 control-label">Cash</label>
-                                <div class="col-sm-7">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" ng-model="penjualan.cash" ng-disabled="true" >
-                                    </div>  
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-5 control-label">Credit</label>
-                                <div class="col-sm-7">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" ng-model="penjualan.credit" ng-disabled="true" >
-                                    </div>  
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-5 control-label">Kembalian</label>
-                                <div class="col-sm-7">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" value="{{penjualan.cash - penjualan.total}}" ng-disabled="true" >
-                                    </div>  
-                                </div>
+                            <label class="col-md-1 col-sm-3 control-label">Cabang</label>
+                            <div class="col-md-3 col-sm-9">
+                                <input type="text" class="form-control" ng-model="penjualan.klinik" ng-disabled="true" >
                             </div>
                         </div>
-                        <div class="line line-dashed b-b line-lg pull-in"></div>
-                        <h5 class="font-bold">- Detail Retur Penjualan</h5> 
+                        <div class="form-group">
+                            <label class="col-md-1 col-sm-3 control-label">Keterangan</label>
+                            <div class="col-md-11 col-sm-9">
+                                <input type="text" class="form-control" ng-model="penjualan.keterangan" ng-disabled="true" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-1 col-sm-3 control-label">Customer</label>
+                            <div class="col-md-3 col-sm-9">
+                                <input type="text" class="form-control" ng-model="penjualan.customer" ng-disabled="true" >
+                            </div>
+                            <label class="col-md-1 col-sm-3 control-label">No Telpon</label>
+                            <div class="col-md-3 col-sm-9">
+                                <input type="text" class="form-control" ng-model="penjualan.no_tlp" ng-disabled="true" >
+                            </div>
+                            <label class="col-md-1 col-sm-3 control-label">Email</label>
+                            <div class="col-md-3 col-sm-9">
+                                <input type="text" class="form-control" ng-model="penjualan.email" ng-disabled="true" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-1 col-sm-3 control-label">Alamat</label>
+                            <div class="col-md-11 col-sm-9">
+                                <input type="text" class="form-control" ng-model="penjualan.alamat" ng-disabled="true" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-1 col-sm-3 control-label">Total</label>
+                            <div class="col-md-3 col-sm-9">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Rp</span>
+                                    <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" value="{{penjualan.total| number}}" ng-disabled="true" >
+                                </div>  
+                            </div>
+                            <label class="col-md-1 col-sm-3 control-label">Cash</label>
+                            <div class="col-md-3 col-sm-9">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Rp</span>
+                                    <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" value="{{penjualan.cash| number}}" ng-disabled="true" >
+                                </div>  
+                            </div>
+                            <label class="col-md-1 col-sm-3 control-label">Credit</label>
+                            <div class="col-md-3 col-sm-9">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Rp</span>
+                                    <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" value="{{penjualan.credit| number}}" ng-disabled="true" >
+                                </div>  
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <h5 class="font-bold">- Detail Retur Penjualan</h5> 
+                            </div>
+                        </div>
                         <table class="table table-bordered det-trans">
                             <thead>
                                 <tr>
                                     <th style="text-align: center;">Barang</th>
                                     <th style="text-align: center;">Jumlah</th>
                                     <th style="text-align: center;">Jumlah Retur</th>
-                                    <th style="text-align: center;">Tipe</th>
+                                    <!--<th style="text-align: center;">Tipe</th>-->
                                     <th style="text-align: center;">Harga Awal</th>
-                                    <th style="text-align: center;">Harga</th>
-                                    <th style="text-align: center;">Diskon</th>
-                                    <th style="text-align: center;">Sub total Retur</th>
+                                    <th style="text-align: center;">Harga Retur</th>
+                                    <!--<th style="text-align: center;">Diskon</th>-->
+                                    <th style="text-align: center;">Sub total</th>
                                 </tr>
                             </thead>
                             <tr ng-repeat="detail in detPenjualan">
@@ -241,29 +223,29 @@
                                     <input type="text" class="form-control angka"  ng-keyup="total()"  ng-model="detail.jumlah"  ng-readonly="true" >
                                 </td>
                                 <td style="width:90px">
-                                    <input  type="text" class="form-control angka"  ng-keyup="total()"  ng-model="detail.jumlah_retur"   >
+                                    <input  type="text" class="form-control angka"  ng-keyup="total()"  ng-model="detail.jumlah_retur" ng-disabled="is_view">
                                 </td>
-                                <td style="width: 135px">
-                                    <input type="text" class="form-control" ng-maxlength="8"  ng-model="detail.type"  ng-disabled="true" ng-readonly="is_create == false" >
-                                </td>
+                                <!--                                <td style="width: 135px">
+                                                                    <input type="text" class="form-control" ng-maxlength="8"  ng-model="detail.type"  ng-disabled="true" ng-readonly="is_create == false" >
+                                                                </td>-->
                                 <td style="width:135px">
                                     <div class="input-group">
                                         <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control angka" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.harga_awal" ng-disabled="true" >
+                                        <input type="text" class="form-control angka" ng-maxlength="15" ng-keyup="total()"  ng-model="detail.harga_awal" ng-disabled="true" >
                                     </div>
                                 </td>
                                 <td style="width:135px"">
                                     <div class="input-group">
                                         <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control angka" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.harga"  >
+                                        <input type="text" class="form-control angka" ng-maxlength="15" ng-disabled="is_view" ng-keyup="total()"  ng-model="detail.harga"  >
                                     </div>
                                 </td>
-                                <td style="width:135px">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control angka" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.diskon_awal"  >
-                                    </div>
-                                </td>
+                                <!--                                <td style="width:135px">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon">Rp</span>
+                                                                        <input type="text" class="form-control angka" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-keyup="total()"  ng-model="detail.diskon_awal"  >
+                                                                    </div>
+                                                                </td>-->
                                 <td style="width:135px">
                                     <div class="input-group">
                                         <span class="input-group-addon">Rp</span>
@@ -272,16 +254,16 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th colspan="7" style="text-align: right;">Biaya Lain :&nbsp;</th>
+                                <th colspan="5" style="text-align: right;">Biaya Lain :&nbsp;</th>
                                 <td style="width:135px" >
                                     <div class="input-group">
                                         <span class="input-group-addon">Rp</span>
-                                        <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" ng-keyup="total()" ng-model="form.biaya_lain" ng-disabled="is_view" >
+                                        <input type="text" class="form-control angka" ng-disabled="is_view" ng-pattern="/^[0-9]+$/" ng-keyup="total()" ng-model="form.biaya_lain" ng-disabled="is_view" >
                                     </div> 
                                 </td>
                             </tr>
                             <tr>
-                                <th colspan="7" style="text-align: right;">Total :&nbsp;</th>
+                                <th colspan="5" style="text-align: right;">Total :&nbsp;</th>
                                 <td style="width:135px" >
                                     <div class="input-group" style="margin:0px;">
                                         <span class="input-group-addon">Rp</span>
@@ -290,91 +272,89 @@
                                 </td>
                             </tr>
                         </table>
-                        <div class="line line-dashed b-b line-lg pull-in"></div>
                         <div align="center">
                             <button type="submit" class="btn btn-default fa fa-arrow-circle-o-left" ng-click="cancel()">&nbsp;Back</button>
                             <button type="submit" class="btn btn-primary fa fa-save" ng-hide="is_view"  ng-click="save(form, detPenjualan)">&nbsp;Simpan Perubahan</button>
-                        </div>	
-                    </div>
+                        </div>
+                    </div>	
                 </div>
             </div>
         </form>
-        <div id="printArea" ng-show="is_view">
-            <div style="height: 75px;">
-                <div class="kiri" style="width: 50%">
-                    <img ng-src="img/logo.png" align="left" style="margin-right: 8px"/>
-                    {{penjualan.klinik | uppercase}}<br/>
-                    Telp. {{penjualan.cab_telp | uppercase}}<br/>
-                    
-                    No. Nota : {{penjualan.kode| uppercase}}
-                </div>
-                <div class="kanan" style="width: 30%">
-                    <span class="label"><u>Kepada Yth.</u></span><br/>
-                    <span class="label">TN/NY {{penjualan.nama_customer| uppercase}}</span><br/>
-                    <span class="label">{{penjualan.alamat| uppercase}} {{penjualan.no_tlp}}</span><br/>
-                </div>
-            </div>
-            <div style="margin-top: 20px;">
-                <table class="print-detail">
-                    <thead>
-                        <tr>
-                            <th style="width:400px;">Nama Barang</th>
-                            <th style="width:200px;">Jumlah</th>
-                            <th style="width:200px;">Jumlah Retur</th>
-                            <th style="width:200px;">Harga Awal</th>
-                            <th style="width:200px;">Harga</th>
-                            <th style="width:200px;">Disc</th>
-                            <th style="width:200px;">Jumlah Uang</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="detail in detPenjualan">
-                            <td>
-                                {{detail.nama| uppercase}} 
+    </div>
+    <div id="printArea" ng-show="is_view">
+        <div style="height: 75px;">
+            <div class="kiri" style="width: 50%">
+                <img ng-src="img/logo.png" align="left" style="margin-right: 8px"/>
+                {{penjualan.klinik| uppercase}}<br/>
+                Telp. {{penjualan.cab_telp| uppercase}}<br/>
 
-                            </td>
-                            <td style="text-align: right; vertical-align: 0px;">
-                                {{detail.jumlah}}
-                            </td>
-                            <td style="text-align: right; vertical-align: 0px;">
-                                {{detail.jumlah_retur}}
-                            </td>
-                            <td style="text-align: right; vertical-align: 0px;">
-                                {{detail.harga_awal| currency:undefined:0:undefined:0}}
-                            </td>
-                            <td style="text-align: right; vertical-align: 0px;">
-                                {{detail.harga| currency:undefined:0:undefined:0}}
-                            </td>
-                            <td style="text-align: right; vertical-align: 0px;">
-                                {{detail.diskon_awal | currency:undefined:0:undefined:0}}
-                            </td>
-                            <td style="text-align: right; vertical-align: 0px;">
-                                {{(detail.jumlah_retur * detail.harga) - (detail.jumlah_retur * detail.diskon_awal) | currency:undefined:0:undefined:0}}
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tfoot style="font-style: normal;">
-                        <tr>
-                            <td colspan="5" rowspan="2"> 
-                                <b>Ket:</b> Barang - barang yang sudah di beli tidak dapat ditukar / dikembalikan kecuali ada perjanjian, 
-                                <p>Hormat kami, </p>
-                                <p>Dicetak Oleh: {{user.nama}} </p>
-                            </td>
-                            <td colspan=""  style="text-align: right;border-bottom: none">Total :&nbsp;</td>
-                            <td style="text-align: right;">
-                                {{form.biaya_lain| currency:undefined:0:undefined:0}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td  style="text-align: right; border-bottom: none">Bayar :&nbsp;</td>
-                            <td style="text-align: right;">
-                                {{form.total| currency:undefined:0:undefined:0}}
-                            </td>
-                        </tr>
-                        <
-                    </tfoot>
-                </table>
+                No. Nota : {{penjualan.kode| uppercase}}
             </div>
+            <div class="kanan" style="width: 30%">
+                <span class="label"><u>Kepada Yth.</u></span><br/>
+                <span class="label">TN/NY {{penjualan.nama_customer| uppercase}}</span><br/>
+                <span class="label">{{penjualan.alamat| uppercase}} {{penjualan.no_tlp}}</span><br/>
+            </div>
+        </div>
+        <div style="margin-top: 20px;">
+            <table class="print-detail">
+                <thead>
+                    <tr>
+                        <th style="width:400px;">Nama Barang</th>
+                        <th style="width:200px;">Jumlah</th>
+                        <th style="width:200px;">Jumlah Retur</th>
+                        <th style="width:200px;">Harga Awal</th>
+                        <th style="width:200px;">Harga</th>
+                        <th style="width:200px;">Disc</th>
+                        <th style="width:200px;">Jumlah Uang</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="detail in detPenjualan">
+                        <td>
+                            {{detail.nama| uppercase}} 
+
+                        </td>
+                        <td style="text-align: right; vertical-align: 0px;">
+                            {{detail.jumlah}}
+                        </td>
+                        <td style="text-align: right; vertical-align: 0px;">
+                            {{detail.jumlah_retur}}
+                        </td>
+                        <td style="text-align: right; vertical-align: 0px;">
+                            {{detail.harga_awal| currency:undefined:0:undefined:0}}
+                        </td>
+                        <td style="text-align: right; vertical-align: 0px;">
+                            {{detail.harga| currency:undefined:0:undefined:0}}
+                        </td>
+                        <td style="text-align: right; vertical-align: 0px;">
+                            {{detail.diskon_awal| currency:undefined:0:undefined:0}}
+                        </td>
+                        <td style="text-align: right; vertical-align: 0px;">
+                            {{(detail.jumlah_retur * detail.harga) - (detail.jumlah_retur * detail.diskon_awal) | currency:undefined:0:undefined:0}}
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot style="font-style: normal;">
+                    <tr>
+                        <td colspan="5" rowspan="2"> 
+                            <b>Ket:</b> Barang - barang yang sudah di beli tidak dapat ditukar / dikembalikan kecuali ada perjanjian, 
+                            <p>Hormat kami, </p>
+                            <p>Dicetak Oleh: {{user.nama}} </p>
+                        </td>
+                        <td colspan=""  style="text-align: right;border-bottom: none">Total :&nbsp;</td>
+                        <td style="text-align: right;">
+                            {{form.biaya_lain| currency:undefined:0:undefined:0}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td  style="text-align: right; border-bottom: none">Bayar :&nbsp;</td>
+                        <td style="text-align: right;">
+                            {{form.total| currency:undefined:0:undefined:0}}
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
     </div>
 </div>

@@ -5959,3 +5959,1346 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1458792568.935
     'REQUEST_TIME' => 1458792568
 ]
+2016-03-28 08:42:24 [::1][-][-][error][yii\base\ErrorException:8] exception 'yii\base\ErrorException' with message 'Undefined variable: _SESSION' in /var/www/anainaskincare/api/controllers/PenjualanController.php:506
+Stack trace:
+#0 /var/www/anainaskincare/api/controllers/PenjualanController.php(506): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', '/var/www/anaina...', 506, Array)
+#1 [internal function]: app\controllers\PenjualanController->actionCari()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('cari', Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('penjualan/cari', Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2016-03-28 08:42:24 [::1][-][-][info][application] $_GET = [
+    'nama' => 'jual'
+]
+
+$_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '47908'
+    'REDIRECT_QUERY_STRING' => 'nama=jual'
+    'REDIRECT_URL' => '/anainaskincare/api/web/penjualan/cari'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'nama=jual'
+    'REQUEST_URI' => '/anainaskincare/api/web/penjualan/cari?nama=jual'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459129344.059
+    'REQUEST_TIME' => 1459129344
+]
+2016-03-28 08:45:09 [::1][-][-][error][application] [
+    'id' => '5',
+    'kode' => 'JUAL/001/00005',
+    'cabang_id' => '1',
+    'customer_id' => '11',
+    'tanggal' => '2015-08-13',
+    'keterangan' => null,
+    'total' => '302000',
+    'cash' => '302000',
+    'credit' => '0',
+    'atm' => '0',
+    'status' => 'Selesai',
+    'print' => '0',
+    'created_at' => '1439448928',
+    'created_by' => '11',
+    'modified_at' => '1439448928',
+    'modified_by' => '11',
+]
+    in /var/www/anainaskincare/api/controllers/ReturpenjualanController.php:294
+2016-03-28 08:45:09 [::1][-][-][info][application] $_POST = [
+    '{\"id\":\"5\",\"kode\":\"JUAL/001/00005\",\"cabang_id\":\"1\",\"customer_id\":\"11\",\"tanggal\":\"2015-08-13\",\"keterangan\":null,\"total\":\"302000\",\"cash\":\"302000\",\"credit\":\"0\",\"atm\":\"0\",\"status\":\"Selesai\",\"print\":\"0\",\"created_at\":\"1439448928\",\"created_by\":\"11\",\"modified_at\":\"1439448928\",\"modified_by\":\"11\"}' => ''
+]
+
+$_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '287'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '47953'
+    'REDIRECT_URL' => '/anainaskincare/api/web/returpenjualan/det_kodepenjualan/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/returpenjualan/det_kodepenjualan/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459129509.877
+    'REQUEST_TIME' => 1459129509
+]
+2016-03-28 08:45:19 [::1][-][-][error][application] [
+    'id' => '4',
+    'kode' => 'JUAL/001/00004',
+    'cabang_id' => '1',
+    'customer_id' => '10',
+    'tanggal' => '2015-08-13',
+    'keterangan' => null,
+    'total' => '105000',
+    'cash' => '105000',
+    'credit' => '0',
+    'atm' => '0',
+    'status' => 'Selesai',
+    'print' => '0',
+    'created_at' => '1439448206',
+    'created_by' => '11',
+    'modified_at' => '1439448206',
+    'modified_by' => '11',
+]
+    in /var/www/anainaskincare/api/controllers/ReturpenjualanController.php:294
+2016-03-28 08:45:19 [::1][-][-][info][application] $_POST = [
+    '{\"id\":\"4\",\"kode\":\"JUAL/001/00004\",\"cabang_id\":\"1\",\"customer_id\":\"10\",\"tanggal\":\"2015-08-13\",\"keterangan\":null,\"total\":\"105000\",\"cash\":\"105000\",\"credit\":\"0\",\"atm\":\"0\",\"status\":\"Selesai\",\"print\":\"0\",\"created_at\":\"1439448206\",\"created_by\":\"11\",\"modified_at\":\"1439448206\",\"modified_by\":\"11\"}' => ''
+]
+
+$_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '287'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '47955'
+    'REDIRECT_URL' => '/anainaskincare/api/web/returpenjualan/det_kodepenjualan/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/returpenjualan/det_kodepenjualan/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459129519.873
+    'REQUEST_TIME' => 1459129519
+]
+2016-03-28 08:47:32 [::1][-][-][error][application] [
+    'id' => '1',
+    'kode' => 'JUAL/001/00001',
+    'cabang_id' => '1',
+    'customer_id' => '2',
+    'tanggal' => '2015-08-13',
+    'keterangan' => null,
+    'total' => '95000',
+    'cash' => '105000',
+    'credit' => '0',
+    'atm' => '0',
+    'status' => 'Selesai',
+    'print' => '0',
+    'created_at' => '1439437427',
+    'created_by' => '13',
+    'modified_at' => '1439437427',
+    'modified_by' => '13',
+]
+    in /var/www/anainaskincare/api/controllers/ReturpenjualanController.php:294
+2016-03-28 08:47:32 [::1][-][-][info][application] $_POST = [
+    '{\"id\":\"1\",\"kode\":\"JUAL/001/00001\",\"cabang_id\":\"1\",\"customer_id\":\"2\",\"tanggal\":\"2015-08-13\",\"keterangan\":null,\"total\":\"95000\",\"cash\":\"105000\",\"credit\":\"0\",\"atm\":\"0\",\"status\":\"Selesai\",\"print\":\"0\",\"created_at\":\"1439437427\",\"created_by\":\"13\",\"modified_at\":\"1439437427\",\"modified_by\":\"13\"}' => ''
+]
+
+$_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '285'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '47963'
+    'REDIRECT_URL' => '/anainaskincare/api/web/returpenjualan/det_kodepenjualan/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/returpenjualan/det_kodepenjualan/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459129652.238
+    'REQUEST_TIME' => 1459129652
+]
+2016-03-28 08:49:40 [::1][-][-][error][application] [
+    'retur_penjualan' => [
+        'tanggal' => '2016-03-28T01:47:27.822Z',
+        'kode' => 'RJUAL/001/00001',
+        'penjualan' => [
+            'customer' => 'NN. DEWI BUDI ARTI',
+            'no_tlp' => '083854813791',
+            'email' => null,
+            'alamat' => 'BENDUL MERISI XI 7A WONOKROMO SURABAYA',
+            'klinik' => 'RUMAH CANTIK ANAINA TRATAP',
+            'cabang_id' => '1',
+            'id' => '1',
+            'kode' => 'JUAL/001/00001',
+            'customer_id' => '2',
+            'tanggal' => '2015-08-13',
+            'keterangan' => null,
+            'total' => '95000',
+            'cash' => '105000',
+            'credit' => '0',
+            'atm' => '0',
+            'status' => 'Selesai',
+            'print' => '0',
+            'created_at' => '1439437427',
+            'created_by' => '13',
+            'modified_at' => '1439437427',
+            'modified_by' => '13',
+        ],
+        'biaya_lain' => 0,
+        'total' => 40000,
+        'belanja' => 0,
+        'total_belanja' => 40000,
+        'total_diskon' => 0,
+    ],
+    'retur_penjualandet' => [
+        [
+            'id' => '2',
+            'type' => 'Barang',
+            'produk_id' => '16',
+            'jumlah' => '1',
+            'harga_awal' => '40000',
+            'diskon_awal' => '0',
+            'harga' => '40000',
+            'jumlah_retur' => '1',
+            'diskon' => '0',
+        ],
+        [
+            'id' => '1',
+            'type' => 'Barang',
+            'produk_id' => '190',
+            'jumlah' => '1',
+            'harga_awal' => '55000',
+            'diskon_awal' => '0',
+            'harga' => 0,
+            'jumlah_retur' => 0,
+            'diskon' => '0',
+        ],
+    ],
+]
+    in /var/www/anainaskincare/api/controllers/ReturpenjualanController.php:164
+2016-03-28 08:49:40 [::1][-][-][info][application] $_POST = [
+    '{\"retur_penjualan\":{\"tanggal\":\"2016-03-28T01:47:27_822Z\",\"kode\":\"RJUAL/001/00001\",\"penjualan\":{\"customer\":\"NN__DEWI_BUDI_ARTI\",\"no_tlp\":\"083854813791\",\"email\":null,\"alamat\":\"BENDUL_MERISI_XI_7A_WONOKROMO_SURABAYA\",\"klinik\":\"RUMAH_CANTIK_ANAINA_TRATAP\",\"cabang_id\":\"1\",\"id\":\"1\",\"kode\":\"JUAL/001/00001\",\"customer_id\":\"2\",\"tanggal\":\"2015-08-13\",\"keterangan\":null,\"total\":\"95000\",\"cash\":\"105000\",\"credit\":\"0\",\"atm\":\"0\",\"status\":\"Selesai\",\"print\":\"0\",\"created_at\":\"1439437427\",\"created_by\":\"13\",\"modified_at\":\"1439437427\",\"modified_by\":\"13\"},\"biaya_lain\":0,\"total\":40000,\"belanja\":0,\"total_belanja\":40000,\"total_diskon\":0},\"retur_penjualandet\":' => [
+        '{\"id\":\"2\",\"type\":\"Barang\",\"produk_id\":\"16\",\"jumlah\":\"1\",\"harga_awal\":\"40000\",\"diskon_awal\":\"0\",\"harga\":\"40000\",\"jumlah_retur\":\"1\",\"diskon\":\"0\"},{\"id\":\"1\",\"type\":\"Barang\",\"produk_id\":\"190\",\"jumlah\":\"1\",\"harga_awal\":\"55000\",\"diskon_awal\":\"0\",\"harga\":0,\"jumlah_retur\":0,\"diskon\":\"0\"}' => ''
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SESSION = [
+    'user' => [
+        'id' => 1
+        'username' => 'admin'
+        'nama' => 'administrator'
+        'akses' => stdClass#1
+        (
+            [master_roles] => true
+            [transaksi_stokmasuk] => true
+            [transaksi_stokkeluar] => true
+            [transaksi_pembelian] => true
+            [transaksi_bayarhutang] => true
+            [transaksi_returpembelian] => true
+            [transaksi_penjualan] => true
+            [transaksi_bayarpiutang] => true
+            [transaksi_returpenjualan] => true
+            [master_cabang] => true
+            [master_customer] => true
+            [master_supplier] => true
+            [master_pegawai] => true
+            [master_satuan] => true
+            [master_kategori] => true
+            [master_barang] => true
+            [master_user] => true
+            [laporan_kartustok] => true
+            [laporan_bonuskaryawan] => true
+            [laporan_labarugi] => true
+            [laporan_kartustatus] => true
+            [laporan_penjualan] => true
+            [laporan_barang] => true
+            [transaksi_terimabarang] => true
+            [transaksi_kirimbarang] => true
+        )
+        'settings' => stdClass#2
+        (
+            [themeID] => '11'
+            [navbarHeaderColor] => 'bg-primary'
+            [navbarCollapseColor] => 'bg-primary'
+            [asideColor] => 'bg-dark'
+            [container] => false
+        )
+        'cabang' => [
+            0 => [
+                'id' => '1'
+                'kode' => '001'
+                'nama' => 'RUMAH CANTIK ANAINA TRATAP'
+                'alamat' => 'JL. Roon 15, Sawotratap, Sdj'
+                'no_tlp' => '031-8532117'
+                'email' => ''
+                'is_deleted' => '0'
+            ]
+            1 => [
+                'id' => '2'
+                'kode' => '002'
+                'nama' => 'ANAINA  GEDANGAN'
+                'alamat' => 'Komp Ruko Central Square Blok B 10
+JL. A. Yani No 41-43, Gedangan'
+                'no_tlp' => '-'
+                'email' => ''
+                'is_deleted' => '0'
+            ]
+            2 => [
+                'id' => '3'
+                'kode' => '003'
+                'nama' => 'ANAINA SKINCARE MALANG'
+                'alamat' => 'Perum Citra Graha No 1, Banjar Arum - Singosari - Malang'
+                'no_tlp' => '0341-459017'
+                'email' => null
+                'is_deleted' => '0'
+            ]
+            3 => [
+                'id' => '4'
+                'kode' => '004'
+                'nama' => 'ANAINA KANTOR'
+                'alamat' => 'JL. ROON 15 SAWOTRATAP'
+                'no_tlp' => '031-8532217'
+                'email' => null
+                'is_deleted' => '0'
+            ]
+            4 => [
+                'id' => '5'
+                'kode' => '005'
+                'nama' => 'APOTEK ANAINA'
+                'alamat' => 'JL P. ROON 15'
+                'no_tlp' => '031-8532117'
+                'email' => null
+                'is_deleted' => '0'
+            ]
+        ]
+        'cabang_id' => [
+            0 => '1'
+            1 => '2'
+            2 => '3'
+            3 => '4'
+            4 => '5'
+        ]
+    ]
+    'query' => yii\db\Query#3
+    (
+        [select] => [
+            0 => 'm_user.nama as petugas'
+            1 => 'r_penjualan.*'
+            2 => 'penjualan.kode as kode_penjualan'
+            3 => 'penjualan.total as total_penjualan'
+            4 => 'm_cabang.nama as cabang'
+            5 => 'm_customer.nama as nama_customer'
+            6 => 'penjualan.customer_id as customer_id'
+            7 => 'penjualan.cabang_id as cabang_id'
+        ]
+        [selectOption] => null
+        [distinct] => null
+        [from] => [
+            0 => 'r_penjualan'
+        ]
+        [groupBy] => null
+        [join] => [
+            0 => [
+                0 => 'JOIN'
+                1 => 'penjualan'
+                2 => 'penjualan.id = r_penjualan.penjualan_id'
+            ]
+            1 => [
+                0 => 'JOIN'
+                1 => 'm_customer'
+                2 => 'penjualan.customer_id = m_customer.id'
+            ]
+            2 => [
+                0 => 'JOIN'
+                1 => 'm_cabang'
+                2 => 'penjualan.cabang_id= m_cabang.id'
+            ]
+            3 => [
+                0 => 'JOIN'
+                1 => 'm_user'
+                2 => 'r_penjualan.created_by = m_user.id'
+            ]
+        ]
+        [having] => null
+        [union] => null
+        [params] => []
+        [yii\base\Component:_events] => []
+        [yii\base\Component:_behaviors] => null
+        [where] => null
+        [limit] => '10'
+        [offset] => '0'
+        [orderBy] => [
+            'r_penjualan.id' => 4
+        ]
+        [indexBy] => null
+    )
+    '__flash' => []
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '922'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '47965'
+    'REDIRECT_URL' => '/anainaskincare/api/web/returpenjualan/create'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/returpenjualan/create'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459129780.531
+    'REQUEST_TIME' => 1459129780
+]
+2016-03-28 08:49:42 [::1][-][-][error][application] [
+    'no_tlp' => '083854813791',
+    'nama_customer' => 'NN. DEWI BUDI ARTI',
+    'email' => null,
+    'alamat' => 'BENDUL MERISI XI 7A WONOKROMO SURABAYA',
+    'klinik' => 'RUMAH CANTIK ANAINA TRATAP',
+    'cab_telp' => '031-8532117',
+    'id' => '1',
+    'kode' => 'JUAL/001/00001',
+    'cabang_id' => '1',
+    'customer_id' => '2',
+    'tanggal' => '2015-08-13',
+    'keterangan' => null,
+    'total' => '95000',
+    'cash' => '105000',
+    'credit' => '0',
+    'atm' => '0',
+    'status' => 'Selesai',
+    'print' => '0',
+    'created_at' => '1439437427',
+    'created_by' => '13',
+    'modified_at' => '1439437427',
+    'modified_by' => '13',
+    'penjualan' => [
+        'kode' => 'JUAL/001/00001',
+    ],
+]
+    in /var/www/anainaskincare/api/controllers/ReturpenjualanController.php:156
+2016-03-28 08:49:42 [::1][-][-][info][application] $_GET = [
+    'id' => '1'
+]
+
+$_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '47965'
+    'REDIRECT_URL' => '/anainaskincare/api/web/returpenjualan/view/1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/returpenjualan/view/1'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459129782.234
+    'REQUEST_TIME' => 1459129782
+]
+2016-03-28 08:49:56 [::1][-][-][error][application] [
+    'no_tlp' => '083854813791',
+    'nama_customer' => 'NN. DEWI BUDI ARTI',
+    'email' => null,
+    'alamat' => 'BENDUL MERISI XI 7A WONOKROMO SURABAYA',
+    'klinik' => 'RUMAH CANTIK ANAINA TRATAP',
+    'cab_telp' => '031-8532117',
+    'id' => '1',
+    'kode' => 'JUAL/001/00001',
+    'cabang_id' => '1',
+    'customer_id' => '2',
+    'tanggal' => '2015-08-13',
+    'keterangan' => null,
+    'total' => '95000',
+    'cash' => '105000',
+    'credit' => '0',
+    'atm' => '0',
+    'status' => 'Selesai',
+    'print' => '0',
+    'created_at' => '1439437427',
+    'created_by' => '13',
+    'modified_at' => '1439437427',
+    'modified_by' => '13',
+    'penjualan' => [
+        'kode' => 'JUAL/001/00001',
+    ],
+]
+    in /var/www/anainaskincare/api/controllers/ReturpenjualanController.php:156
+2016-03-28 08:49:56 [::1][-][-][info][application] $_GET = [
+    'id' => '1'
+]
+
+$_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '47966'
+    'REDIRECT_URL' => '/anainaskincare/api/web/returpenjualan/view/1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/returpenjualan/view/1'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459129796.584
+    'REQUEST_TIME' => 1459129796
+]
+2016-03-28 08:53:35 [::1][-][-][error][application] [
+    'customer' => 'NN. DEWI BUDI ARTI',
+    'no_tlp' => '083854813791',
+    'nama_customer' => 'NN. DEWI BUDI ARTI',
+    'email' => null,
+    'alamat' => 'BENDUL MERISI XI 7A WONOKROMO SURABAYA',
+    'klinik' => 'RUMAH CANTIK ANAINA TRATAP',
+    'cab_telp' => '031-8532117',
+    'id' => '1',
+    'kode' => 'JUAL/001/00001',
+    'cabang_id' => '1',
+    'customer_id' => '2',
+    'tanggal' => '2015-08-13',
+    'keterangan' => null,
+    'total' => '95000',
+    'cash' => '105000',
+    'credit' => '0',
+    'atm' => '0',
+    'status' => 'Selesai',
+    'print' => '0',
+    'created_at' => '1439437427',
+    'created_by' => '13',
+    'modified_at' => '1439437427',
+    'modified_by' => '13',
+    'penjualan' => [
+        'kode' => 'JUAL/001/00001',
+    ],
+]
+    in /var/www/anainaskincare/api/controllers/ReturpenjualanController.php:156
+2016-03-28 08:53:35 [::1][-][-][info][application] $_GET = [
+    'id' => '1'
+]
+
+$_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '47968'
+    'REDIRECT_URL' => '/anainaskincare/api/web/returpenjualan/view/1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/returpenjualan/view/1'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459130015.675
+    'REQUEST_TIME' => 1459130015
+]
+2016-03-28 08:53:43 [::1][-][-][error][application] [
+    'customer' => 'NN. DEWI BUDI ARTI',
+    'no_tlp' => '083854813791',
+    'nama_customer' => 'NN. DEWI BUDI ARTI',
+    'email' => null,
+    'alamat' => 'BENDUL MERISI XI 7A WONOKROMO SURABAYA',
+    'klinik' => 'RUMAH CANTIK ANAINA TRATAP',
+    'cab_telp' => '031-8532117',
+    'id' => '1',
+    'kode' => 'JUAL/001/00001',
+    'cabang_id' => '1',
+    'customer_id' => '2',
+    'tanggal' => '2015-08-13',
+    'keterangan' => null,
+    'total' => '95000',
+    'cash' => '105000',
+    'credit' => '0',
+    'atm' => '0',
+    'status' => 'Selesai',
+    'print' => '0',
+    'created_at' => '1439437427',
+    'created_by' => '13',
+    'modified_at' => '1439437427',
+    'modified_by' => '13',
+    'penjualan' => [
+        'kode' => 'JUAL/001/00001',
+    ],
+]
+    in /var/www/anainaskincare/api/controllers/ReturpenjualanController.php:156
+2016-03-28 08:53:43 [::1][-][-][info][application] $_GET = [
+    'id' => '1'
+]
+
+$_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '47974'
+    'REDIRECT_URL' => '/anainaskincare/api/web/returpenjualan/view/1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/returpenjualan/view/1'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459130023.356
+    'REQUEST_TIME' => 1459130023
+]
+2016-03-28 08:53:58 [::1][-][-][error][application] [
+    'id' => '9',
+    'kode' => 'JUAL/001/00009',
+    'cabang_id' => '1',
+    'customer_id' => '18',
+    'tanggal' => '2015-08-13',
+    'keterangan' => null,
+    'total' => '62000',
+    'cash' => '62000',
+    'credit' => '0',
+    'atm' => '0',
+    'status' => 'Selesai',
+    'print' => '0',
+    'created_at' => '1439451835',
+    'created_by' => '11',
+    'modified_at' => '1439451835',
+    'modified_by' => '11',
+]
+    in /var/www/anainaskincare/api/controllers/ReturpenjualanController.php:294
+2016-03-28 08:53:58 [::1][-][-][info][application] $_POST = [
+    '{\"id\":\"9\",\"kode\":\"JUAL/001/00009\",\"cabang_id\":\"1\",\"customer_id\":\"18\",\"tanggal\":\"2015-08-13\",\"keterangan\":null,\"total\":\"62000\",\"cash\":\"62000\",\"credit\":\"0\",\"atm\":\"0\",\"status\":\"Selesai\",\"print\":\"0\",\"created_at\":\"1439451835\",\"created_by\":\"11\",\"modified_at\":\"1439451835\",\"modified_by\":\"11\"}' => ''
+]
+
+$_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '285'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '47976'
+    'REDIRECT_URL' => '/anainaskincare/api/web/returpenjualan/det_kodepenjualan/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/returpenjualan/det_kodepenjualan/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459130038.803
+    'REQUEST_TIME' => 1459130038
+]
+2016-03-28 08:54:30 [::1][-][-][error][application] [
+    'retur_penjualan' => [
+        'tanggal' => '2016-03-28T01:53:53.066Z',
+        'kode' => 'RJUAL/001/00002',
+        'penjualan' => [
+            'customer' => 'NY. IHDATUS NUR AINI',
+            'no_tlp' => '085854140283',
+            'email' => null,
+            'alamat' => 'MEDAENG RT 4 RW 2 SIDOARJO',
+            'klinik' => 'RUMAH CANTIK ANAINA TRATAP',
+            'cabang_id' => '1',
+            'id' => '9',
+            'kode' => 'JUAL/001/00009',
+            'customer_id' => '18',
+            'tanggal' => '2015-08-13',
+            'keterangan' => null,
+            'total' => '62000',
+            'cash' => '62000',
+            'credit' => '0',
+            'atm' => '0',
+            'status' => 'Selesai',
+            'print' => '0',
+            'created_at' => '1439451835',
+            'created_by' => '11',
+            'modified_at' => '1439451835',
+            'modified_by' => '11',
+        ],
+        'biaya_lain' => 0,
+        'total' => 62000,
+        'belanja' => 0,
+        'total_belanja' => 62000,
+        'total_diskon' => 0,
+    ],
+    'retur_penjualandet' => [
+        [
+            'id' => '16',
+            'type' => 'Barang',
+            'produk_id' => '125',
+            'jumlah' => '1',
+            'harga_awal' => '62000',
+            'diskon_awal' => null,
+            'harga' => '62000',
+            'jumlah_retur' => '1',
+            'diskon' => 0,
+        ],
+    ],
+]
+    in /var/www/anainaskincare/api/controllers/ReturpenjualanController.php:164
+2016-03-28 08:54:30 [::1][-][-][info][application] $_POST = [
+    '{\"retur_penjualan\":{\"tanggal\":\"2016-03-28T01:53:53_066Z\",\"kode\":\"RJUAL/001/00002\",\"penjualan\":{\"customer\":\"NY__IHDATUS_NUR_AINI\",\"no_tlp\":\"085854140283\",\"email\":null,\"alamat\":\"MEDAENG_RT_4_RW_2_SIDOARJO\",\"klinik\":\"RUMAH_CANTIK_ANAINA_TRATAP\",\"cabang_id\":\"1\",\"id\":\"9\",\"kode\":\"JUAL/001/00009\",\"customer_id\":\"18\",\"tanggal\":\"2015-08-13\",\"keterangan\":null,\"total\":\"62000\",\"cash\":\"62000\",\"credit\":\"0\",\"atm\":\"0\",\"status\":\"Selesai\",\"print\":\"0\",\"created_at\":\"1439451835\",\"created_by\":\"11\",\"modified_at\":\"1439451835\",\"modified_by\":\"11\"},\"biaya_lain\":0,\"total\":62000,\"belanja\":0,\"total_belanja\":62000,\"total_diskon\":0},\"retur_penjualandet\":' => [
+        '{\"id\":\"16\",\"type\":\"Barang\",\"produk_id\":\"125\",\"jumlah\":\"1\",\"harga_awal\":\"62000\",\"diskon_awal\":null,\"harga\":\"62000\",\"jumlah_retur\":\"1\",\"diskon\":0}' => ''
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SESSION = [
+    'user' => [
+        'id' => 1
+        'username' => 'admin'
+        'nama' => 'administrator'
+        'akses' => stdClass#1
+        (
+            [master_roles] => true
+            [transaksi_stokmasuk] => true
+            [transaksi_stokkeluar] => true
+            [transaksi_pembelian] => true
+            [transaksi_bayarhutang] => true
+            [transaksi_returpembelian] => true
+            [transaksi_penjualan] => true
+            [transaksi_bayarpiutang] => true
+            [transaksi_returpenjualan] => true
+            [master_cabang] => true
+            [master_customer] => true
+            [master_supplier] => true
+            [master_pegawai] => true
+            [master_satuan] => true
+            [master_kategori] => true
+            [master_barang] => true
+            [master_user] => true
+            [laporan_kartustok] => true
+            [laporan_bonuskaryawan] => true
+            [laporan_labarugi] => true
+            [laporan_kartustatus] => true
+            [laporan_penjualan] => true
+            [laporan_barang] => true
+            [transaksi_terimabarang] => true
+            [transaksi_kirimbarang] => true
+        )
+        'settings' => stdClass#2
+        (
+            [themeID] => '11'
+            [navbarHeaderColor] => 'bg-primary'
+            [navbarCollapseColor] => 'bg-primary'
+            [asideColor] => 'bg-dark'
+            [container] => false
+        )
+        'cabang' => [
+            0 => [
+                'id' => '1'
+                'kode' => '001'
+                'nama' => 'RUMAH CANTIK ANAINA TRATAP'
+                'alamat' => 'JL. Roon 15, Sawotratap, Sdj'
+                'no_tlp' => '031-8532117'
+                'email' => ''
+                'is_deleted' => '0'
+            ]
+            1 => [
+                'id' => '2'
+                'kode' => '002'
+                'nama' => 'ANAINA  GEDANGAN'
+                'alamat' => 'Komp Ruko Central Square Blok B 10
+JL. A. Yani No 41-43, Gedangan'
+                'no_tlp' => '-'
+                'email' => ''
+                'is_deleted' => '0'
+            ]
+            2 => [
+                'id' => '3'
+                'kode' => '003'
+                'nama' => 'ANAINA SKINCARE MALANG'
+                'alamat' => 'Perum Citra Graha No 1, Banjar Arum - Singosari - Malang'
+                'no_tlp' => '0341-459017'
+                'email' => null
+                'is_deleted' => '0'
+            ]
+            3 => [
+                'id' => '4'
+                'kode' => '004'
+                'nama' => 'ANAINA KANTOR'
+                'alamat' => 'JL. ROON 15 SAWOTRATAP'
+                'no_tlp' => '031-8532217'
+                'email' => null
+                'is_deleted' => '0'
+            ]
+            4 => [
+                'id' => '5'
+                'kode' => '005'
+                'nama' => 'APOTEK ANAINA'
+                'alamat' => 'JL P. ROON 15'
+                'no_tlp' => '031-8532117'
+                'email' => null
+                'is_deleted' => '0'
+            ]
+        ]
+        'cabang_id' => [
+            0 => '1'
+            1 => '2'
+            2 => '3'
+            3 => '4'
+            4 => '5'
+        ]
+    ]
+    'query' => yii\db\Query#3
+    (
+        [select] => [
+            0 => 'm_user.nama as petugas'
+            1 => 'r_penjualan.*'
+            2 => 'penjualan.kode as kode_penjualan'
+            3 => 'penjualan.total as total_penjualan'
+            4 => 'm_cabang.nama as cabang'
+            5 => 'm_customer.nama as nama_customer'
+            6 => 'penjualan.customer_id as customer_id'
+            7 => 'penjualan.cabang_id as cabang_id'
+        ]
+        [selectOption] => null
+        [distinct] => null
+        [from] => [
+            0 => 'r_penjualan'
+        ]
+        [groupBy] => null
+        [join] => [
+            0 => [
+                0 => 'JOIN'
+                1 => 'penjualan'
+                2 => 'penjualan.id = r_penjualan.penjualan_id'
+            ]
+            1 => [
+                0 => 'JOIN'
+                1 => 'm_customer'
+                2 => 'penjualan.customer_id = m_customer.id'
+            ]
+            2 => [
+                0 => 'JOIN'
+                1 => 'm_cabang'
+                2 => 'penjualan.cabang_id= m_cabang.id'
+            ]
+            3 => [
+                0 => 'JOIN'
+                1 => 'm_user'
+                2 => 'r_penjualan.created_by = m_user.id'
+            ]
+        ]
+        [having] => null
+        [union] => null
+        [params] => []
+        [yii\base\Component:_events] => []
+        [yii\base\Component:_behaviors] => null
+        [where] => null
+        [limit] => '10'
+        [offset] => '0'
+        [orderBy] => [
+            'r_penjualan.id' => 4
+        ]
+        [indexBy] => null
+    )
+    '__flash' => []
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '776'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '47977'
+    'REDIRECT_URL' => '/anainaskincare/api/web/returpenjualan/create'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/returpenjualan/create'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459130070.811
+    'REQUEST_TIME' => 1459130070
+]
+2016-03-28 08:54:40 [::1][-][-][error][application] [
+    'customer' => 'NY. IHDATUS NUR AINI',
+    'no_tlp' => '085854140283',
+    'nama_customer' => 'NY. IHDATUS NUR AINI',
+    'email' => null,
+    'alamat' => 'MEDAENG RT 4 RW 2 SIDOARJO',
+    'klinik' => 'RUMAH CANTIK ANAINA TRATAP',
+    'cab_telp' => '031-8532117',
+    'id' => '9',
+    'kode' => 'JUAL/001/00009',
+    'cabang_id' => '1',
+    'customer_id' => '18',
+    'tanggal' => '2015-08-13',
+    'keterangan' => null,
+    'total' => '62000',
+    'cash' => '62000',
+    'credit' => '0',
+    'atm' => '0',
+    'status' => 'Selesai',
+    'print' => '0',
+    'created_at' => '1439451835',
+    'created_by' => '11',
+    'modified_at' => '1439451835',
+    'modified_by' => '11',
+    'penjualan' => [
+        'kode' => 'JUAL/001/00009',
+    ],
+]
+    in /var/www/anainaskincare/api/controllers/ReturpenjualanController.php:156
+2016-03-28 08:54:40 [::1][-][-][info][application] $_GET = [
+    'id' => '2'
+]
+
+$_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '47978'
+    'REDIRECT_URL' => '/anainaskincare/api/web/returpenjualan/view/2'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/returpenjualan/view/2'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459130080.167
+    'REQUEST_TIME' => 1459130080
+]
+2016-03-28 09:29:32 [::1][-][-][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[42S02]: Base table or view not found: 1146 Table 'landa_anaina_v2.atransfer' doesn't exist' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php:825
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(825): PDOStatement->execute()
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(349): yii\db\Command->queryInternal('fetchAll', NULL)
+#2 /var/www/anainaskincare/api/controllers/TransferController.php(103): yii\db\Command->queryAll()
+#3 [internal function]: app\controllers\TransferController->actionTerima()
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('terima', Array)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('transfer/terima', Array)
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#10 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[42S02]: Base table or view not found: 1146 Table 'landa_anaina_v2.atransfer' doesn't exist
+The SQL being executed was: SELECT `transfer`.*, `kirim`.`nama` AS `gudang`, `penerima`.`nama` AS `penerima`, `terima`.`nama` AS `cabang`, `m_user`.`nama` AS `pengirim` FROM `atransfer` LEFT JOIN `m_cabang` `kirim` ON transfer.gudang_id = kirim.id LEFT JOIN `m_cabang` `terima` ON transfer.cabang_id = terima.id LEFT JOIN `m_user` ON transfer.created_by = m_user.id LEFT JOIN `m_user` `penerima` ON transfer.penerima_id = penerima.id WHERE ((`transfer`.`cabang_id` LIKE '%l.id%') AND (`transfer`.`gudang_id` LIKE '%c.id%')) AND (`cabang_id`='4') ORDER BY `transfer`.`id` DESC LIMIT 10' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php:595
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(840): yii\db\Schema->convertException(Object(PDOException), 'SELECT `transfe...')
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(349): yii\db\Command->queryInternal('fetchAll', NULL)
+#2 /var/www/anainaskincare/api/controllers/TransferController.php(103): yii\db\Command->queryAll()
+#3 [internal function]: app\controllers\TransferController->actionTerima()
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('terima', Array)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('transfer/terima', Array)
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#10 {main}
+Additional Information:
+Array
+(
+    [0] => 42S02
+    [1] => 1146
+    [2] => Table 'landa_anaina_v2.atransfer' doesn't exist
+)
+
+2016-03-28 09:29:32 [::1][-][-][info][application] $_GET = [
+    'filter' => '{\"transfer.cabang_id\":\"l.id\",\"transfer.gudang_id\":\"c.id\"}'
+    'limit' => '10'
+    'offset' => '0'
+]
+
+$_COOKIE = [
+    '_csrf' => '335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y\";}'
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+]
+
+$_SESSION = [
+    'user' => [
+        'id' => 25
+        'username' => 'kantor'
+        'nama' => 'kantor'
+        'akses' => stdClass#1
+        (
+            [transaksi_terimabarang] => true
+        )
+        'settings' => null
+        'cabang' => [
+            0 => [
+                'id' => '4'
+                'kode' => '004'
+                'nama' => 'ANAINA KANTOR'
+                'alamat' => 'JL. ROON 15 SAWOTRATAP'
+                'no_tlp' => '031-8532217'
+                'email' => null
+                'is_deleted' => '0'
+            ]
+        ]
+        'cabang_id' => [
+            0 => '4'
+        ]
+    ]
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => '_csrf=335d07e32a6dff0e8d729cfa71224a69f89871c94e2a68bdd7a86a10cc21863aa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22GRATUkOteFDj4gXt7Rc2vDQ0DsfAN86y%22%3B%7D; PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '48260'
+    'REDIRECT_QUERY_STRING' => 'filter=%7B%22transfer.cabang_id%22:%22l.id%22,%22transfer.gudang_id%22:%22c.id%22%7D&limit=10&offset=0'
+    'REDIRECT_URL' => '/anainaskincare/api/web/transfer/terima'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'filter=%7B%22transfer.cabang_id%22:%22l.id%22,%22transfer.gudang_id%22:%22c.id%22%7D&limit=10&offset=0'
+    'REQUEST_URI' => '/anainaskincare/api/web/transfer/terima?filter=%7B%22transfer.cabang_id%22:%22l.id%22,%22transfer.gudang_id%22:%22c.id%22%7D&limit=10&offset=0'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459132172.057
+    'REQUEST_TIME' => 1459132172
+]

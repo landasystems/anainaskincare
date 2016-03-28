@@ -147,7 +147,7 @@ class ReturpenjualanController extends Controller {
                 ->join('JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
                 ->join('JOIN', 'm_cabang', 'penjualan.cabang_id= m_cabang.id')
                 ->where('penjualan.id="' . $model['penjualan_id'] . '"')
-                ->select("m_customer.no_tlp as no_tlp, m_customer.nama as nama_customer, m_customer.email as email, m_customer.alamat as alamat, 
+                ->select("m_customer.nama as customer, m_customer.no_tlp as no_tlp, m_customer.nama as nama_customer, m_customer.email as email, m_customer.alamat as alamat, 
                         m_cabang.nama as klinik, m_cabang.no_tlp as cab_telp, penjualan.*");
         $command = $query->createCommand();
         $models = $command->queryOne();
@@ -297,7 +297,7 @@ class ReturpenjualanController extends Controller {
                 ->join('JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
                 ->join('JOIN', 'm_cabang', 'penjualan.cabang_id= m_cabang.id')
                 ->where('penjualan.id="' . $id . '"')
-                ->select("m_customer.no_tlp as no_tlp, m_customer.email as email, m_customer.alamat as alamat, 
+                ->select("m_customer.nama as customer, m_customer.no_tlp as no_tlp, m_customer.email as email, m_customer.alamat as alamat, 
                         m_cabang.nama as klinik,m_cabang.id as cabang_id, penjualan.*");
         $command = $query->createCommand();
         $models = $command->queryOne();

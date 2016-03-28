@@ -8,11 +8,11 @@ app.controller('terimaCtrl', function ($scope, Data, toaster) {
     $scope.detTransfer = [];
 
     Data.get('site/session').then(function (data) {
-        $scope.sCabang = data.data.user.cabang;
+        $scope.lCabang = data.data.user.cabang;
     });
 
     Data.get('cabang/listcabang').then(function (data) {
-        $scope.lCabang = data.data;
+        $scope.sCabang = data.data;
     });
 
     //subtotal
