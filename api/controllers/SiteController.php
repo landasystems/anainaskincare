@@ -65,13 +65,13 @@ class SiteController extends Controller {
             $tanggal = date("Y-m-d", $tgl);
 
             if (isset($dt[$tanggal])) {
-                foreach ($dt[$tanggal] as $key => $val) {
-                    if (isset($dt[$tanggal][$key])) {
-                        $data[$key]['data'][] = $dt[$tanggal][$key]['total'];
-                        $data[$key]['name'] = isset($dt[$key]) ? $dt[$key] : '-';
+                foreach ($_SESSION['user']['cabang'] as $val) {
+                    if (isset($dt[$tanggal][$val['id']])) {
+                        $data[$val['id']]['data'][] = $dt[$tanggal][$val['id']]['total'];
+                        $data[$val['id']]['name'] = $val['nama'];
                     } else {
-                        $data[$key]['data'][] = 0;
-                        $data[$key]['name'] = isset($dt[$key]) ? $dt[$key] : '-';
+                        $data[$val['id']]['data'][] = 0;
+                        $data[$val['id']]['name'] = $val['nama'];
                     }
                 }
             } else {
