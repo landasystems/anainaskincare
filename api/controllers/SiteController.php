@@ -28,8 +28,8 @@ class SiteController extends Controller {
     }
 
     public function actionPenjualan() {
-        $month = 02;
-        $year = 2016;
+        $month = date("m");
+        $year = date("Y");
         session_start();
         $pen = \app\models\Penjualan::find()
                 ->joinWith('cabang')
@@ -70,7 +70,7 @@ class SiteController extends Controller {
                         $data[$key]['data'][] = $dt[$tanggal][$key]['total'];
                         $data[$key]['name'] = isset($dt[$key]) ? $dt[$key] : '-';
                     } else {
-                        $data[$key]['data'] = 0;
+                        $data[$key]['data'][] = 0;
                         $data[$key]['name'] = isset($dt[$key]) ? $dt[$key] : '-';
                     }
                 }
