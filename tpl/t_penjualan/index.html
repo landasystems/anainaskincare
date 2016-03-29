@@ -58,7 +58,8 @@
                             <th st-sort="status" style="text-align: center;">Status</th>
                             <th st-sort="m_user.nama">Petugas</th>
                             <th st-sort="created_at">Dibuat</th>
-                            <!--<th st-sort="print">Tercetak</th>-->
+                            <th st-sort="print">Dicetak</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody ng-show="!isLoading">
@@ -72,9 +73,9 @@
                                 <span class="badge bg-success" ng-show="row.status == 'Selesai'">{{row.status}}</span>
                                 <span class="badge bg-danger" ng-show="row.status == 'Pesan'">{{row.status}}</span>
                             </td>
-                            <!--<td style="text-align: center; width: 20px;">{{row.print}} x</td>-->
                             <td>{{row.petugas}}</td>
                             <td>{{row.created_at * 1000| date:'medium'}}</td>
+                            <td style="text-align: center; width: 20px;">{{row.print}} kali</td>
                             <td style="text-align: center">
                                 <!--                                <div class="btn-group" role="group" style="margin-top: -3px;" ng-if="row.print == 0">
                                                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ></button>
@@ -92,12 +93,12 @@
                     </tbody>
                     <tbody ng-show="isLoading">
                         <tr>
-                            <td colspan="9" class="text-center">Loading ... </td>
+                            <td colspan="10" class="text-center">Loading ... </td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="9" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html"></td>
+                            <td colspan="10" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html"></td>
                         </tr>
                 </table>		
             </div>
@@ -112,7 +113,7 @@
                 <div class="panel-heading">
                     {{formtitle}}
                     <div class="btn-group pull-right" role="group" style="margin-top: -3px;" ng-hide="is_view == false">
-                        <span style="color:#F77A7A;float:left" ng-show="form.print >= 1"><i>Transaksi ini telah dicetak {{form.print}} kali &nbsp;&nbsp; </i></span>
+                        <span style="color:#F77A7A;float:left"><i>Transaksi ini telah dicetak {{form.print}} kali &nbsp;&nbsp; </i></span>
                         <!--<button type="button" ng-show="form.status == 'Selesai'" ng-disabled="form.print >= 2" class="btn btn-primary fa fa-print" ng-print print-element-id="printArea" ng-click="savePrint(form)">&nbsp;Print</button>-->
                         <button type="button" ng-show="form.status == 'Selesai'" class="btn btn-primary fa fa-print" ng-print print-element-id="printArea" ng-click="savePrint(form)">&nbsp;Print</button>
                     </div> 

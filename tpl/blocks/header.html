@@ -23,18 +23,21 @@
             <div class="dropdown-menu wrapper w-full bg-white">
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="col-xs-4" ng-show="user.akses.master_satuan || user.akses.master_kategori || user.akses.master_barang">
+                        <div class="col-xs-4" ng-show="user.akses.master_cabang || user.akses.master_customer || user.akses.master_supplier || user.akses.master_pegawai">
                             <ul class="list-unstyled l-h-2x">
-                                <li ng-show="user.akses.master_satuan">
-                                    <a ui-sref="master.satuan"><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Satuan</a>
-                                </li>
-                                <li ng-show='user.akses.master_kategori'>
-                                    <a ui-sref="master.kategori"><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Kategori</a>
-                                </li>
-                                <li ng-show='user.akses.master_barang'>
-                                    <a ui-sref="master.barang"><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Produk</a>
-                                </li>
-                            </ul>
+                                    <li ng-show="user.akses.master_cabang">
+                                        <a ui-sref="master.cabang"><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Cabang</a>
+                                    </li>
+                                    <li ng-show="user.akses.master_customer">
+                                        <a ui-sref="master.customer"><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Customer</a>
+                                    </li>
+                                    <li ng-show="user.akses.master_supplier">
+                                        <a ui-sref="master.supplier"><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Supplier</a>
+                                    </li>
+                                    <li ng-show="user.akses.master_pegawai">
+                                        <a ui-sref="master.pegawai"><i class="fa fa-fw fa-angle-right text-muted m-r-xs"></i>Karyawan</a>
+                                    </li>
+                                </ul>
                         </div>
                         <div class="col-xs-4" ng-show="user.akses.master_satuan || user.akses.master_kategori || user.akses.master_barang">
                             <div class="m-l-xs m-t-xs m-b-xs font-bold">Inventory</div>
