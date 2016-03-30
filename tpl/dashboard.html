@@ -1,42 +1,55 @@
-<div class="bg-light lter b-b wrapper-md">
-    <h1 class="m-n font-thin h3">Selamat Datang - Area Administrator</h1>
-</div>
-<!--<div class="wrapper-md" ng-controller="dashboardCtrl">
-    <div class="panel panel-default">
-        <div class="panel-heading">Chat</div>
-        <div class="panel-body">
-            <div ng-repeat =" message in messages">
-                <div class="m-b">
-                    <a href="" class="pull-left thumb-sm avatar">
-                        <img src="img/a0.jpg" alt="...">
-                    </a>
-                    <div class="m-l-xxl">
-                        <div class="pos-rlt wrapper b b-light r r-2x">
-                            <span class="arrow left pull-up"></span>
-                            <p><i>{{message.username}}</i></p>
-                            <p class="m-b-none">{{ message.text}}</p>
-                        </div>
-                        <small class="text-muted">
-                            <i class="fa fa-ok text-success"></i> 
-                            {{message.tgl|date}}
-                        </small>
+<div ng-controller="dashboardCtrl">
+    <div class="bg-light lter b-b wrapper-md">
+        <h1 class="m-n font-thin h3">Selamat Datang - Area Administrator</h1>
+    </div>
+    <div class="wrapper-md">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row row-sm text-center" style="text-align: center">
+                    <div class="col-xs-2">
+                        <button style="width: 100%" ui-sref='transaksi.stokmasuk' ng-disabled="!user.akses.transaksi_stokmasuk" class="block panel padder-v bg-warning item">
+                            <span class="text-white font-thin h1 block"><i class="fa fa-mail-reply"></i></span>
+                            <span class="text-white font-thin h4 block">Masuk</span>
+                        </button>
+                    </div>
+                    <div class="col-xs-2">
+                        <button style="width: 100%" ui-sref='transaksi.stokkeluar' ng-disabled="!user.akses.transaksi_stokkeluar" class="block panel padder-v bg-dark item">
+                            <span class="text-white font-thin h1 block"><i class="fa fa-mail-forward"></i></span>
+                            <span class="text-white font-thin h4 block">Keluar</span>
+                        </button>
+                    </div>
+                    <div class="col-xs-2">
+                        <button style="width: 100%"  ui-sref='transaksi.penjualan' ng-disabled="!user.akses.transaksi_penjualan" class="block panel padder-v bg-primary item">
+                            <span class="text-white font-thin h1 block"><i class="glyphicon glyphicon-shopping-cart"></i></span>
+                            <span class="text-white font-thin h4 block">Penjualan</span>
+                        </button>
+                    </div>
+                    <div class="col-xs-2">
+                        <button style="width: 100%"  ui-sref='transaksi.pembelian' ng-disabled="!user.akses.transaksi_pembelian" class="block panel padder-v bg-info item">
+                            <span class="text-white font-thin h1 block"><i class="glyphicon glyphicon-open"></i></span>
+                            <span class="text-white font-thin h4 block">Pembelian</span>
+
+                        </button>
+                    </div>
+                    <div class="col-xs-2">
+                        <button style="width: 100%" ui-sref='transaksi.kirimbarang' ng-disabled="!user.akses.transaksi_kirimbarang" class="block panel padder-v bg-danger item">
+                            <span class="text-white font-thin h1 block"><i class="glyphicon glyphicon-send"></i></span>
+                            <span class="text-white font-thin h4 block">Transfer</span>
+                        </button>
+                    </div>
+                    <div class="col-xs-2">
+                        <button style="width: 100%" ui-sref='transaksi.terimabarang' ng-disabled="!user.akses.transaksi_terimabarang" class="block panel padder-v bg-success item">
+                            <span class="text-white font-thin h1 block"><i class="glyphicon glyphicon-saved"></i></span>
+                            <span class="text-white font-thin h4 block">Terima</span>
+                        </button>
                     </div>
                 </div>
-            </div>                          
-        </div>
-        <footer class="panel-footer">
-             chat form 
-            <div>
-                <a class="pull-left thumb-xs avatar"><img src="img/a0.jpg" class="img-circle" alt="..."></a>
-                <form class="m-b-none m-l-xl ng-pristine ng-valid">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Say something" ng-model="newMessageText">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" ng-click="addMessage()">SEND</button>
-                        </span>
-                    </div>
-                </form>
             </div>
-        </footer>
-    </div>-->
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <highchart id="chart1" config="penjualan" class="span5"></highchart>
+            </div>
+        </div>
+    </div>
 </div>

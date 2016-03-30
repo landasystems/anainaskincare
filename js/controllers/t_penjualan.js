@@ -179,7 +179,6 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         form.alamat = $item.alamat;
         $scope.read = false;
         if ($scope.tagCust == true) {
-            $scope.form.kode_cust = 'Generate Otomatis';
             $scope.tagCust = false;
         }
     };

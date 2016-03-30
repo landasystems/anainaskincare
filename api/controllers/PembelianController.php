@@ -178,9 +178,23 @@ class PembelianController extends Controller {
         $params = json_decode(file_get_contents("php://input"), true);
         $model = new Pembelian();
         $model->attributes = $params['pembelian'];
-        $model->supplier_id = $params['pembelian']['supplier']['id'];
         $model->tanggal = date("Y-m-d", strtotime($params['pembelian']['tanggal']));
 
+        if (isset($params['pembelian']['supplier']['id'])) {
+            $sup = \app\models\Supplier::findOne($params['pembelian']['supplier']['id']);
+        } else {
+            $sup = new \app\models\Supplier;
+        }
+
+        $sup->nama = isset($params['pembelian']['supplier']['nama']) ? $params['pembelian']['supplier']['nama'] : '-';
+        $sup->kode = isset($params['pembelian']['kode_cust']) ? $params['pembelian']['kode_cust'] : '-';
+        $sup->alamat = isset($params['pembelian']['alamat']) ? $params['pembelian']['alamat'] : '-';
+        $sup->no_tlp = isset($params['pembelian']['no_tlp']) ? $params['pembelian']['no_tlp'] : '-';
+        $sup->email = isset($params['pembelian']['email']) ? $params['pembelian']['email'] : '-';
+
+        $sup->save();
+
+        $model->supplier_id = $sup->id;
 
         if ($model->save()) {
             if ($model->credit > 0) {
@@ -198,7 +212,7 @@ class PembelianController extends Controller {
                 $modelDet->produk_id = $val['barang']['id'];
                 $modelDet->pembelian_id = $model->id;
                 if ($modelDet->save()) {
-                     //======== AKTIFKAN JIKA HARGA PER CABANG BERBEDA ===========//
+                    //======== AKTIFKAN JIKA HARGA PER CABANG BERBEDA ===========//
                     //======== SIMPAN HARGA BELI BARU ============//
 //                    $harga = \app\models\Harga::find()->where('cabang_id="' . $model->cabang_id . '" and produk_id="' . $det->produk_id . '"')->one();
 //                    if (!empty($harga)) {
@@ -233,6 +247,22 @@ class PembelianController extends Controller {
         $model = $this->findModel($id);
         $model->attributes = $params['pembelian'];
         $model->tanggal = date("Y-m-d", strtotime($params['pembelian']['tanggal']));
+
+        if (isset($params['pembelian']['supplier']['id'])) {
+            $sup = \app\models\Supplier::findOne($params['pembelian']['supplier']['id']);
+        } else {
+            $sup = new \app\models\Supplier;
+        }
+
+        $sup->nama = isset($params['pembelian']['supplier']['nama']) ? $params['pembelian']['supplier']['nama'] : '-';
+        $sup->kode = isset($params['pembelian']['kode_cust']) ? $params['pembelian']['kode_cust'] : '-';
+        $sup->alamat = isset($params['pembelian']['alamat']) ? $params['pembelian']['alamat'] : '-';
+        $sup->no_tlp = isset($params['pembelian']['no_tlp']) ? $params['pembelian']['no_tlp'] : '-';
+        $sup->email = isset($params['pembelian']['email']) ? $params['pembelian']['email'] : '-';
+
+        $sup->save();
+
+        $model->supplier_id = $sup->id;
 
         if ($model->save()) {
             $credit = Hutang::find()->where('pembelian_id=' . $model->id)->one();

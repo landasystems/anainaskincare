@@ -13,8 +13,21 @@
 }
 
 .angka {
-    max-width: 90px;
+    max-width: 100%;
     text-align: right
+}
+
+.form-horizontal .control-label{
+    text-align: left;
+}
+table{
+    font-size: 12px !important;
+}
+table thead{
+    font-size: 13px !important;
+}
+.form-group{
+    margin-bottom: 7px !important;
 }
 
 /*----pencarian*/

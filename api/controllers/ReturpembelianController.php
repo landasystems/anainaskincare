@@ -93,7 +93,7 @@ class ReturpembelianController extends Controller {
                 ->join('LEFT JOIN', 'pembelian as pe', 'rp.pembelian_id = pe.id')
                 ->join('LEFT JOIN', 'm_supplier as su', 'pe.supplier_id = su.id')
                 ->join('LEFT JOIN', 'm_cabang as ca', 'pe.cabang_id = ca.id')
-                ->join('LEFT JOIN', 'm_user','m_user.id = rp.created_by')
+                ->join('LEFT JOIN', 'm_user', 'm_user.id = rp.created_by')
                 ->orderBy($sort)
                 ->select("m_user.nama as petugas, rp.*,pe.kode as kode_pembelian,su.nama as nama_supplier,ca.nama as klinik,ca.id as cabang_id");
 
@@ -168,8 +168,8 @@ class ReturpembelianController extends Controller {
         $model->attributes = $params['retur'];
         $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
         $model->pembelian_id = $params['retur']['pembelian']['id'];
-        $model->total = $params['retur']['sub_totals'];
-        $model->biaya_lain = $params['retur']['total_biaya'] - $params['retur']['sub_totals'];
+        $model->total = $params['retur']['total_biaya'] - $params['retur']['biaya_lain'];
+        $model->biaya_lain = $params['retur']['biaya_lain'];
 
         if ($model->save()) {
             $deleteAll = RPembelianDet::deleteAll('r_pembelian_id=' . $model->id);
@@ -204,8 +204,8 @@ class ReturpembelianController extends Controller {
         $model->attributes = $params['retur'];
         $model->tanggal = date('Y-m-d', strtotime($model->tanggal));
         $model->pembelian_id = $params['retur']['pembelian']['id'];
-        $model->total = $params['retur']['sub_totals'];
-        $model->biaya_lain = $params['retur']['total_biaya'] - $params['retur']['sub_totals'];
+        $model->total = $params['retur']['total_biaya'] - $params['retur']['biaya_lain'];
+        $model->biaya_lain = $params['retur']['biaya_lain'];
 
         if ($model->save()) {
             $deleteAll = RPembelianDet::deleteAll('r_pembelian_id=' . $model->id);

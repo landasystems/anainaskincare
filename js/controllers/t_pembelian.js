@@ -17,6 +17,15 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
     $scope.is_edit = false;
     $scope.is_view = false;
     $scope.is_create = false;
+    $scope.tagSup = false;
+    $scope.read = false;
+    $scope.tagSupplier = function (sup) {
+        var item = {
+            nama: sup,
+        };
+        $scope.tagSup = true;
+        return item;
+    };
     $scope.getkode_cabang = function (form, is_create) {
         if (is_create) {
             Data.get('pembelian/lastcode/', form.cabang).then(function (data) {
@@ -37,7 +46,7 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
     });
     $scope.cariProduk = function ($query, $cabang) {
         if ($query.length >= 3) {
-            Data.get('barang/cari', {nama: $query, cabang: $cabang.id}).then(function (data) {
+            Data.get('barang/cari?type=Barang', {nama: $query, cabang: $cabang.id}).then(function (data) {
                 $scope.listProduk = data.data;
                 angular.forEach($scope.listProduk, function (detail) {
                     detail.diskon = (detail.diskon != undefined) ? detail.diskon : 0;
@@ -56,9 +65,14 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
         $scope.calculate();
     };
     $scope.pilihSupplier = function (form, $item) {
+        form.kode_cust = $item.kode;
         form.no_tlp = $item.no_tlp;
         form.email = $item.email;
         form.alamat = $item.alamat;
+        $scope.read = false;
+        if ($scope.tagSup == true) {
+            $scope.tagSup = false;
+        }
     };
     $scope.callServer = function callServer(tableState) {
         tableStateRef = tableState;
@@ -204,9 +218,9 @@ app.controller('pembelianCtrl', function ($scope, Data, toaster) {
         var cash = (parseInt($scope.form.cash) !== null) ? parseInt($scope.form.cash) : 0;
         var total = (parseInt($scope.form.total) !== null) ? parseInt($scope.form.total) : 0;
         var credit = total - cash;
-        var kembalian = cash - total + credit;
-        $scope.form.credit = credit;
-        $scope.form.kembalian = (kembalian > 0) ? kembalian : 0;
+        $scope.form.credit = (credit >= 0) ? credit : 0;
+        var kembalian = cash - (total + $scope.form.credit);
+        $scope.form.kembalian = kembalian;
     };
     $scope.excel = function () {
         Data.get('pembelian', paramRef).then(function (data) {
