@@ -11709,3 +11709,1115 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1458784459.459
     'REQUEST_TIME' => 1458784459
 ]
+2016-03-30 15:13:13 [127.0.0.1][-][-][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[42000] [1049] Unknown database 'landa_anaina_v2'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php:579
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(579): PDO->__construct('mysql:host=loca...', 'root', 'landak', NULL)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(529): yii\db\Connection->createPdoInstance()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(836): yii\db\Connection->open()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(823): yii\db\Connection->getMasterPdo()
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(444): yii\db\Connection->getSlavePdo()
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(732): yii\db\Schema->quoteValue('admin')
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(164): yii\db\Connection->quoteValue('admin')
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(794): yii\db\Command->getRawSql()
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(363): yii\db\Command->queryInternal('fetch', NULL)
+#9 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(243): yii\db\Command->queryOne()
+#10 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(285): yii\db\Query->one(NULL)
+#11 /var/www/anainaskincare/api/controllers/SiteController.php(131): yii\db\ActiveQuery->one()
+#12 [internal function]: app\controllers\SiteController->actionLogin()
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#14 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#15 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('login', Array)
+#16 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/login/', Array)
+#17 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#18 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#19 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[42000] [1049] Unknown database 'landa_anaina_v2'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php:534
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(836): yii\db\Connection->open()
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(823): yii\db\Connection->getMasterPdo()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(444): yii\db\Connection->getSlavePdo()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(732): yii\db\Schema->quoteValue('admin')
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(164): yii\db\Connection->quoteValue('admin')
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(794): yii\db\Command->getRawSql()
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(363): yii\db\Command->queryInternal('fetch', NULL)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(243): yii\db\Command->queryOne()
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(285): yii\db\Query->one(NULL)
+#9 /var/www/anainaskincare/api/controllers/SiteController.php(131): yii\db\ActiveQuery->one()
+#10 [internal function]: app\controllers\SiteController->actionLogin()
+#11 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#12 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('login', Array)
+#14 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/login/', Array)
+#15 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#16 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#17 {main}
+Additional Information:
+
+2016-03-30 15:13:13 [127.0.0.1][-][-][info][application] $_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    '_csrf' => '2165c399f573f7f90edc43757bb9280a081cebadf25ce1d330e9bc847b8b5a7bs:32:\"ANddNL-ej-jgw4XGYJIko745CL4Q-bLZ\";'
+    '_ga' => 'GA1.1.1491920020.1454028348'
+    'PHPSESSID' => 'iibf'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '149'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; _csrf=2165c399f573f7f90edc43757bb9280a081cebadf25ce1d330e9bc847b8b5a7bs%3A32%3A%22ANddNL-ej-jgw4XGYJIko745CL4Q-bLZ%22%3B; _ga=GA1.1.1491920020.1454028348; PHPSESSID=iibf'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '40883'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/login/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/login/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459325593.528
+    'REQUEST_TIME' => 1459325593
+]
+2016-03-30 15:13:15 [127.0.0.1][-][-][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[42000] [1049] Unknown database 'landa_anaina_v2'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php:579
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(579): PDO->__construct('mysql:host=loca...', 'root', 'landak', NULL)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(529): yii\db\Connection->createPdoInstance()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(836): yii\db\Connection->open()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(823): yii\db\Connection->getMasterPdo()
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(444): yii\db\Connection->getSlavePdo()
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(732): yii\db\Schema->quoteValue('admin')
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(164): yii\db\Connection->quoteValue('admin')
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(794): yii\db\Command->getRawSql()
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(363): yii\db\Command->queryInternal('fetch', NULL)
+#9 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(243): yii\db\Command->queryOne()
+#10 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(285): yii\db\Query->one(NULL)
+#11 /var/www/anainaskincare/api/controllers/SiteController.php(131): yii\db\ActiveQuery->one()
+#12 [internal function]: app\controllers\SiteController->actionLogin()
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#14 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#15 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('login', Array)
+#16 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/login/', Array)
+#17 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#18 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#19 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[42000] [1049] Unknown database 'landa_anaina_v2'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php:534
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(836): yii\db\Connection->open()
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(823): yii\db\Connection->getMasterPdo()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(444): yii\db\Connection->getSlavePdo()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(732): yii\db\Schema->quoteValue('admin')
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(164): yii\db\Connection->quoteValue('admin')
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(794): yii\db\Command->getRawSql()
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(363): yii\db\Command->queryInternal('fetch', NULL)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(243): yii\db\Command->queryOne()
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(285): yii\db\Query->one(NULL)
+#9 /var/www/anainaskincare/api/controllers/SiteController.php(131): yii\db\ActiveQuery->one()
+#10 [internal function]: app\controllers\SiteController->actionLogin()
+#11 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#12 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('login', Array)
+#14 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/login/', Array)
+#15 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#16 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#17 {main}
+Additional Information:
+
+2016-03-30 15:13:15 [127.0.0.1][-][-][info][application] $_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    '_csrf' => '2165c399f573f7f90edc43757bb9280a081cebadf25ce1d330e9bc847b8b5a7bs:32:\"ANddNL-ej-jgw4XGYJIko745CL4Q-bLZ\";'
+    '_ga' => 'GA1.1.1491920020.1454028348'
+    'PHPSESSID' => 'iibf'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '148'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; _csrf=2165c399f573f7f90edc43757bb9280a081cebadf25ce1d330e9bc847b8b5a7bs%3A32%3A%22ANddNL-ej-jgw4XGYJIko745CL4Q-bLZ%22%3B; _ga=GA1.1.1491920020.1454028348; PHPSESSID=iibf'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '40894'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/login/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/login/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459325595.552
+    'REQUEST_TIME' => 1459325595
+]
+2016-03-30 15:14:36 [127.0.0.1][-][-][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[42000] [1049] Unknown database 'landa_anaina_v2'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php:579
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(579): PDO->__construct('mysql:host=loca...', 'root', 'landak', NULL)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(529): yii\db\Connection->createPdoInstance()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(836): yii\db\Connection->open()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(823): yii\db\Connection->getMasterPdo()
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(444): yii\db\Connection->getSlavePdo()
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(732): yii\db\Schema->quoteValue('admin')
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(164): yii\db\Connection->quoteValue('admin')
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(794): yii\db\Command->getRawSql()
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(363): yii\db\Command->queryInternal('fetch', NULL)
+#9 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(243): yii\db\Command->queryOne()
+#10 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(285): yii\db\Query->one(NULL)
+#11 /var/www/anainaskincare/api/controllers/SiteController.php(131): yii\db\ActiveQuery->one()
+#12 [internal function]: app\controllers\SiteController->actionLogin()
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#14 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#15 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('login', Array)
+#16 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/login/', Array)
+#17 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#18 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#19 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[42000] [1049] Unknown database 'landa_anaina_v2'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php:534
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(836): yii\db\Connection->open()
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(823): yii\db\Connection->getMasterPdo()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(444): yii\db\Connection->getSlavePdo()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(732): yii\db\Schema->quoteValue('admin')
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(164): yii\db\Connection->quoteValue('admin')
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(794): yii\db\Command->getRawSql()
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(363): yii\db\Command->queryInternal('fetch', NULL)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(243): yii\db\Command->queryOne()
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(285): yii\db\Query->one(NULL)
+#9 /var/www/anainaskincare/api/controllers/SiteController.php(131): yii\db\ActiveQuery->one()
+#10 [internal function]: app\controllers\SiteController->actionLogin()
+#11 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#12 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('login', Array)
+#14 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/login/', Array)
+#15 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#16 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#17 {main}
+Additional Information:
+
+2016-03-30 15:14:36 [127.0.0.1][-][-][info][application] $_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    '_csrf' => '2165c399f573f7f90edc43757bb9280a081cebadf25ce1d330e9bc847b8b5a7bs:32:\"ANddNL-ej-jgw4XGYJIko745CL4Q-bLZ\";'
+    '_ga' => 'GA1.1.1491920020.1454028348'
+    'PHPSESSID' => 'iibf'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '148'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; _csrf=2165c399f573f7f90edc43757bb9280a081cebadf25ce1d330e9bc847b8b5a7bs%3A32%3A%22ANddNL-ej-jgw4XGYJIko745CL4Q-bLZ%22%3B; _ga=GA1.1.1491920020.1454028348; PHPSESSID=iibf'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '40919'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/login/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/login/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459325676.216
+    'REQUEST_TIME' => 1459325676
+]
+2016-03-30 15:14:37 [127.0.0.1][-][-][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[42000] [1049] Unknown database 'landa_anaina_v2'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php:579
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(579): PDO->__construct('mysql:host=loca...', 'root', 'landak', NULL)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(529): yii\db\Connection->createPdoInstance()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(836): yii\db\Connection->open()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(823): yii\db\Connection->getMasterPdo()
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(444): yii\db\Connection->getSlavePdo()
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(732): yii\db\Schema->quoteValue('admin')
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(164): yii\db\Connection->quoteValue('admin')
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(794): yii\db\Command->getRawSql()
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(363): yii\db\Command->queryInternal('fetch', NULL)
+#9 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(243): yii\db\Command->queryOne()
+#10 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(285): yii\db\Query->one(NULL)
+#11 /var/www/anainaskincare/api/controllers/SiteController.php(131): yii\db\ActiveQuery->one()
+#12 [internal function]: app\controllers\SiteController->actionLogin()
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#14 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#15 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('login', Array)
+#16 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/login/', Array)
+#17 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#18 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#19 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[42000] [1049] Unknown database 'landa_anaina_v2'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php:534
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(836): yii\db\Connection->open()
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(823): yii\db\Connection->getMasterPdo()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(444): yii\db\Connection->getSlavePdo()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(732): yii\db\Schema->quoteValue('admin')
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(164): yii\db\Connection->quoteValue('admin')
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(794): yii\db\Command->getRawSql()
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(363): yii\db\Command->queryInternal('fetch', NULL)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(243): yii\db\Command->queryOne()
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(285): yii\db\Query->one(NULL)
+#9 /var/www/anainaskincare/api/controllers/SiteController.php(131): yii\db\ActiveQuery->one()
+#10 [internal function]: app\controllers\SiteController->actionLogin()
+#11 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#12 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('login', Array)
+#14 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/login/', Array)
+#15 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#16 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#17 {main}
+Additional Information:
+
+2016-03-30 15:14:37 [127.0.0.1][-][-][info][application] $_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    '_csrf' => '2165c399f573f7f90edc43757bb9280a081cebadf25ce1d330e9bc847b8b5a7bs:32:\"ANddNL-ej-jgw4XGYJIko745CL4Q-bLZ\";'
+    '_ga' => 'GA1.1.1491920020.1454028348'
+    'PHPSESSID' => 'iibf'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '148'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; _csrf=2165c399f573f7f90edc43757bb9280a081cebadf25ce1d330e9bc847b8b5a7bs%3A32%3A%22ANddNL-ej-jgw4XGYJIko745CL4Q-bLZ%22%3B; _ga=GA1.1.1491920020.1454028348; PHPSESSID=iibf'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '40920'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/login/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/login/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459325677.867
+    'REQUEST_TIME' => 1459325677
+]
+2016-03-30 15:14:38 [127.0.0.1][-][-][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[42000] [1049] Unknown database 'landa_anaina_v2'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php:579
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(579): PDO->__construct('mysql:host=loca...', 'root', 'landak', NULL)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(529): yii\db\Connection->createPdoInstance()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(836): yii\db\Connection->open()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(823): yii\db\Connection->getMasterPdo()
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(444): yii\db\Connection->getSlavePdo()
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(732): yii\db\Schema->quoteValue('admin')
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(164): yii\db\Connection->quoteValue('admin')
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(794): yii\db\Command->getRawSql()
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(363): yii\db\Command->queryInternal('fetch', NULL)
+#9 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(243): yii\db\Command->queryOne()
+#10 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(285): yii\db\Query->one(NULL)
+#11 /var/www/anainaskincare/api/controllers/SiteController.php(131): yii\db\ActiveQuery->one()
+#12 [internal function]: app\controllers\SiteController->actionLogin()
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#14 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#15 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('login', Array)
+#16 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/login/', Array)
+#17 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#18 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#19 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[42000] [1049] Unknown database 'landa_anaina_v2'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php:534
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(836): yii\db\Connection->open()
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(823): yii\db\Connection->getMasterPdo()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(444): yii\db\Connection->getSlavePdo()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(732): yii\db\Schema->quoteValue('admin')
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(164): yii\db\Connection->quoteValue('admin')
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(794): yii\db\Command->getRawSql()
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(363): yii\db\Command->queryInternal('fetch', NULL)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(243): yii\db\Command->queryOne()
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(285): yii\db\Query->one(NULL)
+#9 /var/www/anainaskincare/api/controllers/SiteController.php(131): yii\db\ActiveQuery->one()
+#10 [internal function]: app\controllers\SiteController->actionLogin()
+#11 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#12 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('login', Array)
+#14 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/login/', Array)
+#15 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#16 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#17 {main}
+Additional Information:
+
+2016-03-30 15:14:38 [127.0.0.1][-][-][info][application] $_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    '_csrf' => '2165c399f573f7f90edc43757bb9280a081cebadf25ce1d330e9bc847b8b5a7bs:32:\"ANddNL-ej-jgw4XGYJIko745CL4Q-bLZ\";'
+    '_ga' => 'GA1.1.1491920020.1454028348'
+    'PHPSESSID' => 'iibf'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '148'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; _csrf=2165c399f573f7f90edc43757bb9280a081cebadf25ce1d330e9bc847b8b5a7bs%3A32%3A%22ANddNL-ej-jgw4XGYJIko745CL4Q-bLZ%22%3B; _ga=GA1.1.1491920020.1454028348; PHPSESSID=iibf'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '40921'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/login/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/login/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459325678.051
+    'REQUEST_TIME' => 1459325678
+]
+2016-03-30 15:14:38 [127.0.0.1][-][-][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[42000] [1049] Unknown database 'landa_anaina_v2'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php:579
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(579): PDO->__construct('mysql:host=loca...', 'root', 'landak', NULL)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(529): yii\db\Connection->createPdoInstance()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(836): yii\db\Connection->open()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(823): yii\db\Connection->getMasterPdo()
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(444): yii\db\Connection->getSlavePdo()
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(732): yii\db\Schema->quoteValue('admin')
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(164): yii\db\Connection->quoteValue('admin')
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(794): yii\db\Command->getRawSql()
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(363): yii\db\Command->queryInternal('fetch', NULL)
+#9 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(243): yii\db\Command->queryOne()
+#10 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(285): yii\db\Query->one(NULL)
+#11 /var/www/anainaskincare/api/controllers/SiteController.php(131): yii\db\ActiveQuery->one()
+#12 [internal function]: app\controllers\SiteController->actionLogin()
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#14 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#15 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('login', Array)
+#16 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/login/', Array)
+#17 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#18 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#19 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[42000] [1049] Unknown database 'landa_anaina_v2'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php:534
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(836): yii\db\Connection->open()
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(823): yii\db\Connection->getMasterPdo()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(444): yii\db\Connection->getSlavePdo()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(732): yii\db\Schema->quoteValue('admin')
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(164): yii\db\Connection->quoteValue('admin')
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(794): yii\db\Command->getRawSql()
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(363): yii\db\Command->queryInternal('fetch', NULL)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(243): yii\db\Command->queryOne()
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(285): yii\db\Query->one(NULL)
+#9 /var/www/anainaskincare/api/controllers/SiteController.php(131): yii\db\ActiveQuery->one()
+#10 [internal function]: app\controllers\SiteController->actionLogin()
+#11 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#12 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('login', Array)
+#14 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/login/', Array)
+#15 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#16 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#17 {main}
+Additional Information:
+
+2016-03-30 15:14:38 [127.0.0.1][-][-][info][application] $_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    '_csrf' => '2165c399f573f7f90edc43757bb9280a081cebadf25ce1d330e9bc847b8b5a7bs:32:\"ANddNL-ej-jgw4XGYJIko745CL4Q-bLZ\";'
+    '_ga' => 'GA1.1.1491920020.1454028348'
+    'PHPSESSID' => 'iibf'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '148'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; _csrf=2165c399f573f7f90edc43757bb9280a081cebadf25ce1d330e9bc847b8b5a7bs%3A32%3A%22ANddNL-ej-jgw4XGYJIko745CL4Q-bLZ%22%3B; _ga=GA1.1.1491920020.1454028348; PHPSESSID=iibf'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '40922'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/login/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/login/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459325678.204
+    'REQUEST_TIME' => 1459325678
+]
+2016-03-30 15:14:38 [127.0.0.1][-][-][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[42000] [1049] Unknown database 'landa_anaina_v2'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php:579
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(579): PDO->__construct('mysql:host=loca...', 'root', 'landak', NULL)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(529): yii\db\Connection->createPdoInstance()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(836): yii\db\Connection->open()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(823): yii\db\Connection->getMasterPdo()
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(444): yii\db\Connection->getSlavePdo()
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(732): yii\db\Schema->quoteValue('admin')
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(164): yii\db\Connection->quoteValue('admin')
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(794): yii\db\Command->getRawSql()
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(363): yii\db\Command->queryInternal('fetch', NULL)
+#9 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(243): yii\db\Command->queryOne()
+#10 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(285): yii\db\Query->one(NULL)
+#11 /var/www/anainaskincare/api/controllers/SiteController.php(131): yii\db\ActiveQuery->one()
+#12 [internal function]: app\controllers\SiteController->actionLogin()
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#14 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#15 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('login', Array)
+#16 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/login/', Array)
+#17 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#18 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#19 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[42000] [1049] Unknown database 'landa_anaina_v2'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php:534
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(836): yii\db\Connection->open()
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(823): yii\db\Connection->getMasterPdo()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(444): yii\db\Connection->getSlavePdo()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(732): yii\db\Schema->quoteValue('admin')
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(164): yii\db\Connection->quoteValue('admin')
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(794): yii\db\Command->getRawSql()
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(363): yii\db\Command->queryInternal('fetch', NULL)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(243): yii\db\Command->queryOne()
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(285): yii\db\Query->one(NULL)
+#9 /var/www/anainaskincare/api/controllers/SiteController.php(131): yii\db\ActiveQuery->one()
+#10 [internal function]: app\controllers\SiteController->actionLogin()
+#11 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#12 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('login', Array)
+#14 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/login/', Array)
+#15 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#16 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#17 {main}
+Additional Information:
+
+2016-03-30 15:14:38 [127.0.0.1][-][-][info][application] $_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    '_csrf' => '2165c399f573f7f90edc43757bb9280a081cebadf25ce1d330e9bc847b8b5a7bs:32:\"ANddNL-ej-jgw4XGYJIko745CL4Q-bLZ\";'
+    '_ga' => 'GA1.1.1491920020.1454028348'
+    'PHPSESSID' => 'iibf'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '148'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; _csrf=2165c399f573f7f90edc43757bb9280a081cebadf25ce1d330e9bc847b8b5a7bs%3A32%3A%22ANddNL-ej-jgw4XGYJIko745CL4Q-bLZ%22%3B; _ga=GA1.1.1491920020.1454028348; PHPSESSID=iibf'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '40923'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/login/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/login/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459325678.369
+    'REQUEST_TIME' => 1459325678
+]
+2016-03-30 15:14:38 [127.0.0.1][-][-][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[42000] [1049] Unknown database 'landa_anaina_v2'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php:579
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(579): PDO->__construct('mysql:host=loca...', 'root', 'landak', NULL)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(529): yii\db\Connection->createPdoInstance()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(836): yii\db\Connection->open()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(823): yii\db\Connection->getMasterPdo()
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(444): yii\db\Connection->getSlavePdo()
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(732): yii\db\Schema->quoteValue('admin')
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(164): yii\db\Connection->quoteValue('admin')
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(794): yii\db\Command->getRawSql()
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(363): yii\db\Command->queryInternal('fetch', NULL)
+#9 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(243): yii\db\Command->queryOne()
+#10 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(285): yii\db\Query->one(NULL)
+#11 /var/www/anainaskincare/api/controllers/SiteController.php(131): yii\db\ActiveQuery->one()
+#12 [internal function]: app\controllers\SiteController->actionLogin()
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#14 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#15 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('login', Array)
+#16 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/login/', Array)
+#17 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#18 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#19 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[42000] [1049] Unknown database 'landa_anaina_v2'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php:534
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(836): yii\db\Connection->open()
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(823): yii\db\Connection->getMasterPdo()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(444): yii\db\Connection->getSlavePdo()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(732): yii\db\Schema->quoteValue('admin')
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(164): yii\db\Connection->quoteValue('admin')
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(794): yii\db\Command->getRawSql()
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(363): yii\db\Command->queryInternal('fetch', NULL)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(243): yii\db\Command->queryOne()
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(285): yii\db\Query->one(NULL)
+#9 /var/www/anainaskincare/api/controllers/SiteController.php(131): yii\db\ActiveQuery->one()
+#10 [internal function]: app\controllers\SiteController->actionLogin()
+#11 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#12 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('login', Array)
+#14 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/login/', Array)
+#15 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#16 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#17 {main}
+Additional Information:
+
+2016-03-30 15:14:38 [127.0.0.1][-][-][info][application] $_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    '_csrf' => '2165c399f573f7f90edc43757bb9280a081cebadf25ce1d330e9bc847b8b5a7bs:32:\"ANddNL-ej-jgw4XGYJIko745CL4Q-bLZ\";'
+    '_ga' => 'GA1.1.1491920020.1454028348'
+    'PHPSESSID' => 'iibf'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '148'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; _csrf=2165c399f573f7f90edc43757bb9280a081cebadf25ce1d330e9bc847b8b5a7bs%3A32%3A%22ANddNL-ej-jgw4XGYJIko745CL4Q-bLZ%22%3B; _ga=GA1.1.1491920020.1454028348; PHPSESSID=iibf'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '40924'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/login/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/login/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459325678.521
+    'REQUEST_TIME' => 1459325678
+]
+2016-03-30 15:14:38 [127.0.0.1][-][-][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[42000] [1049] Unknown database 'landa_anaina_v2'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php:579
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(579): PDO->__construct('mysql:host=loca...', 'root', 'landak', NULL)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(529): yii\db\Connection->createPdoInstance()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(836): yii\db\Connection->open()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(823): yii\db\Connection->getMasterPdo()
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(444): yii\db\Connection->getSlavePdo()
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(732): yii\db\Schema->quoteValue('admin')
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(164): yii\db\Connection->quoteValue('admin')
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(794): yii\db\Command->getRawSql()
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(363): yii\db\Command->queryInternal('fetch', NULL)
+#9 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(243): yii\db\Command->queryOne()
+#10 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(285): yii\db\Query->one(NULL)
+#11 /var/www/anainaskincare/api/controllers/SiteController.php(131): yii\db\ActiveQuery->one()
+#12 [internal function]: app\controllers\SiteController->actionLogin()
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#14 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#15 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('login', Array)
+#16 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/login/', Array)
+#17 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#18 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#19 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[42000] [1049] Unknown database 'landa_anaina_v2'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php:534
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(836): yii\db\Connection->open()
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(823): yii\db\Connection->getMasterPdo()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(444): yii\db\Connection->getSlavePdo()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(732): yii\db\Schema->quoteValue('admin')
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(164): yii\db\Connection->quoteValue('admin')
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(794): yii\db\Command->getRawSql()
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(363): yii\db\Command->queryInternal('fetch', NULL)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(243): yii\db\Command->queryOne()
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(285): yii\db\Query->one(NULL)
+#9 /var/www/anainaskincare/api/controllers/SiteController.php(131): yii\db\ActiveQuery->one()
+#10 [internal function]: app\controllers\SiteController->actionLogin()
+#11 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#12 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('login', Array)
+#14 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/login/', Array)
+#15 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#16 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#17 {main}
+Additional Information:
+
+2016-03-30 15:14:38 [127.0.0.1][-][-][info][application] $_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    '_csrf' => '2165c399f573f7f90edc43757bb9280a081cebadf25ce1d330e9bc847b8b5a7bs:32:\"ANddNL-ej-jgw4XGYJIko745CL4Q-bLZ\";'
+    '_ga' => 'GA1.1.1491920020.1454028348'
+    'PHPSESSID' => 'iibf'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '148'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; _csrf=2165c399f573f7f90edc43757bb9280a081cebadf25ce1d330e9bc847b8b5a7bs%3A32%3A%22ANddNL-ej-jgw4XGYJIko745CL4Q-bLZ%22%3B; _ga=GA1.1.1491920020.1454028348; PHPSESSID=iibf'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '40925'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/login/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/login/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459325678.671
+    'REQUEST_TIME' => 1459325678
+]
+2016-03-30 15:14:38 [127.0.0.1][-][-][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[42000] [1049] Unknown database 'landa_anaina_v2'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php:579
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(579): PDO->__construct('mysql:host=loca...', 'root', 'landak', NULL)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(529): yii\db\Connection->createPdoInstance()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(836): yii\db\Connection->open()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(823): yii\db\Connection->getMasterPdo()
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(444): yii\db\Connection->getSlavePdo()
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(732): yii\db\Schema->quoteValue('admin')
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(164): yii\db\Connection->quoteValue('admin')
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(794): yii\db\Command->getRawSql()
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(363): yii\db\Command->queryInternal('fetch', NULL)
+#9 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(243): yii\db\Command->queryOne()
+#10 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(285): yii\db\Query->one(NULL)
+#11 /var/www/anainaskincare/api/controllers/SiteController.php(131): yii\db\ActiveQuery->one()
+#12 [internal function]: app\controllers\SiteController->actionLogin()
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#14 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#15 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('login', Array)
+#16 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/login/', Array)
+#17 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#18 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#19 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[42000] [1049] Unknown database 'landa_anaina_v2'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php:534
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(836): yii\db\Connection->open()
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(823): yii\db\Connection->getMasterPdo()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(444): yii\db\Connection->getSlavePdo()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(732): yii\db\Schema->quoteValue('admin')
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(164): yii\db\Connection->quoteValue('admin')
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(794): yii\db\Command->getRawSql()
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(363): yii\db\Command->queryInternal('fetch', NULL)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(243): yii\db\Command->queryOne()
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(285): yii\db\Query->one(NULL)
+#9 /var/www/anainaskincare/api/controllers/SiteController.php(131): yii\db\ActiveQuery->one()
+#10 [internal function]: app\controllers\SiteController->actionLogin()
+#11 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#12 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('login', Array)
+#14 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/login/', Array)
+#15 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#16 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#17 {main}
+Additional Information:
+
+2016-03-30 15:14:38 [127.0.0.1][-][-][info][application] $_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    '_csrf' => '2165c399f573f7f90edc43757bb9280a081cebadf25ce1d330e9bc847b8b5a7bs:32:\"ANddNL-ej-jgw4XGYJIko745CL4Q-bLZ\";'
+    '_ga' => 'GA1.1.1491920020.1454028348'
+    'PHPSESSID' => 'iibf'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '148'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; _csrf=2165c399f573f7f90edc43757bb9280a081cebadf25ce1d330e9bc847b8b5a7bs%3A32%3A%22ANddNL-ej-jgw4XGYJIko745CL4Q-bLZ%22%3B; _ga=GA1.1.1491920020.1454028348; PHPSESSID=iibf'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '40926'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/login/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/login/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459325678.825
+    'REQUEST_TIME' => 1459325678
+]
+2016-03-30 15:14:38 [127.0.0.1][-][-][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[42000] [1049] Unknown database 'landa_anaina_v2'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php:579
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(579): PDO->__construct('mysql:host=loca...', 'root', 'landak', NULL)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(529): yii\db\Connection->createPdoInstance()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(836): yii\db\Connection->open()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(823): yii\db\Connection->getMasterPdo()
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(444): yii\db\Connection->getSlavePdo()
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(732): yii\db\Schema->quoteValue('admin')
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(164): yii\db\Connection->quoteValue('admin')
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(794): yii\db\Command->getRawSql()
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(363): yii\db\Command->queryInternal('fetch', NULL)
+#9 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(243): yii\db\Command->queryOne()
+#10 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(285): yii\db\Query->one(NULL)
+#11 /var/www/anainaskincare/api/controllers/SiteController.php(131): yii\db\ActiveQuery->one()
+#12 [internal function]: app\controllers\SiteController->actionLogin()
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#14 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#15 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('login', Array)
+#16 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/login/', Array)
+#17 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#18 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#19 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[42000] [1049] Unknown database 'landa_anaina_v2'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php:534
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(836): yii\db\Connection->open()
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(823): yii\db\Connection->getMasterPdo()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(444): yii\db\Connection->getSlavePdo()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(732): yii\db\Schema->quoteValue('admin')
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(164): yii\db\Connection->quoteValue('admin')
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(794): yii\db\Command->getRawSql()
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(363): yii\db\Command->queryInternal('fetch', NULL)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(243): yii\db\Command->queryOne()
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(285): yii\db\Query->one(NULL)
+#9 /var/www/anainaskincare/api/controllers/SiteController.php(131): yii\db\ActiveQuery->one()
+#10 [internal function]: app\controllers\SiteController->actionLogin()
+#11 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#12 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('login', Array)
+#14 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/login/', Array)
+#15 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#16 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#17 {main}
+Additional Information:
+
+2016-03-30 15:14:38 [127.0.0.1][-][-][info][application] $_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    '_csrf' => '2165c399f573f7f90edc43757bb9280a081cebadf25ce1d330e9bc847b8b5a7bs:32:\"ANddNL-ej-jgw4XGYJIko745CL4Q-bLZ\";'
+    '_ga' => 'GA1.1.1491920020.1454028348'
+    'PHPSESSID' => 'iibf'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '148'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; _csrf=2165c399f573f7f90edc43757bb9280a081cebadf25ce1d330e9bc847b8b5a7bs%3A32%3A%22ANddNL-ej-jgw4XGYJIko745CL4Q-bLZ%22%3B; _ga=GA1.1.1491920020.1454028348; PHPSESSID=iibf'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '40927'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/login/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/login/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459325678.973
+    'REQUEST_TIME' => 1459325678
+]
+2016-03-30 15:14:39 [127.0.0.1][-][-][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[42000] [1049] Unknown database 'landa_anaina_v2'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php:579
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(579): PDO->__construct('mysql:host=loca...', 'root', 'landak', NULL)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(529): yii\db\Connection->createPdoInstance()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(836): yii\db\Connection->open()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(823): yii\db\Connection->getMasterPdo()
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(444): yii\db\Connection->getSlavePdo()
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(732): yii\db\Schema->quoteValue('admin')
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(164): yii\db\Connection->quoteValue('admin')
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(794): yii\db\Command->getRawSql()
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(363): yii\db\Command->queryInternal('fetch', NULL)
+#9 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(243): yii\db\Command->queryOne()
+#10 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(285): yii\db\Query->one(NULL)
+#11 /var/www/anainaskincare/api/controllers/SiteController.php(131): yii\db\ActiveQuery->one()
+#12 [internal function]: app\controllers\SiteController->actionLogin()
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#14 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#15 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('login', Array)
+#16 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/login/', Array)
+#17 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#18 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#19 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[42000] [1049] Unknown database 'landa_anaina_v2'' in /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php:534
+Stack trace:
+#0 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(836): yii\db\Connection->open()
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(823): yii\db\Connection->getMasterPdo()
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Schema.php(444): yii\db\Connection->getSlavePdo()
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Connection.php(732): yii\db\Schema->quoteValue('admin')
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(164): yii\db\Connection->quoteValue('admin')
+#5 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(794): yii\db\Command->getRawSql()
+#6 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Command.php(363): yii\db\Command->queryInternal('fetch', NULL)
+#7 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/Query.php(243): yii\db\Command->queryOne()
+#8 /var/www/anainaskincare/api/vendor/yiisoft/yii2/db/ActiveQuery.php(285): yii\db\Query->one(NULL)
+#9 /var/www/anainaskincare/api/controllers/SiteController.php(131): yii\db\ActiveQuery->one()
+#10 [internal function]: app\controllers\SiteController->actionLogin()
+#11 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/InlineAction.php(55): call_user_func_array(Array, Array)
+#12 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Controller.php(151): yii\base\InlineAction->runWithParams(Array)
+#13 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Module.php(455): yii\base\Controller->runAction('login', Array)
+#14 /var/www/anainaskincare/api/vendor/yiisoft/yii2/web/Application.php(84): yii\base\Module->runAction('site/login/', Array)
+#15 /var/www/anainaskincare/api/vendor/yiisoft/yii2/base/Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#16 /var/www/anainaskincare/api/web/index.php(12): yii\base\Application->run()
+#17 {main}
+Additional Information:
+
+2016-03-30 15:14:39 [127.0.0.1][-][-][info][application] $_COOKIE = [
+    'YII_CSRF_TOKEN' => '5c6f32a2e0c1911c889ef823b22be4a4e8d82950'
+    '_csrf' => '2165c399f573f7f90edc43757bb9280a081cebadf25ce1d330e9bc847b8b5a7bs:32:\"ANddNL-ej-jgw4XGYJIko745CL4Q-bLZ\";'
+    '_ga' => 'GA1.1.1491920020.1454028348'
+    'PHPSESSID' => 'iibf'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '148'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8,id;q=0.6,ms;q=0.4'
+    'HTTP_COOKIE' => 'YII_CSRF_TOKEN=5c6f32a2e0c1911c889ef823b22be4a4e8d82950; _csrf=2165c399f573f7f90edc43757bb9280a081cebadf25ce1d330e9bc847b8b5a7bs%3A32%3A%22ANddNL-ej-jgw4XGYJIko745CL4Q-bLZ%22%3B; _ga=GA1.1.1491920020.1454028348; PHPSESSID=iibf'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.7 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.7 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '40928'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/login/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/login/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1459325679.141
+    'REQUEST_TIME' => 1459325679
+]
