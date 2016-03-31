@@ -283,7 +283,7 @@
                             </ul>
                             </td>
                             <td style="width:90px;">
-                                <input type="text" class="form-control angka" ng-maxlength="4" ng-pattern="/^[0-9]+$/" ng-change="total()"  ng-model="detail.jumlah" ng-disabled="is_view" ng-readonly="is_create == false" required>
+                                <input type="text" class="form-control angka" ng-maxlength="4" ng-pattern="/^[0-9]+$/" ng-change="total()"  ng-model="detail.jumlah" ng-readonly="is_view" required>
                                 <ul ng-if="detail.type == 'Paket'" style="margin-top: 10px; list-style: none">
                                     <li ng-repeat="paket in detail.listPaket">{{paket.jml * detail.jumlah}}</li>
                                 </ul>
@@ -303,7 +303,7 @@
                                         <td width="40%">     
                                             <div class="input-group " style="margin:0px;">
                                                 <input type="text" class="form-control angka" ng-maxlength="2" ng-pattern="/^[0-9]+$/" ng-change="calcDiskonHarga(detail);
-                                                                    total();"  ng-model="detail.diskonpersen"  ng-disabled="is_view" ng-readonly="is_create == false">
+                                                                    total();"  ng-model="detail.diskonpersen"   ng-readonly="is_view">
                                                 <span class="input-group-addon">%</span>
                                             </div>
                                         </td>
