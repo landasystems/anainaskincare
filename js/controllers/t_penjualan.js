@@ -107,7 +107,11 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         var url = (form.id > 0) ? 'penjualan/update/' + form.id : 'penjualan/create'
         Data.post(url, data).then(function (result) {
             if (result.status == 0) {
-                toaster.pop('error', "Terjadi Kesalahan", result.errors);
+                var error = '';
+                angular.forEach(result.errors, function ($value, $key) {
+                    error = error + '- ' + $value + "<br>";
+                });
+                toaster.pop('error', "Terjadi Kesalahan", error);
             } else {
                 $scope.view(result.data);
                 toaster.pop('success', "Berhasil", "Data berhasil tersimpan");

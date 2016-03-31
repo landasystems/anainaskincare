@@ -306,63 +306,66 @@ class PenjualanController extends Controller {
             $cust = new Customer;
         }
 
-        $cust->nama = isset($params['penjualan']['customers']['nama']) ? $params['penjualan']['customers']['nama'] : '-';
-        $cust->kode = isset($params['penjualan']['kode_cust']) ? $params['penjualan']['kode_cust'] : '-';
-        $cust->alamat = isset($params['penjualan']['alamat']) ? $params['penjualan']['alamat'] : '-';
-        $cust->no_tlp = isset($params['penjualan']['no_tlp']) ? $params['penjualan']['no_tlp'] : '-';
-        $cust->email = isset($params['penjualan']['email']) ? $params['penjualan']['email'] : '-';
-        $cust->save();
+        $cust->nama = isset($params['penjualan']['customers']['nama']) ? $params['penjualan']['customers']['nama'] : '';
+        $cust->kode = isset($params['penjualan']['kode_cust']) ? $params['penjualan']['kode_cust'] : '';
+        $cust->alamat = isset($params['penjualan']['alamat']) ? $params['penjualan']['alamat'] : '';
+        $cust->no_tlp = isset($params['penjualan']['no_tlp']) ? $params['penjualan']['no_tlp'] : '';
+        $cust->email = isset($params['penjualan']['email']) ? $params['penjualan']['email'] : '';
 
-        $model->customer_id = $cust->id;
+        if ($cust->validate()) {
+            $cust->save();
+            $model->customer_id = $cust->id;
+        }
 
-        if ($model->save()) {
-            if ($model->status == "Pesan") {
-                if ($model->credit > 0) {
-                    $pinjaman = new Pinjaman();
-                    $pinjaman->penjualan_id = $model->id;
-                    $pinjaman->debet = $model->credit;
-                    $pinjaman->tanggal_transaksi = $model->tanggal;
-                    $pinjaman->status = 'Belum Lunas';
-                    $pinjaman->save();
-                }
-            }
-
-            foreach ($params['penjualandet'] as $data) {
-                $det = new PenjualanDet();
-                $det->attributes = $data;
-                $det->penjualan_id = $model->id;
-                $det->produk_id = $data['produk']['id'];
-                $det->pegawai_terapis_id = isset($data['terapis']['id']) ? $data['terapis']['id'] : '';
-                $det->pegawai_dokter_id = isset($data['dokter']['id']) ? $data['dokter']['id'] : '';
-
-                if ($det->type == "Paket") {
-                    $det->paket_id = $data['produk']['id'];
+        if ($model->validate() && $cust->validate()) {
+            if ($model->save()) {
+                if ($model->status == "Pesan") {
+                    if ($model->credit > 0) {
+                        $pinjaman = new Pinjaman();
+                        $pinjaman->penjualan_id = $model->id;
+                        $pinjaman->debet = $model->credit;
+                        $pinjaman->tanggal_transaksi = $model->tanggal;
+                        $pinjaman->status = 'Belum Lunas';
+                        $pinjaman->save();
+                    }
                 }
 
-                if ($det->save()) {
+                foreach ($params['penjualandet'] as $data) {
+                    $det = new PenjualanDet();
+                    $det->attributes = $data;
+                    $det->penjualan_id = $model->id;
+                    $det->produk_id = $data['produk']['id'];
+                    $det->pegawai_terapis_id = isset($data['terapis']['id']) ? $data['terapis']['id'] : '';
+                    $det->pegawai_dokter_id = isset($data['dokter']['id']) ? $data['dokter']['id'] : '';
 
-                    if ($det->type == 'Paket') {
-                        $sPaket = \app\models\PaketDet::find()->where('paket_id=' . $det->produk_id)->all();
-                        foreach ($sPaket as $vPaket) {
-                            $detPaket = new PenjualanDet();
-                            $detPaket->penjualan_id = $model->id;
-                            $detPaket->produk_id = $vPaket->barang_id;
-                            $detPaket->jumlah = $vPaket->jml * $det->jumlah;
-                            $detPaket->type = 'Paket';
-                            $detPaket->harga = 0;
-                            $detPaket->paket_id = $data['produk']['id'];
-                            $detPaket->save();
-
-                            if ($model->status == 'Selesai') {
-                                $keterangan = 'penjualan';
-                                $stok = new \app\models\KartuStok();
-                                $update = $stok->process('out', $model->tanggal, $model->kode, $detPaket->produk_id, $detPaket->jumlah, $model->cabang_id, $detPaket->harga, $keterangan, $model->id);
-                            }
-                        }
+                    if ($det->type == "Paket") {
+                        $det->paket_id = $data['produk']['id'];
                     }
 
-                    //======== AKTIFKAN JIKA HARGA PER CABANG BERBEDA ===========//
-                    //======== SIMPAN HARGA JUAL BARU ============//
+                    if ($det->save()) {
+
+                        if ($det->type == 'Paket') {
+                            $sPaket = \app\models\PaketDet::find()->where('paket_id=' . $det->produk_id)->all();
+                            foreach ($sPaket as $vPaket) {
+                                $detPaket = new PenjualanDet();
+                                $detPaket->penjualan_id = $model->id;
+                                $detPaket->produk_id = $vPaket->barang_id;
+                                $detPaket->jumlah = $vPaket->jml * $det->jumlah;
+                                $detPaket->type = 'Paket';
+                                $detPaket->harga = 0;
+                                $detPaket->paket_id = $data['produk']['id'];
+                                $detPaket->save();
+
+                                if ($model->status == 'Selesai') {
+                                    $keterangan = 'penjualan';
+                                    $stok = new \app\models\KartuStok();
+                                    $update = $stok->process('out', $model->tanggal, $model->kode, $detPaket->produk_id, $detPaket->jumlah, $model->cabang_id, $detPaket->harga, $keterangan, $model->id);
+                                }
+                            }
+                        }
+
+                        //======== AKTIFKAN JIKA HARGA PER CABANG BERBEDA ===========//
+                        //======== SIMPAN HARGA JUAL BARU ============//
 //                    $harga = \app\models\Harga::find()->where('cabang_id="' . $model->cabang_id . '" and produk_id="' . $det->produk_id . '"')->one();
 //                    if (!empty($harga)) {
 //                        $harga->harga_jual = $det->harga;
@@ -375,19 +378,22 @@ class PenjualanController extends Controller {
 //                        $harga->save();
 //                    }
 
-                    if ($model->status == 'Selesai') {
-                        $keterangan = 'penjualan';
-                        $stok = new \app\models\KartuStok();
-                        $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
+                        if ($model->status == 'Selesai') {
+                            $keterangan = 'penjualan';
+                            $stok = new \app\models\KartuStok();
+                            $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
+                        }
                     }
                 }
-            }
 
-            $this->setHeader(200);
-            echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
+                $this->setHeader(200);
+                echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
+            } else {
+                $this->setHeader(400);
+                echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $model->errors), JSON_PRETTY_PRINT);
+            }
         } else {
-            $this->setHeader(400);
-            echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $model->errors), JSON_PRETTY_PRINT);
+            echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => array_merge($cust->errors, $model->errors)), JSON_PRETTY_PRINT);
         }
     }
 
@@ -406,70 +412,74 @@ class PenjualanController extends Controller {
             $cust = new Customer;
         }
 
-        $cust->nama = isset($params['penjualan']['customers']['nama']) ? $params['penjualan']['customers']['nama'] : '-';
-        $cust->kode = isset($params['penjualan']['kode_cust']) ? $params['penjualan']['kode_cust'] : '-';
-        $cust->alamat = isset($params['penjualan']['alamat']) ? $params['penjualan']['alamat'] : '-';
-        $cust->no_tlp = isset($params['penjualan']['no_tlp']) ? $params['penjualan']['no_tlp'] : '-';
-        $cust->email = isset($params['penjualan']['email']) ? $params['penjualan']['email'] : '-';
+        $cust->nama = isset($params['penjualan']['customers']['nama']) ? $params['penjualan']['customers']['nama'] : '';
+        $cust->kode = isset($params['penjualan']['kode_cust']) ? $params['penjualan']['kode_cust'] : '';
+        $cust->alamat = isset($params['penjualan']['alamat']) ? $params['penjualan']['alamat'] : '';
+        $cust->no_tlp = isset($params['penjualan']['no_tlp']) ? $params['penjualan']['no_tlp'] : '';
+        $cust->email = isset($params['penjualan']['email']) ? $params['penjualan']['email'] : '';
 
-        $model->customer_id = $cust->id;
+        if ($cust->validate()) {
+            $cust->save();
+            $model->customer_id = $cust->id;
+        }
 
-        if ($model->save()) {
-            if ($model->status == 'Selesai') {
-                if ($model->credit > 0) {
-                    $pinjaman = Pinjaman::find()->where('penjualan_id=' . $model->id)->one();
-                    if (empty($pinjaman)) {
-                        $pinjaman = new Pinjaman();
+        if ($model->validate() && $cust->validate()) {
+            if ($model->save()) {
+                if ($model->status == 'Selesai') {
+                    if ($model->credit > 0) {
+                        $pinjaman = Pinjaman::find()->where('penjualan_id=' . $model->id)->one();
+                        if (empty($pinjaman)) {
+                            $pinjaman = new Pinjaman();
+                        }
+
+                        $pinjaman->penjualan_id = $model->id;
+                        $pinjaman->debet = $model->credit;
+                        $pinjaman->status = 'Belum Lunas';
+                        $pinjaman->save();
+                        //stock
                     }
-
-                    $pinjaman->penjualan_id = $model->id;
-                    $pinjaman->debet = $model->credit;
-                    $pinjaman->status = 'Belum Lunas';
-                    $pinjaman->save();
-                    //stock
                 }
-            }
-            $penjualanDet = $params['penjualandet'];
+                $penjualanDet = $params['penjualandet'];
 
-            //hapus kartu stok
-            $keterangan = 'penjualan';
-            $stok = new \app\models\KartuStok();
-            $hapus = $stok->hapusKartu($keterangan, $model->id);
+                //hapus kartu stok
+                $keterangan = 'penjualan';
+                $stok = new \app\models\KartuStok();
+                $hapus = $stok->hapusKartu($keterangan, $model->id);
 
-            foreach ($params['penjualandet'] as $val) {
-                $det = PenjualanDet::findOne($val['id']);
-                if (empty($det)) {
-                    $det = new PenjualanDet();
-                }
-                $det->attributes = $val;
-                $det->produk_id = $val['produk']['id'];
-                $det->pegawai_terapis_id = isset($val['terapis']['id']) ? $val['terapis']['id'] : null;
-                $det->pegawai_dokter_id = isset($val['dokter']['id']) ? $val['dokter']['id'] : null;
-                $det->penjualan_id = $model->id;
-                if ($det->save()) {
-                    if ($det->type == 'Paket') {
-                        $delDet = PenjualanDet::deleteAll('penjualan_id = ' . $model->id . ' and paket_id = ' . $det->produk_id . ' and harga > 0');
-                        $sPaket = \app\models\PaketDet::find()->where('paket_id=' . $det->produk_id)->all();
-                        foreach ($sPaket as $vPaket) {
-                            $detPaket = new PenjualanDet();
-                            $detPaket->penjualan_id = $model->id;
-                            $detPaket->produk_id = $vPaket->barang_id;
-                            $detPaket->jumlah = $vPaket->jml * $det->jumlah;
-                            $detPaket->type = 'Paket';
-                            $detPaket->harga = 0;
-                            $detPaket->paket_id = $data['produk']['id'];
-                            $detPaket->save();
+                foreach ($params['penjualandet'] as $val) {
+                    $det = PenjualanDet::findOne($val['id']);
+                    if (empty($det)) {
+                        $det = new PenjualanDet();
+                    }
+                    $det->attributes = $val;
+                    $det->produk_id = $val['produk']['id'];
+                    $det->pegawai_terapis_id = isset($val['terapis']['id']) ? $val['terapis']['id'] : null;
+                    $det->pegawai_dokter_id = isset($val['dokter']['id']) ? $val['dokter']['id'] : null;
+                    $det->penjualan_id = $model->id;
+                    if ($det->save()) {
+                        if ($det->type == 'Paket') {
+                            $delDet = PenjualanDet::deleteAll('penjualan_id = ' . $model->id . ' and paket_id = ' . $det->produk_id . ' and harga > 0');
+                            $sPaket = \app\models\PaketDet::find()->where('paket_id=' . $det->produk_id)->all();
+                            foreach ($sPaket as $vPaket) {
+                                $detPaket = new PenjualanDet();
+                                $detPaket->penjualan_id = $model->id;
+                                $detPaket->produk_id = $vPaket->barang_id;
+                                $detPaket->jumlah = $vPaket->jml * $det->jumlah;
+                                $detPaket->type = 'Paket';
+                                $detPaket->harga = 0;
+                                $detPaket->paket_id = $data['produk']['id'];
+                                $detPaket->save();
 
-                            if ($model->status == 'Selesai') {
-                                $keterangan = 'penjualan';
-                                $stok = new \app\models\KartuStok();
-                                $update = $stok->process('out', $model->tanggal, $model->kode, $detPaket->produk_id, $detPaket->jumlah, $model->cabang_id, $detPaket->harga, $keterangan, $model->id);
+                                if ($model->status == 'Selesai') {
+                                    $keterangan = 'penjualan';
+                                    $stok = new \app\models\KartuStok();
+                                    $update = $stok->process('out', $model->tanggal, $model->kode, $detPaket->produk_id, $detPaket->jumlah, $model->cabang_id, $detPaket->harga, $keterangan, $model->id);
+                                }
                             }
                         }
-                    }
 
-                    //======== AKTIFKAN JIKA HARGA PER CABANG BERBEDA ===========//
-                    //======== SIMPAN HARGA JUAL BARU ============//
+                        //======== AKTIFKAN JIKA HARGA PER CABANG BERBEDA ===========//
+                        //======== SIMPAN HARGA JUAL BARU ============//
 //                    $harga = \app\models\Harga::find()->where('cabang_id="' . $model->cabang_id . '" and produk_id="' . $det->produk_id . '"')->one();
 //                    if (!empty($harga)) {
 //                        $harga->harga_jual = $det->harga;
@@ -482,19 +492,22 @@ class PenjualanController extends Controller {
 //                        $harga->save();
 //                    }
 
-                    $id_det[] = $det->id;
-                    if ($model->status == 'Selesai') {
-                        $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
+                        $id_det[] = $det->id;
+                        if ($model->status == 'Selesai') {
+                            $update = $stok->process('out', $model->tanggal, $model->kode, $det->produk_id, $det->jumlah, $model->cabang_id, $det->harga, $keterangan, $model->id);
+                        }
                     }
                 }
-            }
-            $deleteDetail = PenjualanDet::deleteAll('id NOT IN (' . implode(',', $id_det) . ') AND penjualan_id=' . $model->id);
+                $deleteDetail = PenjualanDet::deleteAll('id NOT IN (' . implode(',', $id_det) . ') AND penjualan_id=' . $model->id);
 
-            $this->setHeader(200);
-            echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
+                $this->setHeader(200);
+                echo json_encode(array('status' => 1, 'data' => array_filter($model->attributes)), JSON_PRETTY_PRINT);
+            } else {
+                $this->setHeader(400);
+                echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $model->errors), JSON_PRETTY_PRINT);
+            }
         } else {
-            $this->setHeader(400);
-            echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $model->errors), JSON_PRETTY_PRINT);
+            echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => array_merge($cust->errors, $model->errors)), JSON_PRETTY_PRINT);
         }
     }
 

@@ -34,6 +34,7 @@ class Customer extends \yii\db\ActiveRecord {
             [['is_deleted'], 'integer'],
             [['tanggal_lahir'], 'safe'],
             [['kode'], 'unique'],
+            [['nama','kode','alamat'],'required'],
             [['kode', 'no_tlp'], 'string', 'max' => 25],
             [['nama', 'email'], 'string', 'max' => 45],
             [['jenis_kelamin'], 'string', 'max' => 15]
@@ -46,12 +47,12 @@ class Customer extends \yii\db\ActiveRecord {
     public function attributeLabels() {
         return [
             'id' => 'ID',
-            'kode' => 'Kode',
-            'nama' => 'Nama',
+            'kode' => 'No Register',
+            'nama' => 'Nama Customer',
             'jenis_kelamin' => 'Jenis Kelamin',
-            'no_tlp' => 'No Tlp',
+            'no_tlp' => 'No Tlp Customer',
             'email' => 'Email',
-            'alamat' => 'Alamat',
+            'alamat' => 'Alamat Customer',
             'is_deleted' => 'Is Deleted',
         ];
     }

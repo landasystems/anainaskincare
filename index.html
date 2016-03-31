@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="css/loading-bar.css" type="text/css" />
     </head>
     <body ng-controller="AppCtrl">
-    <toaster-container></toaster-container>
+    <toaster-container toaster-options="{'body-output-type': 'trustedHtml'}"></toaster-container>
     <div class="app ng-scope app-header-fixed app-aside-dock" id="app" ng-class="" ui-view></div>
 
     <script src="vendor/jquery/jquery.min.js"></script>
