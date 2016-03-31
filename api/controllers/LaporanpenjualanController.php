@@ -153,16 +153,18 @@ class LaporanpenjualanController extends Controller {
             $total += $subTotal;
             $totalDiskon += $val['diskon'];
 
-            if ($tempKode != $val['kode']) {
-                $totalCash += $val['cash'];
-                $totalCredit += $val['credit'];
-                $totalAtm += $val['atm'];
-                $tempKode = $val['kode'];
-            }
+//            if ($tempKode != $val['kode']) {
+//              
+//            }
 
             if ($tempId != $val['id_penjualan']) {
                 $tempId = $val['id_penjualan'];
                 $indek ++;
+
+                $totalCash += $val['cash'];
+                $totalCredit += $val['credit'];
+                $totalAtm += $val['atm'];
+                $tempKode = $val['kode'];
             }
 
 

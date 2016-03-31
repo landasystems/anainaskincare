@@ -302,8 +302,10 @@ class PenjualanController extends Controller {
 
         if (isset($params['penjualan']['customers']['id'])) {
             $cust = Customer::findOne($params['penjualan']['customers']['id']);
+//            echo 'a';
         } else {
             $cust = new Customer;
+//            echo 'b';
         }
 
         $cust->nama = isset($params['penjualan']['customers']['nama']) ? $params['penjualan']['customers']['nama'] : '';
