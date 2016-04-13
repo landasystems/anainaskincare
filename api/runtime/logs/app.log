@@ -7127,3 +7127,1971 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1459395539.289
     'REQUEST_TIME' => 1459395539
 ]
+2016-04-12 14:41:54 [::1][-][-][warning][yii\log\Dispatcher::dispatch] Unable to send log via yii\debug\LogTarget: PHP Warning 'yii\base\ErrorException' with message 'file_put_contents(/var/www/anainaskincare/api/runtime/debug/570ca6c25baed.data): failed to open stream: Permission denied' 
+
+in /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php:58
+
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleError(2, 'file_put_conten...', '/var/www/anaina...', 58, Array)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(58): file_put_contents('/var/www/anaina...', 'a:8:{s:6:"confi...')
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(112): yii\debug\LogTarget->export(Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Dispatcher.php(183): yii\debug\LogTarget->collect(Array, true)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Logger.php(173): yii\log\Dispatcher->dispatch(Array, true)
+#5 [internal function]: yii\log\Logger->flush(true)
+#6 {main}
+2016-04-12 14:41:54 [::1][-][-][info][application] $_COOKIE = [
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+    '_csrf' => 'd5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"InNmOrbDlqlv4__jNXOysjZE5QQyuufY\";}'
+]
+
+$_SESSION = [
+    'user' => [
+        'id' => 1
+        'username' => 'admin'
+        'nama' => 'admin'
+        'akses' => stdClass#1
+        (
+            [master_roles] => true
+            [transaksi_stokmasuk] => true
+            [transaksi_stokkeluar] => true
+            [transaksi_pembelian] => true
+            [transaksi_bayarhutang] => true
+            [transaksi_returpembelian] => true
+            [transaksi_penjualan] => true
+            [transaksi_bayarpiutang] => true
+            [transaksi_returpenjualan] => true
+            [master_cabang] => true
+            [master_customer] => true
+            [master_supplier] => true
+            [master_pegawai] => true
+            [master_satuan] => true
+            [master_kategori] => true
+            [master_barang] => true
+            [master_user] => true
+            [laporan_kartustok] => true
+            [laporan_bonuskaryawan] => true
+            [laporan_labarugi] => true
+            [laporan_kartustatus] => true
+            [laporan_penjualan] => true
+            [laporan_barang] => true
+            [transaksi_terimabarang] => true
+            [transaksi_kirimbarang] => true
+            [laporan_pembayaran] => true
+            [transaksi_printpenjualan] => true
+            [transaksi_editpenjualan] => true
+            [transaksi_opname] => true
+        )
+        'settings' => null
+        'cabang' => [
+            0 => [
+                'id' => '16'
+                'kode' => 'GBGR'
+                'nama' => 'GLORY BOGOR'
+                'alamat' => 'MALL JAMBU DUA'
+                'no_tlp' => '0878785826892'
+                'email' => null
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            1 => [
+                'id' => '11'
+                'kode' => 'GMD'
+                'nama' => 'GLORY MANGGA DUA'
+                'alamat' => 'MANGGA DUA'
+                'no_tlp' => '6006455'
+                'email' => 'GLORY@YAHOO.COM'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            2 => [
+                'id' => '10'
+                'kode' => 'GTGR'
+                'nama' => 'GLORY TANGERANG'
+                'alamat' => 'TANGERANG'
+                'no_tlp' => '02131242'
+                'email' => 'gloryditgr@gmail.com'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            3 => [
+                'id' => '7'
+                'kode' => 'TLP'
+                'nama' => 'TULIP'
+                'alamat' => 'Pondok Jaya'
+                'no_tlp' => '0217182888'
+                'email' => '-'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            4 => [
+                'id' => '6'
+                'kode' => 'GD'
+                'nama' => 'GUDANG PUSAT'
+                'alamat' => '-'
+                'no_tlp' => '021000000'
+                'email' => null
+                'jenis' => 'gudang'
+                'is_deleted' => '0'
+            ]
+            5 => [
+                'id' => '8'
+                'kode' => 'TK002'
+                'nama' => 'Glory Mangga Dua'
+                'alamat' => 'Mall Mangga Dua'
+                'no_tlp' => '0216006455'
+                'email' => null
+                'jenis' => 'toko'
+                'is_deleted' => '1'
+            ]
+            6 => [
+                'id' => '9'
+                'kode' => 'GBKS'
+                'nama' => 'GLORY BEKASI'
+                'alamat' => 'Bekasi'
+                'no_tlp' => '0812121212'
+                'email' => 'glorydibekaksi@gmail.com'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            7 => [
+                'id' => '12'
+                'kode' => 'GJ'
+                'nama' => 'GLORY JOGJAKARTA'
+                'alamat' => 'JOGJAKARTA'
+                'no_tlp' => '0212125211'
+                'email' => 'glorydijogja@gmail.com'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            8 => [
+                'id' => '13'
+                'kode' => 'GPLB'
+                'nama' => 'GLORY PALEMBANG'
+                'alamat' => 'PALEMBANG'
+                'no_tlp' => '281212521'
+                'email' => 'glorydipalembang@gmail.com'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            9 => [
+                'id' => '14'
+                'kode' => 'WSBY'
+                'nama' => 'WINNER SURABAYA'
+                'alamat' => 'SBY'
+                'no_tlp' => '021521548451'
+                'email' => 'winndigitalsablon.com'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            10 => [
+                'id' => '15'
+                'kode' => 'GSM'
+                'nama' => 'GLORY SEMARANG'
+                'alamat' => 'SEMARANG'
+                'no_tlp' => '0812121252452'
+                'email' => ''
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+        ]
+        'cabang_id' => [
+            0 => '16'
+            1 => '11'
+            2 => '10'
+            3 => '7'
+            4 => '6'
+            5 => '8'
+            6 => '9'
+            7 => '12'
+            8 => '13'
+            9 => '14'
+            10 => '15'
+        ]
+    ]
+    'query' => yii\db\Query#2
+    (
+        [select] => [
+            0 => 'mp.*'
+            1 => 'ms.nama as satuan'
+            2 => 'mk.nama as kategori'
+        ]
+        [selectOption] => null
+        [distinct] => null
+        [from] => [
+            0 => 'm_produk as mp'
+        ]
+        [groupBy] => null
+        [join] => [
+            0 => [
+                0 => 'Left Join'
+                1 => 'm_satuan as ms'
+                2 => 'mp.satuan_id = ms.id'
+            ]
+            1 => [
+                0 => 'Left Join'
+                1 => 'm_kategori as mk'
+                2 => 'mk.id = mp.kategori_id'
+            ]
+        ]
+        [having] => null
+        [union] => null
+        [params] => []
+        [yii\base\Component:_events] => []
+        [yii\base\Component:_behaviors] => null
+        [where] => [
+            0 => 'like'
+            1 => 'mp.kategori_id'
+            2 => '8'
+        ]
+        [limit] => '10'
+        [offset] => '0'
+        [orderBy] => [
+            'mp.kode' => 4
+        ]
+        [indexBy] => null
+    )
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7; _csrf=d5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22InNmOrbDlqlv4__jNXOysjZE5QQyuufY%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '36478'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/session'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/session'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1460446914.233
+    'REQUEST_TIME' => 1460446914
+]
+2016-04-12 14:41:54 [::1][-][-][warning][yii\log\Dispatcher::dispatch] Unable to send log via yii\debug\LogTarget: PHP Warning 'yii\base\ErrorException' with message 'file_put_contents(/var/www/anainaskincare/api/runtime/debug/570ca6c27307f.data): failed to open stream: Permission denied' 
+
+in /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php:58
+
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleError(2, 'file_put_conten...', '/var/www/anaina...', 58, Array)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(58): file_put_contents('/var/www/anaina...', 'a:8:{s:6:"confi...')
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(112): yii\debug\LogTarget->export(Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Dispatcher.php(183): yii\debug\LogTarget->collect(Array, true)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Logger.php(173): yii\log\Dispatcher->dispatch(Array, true)
+#5 [internal function]: yii\log\Logger->flush(true)
+#6 {main}
+2016-04-12 14:41:54 [::1][-][-][info][application] $_COOKIE = [
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+    '_csrf' => 'd5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"InNmOrbDlqlv4__jNXOysjZE5QQyuufY\";}'
+]
+
+$_SESSION = [
+    'user' => [
+        'id' => 1
+        'username' => 'admin'
+        'nama' => 'admin'
+        'akses' => stdClass#1
+        (
+            [master_roles] => true
+            [transaksi_stokmasuk] => true
+            [transaksi_stokkeluar] => true
+            [transaksi_pembelian] => true
+            [transaksi_bayarhutang] => true
+            [transaksi_returpembelian] => true
+            [transaksi_penjualan] => true
+            [transaksi_bayarpiutang] => true
+            [transaksi_returpenjualan] => true
+            [master_cabang] => true
+            [master_customer] => true
+            [master_supplier] => true
+            [master_pegawai] => true
+            [master_satuan] => true
+            [master_kategori] => true
+            [master_barang] => true
+            [master_user] => true
+            [laporan_kartustok] => true
+            [laporan_bonuskaryawan] => true
+            [laporan_labarugi] => true
+            [laporan_kartustatus] => true
+            [laporan_penjualan] => true
+            [laporan_barang] => true
+            [transaksi_terimabarang] => true
+            [transaksi_kirimbarang] => true
+            [laporan_pembayaran] => true
+            [transaksi_printpenjualan] => true
+            [transaksi_editpenjualan] => true
+            [transaksi_opname] => true
+        )
+        'settings' => null
+        'cabang' => [
+            0 => [
+                'id' => '16'
+                'kode' => 'GBGR'
+                'nama' => 'GLORY BOGOR'
+                'alamat' => 'MALL JAMBU DUA'
+                'no_tlp' => '0878785826892'
+                'email' => null
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            1 => [
+                'id' => '11'
+                'kode' => 'GMD'
+                'nama' => 'GLORY MANGGA DUA'
+                'alamat' => 'MANGGA DUA'
+                'no_tlp' => '6006455'
+                'email' => 'GLORY@YAHOO.COM'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            2 => [
+                'id' => '10'
+                'kode' => 'GTGR'
+                'nama' => 'GLORY TANGERANG'
+                'alamat' => 'TANGERANG'
+                'no_tlp' => '02131242'
+                'email' => 'gloryditgr@gmail.com'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            3 => [
+                'id' => '7'
+                'kode' => 'TLP'
+                'nama' => 'TULIP'
+                'alamat' => 'Pondok Jaya'
+                'no_tlp' => '0217182888'
+                'email' => '-'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            4 => [
+                'id' => '6'
+                'kode' => 'GD'
+                'nama' => 'GUDANG PUSAT'
+                'alamat' => '-'
+                'no_tlp' => '021000000'
+                'email' => null
+                'jenis' => 'gudang'
+                'is_deleted' => '0'
+            ]
+            5 => [
+                'id' => '8'
+                'kode' => 'TK002'
+                'nama' => 'Glory Mangga Dua'
+                'alamat' => 'Mall Mangga Dua'
+                'no_tlp' => '0216006455'
+                'email' => null
+                'jenis' => 'toko'
+                'is_deleted' => '1'
+            ]
+            6 => [
+                'id' => '9'
+                'kode' => 'GBKS'
+                'nama' => 'GLORY BEKASI'
+                'alamat' => 'Bekasi'
+                'no_tlp' => '0812121212'
+                'email' => 'glorydibekaksi@gmail.com'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            7 => [
+                'id' => '12'
+                'kode' => 'GJ'
+                'nama' => 'GLORY JOGJAKARTA'
+                'alamat' => 'JOGJAKARTA'
+                'no_tlp' => '0212125211'
+                'email' => 'glorydijogja@gmail.com'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            8 => [
+                'id' => '13'
+                'kode' => 'GPLB'
+                'nama' => 'GLORY PALEMBANG'
+                'alamat' => 'PALEMBANG'
+                'no_tlp' => '281212521'
+                'email' => 'glorydipalembang@gmail.com'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            9 => [
+                'id' => '14'
+                'kode' => 'WSBY'
+                'nama' => 'WINNER SURABAYA'
+                'alamat' => 'SBY'
+                'no_tlp' => '021521548451'
+                'email' => 'winndigitalsablon.com'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            10 => [
+                'id' => '15'
+                'kode' => 'GSM'
+                'nama' => 'GLORY SEMARANG'
+                'alamat' => 'SEMARANG'
+                'no_tlp' => '0812121252452'
+                'email' => ''
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+        ]
+        'cabang_id' => [
+            0 => '16'
+            1 => '11'
+            2 => '10'
+            3 => '7'
+            4 => '6'
+            5 => '8'
+            6 => '9'
+            7 => '12'
+            8 => '13'
+            9 => '14'
+            10 => '15'
+        ]
+    ]
+    'query' => yii\db\Query#2
+    (
+        [select] => [
+            0 => 'mp.*'
+            1 => 'ms.nama as satuan'
+            2 => 'mk.nama as kategori'
+        ]
+        [selectOption] => null
+        [distinct] => null
+        [from] => [
+            0 => 'm_produk as mp'
+        ]
+        [groupBy] => null
+        [join] => [
+            0 => [
+                0 => 'Left Join'
+                1 => 'm_satuan as ms'
+                2 => 'mp.satuan_id = ms.id'
+            ]
+            1 => [
+                0 => 'Left Join'
+                1 => 'm_kategori as mk'
+                2 => 'mk.id = mp.kategori_id'
+            ]
+        ]
+        [having] => null
+        [union] => null
+        [params] => []
+        [yii\base\Component:_events] => []
+        [yii\base\Component:_behaviors] => null
+        [where] => [
+            0 => 'like'
+            1 => 'mp.kategori_id'
+            2 => '8'
+        ]
+        [limit] => '10'
+        [offset] => '0'
+        [orderBy] => [
+            'mp.kode' => 4
+        ]
+        [indexBy] => null
+    )
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7; _csrf=d5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22InNmOrbDlqlv4__jNXOysjZE5QQyuufY%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '36478'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/session'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/session'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1460446914.466
+    'REQUEST_TIME' => 1460446914
+]
+2016-04-12 14:41:55 [::1][-][-][warning][yii\log\Dispatcher::dispatch] Unable to send log via yii\debug\LogTarget: PHP Warning 'yii\base\ErrorException' with message 'file_put_contents(/var/www/anainaskincare/api/runtime/debug/570ca6c2ef040.data): failed to open stream: Permission denied' 
+
+in /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php:58
+
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleError(2, 'file_put_conten...', '/var/www/anaina...', 58, Array)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(58): file_put_contents('/var/www/anaina...', 'a:8:{s:6:"confi...')
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(112): yii\debug\LogTarget->export(Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Dispatcher.php(183): yii\debug\LogTarget->collect(Array, true)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Logger.php(173): yii\log\Dispatcher->dispatch(Array, true)
+#5 [internal function]: yii\log\Logger->flush(true)
+#6 {main}
+2016-04-12 14:41:54 [::1][-][-][info][application] $_COOKIE = [
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+    '_csrf' => 'd5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"InNmOrbDlqlv4__jNXOysjZE5QQyuufY\";}'
+]
+
+$_SESSION = [
+    'user' => [
+        'id' => 1
+        'username' => 'admin'
+        'nama' => 'admin'
+        'akses' => stdClass#1
+        (
+            [master_roles] => true
+            [transaksi_stokmasuk] => true
+            [transaksi_stokkeluar] => true
+            [transaksi_pembelian] => true
+            [transaksi_bayarhutang] => true
+            [transaksi_returpembelian] => true
+            [transaksi_penjualan] => true
+            [transaksi_bayarpiutang] => true
+            [transaksi_returpenjualan] => true
+            [master_cabang] => true
+            [master_customer] => true
+            [master_supplier] => true
+            [master_pegawai] => true
+            [master_satuan] => true
+            [master_kategori] => true
+            [master_barang] => true
+            [master_user] => true
+            [laporan_kartustok] => true
+            [laporan_bonuskaryawan] => true
+            [laporan_labarugi] => true
+            [laporan_kartustatus] => true
+            [laporan_penjualan] => true
+            [laporan_barang] => true
+            [transaksi_terimabarang] => true
+            [transaksi_kirimbarang] => true
+            [laporan_pembayaran] => true
+            [transaksi_printpenjualan] => true
+            [transaksi_editpenjualan] => true
+            [transaksi_opname] => true
+        )
+        'settings' => null
+        'cabang' => [
+            0 => [
+                'id' => '16'
+                'kode' => 'GBGR'
+                'nama' => 'GLORY BOGOR'
+                'alamat' => 'MALL JAMBU DUA'
+                'no_tlp' => '0878785826892'
+                'email' => null
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            1 => [
+                'id' => '11'
+                'kode' => 'GMD'
+                'nama' => 'GLORY MANGGA DUA'
+                'alamat' => 'MANGGA DUA'
+                'no_tlp' => '6006455'
+                'email' => 'GLORY@YAHOO.COM'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            2 => [
+                'id' => '10'
+                'kode' => 'GTGR'
+                'nama' => 'GLORY TANGERANG'
+                'alamat' => 'TANGERANG'
+                'no_tlp' => '02131242'
+                'email' => 'gloryditgr@gmail.com'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            3 => [
+                'id' => '7'
+                'kode' => 'TLP'
+                'nama' => 'TULIP'
+                'alamat' => 'Pondok Jaya'
+                'no_tlp' => '0217182888'
+                'email' => '-'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            4 => [
+                'id' => '6'
+                'kode' => 'GD'
+                'nama' => 'GUDANG PUSAT'
+                'alamat' => '-'
+                'no_tlp' => '021000000'
+                'email' => null
+                'jenis' => 'gudang'
+                'is_deleted' => '0'
+            ]
+            5 => [
+                'id' => '8'
+                'kode' => 'TK002'
+                'nama' => 'Glory Mangga Dua'
+                'alamat' => 'Mall Mangga Dua'
+                'no_tlp' => '0216006455'
+                'email' => null
+                'jenis' => 'toko'
+                'is_deleted' => '1'
+            ]
+            6 => [
+                'id' => '9'
+                'kode' => 'GBKS'
+                'nama' => 'GLORY BEKASI'
+                'alamat' => 'Bekasi'
+                'no_tlp' => '0812121212'
+                'email' => 'glorydibekaksi@gmail.com'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            7 => [
+                'id' => '12'
+                'kode' => 'GJ'
+                'nama' => 'GLORY JOGJAKARTA'
+                'alamat' => 'JOGJAKARTA'
+                'no_tlp' => '0212125211'
+                'email' => 'glorydijogja@gmail.com'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            8 => [
+                'id' => '13'
+                'kode' => 'GPLB'
+                'nama' => 'GLORY PALEMBANG'
+                'alamat' => 'PALEMBANG'
+                'no_tlp' => '281212521'
+                'email' => 'glorydipalembang@gmail.com'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            9 => [
+                'id' => '14'
+                'kode' => 'WSBY'
+                'nama' => 'WINNER SURABAYA'
+                'alamat' => 'SBY'
+                'no_tlp' => '021521548451'
+                'email' => 'winndigitalsablon.com'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            10 => [
+                'id' => '15'
+                'kode' => 'GSM'
+                'nama' => 'GLORY SEMARANG'
+                'alamat' => 'SEMARANG'
+                'no_tlp' => '0812121252452'
+                'email' => ''
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+        ]
+        'cabang_id' => [
+            0 => '16'
+            1 => '11'
+            2 => '10'
+            3 => '7'
+            4 => '6'
+            5 => '8'
+            6 => '9'
+            7 => '12'
+            8 => '13'
+            9 => '14'
+            10 => '15'
+        ]
+    ]
+    'query' => yii\db\Query#2
+    (
+        [select] => [
+            0 => 'mp.*'
+            1 => 'ms.nama as satuan'
+            2 => 'mk.nama as kategori'
+        ]
+        [selectOption] => null
+        [distinct] => null
+        [from] => [
+            0 => 'm_produk as mp'
+        ]
+        [groupBy] => null
+        [join] => [
+            0 => [
+                0 => 'Left Join'
+                1 => 'm_satuan as ms'
+                2 => 'mp.satuan_id = ms.id'
+            ]
+            1 => [
+                0 => 'Left Join'
+                1 => 'm_kategori as mk'
+                2 => 'mk.id = mp.kategori_id'
+            ]
+        ]
+        [having] => null
+        [union] => null
+        [params] => []
+        [yii\base\Component:_events] => []
+        [yii\base\Component:_behaviors] => null
+        [where] => [
+            0 => 'like'
+            1 => 'mp.kategori_id'
+            2 => '8'
+        ]
+        [limit] => '10'
+        [offset] => '0'
+        [orderBy] => [
+            'mp.kode' => 4
+        ]
+        [indexBy] => null
+    )
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '0'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7; _csrf=d5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22InNmOrbDlqlv4__jNXOysjZE5QQyuufY%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '36478'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/penjualan'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/penjualan'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1460446914.975
+    'REQUEST_TIME' => 1460446914
+]
+2016-04-12 14:41:57 [::1][-][-][warning][yii\log\Dispatcher::dispatch] Unable to send log via yii\debug\LogTarget: PHP Warning 'yii\base\ErrorException' with message 'file_put_contents(/var/www/anainaskincare/api/runtime/debug/570ca6c53a620.data): failed to open stream: Permission denied' 
+
+in /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php:58
+
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleError(2, 'file_put_conten...', '/var/www/anaina...', 58, Array)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(58): file_put_contents('/var/www/anaina...', 'a:8:{s:6:"confi...')
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(112): yii\debug\LogTarget->export(Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Dispatcher.php(183): yii\debug\LogTarget->collect(Array, true)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Logger.php(173): yii\log\Dispatcher->dispatch(Array, true)
+#5 [internal function]: yii\log\Logger->flush(true)
+#6 {main}
+2016-04-12 14:41:57 [::1][-][-][info][application] $_COOKIE = [
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+    '_csrf' => 'd5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"InNmOrbDlqlv4__jNXOysjZE5QQyuufY\";}'
+]
+
+$_SESSION = [
+    'user' => [
+        'id' => 1
+        'username' => 'admin'
+        'nama' => 'admin'
+        'akses' => stdClass#1
+        (
+            [master_roles] => true
+            [transaksi_stokmasuk] => true
+            [transaksi_stokkeluar] => true
+            [transaksi_pembelian] => true
+            [transaksi_bayarhutang] => true
+            [transaksi_returpembelian] => true
+            [transaksi_penjualan] => true
+            [transaksi_bayarpiutang] => true
+            [transaksi_returpenjualan] => true
+            [master_cabang] => true
+            [master_customer] => true
+            [master_supplier] => true
+            [master_pegawai] => true
+            [master_satuan] => true
+            [master_kategori] => true
+            [master_barang] => true
+            [master_user] => true
+            [laporan_kartustok] => true
+            [laporan_bonuskaryawan] => true
+            [laporan_labarugi] => true
+            [laporan_kartustatus] => true
+            [laporan_penjualan] => true
+            [laporan_barang] => true
+            [transaksi_terimabarang] => true
+            [transaksi_kirimbarang] => true
+            [laporan_pembayaran] => true
+            [transaksi_printpenjualan] => true
+            [transaksi_editpenjualan] => true
+            [transaksi_opname] => true
+        )
+        'settings' => null
+        'cabang' => [
+            0 => [
+                'id' => '16'
+                'kode' => 'GBGR'
+                'nama' => 'GLORY BOGOR'
+                'alamat' => 'MALL JAMBU DUA'
+                'no_tlp' => '0878785826892'
+                'email' => null
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            1 => [
+                'id' => '11'
+                'kode' => 'GMD'
+                'nama' => 'GLORY MANGGA DUA'
+                'alamat' => 'MANGGA DUA'
+                'no_tlp' => '6006455'
+                'email' => 'GLORY@YAHOO.COM'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            2 => [
+                'id' => '10'
+                'kode' => 'GTGR'
+                'nama' => 'GLORY TANGERANG'
+                'alamat' => 'TANGERANG'
+                'no_tlp' => '02131242'
+                'email' => 'gloryditgr@gmail.com'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            3 => [
+                'id' => '7'
+                'kode' => 'TLP'
+                'nama' => 'TULIP'
+                'alamat' => 'Pondok Jaya'
+                'no_tlp' => '0217182888'
+                'email' => '-'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            4 => [
+                'id' => '6'
+                'kode' => 'GD'
+                'nama' => 'GUDANG PUSAT'
+                'alamat' => '-'
+                'no_tlp' => '021000000'
+                'email' => null
+                'jenis' => 'gudang'
+                'is_deleted' => '0'
+            ]
+            5 => [
+                'id' => '8'
+                'kode' => 'TK002'
+                'nama' => 'Glory Mangga Dua'
+                'alamat' => 'Mall Mangga Dua'
+                'no_tlp' => '0216006455'
+                'email' => null
+                'jenis' => 'toko'
+                'is_deleted' => '1'
+            ]
+            6 => [
+                'id' => '9'
+                'kode' => 'GBKS'
+                'nama' => 'GLORY BEKASI'
+                'alamat' => 'Bekasi'
+                'no_tlp' => '0812121212'
+                'email' => 'glorydibekaksi@gmail.com'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            7 => [
+                'id' => '12'
+                'kode' => 'GJ'
+                'nama' => 'GLORY JOGJAKARTA'
+                'alamat' => 'JOGJAKARTA'
+                'no_tlp' => '0212125211'
+                'email' => 'glorydijogja@gmail.com'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            8 => [
+                'id' => '13'
+                'kode' => 'GPLB'
+                'nama' => 'GLORY PALEMBANG'
+                'alamat' => 'PALEMBANG'
+                'no_tlp' => '281212521'
+                'email' => 'glorydipalembang@gmail.com'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            9 => [
+                'id' => '14'
+                'kode' => 'WSBY'
+                'nama' => 'WINNER SURABAYA'
+                'alamat' => 'SBY'
+                'no_tlp' => '021521548451'
+                'email' => 'winndigitalsablon.com'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            10 => [
+                'id' => '15'
+                'kode' => 'GSM'
+                'nama' => 'GLORY SEMARANG'
+                'alamat' => 'SEMARANG'
+                'no_tlp' => '0812121252452'
+                'email' => ''
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+        ]
+        'cabang_id' => [
+            0 => '16'
+            1 => '11'
+            2 => '10'
+            3 => '7'
+            4 => '6'
+            5 => '8'
+            6 => '9'
+            7 => '12'
+            8 => '13'
+            9 => '14'
+            10 => '15'
+        ]
+    ]
+    'query' => yii\db\Query#2
+    (
+        [select] => [
+            0 => 'mp.*'
+            1 => 'ms.nama as satuan'
+            2 => 'mk.nama as kategori'
+        ]
+        [selectOption] => null
+        [distinct] => null
+        [from] => [
+            0 => 'm_produk as mp'
+        ]
+        [groupBy] => null
+        [join] => [
+            0 => [
+                0 => 'Left Join'
+                1 => 'm_satuan as ms'
+                2 => 'mp.satuan_id = ms.id'
+            ]
+            1 => [
+                0 => 'Left Join'
+                1 => 'm_kategori as mk'
+                2 => 'mk.id = mp.kategori_id'
+            ]
+        ]
+        [having] => null
+        [union] => null
+        [params] => []
+        [yii\base\Component:_events] => []
+        [yii\base\Component:_behaviors] => null
+        [where] => [
+            0 => 'like'
+            1 => 'mp.kategori_id'
+            2 => '8'
+        ]
+        [limit] => '10'
+        [offset] => '0'
+        [orderBy] => [
+            'mp.kode' => 4
+        ]
+        [indexBy] => null
+    )
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7; _csrf=d5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22InNmOrbDlqlv4__jNXOysjZE5QQyuufY%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '36478'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/session'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/session'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1460446917.234
+    'REQUEST_TIME' => 1460446917
+]
+2016-04-12 14:41:57 [::1][-][-][warning][yii\log\Dispatcher::dispatch] Unable to send log via yii\debug\LogTarget: PHP Warning 'yii\base\ErrorException' with message 'file_put_contents(/var/www/anainaskincare/api/runtime/debug/570ca6c5f0181.data): failed to open stream: Permission denied' 
+
+in /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php:58
+
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleError(2, 'file_put_conten...', '/var/www/anaina...', 58, Array)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(58): file_put_contents('/var/www/anaina...', 'a:8:{s:6:"confi...')
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(112): yii\debug\LogTarget->export(Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Dispatcher.php(183): yii\debug\LogTarget->collect(Array, true)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Logger.php(173): yii\log\Dispatcher->dispatch(Array, true)
+#5 [internal function]: yii\log\Logger->flush(true)
+#6 {main}
+2016-04-12 14:41:57 [::1][-][-][info][application] $_COOKIE = [
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+    '_csrf' => 'd5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"InNmOrbDlqlv4__jNXOysjZE5QQyuufY\";}'
+]
+
+$_SESSION = [
+    'user' => [
+        'id' => 1
+        'username' => 'admin'
+        'nama' => 'admin'
+        'akses' => stdClass#1
+        (
+            [master_roles] => true
+            [transaksi_stokmasuk] => true
+            [transaksi_stokkeluar] => true
+            [transaksi_pembelian] => true
+            [transaksi_bayarhutang] => true
+            [transaksi_returpembelian] => true
+            [transaksi_penjualan] => true
+            [transaksi_bayarpiutang] => true
+            [transaksi_returpenjualan] => true
+            [master_cabang] => true
+            [master_customer] => true
+            [master_supplier] => true
+            [master_pegawai] => true
+            [master_satuan] => true
+            [master_kategori] => true
+            [master_barang] => true
+            [master_user] => true
+            [laporan_kartustok] => true
+            [laporan_bonuskaryawan] => true
+            [laporan_labarugi] => true
+            [laporan_kartustatus] => true
+            [laporan_penjualan] => true
+            [laporan_barang] => true
+            [transaksi_terimabarang] => true
+            [transaksi_kirimbarang] => true
+            [laporan_pembayaran] => true
+            [transaksi_printpenjualan] => true
+            [transaksi_editpenjualan] => true
+            [transaksi_opname] => true
+        )
+        'settings' => null
+        'cabang' => [
+            0 => [
+                'id' => '16'
+                'kode' => 'GBGR'
+                'nama' => 'GLORY BOGOR'
+                'alamat' => 'MALL JAMBU DUA'
+                'no_tlp' => '0878785826892'
+                'email' => null
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            1 => [
+                'id' => '11'
+                'kode' => 'GMD'
+                'nama' => 'GLORY MANGGA DUA'
+                'alamat' => 'MANGGA DUA'
+                'no_tlp' => '6006455'
+                'email' => 'GLORY@YAHOO.COM'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            2 => [
+                'id' => '10'
+                'kode' => 'GTGR'
+                'nama' => 'GLORY TANGERANG'
+                'alamat' => 'TANGERANG'
+                'no_tlp' => '02131242'
+                'email' => 'gloryditgr@gmail.com'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            3 => [
+                'id' => '7'
+                'kode' => 'TLP'
+                'nama' => 'TULIP'
+                'alamat' => 'Pondok Jaya'
+                'no_tlp' => '0217182888'
+                'email' => '-'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            4 => [
+                'id' => '6'
+                'kode' => 'GD'
+                'nama' => 'GUDANG PUSAT'
+                'alamat' => '-'
+                'no_tlp' => '021000000'
+                'email' => null
+                'jenis' => 'gudang'
+                'is_deleted' => '0'
+            ]
+            5 => [
+                'id' => '8'
+                'kode' => 'TK002'
+                'nama' => 'Glory Mangga Dua'
+                'alamat' => 'Mall Mangga Dua'
+                'no_tlp' => '0216006455'
+                'email' => null
+                'jenis' => 'toko'
+                'is_deleted' => '1'
+            ]
+            6 => [
+                'id' => '9'
+                'kode' => 'GBKS'
+                'nama' => 'GLORY BEKASI'
+                'alamat' => 'Bekasi'
+                'no_tlp' => '0812121212'
+                'email' => 'glorydibekaksi@gmail.com'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            7 => [
+                'id' => '12'
+                'kode' => 'GJ'
+                'nama' => 'GLORY JOGJAKARTA'
+                'alamat' => 'JOGJAKARTA'
+                'no_tlp' => '0212125211'
+                'email' => 'glorydijogja@gmail.com'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            8 => [
+                'id' => '13'
+                'kode' => 'GPLB'
+                'nama' => 'GLORY PALEMBANG'
+                'alamat' => 'PALEMBANG'
+                'no_tlp' => '281212521'
+                'email' => 'glorydipalembang@gmail.com'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            9 => [
+                'id' => '14'
+                'kode' => 'WSBY'
+                'nama' => 'WINNER SURABAYA'
+                'alamat' => 'SBY'
+                'no_tlp' => '021521548451'
+                'email' => 'winndigitalsablon.com'
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+            10 => [
+                'id' => '15'
+                'kode' => 'GSM'
+                'nama' => 'GLORY SEMARANG'
+                'alamat' => 'SEMARANG'
+                'no_tlp' => '0812121252452'
+                'email' => ''
+                'jenis' => 'toko'
+                'is_deleted' => '0'
+            ]
+        ]
+        'cabang_id' => [
+            0 => '16'
+            1 => '11'
+            2 => '10'
+            3 => '7'
+            4 => '6'
+            5 => '8'
+            6 => '9'
+            7 => '12'
+            8 => '13'
+            9 => '14'
+            10 => '15'
+        ]
+    ]
+    'query' => yii\db\Query#2
+    (
+        [select] => [
+            0 => 'mp.*'
+            1 => 'ms.nama as satuan'
+            2 => 'mk.nama as kategori'
+        ]
+        [selectOption] => null
+        [distinct] => null
+        [from] => [
+            0 => 'm_produk as mp'
+        ]
+        [groupBy] => null
+        [join] => [
+            0 => [
+                0 => 'Left Join'
+                1 => 'm_satuan as ms'
+                2 => 'mp.satuan_id = ms.id'
+            ]
+            1 => [
+                0 => 'Left Join'
+                1 => 'm_kategori as mk'
+                2 => 'mk.id = mp.kategori_id'
+            ]
+        ]
+        [having] => null
+        [union] => null
+        [params] => []
+        [yii\base\Component:_events] => []
+        [yii\base\Component:_behaviors] => null
+        [where] => [
+            0 => 'like'
+            1 => 'mp.kategori_id'
+            2 => '8'
+        ]
+        [limit] => '10'
+        [offset] => '0'
+        [orderBy] => [
+            'mp.kode' => 4
+        ]
+        [indexBy] => null
+    )
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7; _csrf=d5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22InNmOrbDlqlv4__jNXOysjZE5QQyuufY%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '36478'
+    'REDIRECT_URL' => '/anainaskincare/api/web/site/session'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/site/session'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1460446917.979
+    'REQUEST_TIME' => 1460446917
+]
+2016-04-12 14:41:58 [::1][-][-][warning][yii\log\Dispatcher::dispatch] Unable to send log via yii\debug\LogTarget: PHP Warning 'yii\base\ErrorException' with message 'file_put_contents(/var/www/anainaskincare/api/runtime/debug/570ca6c600b41.data): failed to open stream: Permission denied' 
+
+in /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php:58
+
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleError(2, 'file_put_conten...', '/var/www/anaina...', 58, Array)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(58): file_put_contents('/var/www/anaina...', 'a:8:{s:6:"confi...')
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(112): yii\debug\LogTarget->export(Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Dispatcher.php(183): yii\debug\LogTarget->collect(Array, true)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Logger.php(173): yii\log\Dispatcher->dispatch(Array, true)
+#5 [internal function]: yii\log\Logger->flush(true)
+#6 {main}
+2016-04-12 14:41:57 [::1][-][-][info][application] $_COOKIE = [
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+    '_csrf' => 'd5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"InNmOrbDlqlv4__jNXOysjZE5QQyuufY\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7; _csrf=d5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22InNmOrbDlqlv4__jNXOysjZE5QQyuufY%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '36478'
+    'REDIRECT_URL' => '/anainaskincare/api/web/kategori/listkategori'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/kategori/listkategori'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1460446917.999
+    'REQUEST_TIME' => 1460446917
+]
+2016-04-12 14:42:01 [::1][-][-][warning][yii\log\Dispatcher::dispatch] Unable to send log via yii\debug\LogTarget: PHP Warning 'yii\base\ErrorException' with message 'file_put_contents(/var/www/anainaskincare/api/runtime/debug/570ca6c9bfd86.data): failed to open stream: Permission denied' 
+
+in /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php:58
+
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleError(2, 'file_put_conten...', '/var/www/anaina...', 58, Array)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(58): file_put_contents('/var/www/anaina...', 'a:8:{s:6:"confi...')
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(112): yii\debug\LogTarget->export(Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Dispatcher.php(183): yii\debug\LogTarget->collect(Array, true)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Logger.php(173): yii\log\Dispatcher->dispatch(Array, true)
+#5 [internal function]: yii\log\Logger->flush(true)
+#6 {main}
+2016-04-12 14:42:01 [::1][-][-][info][application] $_POST = [
+    '{\"nama\":\"\",\"kategori_id\":\"31\"}' => ''
+]
+
+$_COOKIE = [
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+    '_csrf' => 'd5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"InNmOrbDlqlv4__jNXOysjZE5QQyuufY\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '30'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7; _csrf=d5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22InNmOrbDlqlv4__jNXOysjZE5QQyuufY%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '36478'
+    'REDIRECT_URL' => '/anainaskincare/api/web/barang/perkategori/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/barang/perkategori/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1460446921.78
+    'REQUEST_TIME' => 1460446921
+]
+2016-04-12 14:42:03 [::1][-][-][warning][yii\log\Dispatcher::dispatch] Unable to send log via yii\debug\LogTarget: PHP Warning 'yii\base\ErrorException' with message 'file_put_contents(/var/www/anainaskincare/api/runtime/debug/570ca6cb91ccf.data): failed to open stream: Permission denied' 
+
+in /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php:58
+
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleError(2, 'file_put_conten...', '/var/www/anaina...', 58, Array)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(58): file_put_contents('/var/www/anaina...', 'a:8:{s:6:"confi...')
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(112): yii\debug\LogTarget->export(Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Dispatcher.php(183): yii\debug\LogTarget->collect(Array, true)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Logger.php(173): yii\log\Dispatcher->dispatch(Array, true)
+#5 [internal function]: yii\log\Logger->flush(true)
+#6 {main}
+2016-04-12 14:42:03 [::1][-][-][info][application] $_POST = [
+    '{\"tanggal\":{\"startDate\":\"2016-04-12T07:41:57_689Z\",\"endDate\":\"2016-04-12T07:41:57_689Z\"},\"kategori_id\":{\"id\":\"31\",\"kode\":\"024\",\"nama\":\"ACNE_LIFT\",\"is_deleted\":\"0\"},\"produk\":{\"id\":\"259\",\"kode\":\"BT0174\",\"type\":\"Barang\",\"nama\":\"MILK_CLEANSER_ACNE_LIFT\",\"kategori_id\":\"31\",\"satuan_id\":\"1\",\"keterangan\":null,\"harga_beli_terakhir\":\"323100\",\"harga_jual\":null,\"diskon\":null,\"minimum_stok\":null,\"fee_terapis\":null,\"fee_dokter\":null,\"foto\":\"\",\"is_deleted\":\"0\",\"created_at\":null,\"created_by\":null,\"modified_at\":null,\"modified_by\":null}}' => ''
+]
+
+$_COOKIE = [
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+    '_csrf' => 'd5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"InNmOrbDlqlv4__jNXOysjZE5QQyuufY\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '525'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7; _csrf=d5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22InNmOrbDlqlv4__jNXOysjZE5QQyuufY%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '36478'
+    'REDIRECT_URL' => '/anainaskincare/api/web/laporan/kartustok/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/laporan/kartustok/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1460446923.593
+    'REQUEST_TIME' => 1460446923
+]
+2016-04-12 14:42:06 [::1][-][-][warning][yii\log\Dispatcher::dispatch] Unable to send log via yii\debug\LogTarget: PHP Warning 'yii\base\ErrorException' with message 'file_put_contents(/var/www/anainaskincare/api/runtime/debug/570ca6ce4ce61.data): failed to open stream: Permission denied' 
+
+in /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php:58
+
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleError(2, 'file_put_conten...', '/var/www/anaina...', 58, Array)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(58): file_put_contents('/var/www/anaina...', 'a:8:{s:6:"confi...')
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(112): yii\debug\LogTarget->export(Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Dispatcher.php(183): yii\debug\LogTarget->collect(Array, true)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Logger.php(173): yii\log\Dispatcher->dispatch(Array, true)
+#5 [internal function]: yii\log\Logger->flush(true)
+#6 {main}
+2016-04-12 14:42:06 [::1][-][-][info][application] $_POST = [
+    '{\"tanggal\":{\"startDate\":\"2016-04-12T07:41:57_689Z\",\"endDate\":\"2016-04-12T07:41:57_689Z\"},\"kategori_id\":{\"id\":\"31\",\"kode\":\"024\",\"nama\":\"ACNE_LIFT\",\"is_deleted\":\"0\"}}' => ''
+]
+
+$_COOKIE = [
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+    '_csrf' => 'd5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"InNmOrbDlqlv4__jNXOysjZE5QQyuufY\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '164'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7; _csrf=d5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22InNmOrbDlqlv4__jNXOysjZE5QQyuufY%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '36478'
+    'REDIRECT_URL' => '/anainaskincare/api/web/laporan/kartustok/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/laporan/kartustok/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1460446926.309
+    'REQUEST_TIME' => 1460446926
+]
+2016-04-12 14:42:11 [::1][-][-][warning][yii\log\Dispatcher::dispatch] Unable to send log via yii\debug\LogTarget: PHP Warning 'yii\base\ErrorException' with message 'file_put_contents(/var/www/anainaskincare/api/runtime/debug/570ca6d31ec11.data): failed to open stream: Permission denied' 
+
+in /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php:58
+
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleError(2, 'file_put_conten...', '/var/www/anaina...', 58, Array)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(58): file_put_contents('/var/www/anaina...', 'a:8:{s:6:"confi...')
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(112): yii\debug\LogTarget->export(Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Dispatcher.php(183): yii\debug\LogTarget->collect(Array, true)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Logger.php(173): yii\log\Dispatcher->dispatch(Array, true)
+#5 [internal function]: yii\log\Logger->flush(true)
+#6 {main}
+2016-04-12 14:42:11 [::1][-][-][info][application] $_POST = [
+    '{\"nama\":\"\",\"kategori_id\":\"38\"}' => ''
+]
+
+$_COOKIE = [
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+    '_csrf' => 'd5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"InNmOrbDlqlv4__jNXOysjZE5QQyuufY\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '30'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7; _csrf=d5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22InNmOrbDlqlv4__jNXOysjZE5QQyuufY%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '36478'
+    'REDIRECT_URL' => '/anainaskincare/api/web/barang/perkategori/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/barang/perkategori/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1460446931.121
+    'REQUEST_TIME' => 1460446931
+]
+2016-04-12 14:42:12 [::1][-][-][warning][yii\log\Dispatcher::dispatch] Unable to send log via yii\debug\LogTarget: PHP Warning 'yii\base\ErrorException' with message 'file_put_contents(/var/www/anainaskincare/api/runtime/debug/570ca6d387381.data): failed to open stream: Permission denied' 
+
+in /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php:58
+
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleError(2, 'file_put_conten...', '/var/www/anaina...', 58, Array)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(58): file_put_contents('/var/www/anaina...', 'a:8:{s:6:"confi...')
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(112): yii\debug\LogTarget->export(Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Dispatcher.php(183): yii\debug\LogTarget->collect(Array, true)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Logger.php(173): yii\log\Dispatcher->dispatch(Array, true)
+#5 [internal function]: yii\log\Logger->flush(true)
+#6 {main}
+2016-04-12 14:42:11 [::1][-][-][info][application] $_POST = [
+    '{\"tanggal\":{\"startDate\":\"2016-04-12T07:41:57_689Z\",\"endDate\":\"2016-04-12T07:41:57_689Z\"},\"kategori_id\":{\"id\":\"38\",\"kode\":\"029\",\"nama\":\"ACCURA_TREATMENT\",\"is_deleted\":\"0\"}}' => ''
+]
+
+$_COOKIE = [
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+    '_csrf' => 'd5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"InNmOrbDlqlv4__jNXOysjZE5QQyuufY\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '171'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7; _csrf=d5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22InNmOrbDlqlv4__jNXOysjZE5QQyuufY%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '36478'
+    'REDIRECT_URL' => '/anainaskincare/api/web/laporan/kartustok/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/laporan/kartustok/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1460446931.549
+    'REQUEST_TIME' => 1460446931
+]
+2016-04-12 14:42:17 [::1][-][-][warning][yii\log\Dispatcher::dispatch] Unable to send log via yii\debug\LogTarget: PHP Warning 'yii\base\ErrorException' with message 'file_put_contents(/var/www/anainaskincare/api/runtime/debug/570ca6d88f178.data): failed to open stream: Permission denied' 
+
+in /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php:58
+
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleError(2, 'file_put_conten...', '/var/www/anaina...', 58, Array)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(58): file_put_contents('/var/www/anaina...', 'a:8:{s:6:"confi...')
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(112): yii\debug\LogTarget->export(Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Dispatcher.php(183): yii\debug\LogTarget->collect(Array, true)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Logger.php(173): yii\log\Dispatcher->dispatch(Array, true)
+#5 [internal function]: yii\log\Logger->flush(true)
+#6 {main}
+2016-04-12 14:42:16 [::1][-][-][info][application] $_POST = [
+    '{\"tanggal\":{\"startDate\":\"2016-01-31T17:00:00_000Z\",\"endDate\":\"2016-04-12T16:59:59_999Z\"},\"kategori_id\":{\"id\":\"38\",\"kode\":\"029\",\"nama\":\"ACCURA_TREATMENT\",\"is_deleted\":\"0\"}}' => ''
+]
+
+$_COOKIE = [
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+    '_csrf' => 'd5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"InNmOrbDlqlv4__jNXOysjZE5QQyuufY\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '171'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7; _csrf=d5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22InNmOrbDlqlv4__jNXOysjZE5QQyuufY%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '36478'
+    'REDIRECT_URL' => '/anainaskincare/api/web/laporan/kartustok/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/laporan/kartustok/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1460446936.581
+    'REQUEST_TIME' => 1460446936
+]
+2016-04-12 14:42:23 [::1][-][-][warning][yii\log\Dispatcher::dispatch] Unable to send log via yii\debug\LogTarget: PHP Warning 'yii\base\ErrorException' with message 'file_put_contents(/var/www/anainaskincare/api/runtime/debug/570ca6df3685d.data): failed to open stream: Permission denied' 
+
+in /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php:58
+
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleError(2, 'file_put_conten...', '/var/www/anaina...', 58, Array)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(58): file_put_contents('/var/www/anaina...', 'a:8:{s:6:"confi...')
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(112): yii\debug\LogTarget->export(Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Dispatcher.php(183): yii\debug\LogTarget->collect(Array, true)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Logger.php(173): yii\log\Dispatcher->dispatch(Array, true)
+#5 [internal function]: yii\log\Logger->flush(true)
+#6 {main}
+2016-04-12 14:42:23 [::1][-][-][info][application] $_POST = [
+    '{\"tanggal\":{\"startDate\":\"2016-01-31T17:00:00_000Z\",\"endDate\":\"2016-04-12T16:59:59_999Z\"},\"kategori_id\":{\"id\":\"38\",\"kode\":\"029\",\"nama\":\"ACCURA_TREATMENT\",\"is_deleted\":\"0\"}}' => ''
+]
+
+$_COOKIE = [
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+    '_csrf' => 'd5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"InNmOrbDlqlv4__jNXOysjZE5QQyuufY\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '171'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7; _csrf=d5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22InNmOrbDlqlv4__jNXOysjZE5QQyuufY%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '36478'
+    'REDIRECT_URL' => '/anainaskincare/api/web/laporan/kartustok/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/laporan/kartustok/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1460446943.217
+    'REQUEST_TIME' => 1460446943
+]
+2016-04-12 14:42:24 [::1][-][-][warning][yii\log\Dispatcher::dispatch] Unable to send log via yii\debug\LogTarget: PHP Warning 'yii\base\ErrorException' with message 'file_put_contents(/var/www/anainaskincare/api/runtime/debug/570ca6e022bbe.data): failed to open stream: Permission denied' 
+
+in /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php:58
+
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleError(2, 'file_put_conten...', '/var/www/anaina...', 58, Array)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(58): file_put_contents('/var/www/anaina...', 'a:8:{s:6:"confi...')
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(112): yii\debug\LogTarget->export(Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Dispatcher.php(183): yii\debug\LogTarget->collect(Array, true)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Logger.php(173): yii\log\Dispatcher->dispatch(Array, true)
+#5 [internal function]: yii\log\Logger->flush(true)
+#6 {main}
+2016-04-12 14:42:24 [::1][-][-][info][application] $_POST = [
+    '{\"tanggal\":{\"startDate\":\"2016-01-31T17:00:00_000Z\",\"endDate\":\"2016-04-12T16:59:59_999Z\"},\"kategori_id\":{\"id\":\"38\",\"kode\":\"029\",\"nama\":\"ACCURA_TREATMENT\",\"is_deleted\":\"0\"}}' => ''
+]
+
+$_COOKIE = [
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+    '_csrf' => 'd5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"InNmOrbDlqlv4__jNXOysjZE5QQyuufY\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '171'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7; _csrf=d5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22InNmOrbDlqlv4__jNXOysjZE5QQyuufY%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '36478'
+    'REDIRECT_URL' => '/anainaskincare/api/web/laporan/kartustok/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/laporan/kartustok/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1460446944.137
+    'REQUEST_TIME' => 1460446944
+]
+2016-04-12 14:42:29 [::1][-][-][warning][yii\log\Dispatcher::dispatch] Unable to send log via yii\debug\LogTarget: PHP Warning 'yii\base\ErrorException' with message 'file_put_contents(/var/www/anainaskincare/api/runtime/debug/570ca6e5cd985.data): failed to open stream: Permission denied' 
+
+in /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php:58
+
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleError(2, 'file_put_conten...', '/var/www/anaina...', 58, Array)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(58): file_put_contents('/var/www/anaina...', 'a:8:{s:6:"confi...')
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(112): yii\debug\LogTarget->export(Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Dispatcher.php(183): yii\debug\LogTarget->collect(Array, true)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Logger.php(173): yii\log\Dispatcher->dispatch(Array, true)
+#5 [internal function]: yii\log\Logger->flush(true)
+#6 {main}
+2016-04-12 14:42:29 [::1][-][-][info][application] $_POST = [
+    '{\"nama\":\"\",\"kategori_id\":\"15\"}' => ''
+]
+
+$_COOKIE = [
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+    '_csrf' => 'd5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"InNmOrbDlqlv4__jNXOysjZE5QQyuufY\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '30'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7; _csrf=d5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22InNmOrbDlqlv4__jNXOysjZE5QQyuufY%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '36484'
+    'REDIRECT_URL' => '/anainaskincare/api/web/barang/perkategori/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/barang/perkategori/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1460446949.837
+    'REQUEST_TIME' => 1460446949
+]
+2016-04-12 14:42:31 [::1][-][-][warning][yii\log\Dispatcher::dispatch] Unable to send log via yii\debug\LogTarget: PHP Warning 'yii\base\ErrorException' with message 'file_put_contents(/var/www/anainaskincare/api/runtime/debug/570ca6e6372b3.data): failed to open stream: Permission denied' 
+
+in /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php:58
+
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleError(2, 'file_put_conten...', '/var/www/anaina...', 58, Array)
+#1 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(58): file_put_contents('/var/www/anaina...', 'a:8:{s:6:"confi...')
+#2 /var/www/anainaskincare/api/vendor/yiisoft/yii2-debug/LogTarget.php(112): yii\debug\LogTarget->export(Array)
+#3 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Dispatcher.php(183): yii\debug\LogTarget->collect(Array, true)
+#4 /var/www/anainaskincare/api/vendor/yiisoft/yii2/log/Logger.php(173): yii\log\Dispatcher->dispatch(Array, true)
+#5 [internal function]: yii\log\Logger->flush(true)
+#6 {main}
+2016-04-12 14:42:30 [::1][-][-][info][application] $_POST = [
+    '{\"tanggal\":{\"startDate\":\"2016-01-31T17:00:00_000Z\",\"endDate\":\"2016-04-12T16:59:59_999Z\"},\"kategori_id\":{\"id\":\"15\",\"kode\":\"008\",\"nama\":\"CREAM_MALAM\",\"is_deleted\":\"0\"}}' => ''
+]
+
+$_COOKIE = [
+    'PHPSESSID' => '8ivghctjv9tpns80ub0l2cm5p7'
+    '_csrf' => 'd5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"InNmOrbDlqlv4__jNXOysjZE5QQyuufY\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '166'
+    'HTTP_PRAGMA' => 'no-cache'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.82 Chrome/48.0.2564.82 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_REFERER' => 'http://localhost/anainaskincare/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'PHPSESSID=8ivghctjv9tpns80ub0l2cm5p7; _csrf=d5f8f050aa3e1fa4ce5a854ba8d1a0474b6ce6a333a2cec8a4f17b80a943699ba%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22InNmOrbDlqlv4__jNXOysjZE5QQyuufY%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.10 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.10 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/anainaskincare/api/web/index.php'
+    'REMOTE_PORT' => '36484'
+    'REDIRECT_URL' => '/anainaskincare/api/web/laporan/kartustok/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/anainaskincare/api/web/laporan/kartustok/'
+    'SCRIPT_NAME' => '/anainaskincare/api/web/index.php'
+    'PHP_SELF' => '/anainaskincare/api/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1460446950.221
+    'REQUEST_TIME' => 1460446950
+]

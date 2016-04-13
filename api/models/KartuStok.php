@@ -76,6 +76,8 @@ class KartuStok extends \yii\db\ActiveRecord {
             $criteria .= ' and r_penjualan_id = ' . $trans_id;
         } elseif ($keterangan == "r_pembelian") {
             $criteria .= ' and r_pembelian_id = ' . $trans_id;
+        } elseif ($keterangan == "transfer") {
+            $criteria .= ' and transfer_id = ' . $trans_id;
         }
 
         KartuStok::deleteAll("keterangan = '" . $keterangan . "' $criteria");
@@ -96,6 +98,8 @@ class KartuStok extends \yii\db\ActiveRecord {
             $sv->r_penjualan_id = $trans_id;
         } elseif ($keterangan == "r_pembelian") {
             $sv->r_pembelian_id = $trans_id;
+        } else if ($keterangan == "transfer") {
+            $sv->transfer_id = $trans_id;
         }
 
         $sv->created_at = $date . " " . date("H:i:s");
@@ -103,10 +107,10 @@ class KartuStok extends \yii\db\ActiveRecord {
         $sv->produk_id = $produk_id;
         $sv->cabang_id = $cabang_id;
         $sv->keterangan = $keterangan;
-        $sv->jumlah_masuk = $masuk['jumlah'];
-        $sv->harga_masuk = $masuk['harga'];
-        $sv->jumlah_keluar = $keluar['jumlah'];
-        $sv->harga_keluar = $keluar['harga'];
+        $sv->jumlah_masuk = (isset($masuk['jumlah']) && !empty($masuk['jumlah'])) ? $masuk['jumlah'] : 0;
+        $sv->harga_masuk = (isset($masuk['harga']) && !empty($masuk['harga'])) ? $masuk['harga'] : 0;
+        $sv->jumlah_keluar = (isset($keluar['jumlah']) && !empty($keluar['jumlah'])) ? $keluar['jumlah'] : 0;
+        $sv->harga_keluar = (isset($keluar['harga']) && !empty($keluar['harga'])) ? $keluar['harga'] : 0;
         $sv->save();
     }
 
