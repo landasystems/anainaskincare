@@ -48,6 +48,27 @@
         </div>
         <div class="panel panel-default">
             <div class="panel-body">
+                <div class="form-horizontal well" style="margin-bottom: 50px; margin-top: 20px">
+                    <div class="form-group">
+                        <div class="control-group">
+                            <label class="col-sm-1 control-label">Bulan</label>
+                            <div class="col-sm-2">
+                                <select ng-model="form.bulan" class="form-control" >
+                                    <option ng-repeat="bulan in bln" value="{{bulan.id}}">{{bulan.bulan}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="col-sm-1 control-label">Tahun</label>
+                            <div class="col-sm-2">
+                                <input class="form-control" ng-model="form.tahun"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <button class="btn btn-primary" ng-click="grafik()"><i class="fa fa-search"></i> Lihat Grafik</button>
+                        </div>
+                    </div>
+                </div>
                 <highchart id="chart1" config="penjualan" class="span5"></highchart>
             </div>
         </div>

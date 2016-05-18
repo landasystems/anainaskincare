@@ -28,8 +28,15 @@ class SiteController extends Controller {
     }
 
     public function actionPenjualan() {
-        $month = date("m");
-        $year = date("Y");
+        $params = json_decode(file_get_contents("php://input"), true);
+
+        if (isset($params['bulan']) and ! empty($params['bulan'])) {
+            $month = $params['bulan'];
+            $year = (isset($params['tahun']) && !empty($params['tahun'])) ? $params['tahun'] : date("Y");
+        } else {
+            $month = date("m");
+            $year = date("Y");
+        }
         session_start();
         $pen = \app\models\Penjualan::find()
                 ->joinWith('cabang')

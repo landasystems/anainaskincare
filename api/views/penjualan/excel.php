@@ -31,10 +31,22 @@ if (isset($filter['tanggal'])) {
 }else {
     $tgl = '';
 }
+
+if (isset($filter['jenis']) and ! empty($filter['jenis'])) {
+    $detail['kategori'] = 'KATEGORI : ' . strtoupper($filter['jenis']) . '<br>';
+} else {
+    $detail['kategori'] = '';
+}
+
 if (isset($filter['kategori'])) {
     $kategori_id = array();
     foreach ($filter['kategori'] as $val) {
-        $kategori_id[] = $val['id'];
+        if (isset($filter['jenis']) and ! empty($filter['jenis'])) {
+            if ($filter['jenis'] == $val['jenis'])
+                $kategori_id[] = $val['id'];
+        } else {
+            $kategori_id[] = $val['id'];
+        }
     }
 
     $kategori = \app\models\Kategori::findAll(['id' => $kategori_id]);
@@ -43,7 +55,7 @@ if (isset($filter['kategori'])) {
         $nmKategori[] = strtoupper($val['nama']);
     }
     $nama = join(',', $nmKategori);
-    $ktg = 'KATEGORI PRODUK : <b>' . $nama . '</b>';
+    $ktg = empty($nmKategori) ? '' : 'SUB KATEGORI : <b>' . $nama . '</b>';
 } else {
     $ktg = '';
 }
@@ -127,7 +139,7 @@ if (isset($filter['kategori'])) {
         $totalCash += $value['cash'];
         $totalAtm += $value['atm'];
         $totalCredit += $value['credit'];
-        
+
         echo '<tr>';
         echo '<td valign="top">' . $value['tanggal'] . '</td>';
         echo '<td valign="top">' . $value['kode'] . '</td>';
@@ -144,7 +156,7 @@ if (isset($filter['kategori'])) {
         echo '</tr>';
     }
     ?>
-    <tr>        
+    <tr>
         <td align="right"></td>
         <td align="right"></td>
         <td align="right"><?php echo $totalCash ?></td>
@@ -155,7 +167,7 @@ if (isset($filter['kategori'])) {
         <td align="right"></td>
         <td align="right"></td>
         <td align="right"></td>
-        <td align="right"><?=$totalDiskon?></td>
+        <td align="right"><?= $totalDiskon ?></td>
         <td align="right"><?php echo $total ?></td>
     </tr>
 </table>

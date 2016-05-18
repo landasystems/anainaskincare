@@ -26,9 +26,9 @@ class Kategori extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['kode','nama'], 'unique'],
+            [['kode', 'nama'], 'unique'],
             [['is_deleted'], 'integer'],
-            [['kode'], 'string', 'max' => 25],
+            [['kode', 'jenis'], 'string', 'max' => 25],
             [['nama'], 'string', 'max' => 45]
         ];
     }
@@ -41,6 +41,7 @@ class Kategori extends \yii\db\ActiveRecord {
             'id' => 'ID',
             'kode' => 'Kode',
             'nama' => 'Nama',
+            'jenis' => 'Jenis',
             'is_deleted' => 'Is Deleted',
         ];
     }

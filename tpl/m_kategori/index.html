@@ -8,7 +8,7 @@
                 <button class="btn btn-default btn-xs" ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed">Pencarian</button>
                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                     <button type="button" class="btn btn-primary fa fa-plus-square-o" ng-click="create();">&nbsp;Tambah Data</button>
-                </div> 
+                </div>
             </div>
             <div collapse="isCollapsed" class="panel-body collapse" style="height: 0px;">
                 <div class="form-horizontal">
@@ -28,6 +28,15 @@
                     </div>
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">Jenis</label>
+                            <div class="col-sm-6">
+                                <select stInputEvent="change" st-search="jenis" class="form-control">
+                                    <option value="Treatment">Treatment</option>
+                                    <option value="Homecare">Homecare</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">Status</label>
                             <div class="col-sm-6">
                                 <select stInputEvent="change" st-search="is_deleted" class="form-control">
@@ -45,6 +54,7 @@
                         <tr>
                             <th st-sort="kode">Kode</th>
                             <th st-sort="nama">Nama</th>
+                            <th st-sort="jenis">Jenis</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -52,27 +62,28 @@
                         <tr ng-repeat="row in displayed" ng-dblclick="view(row)">
                             <td>{{row.kode}}</td>
                             <td>{{row.nama}}</td>
+                            <td>{{row.jenis}}</td>
                             <td>
                                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ng-show="row.is_deleted == 0"></button>
                                     <button type="button" class="btn btn-danger fa fa-trash-o" ng-click="trash(row);" ng-show="row.is_deleted == 0"></button>
                                     <button type="button" class="btn btn-info fa fa-recycle" ng-click="restore(row);" ng-show="row.is_deleted == 1"></button>
                                     <button type="button" class="btn btn-danger fa fa-minus-circle" ng-click="delete(row);" ng-show="row.is_deleted == 1"></button>
-                                </div> 
+                                </div>
                             </td>
                         </tr>
                     </tbody>
                     <tbody ng-show="isLoading">
                         <tr>
-                            <td colspan="3" class="text-center">Loading ... </td>
+                            <td colspan="4" class="text-center">Loading ... </td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="3" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html">
+                            <td colspan="4" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html">
                             </td>
                         </tr>
-                </table>		
+                </table>
             </div>
         </div>
     </div>
@@ -82,7 +93,7 @@
     <div class="wrapper-md" ng-show="is_edit">
         <div class="panel panel-default">
             <div class="panel-heading">
-                {{formtitle}} 
+                {{formtitle}}
             </div>
             <div class="panel-body">
                 <form name="landaform" class="form-horizontal form-validation">
@@ -102,6 +113,15 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Jenis</label>
+                                <div class="col-sm-6">
+                                    <div class="btn-group m-r">
+                                        <label class="btn btn-default" ng-model="form.jenis" btn-radio="'Treatment'" required>Treatment</label>
+                                        <label class="btn btn-default" ng-model="form.jenis" btn-radio="'Homecare'" required>Homecare</label>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Status</label>
                                 <div class="col-sm-6">

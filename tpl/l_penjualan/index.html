@@ -22,13 +22,23 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Kategori</label>
                             <div class="col-sm-9">
+                                <select ng-model="form.jenis" class="form-control">
+                                    <option value="">Pilih Semua</option>
+                                    <option value="Treatment">Treatment</option>
+                                    <option value="Homecare">Homecare</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Sub Kategori</label>
+                            <div class="col-sm-9">
                                 <ui-select multiple ng-model="form.kategori" theme="bootstrap">
                                     <ui-select-match  placeholder="Pilih Kategori">{{$item.nama}}</ui-select-match>
                                     <ui-select-choices repeat="kategori in listkategori | filter: $select.search">
                                         <div ng-bind-html="kategori.nama | highlight: $select.search"></div>
                                     </ui-select-choices>
                                 </ui-select>
-                                <p class="help-block"><i>* Kosongi untuk memilih semua kategori</i></p>
+                                <p class="help-block"><i>* Kosongi untuk memilih semua sub kategori</i></p>
                             </div>
                         </div>
                         <div class="form-group">
@@ -51,14 +61,14 @@
                         </div>
                     </div>
                     <br><br>
-                    <center style="width: 100%">
+                    <center style="width: 100%; margin-top: 50px;">
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <button type="button" class="btn btn-success fa fa-file-excel-o"  ng-click="excel(form)">&nbsp;Export Excel</button>
                                 <button type="submit" class="btn btn-primary fa  fa-search" ng-disabled="landaform.$invalid" ng-click="view(form)">&nbsp;Tampilkan</button>
                             </div>
                         </div>
-                    </center>	
+                    </center>
                 </form>
 
                 <div ng-show="detail_laporan" style="margin-top: 50px;" id="omset">
@@ -133,7 +143,7 @@
                                     </tr>
                                 </tbody>
                                 <tfoot>
-                            </table>		
+                            </table>
                         </div>
                     </div>
                 </div>

@@ -55,7 +55,6 @@ class LaporanpenjualanController extends Controller {
         //init variable
         $param = json_decode(file_get_contents("php://input"), true);
 
-        $filter = $param['filter'];
         $_SESSION['filter'] = $param['filter'];
 
         $start = date("Y-m-d", strtotime($param['filter']['tanggal']['startDate']));
@@ -64,7 +63,12 @@ class LaporanpenjualanController extends Controller {
         if (isset($param['filter']['kategori'])) {
             $kategori_id = array();
             foreach ($param['filter']['kategori'] as $val) {
-                $kategori_id[] = $val['id'];
+                if (isset($param['filter']['jenis']) and ! empty($param['filter']['jenis'])) {
+                    if ($param['filter']['jenis'] == $val['jenis'])
+                        $kategori_id[] = $val['id'];
+                } else {
+                    $kategori_id[] = $val['id'];
+                }
             }
         }
 
@@ -82,6 +86,7 @@ class LaporanpenjualanController extends Controller {
                 ->join('LEFT JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
                 ->join('LEFT JOIN', 'm_produk', 'penjualan_det.produk_id = m_produk.id')
                 ->join('LEFT JOIN', 'm_user', 'penjualan.created_by = m_user.id')
+                ->join('LEFT JOIN', 'm_kategori', 'm_kategori.id = m_produk.kategori_id')
                 ->orderBy('penjualan.tanggal ASC, penjualan_det.id ASC')
                 ->select('m_user.nama as kasir, penjualan.id as id_penjualan, penjualan.tanggal, penjualan.kode, penjualan.cash, penjualan.credit, penjualan.atm, m_customer.nama as customer, m_produk.nama as produk, penjualan_det.jumlah, penjualan_det.harga, penjualan_det.diskon, penjualan_det.sub_total, penjualan_det.type');
 
@@ -96,6 +101,8 @@ class LaporanpenjualanController extends Controller {
                     $query->andFilterWhere(['m_produk.kategori_id' => $kategori_id]);
                 } else if ($key == 'kasir') {
                     $query->andFilterWhere(['penjualan.created_by' => $kasir]);
+                } else if ($key == 'jenis' and ! empty($key)) {
+                    $query->andFilterWhere(['m_kategori.jenis' => $val]);
                 }
             }
         }
@@ -127,16 +134,28 @@ class LaporanpenjualanController extends Controller {
         }else {
             $tgl = '';
         }
-        if (isset($filter['kategori'])) {
+
+        if (isset($filter['jenis']) and ! empty($filter['jenis'])) {
+            $detail['kategori'] = 'KATEGORI : ' . strtoupper($filter['jenis']) . '<br>';
+        } else {
+            $detail['kategori'] = '';
+        }
+
+        if (isset($filter['kategori']) and ! empty($filter['kategori'])) {
             $kategori = \app\models\Kategori::findAll(['id' => $kategori_id]);
             $nmKategori = array();
             foreach ($kategori as $val) {
-                $nmKategori[] = strtoupper($val['nama']);
+                if (isset($param['filter']['jenis']) and ! empty($param['filter']['jenis'])) {
+                    if ($param['filter']['jenis'] == $val['jenis'])
+                        $nmKategori[] = strtoupper($val['nama']);
+                } else {
+                    $nmKategori[] = strtoupper($val['nama']);
+                }
             }
             $nama = join(',', $nmKategori);
-            $detail['kategori'] = 'KATEGORI PRODUK : <b>' . $nama . '</b>';
+            $detail['kategori'] .= empty($nmKategori) ? '' : 'SUB KATEGORI : <b>' . $nama . '</b>';
         } else {
-            $detail['kategori'] = '';
+            $detail['kategori'] .= '';
         }
 
         $data = array();
@@ -152,10 +171,6 @@ class LaporanpenjualanController extends Controller {
             $subTotal = ($val['harga'] * $val['jumlah']) - ($val['diskon'] * $val['jumlah']);
             $total += $subTotal;
             $totalDiskon += $val['diskon'];
-
-//            if ($tempKode != $val['kode']) {
-//              
-//            }
 
             if ($tempId != $val['id_penjualan']) {
                 $tempId = $val['id_penjualan'];
