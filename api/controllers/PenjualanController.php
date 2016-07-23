@@ -228,7 +228,7 @@ class PenjualanController extends Controller {
             'is_deleted' => $cabis_deleted,
         ];
 
-        // terapis 
+        // terapis
         $query2 = new Query;
         $query2->from('m_pegawai')
                 ->select('*')
@@ -255,18 +255,18 @@ class PenjualanController extends Controller {
         $detail = array();
 
         foreach ($det as $key => $val) {
-            if ($val['harga'] > 0 or ( $val['harga'] > 0 and ! empty($val['paket_id']))) {
-                $detail[$key] = $val->attributes;
-                $namaBarang = (isset($val->barang->nama)) ? $val->barang->nama : '';
-                $hargaBarang = (isset($val->barang->harga_beli_terakhir)) ? $val->barang->harga_beli_terakhir : '';
-                $jualBarang = (isset($val->barang->harga_jual)) ? $val->barang->harga_jual : '';
-                $dokter = (isset($val->dokter->nama)) ? $val->dokter->nama : '';
-                $terapis = (isset($val->terapis->nama)) ? $val->terapis->nama : '';
-                $detail[$key]['produk'] = ['id' => $val->produk_id, 'nama' => $namaBarang, 'harga_beli_terakhir' => $hargaBarang, 'harga_jual' => $jualBarang];
-                $detail[$key]['terapis'] = ['id' => $val->pegawai_terapis_id, 'nama' => $terapis];
-                $detail[$key]['dokter'] = ['id' => $val->pegawai_dokter_id, 'nama' => $dokter];
-                $detail[$key]['diskonpersen'] = ($val->harga == 0) ? 0 : ($val->diskon / $val->harga) * 100;
-            }
+//            if ($val['harga'] >= 0 or ( $val['harga'] >= 0 and ! empty($val['paket_id']))) {
+            $detail[$key] = $val->attributes;
+            $namaBarang = (isset($val->barang->nama)) ? $val->barang->nama : '';
+            $hargaBarang = (isset($val->barang->harga_beli_terakhir)) ? $val->barang->harga_beli_terakhir : '';
+            $jualBarang = (isset($val->barang->harga_jual)) ? $val->barang->harga_jual : '';
+            $dokter = (isset($val->dokter->nama)) ? $val->dokter->nama : '';
+            $terapis = (isset($val->terapis->nama)) ? $val->terapis->nama : '';
+            $detail[$key]['produk'] = ['id' => $val->produk_id, 'nama' => $namaBarang, 'harga_beli_terakhir' => $hargaBarang, 'harga_jual' => $jualBarang];
+            $detail[$key]['terapis'] = ['id' => $val->pegawai_terapis_id, 'nama' => $terapis];
+            $detail[$key]['dokter'] = ['id' => $val->pegawai_dokter_id, 'nama' => $dokter];
+            $detail[$key]['diskonpersen'] = ($val->harga == 0) ? 0 : ($val->diskon / $val->harga) * 100;
+//            }
         }
 
 //        $query = new Query;
@@ -634,7 +634,7 @@ class PenjualanController extends Controller {
         $kode_mdl = (substr($models2['kode'], -5) + 1);
         $kode = substr('00000' . $kode_mdl, strlen($kode_mdl));
 
-        // terapis 
+        // terapis
         $query2 = new Query;
         $query2->from('m_pegawai')
                 ->select('*')

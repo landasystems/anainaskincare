@@ -93,7 +93,8 @@ class LaporanController extends Controller {
         $query = new Query;
         $query->from(['m_pegawai', 'm_produk', 'penjualan', 'penjualan_det'])
                 ->select("m_pegawai.id as id_pegawai , m_produk.nama as produk, m_pegawai.nama as pegawai, penjualan.tanggal as tanggal, penjualan.kode as kode, m_pegawai.jabatan as jabatan, penjualan_det.fee_terapis as fee_terapis, penjualan_det.fee_dokter as fee_dokter")
-                ->where("(m_pegawai.id = penjualan_det.pegawai_terapis_id or m_pegawai.id = penjualan_det.pegawai_dokter_id) and penjualan_det.produk_id = m_produk.id and penjualan.id = penjualan_det.penjualan_id $criteria");
+                ->where("(m_pegawai.id = penjualan_det.pegawai_terapis_id or m_pegawai.id = penjualan_det.pegawai_dokter_id) and penjualan_det.produk_id = m_produk.id and penjualan.id = penjualan_det.penjualan_id $criteria")
+                ->orderBy("m_pegawai.nama ASC, penjualan.tanggal ASC");
 
         $command = $query->createCommand();
         $models = $command->queryAll();
@@ -101,21 +102,34 @@ class LaporanController extends Controller {
         $total = 0;
         $totalA = 0;
         foreach ($models as $val) {
-            if (isset($body[$val['id_pegawai']])) {
-                $i = $i;
-            } else {
-                $i = 0;
-            }
-
             if ($val['jabatan'] == "terapis") {
                 $fee = $val['fee_terapis'];
             } else {
                 $fee = $val['fee_dokter'];
             }
 
-            if (!empty($params['pegawai_id'])) {
-                $pegawai_id = $params['pegawai_id'];
-                if ($val['jabatan'] == $pgw->jabatan) {
+            if (!empty($fee)) {
+                if (isset($body[$val['id_pegawai']])) {
+                    $i = $i;
+                } else {
+                    $i = 0;
+                }
+
+                if (!empty($params['pegawai_id'])) {
+                    $pegawai_id = $params['pegawai_id'];
+                    if ($val['jabatan'] == $pgw->jabatan) {
+                        $body[$pegawai_id]['title']['nama'] = $val['pegawai'];
+                        $body[$pegawai_id]['title']['sub_total'] = isset($body[$val['id_pegawai']]['title']['sub_total']) ? $body[$val['id_pegawai']]['title']['sub_total'] += $fee : $fee;
+                        $body[$pegawai_id]['body'][$i]['tanggal'] = $val['tanggal'];
+                        $body[$pegawai_id]['body'][$i]['kode'] = $val['kode'];
+                        $body[$pegawai_id]['body'][$i]['produk'] = $val['produk'];
+                        $body[$pegawai_id]['body'][$i]['jabatan'] = $val['jabatan'];
+                        $body[$pegawai_id]['body'][$i]['fee'] = $fee;
+
+                        $totalA += $body[$pegawai_id]['body'][$i]['fee'];
+                    }
+                } else {
+                    $pegawai_id = $val['id_pegawai'];
                     $body[$pegawai_id]['title']['nama'] = $val['pegawai'];
                     $body[$pegawai_id]['title']['sub_total'] = isset($body[$val['id_pegawai']]['title']['sub_total']) ? $body[$val['id_pegawai']]['title']['sub_total'] += $fee : $fee;
                     $body[$pegawai_id]['body'][$i]['tanggal'] = $val['tanggal'];
@@ -126,19 +140,9 @@ class LaporanController extends Controller {
 
                     $totalA += $body[$pegawai_id]['body'][$i]['fee'];
                 }
-            } else {
-                $pegawai_id = $val['id_pegawai'];
-                $body[$pegawai_id]['title']['nama'] = $val['pegawai'];
-                $body[$pegawai_id]['title']['sub_total'] = isset($body[$val['id_pegawai']]['title']['sub_total']) ? $body[$val['id_pegawai']]['title']['sub_total'] += $fee : $fee;
-                $body[$pegawai_id]['body'][$i]['tanggal'] = $val['tanggal'];
-                $body[$pegawai_id]['body'][$i]['kode'] = $val['kode'];
-                $body[$pegawai_id]['body'][$i]['produk'] = $val['produk'];
-                $body[$pegawai_id]['body'][$i]['jabatan'] = $val['jabatan'];
-                $body[$pegawai_id]['body'][$i]['fee'] = $fee;
 
-                $totalA += $body[$pegawai_id]['body'][$i]['fee'];
+                $i++;
             }
-            $i++;
         }
         $detail['total'] = $totalA;
         $this->setHeader(200);
