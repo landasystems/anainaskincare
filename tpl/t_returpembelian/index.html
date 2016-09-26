@@ -9,7 +9,7 @@
                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                     <button type="button" class="btn btn-default fa fa-file-excel-o" ng-show="!isCollapsed" ng-click="excel();">&nbsp;Export Excel</button>
                     <button type="button" class="btn btn-primary fa fa-plus-square-o" ng-click="create();">&nbsp;Tambah Data</button>
-                </div> 
+                </div>
             </div>
             <div collapse="isCollapsed" class="panel-body collapse" style="height: 0px;">
                 <div class="form-horizontal">
@@ -74,10 +74,10 @@
                             <td>{{row.petugas}}</td>
                             <td>{{row.created_at * 1000| date:'medium'}}</td>
                             <td>
-                                <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
+                                <div class="btn-group pull-right" role="group" style="margin-top: -3px;" ng-show="user.roles_id == 27 || user.id == row.created_by">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)"></button>
                                     <button type="button" class="btn btn-danger fa fa-trash-o" ng-click="delete(row);"></button>
-                                </div> 
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -91,7 +91,7 @@
                             <td colspan="9" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html">
                             </td>
                         </tr>
-                </table>		
+                </table>
             </div>
         </div>
     </div>
@@ -101,7 +101,7 @@
         <div class="wrapper-md" ng-show="is_edit">
             <div class="panel panel-default col-sm-13">
                 <div class="panel-heading">
-                    {{formtitle}} 
+                    {{formtitle}}
                 </div>
                 <div class="panel-body">
                     <div class="form-group">
@@ -121,7 +121,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-12">
-                            <h5 class="font-bold">- Data Pembelian</h5> 
+                            <h5 class="font-bold">- Data Pembelian</h5>
                         </div>
                     </div>
                     <div class="form-group">
@@ -181,27 +181,27 @@
                         <div class="col-md-3 col-sm-9">
                             <div class="input-group">
                                 <span class="input-group-addon">Rp</span>
-                                <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" value="{{form.total | number}}" ng-disabled="true" >
-                            </div>  
+                                <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" value="{{form.total| number}}" ng-disabled="true" >
+                            </div>
                         </div>
                         <label class="col-md-1 col-sm-3 control-label">Cash</label>
                         <div class="col-md-3 col-sm-9">
                             <div class="input-group">
                                 <span class="input-group-addon">Rp</span>
-                                <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" value="{{form.cash | number}}" ng-disabled="true" >
-                            </div>  
+                                <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" value="{{form.cash| number}}" ng-disabled="true" >
+                            </div>
                         </div>
                         <label class="col-md-1 col-sm-3 control-label">Credit</label>
                         <div class="col-md-3 col-sm-9">
                             <div class="input-group">
                                 <span class="input-group-addon">Rp</span>
-                                <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" value="{{form.credit | number}}" ng-disabled="true" >
-                            </div>  
+                                <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" value="{{form.credit| number}}" ng-disabled="true" >
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-md-12">
-                            <h5 class="font-bold">- Detail Retur Pembelian</h5> 
+                            <h5 class="font-bold">- Detail Retur Pembelian</h5>
                         </div>
                     </div>
                     <table class="table table-striped table-bordered det-trans">

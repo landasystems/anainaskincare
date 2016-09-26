@@ -2,6 +2,8 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
     //init data;
     var tableStateRef;
     var paramRef;
+    var is_diskon = false;
+    var brg_diskon = '';
     $scope.form = {};
     $scope.displayed = [];
     $scope.is_edit = false;
@@ -67,8 +69,8 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         $scope.form.credit = "0";
         $scope.form.cash = "0";
         $scope.form.atm = "0";
-        $scope.form.status = 'Selesai',
-                $scope.retrive = {};
+        $scope.form.status = 'Selesai';
+        $scope.retrive = {};
         $scope.detPenjualan = [
             {
                 type: '',
@@ -99,6 +101,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         $scope.selected(row.id);
         $scope.form.tanggal = new Date(row.tanggal);
     };
+
     $scope.save = function (form, detail) {
         var data = {
             penjualan: form,
@@ -118,6 +121,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             }
         });
     };
+
     $scope.cancel = function () {
         if (!$scope.is_view) { //hanya waktu edit cancel, di load table lagi
             $scope.callServer(tableStateRef);
@@ -126,6 +130,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         $scope.is_edit = false;
         $scope.is_view = false;
     };
+
     $scope.delete = function (row) {
         if (confirm("Apa anda yakin akan MENGHAPUS PERMANENT item ini ?")) {
             Data.delete('penjualan/delete/' + row.id).then(function (result) {
@@ -147,6 +152,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             $scope.form.credit = 0;
         });
     };
+
     $scope.getkode_cabang = function (form) {
         Data.get('penjualan/kode_cabang/' + form.cabang.id).then(function (data) {
             $scope.form.kode = data.kode;
@@ -186,6 +192,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             $scope.tagCust = false;
         }
     };
+
     $scope.pilih = function (detail, $item) {
         detail.harga = ($item.harga_jual != null) ? $item.harga_jual : 0;
         detail.type = $item.type;
@@ -200,6 +207,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             });
         }
     };
+
     $scope.getproduk = function (detail) {
         $scope.detail = detail;
         Data.get('penjualan/det_produk/' + detail.produk_id).then(function (data) {
@@ -240,6 +248,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             $scope.total();
         });
     };
+
     $scope.addDetail = function () {
         var newDet = {
             id: '',
@@ -248,10 +257,12 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
             diskon: '0',
             harga: '0',
             sub_total: '0',
-        }
+        };
+
         $scope.total();
         $scope.detPenjualan.unshift(newDet);
     };
+
     $scope.total = function () {
         var total = 0;
         var diskon = 0;
@@ -266,19 +277,38 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         $scope.form.total_diskon = diskon;
         $scope.form.total_harga = total;
         $scope.detail.sub_total = (total - diskon);
+
+        if ($scope.form.total >= 300000) {
+            Data.get('penjualan/getdiskon').then(function (data) {
+                if (data.s == 1 && is_diskon == false) {
+                    brg_diskon = data.diskon;
+                    is_diskon = true;
+                    $scope.detPenjualan.unshift(data.diskon);
+                }
+            });
+        } else {
+
+        }
     };
 
     $scope.calcDiskonHarga = function (detail) {
         detail.diskon = (parseInt(detail.diskonpersen) * parseInt(detail.harga)) / 100;
-    }
+    };
+
     $scope.calcDiskonPersen = function (detail) {
         detail.diskonpersen = (parseInt(detail.diskon) / parseInt(detail.harga)) * 100;
-    }
-
+    };
 
     $scope.removeRow = function (paramindex) {
         var comArr = eval($scope.detPenjualan);
         $scope.total();
+
+        var pilih = $scope.detPenjualan[paramindex];
+        if (typeof brg_diskon.produk.id != "undefined" && brg_diskon.produk.id == pilih.produk.id) {
+            brg_diskon = '';
+            is_diskon = false;
+        }
+
         if (comArr.length > 1) {
             $scope.detPenjualan.splice(paramindex, 1);
             $scope.total();
@@ -287,13 +317,15 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         }
 
     };
+
     $scope.bayar = function () {
         var total = parseInt($scope.form.total);
         var cash = parseInt($scope.form.cash);
         var credit = total - cash;
         $scope.form.credit = (credit > 0) ? credit : 0;
-    }
+    };
+
     $scope.detail.type = {
         allowClear: true,
-    }
-})
+    };
+});

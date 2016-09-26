@@ -9,7 +9,7 @@
                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                     <button type="button" class="btn btn-default fa fa-file-excel-o" ng-show="!isCollapsed" ng-click="excel();">&nbsp;Export Excel</button>
                     <button type="button" class="btn btn-primary fa fa-plus-square-o" ng-click="create();">&nbsp;Tambah Data</button>
-                </div> 
+                </div>
             </div>
             <div collapse="isCollapsed" class="panel-body collapse" style="height: 0px;">
                 <div class="form-horizontal">
@@ -61,10 +61,10 @@
                             <td>{{row.petugas}}</td>
                             <td>{{row.created_at * 1000| date:'medium'}}</td>
                             <td>
-                                <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
+                                <div class="btn-group pull-right" role="group" style="margin-top: -3px;" ng-show="user.roles_id == 27 || user.id == row.created_by">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)"></button>
                                     <button type="button" class="btn btn-danger fa fa-minus-circle" ng-click="delete(row);"></button>
-                                </div> 
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -79,7 +79,7 @@
                             </td>
                         </tr>
                     </tfoot>
-                </table>		
+                </table>
             </div>
         </div>
     </div>
@@ -89,10 +89,10 @@
     <div class="wrapper-md" ng-show="is_edit">
         <div class="panel panel-default">
             <div class="panel-heading">
-                {{formtitle}} 
+                {{formtitle}}
                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;" ng-hide="is_view == false">
                     <button type="button" class="btn btn-primary fa fa-print"  ng-print print-element-id="printArea">&nbsp;Print</button>
-                </div> 
+                </div>
             </div>
             <div class="panel-body">
                 <form name="landaform" class="form-horizontal form-validation ">
@@ -125,7 +125,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Keterangan</label>
                         <div class="col-sm-3">
-                            <textarea class="form-control" ng-model="form.keterangan" ng-disabled="is_view" ng-readonly="is_create == false"></textarea>   
+                            <textarea class="form-control" ng-model="form.keterangan" ng-disabled="is_view" ng-readonly="is_create == false"></textarea>
                         </div>
                     </div>
                     <div class="line line-dashed b-b line-lg pull-in"></div>
@@ -183,7 +183,7 @@
                                 <button type="submit" class="btn btn-primary fa fa-save" ng-hide="is_view" ng-disabled="" ng-click="save(form, detskeluar)">&nbsp;Simpan Perubahan</button>
                             </div>
                         </div>
-                    </center>	
+                    </center>
                 </form>
             </div>
         </div>

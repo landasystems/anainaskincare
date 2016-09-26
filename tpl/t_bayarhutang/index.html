@@ -69,15 +69,15 @@
                             <td>{{row.tanggal| date}}</td>
                             <td>{{row.nama}}</td>
                             <td>{{row.klinik}}</td>
-                            <td style="text-align: right;">{{row.credit | currency:undefined:0}}</td>
+                            <td style="text-align: right;">{{row.credit| currency:undefined:0}}</td>
                             <td>{{row.status}}</td>
                             <td>{{row.petugas}}</td>
                             <td>{{row.created_at * 1000| date:'medium'}}</td>
                             <td>
-                                <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
+                                <div class="btn-group pull-right" role="group" style="margin-top: -3px;" ng-show="user.roles_id == 27 || user.id == row.created_by">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)"></button>
                                     <button type="button" class="btn btn-danger fa fa-minus-circle" ng-click="delete(row);"></button>
-                                </div> 
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -91,7 +91,7 @@
                             <td colspan="9" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html">
                             </td>
                         </tr>
-                </table>		
+                </table>
             </div>
         </div>
     </div>
@@ -151,12 +151,12 @@
                                     <div class="btn-group">
                                         <label class="btn btn-default" ng-model="form.status" btn-radio="'Lunas'">Lunas</label>
                                         <label class="btn btn-default" ng-model="form.status" btn-radio="'Belum Lunas'">Belum Lunas</label>
-                                    </div>    
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="line line-dashed b-b line-lg pull-in"></div>
-                        <h5 class="font-bold">- Detail Hutang</h5> 
+                        <h5 class="font-bold">- Detail Hutang</h5>
                         <table class="table table-bordered det-trans">
                             <thead>
                                 <tr>

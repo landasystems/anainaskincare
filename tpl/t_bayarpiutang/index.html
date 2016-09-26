@@ -8,7 +8,7 @@
                 <button class="btn btn-default btn-xs" ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed">Pencarian & Export Data</button>
                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                     <button type="button" class="btn btn-default fa fa-file-excel-o" ng-show="!isCollapsed" ng-click="excel()">&nbsp;Export Excel</button>
-                </div> 
+                </div>
             </div>
             <div collapse="isCollapsed" class="panel-body collapse" style="height: 0px;">
                 <div class="form-horizontal">
@@ -71,10 +71,10 @@
                             <td>{{row.petugas}}</td>
                             <td>{{row.created_at * 1000| date:'medium'}}</td>
                             <td>
-                                <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
+                                <div class="btn-group pull-right" role="group" style="margin-top: -3px;" ng-show="user.roles_id == 27 || user.id == row.created_by">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ng-show="row.status == 'Belum Lunas'" ></button>
                                     <button type="button" class="btn btn-danger fa fa-minus-circle" ng-click="delete(row);" ></button>
-                                </div> 
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -88,7 +88,7 @@
                             <td colspan="9" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html"></td>
                         </tr>
                     </tfoot>
-                </table>		
+                </table>
             </div>
         </div>
     </div>
@@ -148,12 +148,12 @@
                                     <div class="btn-group">
                                         <label class="btn btn-default" ng-model="form.status" btn-radio="'Lunas'">Lunas</label>
                                         <label class="btn btn-default" ng-model="form.status" btn-radio="'Belum Lunas'">Belum Lunas</label>
-                                    </div>    
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="line line-dashed b-b line-lg pull-in"></div>
-                        <h5 class="font-bold">- History Piutang-</h5> 
+                        <h5 class="font-bold">- History Piutang-</h5>
                         <table class="table table-bordered det-trans">
                             <thead>
                                 <tr>

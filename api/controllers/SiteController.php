@@ -140,6 +140,7 @@ class SiteController extends Controller {
         if (!empty($model)) {
             session_start();
             $_SESSION['user']['id'] = $model->id;
+            $_SESSION['user']['roles_id'] = $model->roles_id;
             $_SESSION['user']['username'] = $model->username;
             $_SESSION['user']['nama'] = $model->nama;
             $akses = (isset($model->roles->akses)) ? $model->roles->akses : '[]';

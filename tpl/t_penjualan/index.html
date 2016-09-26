@@ -9,7 +9,7 @@
                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                     <!--<button type="button" class="btn btn-default fa fa-file-excel-o" ng-show="!isCollapsed" ng-click="excel();">&nbsp;Export Excel</button>-->
                     <button type="button" class="btn btn-primary fa fa-plus-square-o" ng-click="create();">&nbsp;Tambah Data</button>
-                </div> 
+                </div>
             </div>
             <div collapse="isCollapsed" class="panel-body collapse" style="height: 0px;">
                 <div class="form-horizontal">
@@ -80,11 +80,11 @@
                                 <!--                                <div class="btn-group" role="group" style="margin-top: -3px;" ng-if="row.print == 0">
                                                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ></button>
                                                                     <button type="button" class="btn btn-danger fa fa-minus-circle" ng-click="delete(row);" ></button>
-                                                                </div> 
+                                                                </div>
                                                                 <div ng-if="row.print > 0">
                                                                     <span class="badge bg-success">Already Printed</span>
                                                                 </div>-->
-                                <div class="btn-group" role="group" style="margin-top: -3px;">
+                                <div class="btn-group" role="group" style="margin-top: -3px;" ng-show="user.roles_id == 27 || user.id == row.created_by">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ></button>
                                     <button type="button" class="btn btn-danger fa fa-trash-o" ng-click="delete(row);" ></button>
                                 </div>
@@ -100,7 +100,7 @@
                         <tr>
                             <td colspan="10" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html"></td>
                         </tr>
-                </table>		
+                </table>
             </div>
         </div>
     </div>
@@ -116,7 +116,7 @@
                         <span style="color:#F77A7A;float:left"><i>Transaksi ini telah dicetak {{form.print}} kali &nbsp;&nbsp; </i></span>
                         <!--<button type="button" ng-show="form.status == 'Selesai'" ng-disabled="form.print >= 2" class="btn btn-primary fa fa-print" ng-print print-element-id="printArea" ng-click="savePrint(form)">&nbsp;Print</button>-->
                         <button type="button" ng-show="form.status == 'Selesai'" class="btn btn-primary fa fa-print" ng-print print-element-id="printArea" ng-click="savePrint(form)">&nbsp;Print</button>
-                    </div> 
+                    </div>
                 </div>
                 <div class="panel-body">
                     <div class="form-group">
@@ -160,7 +160,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-12">
-                            <h5 class="font-bold">- Data Penjualan</h5> 
+                            <h5 class="font-bold">- Data Penjualan</h5>
                         </div>
                     </div>
                     <div class="form-group">
@@ -210,7 +210,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <h5 class="font-bold">- Detail Penjualan</h5> 
+                            <h5 class="font-bold">- Detail Penjualan</h5>
                             <table class="table table-bordered det-trans">
                                 <thead>
                                     <tr>
@@ -240,7 +240,7 @@
                                         </div>
                                         <table style="margin-top: 4px;" ng-show="detail.type == 'Jasa'" class="det-trans">
                                             <tr>
-                                                <td width="65%">                                       
+                                                <td width="65%">
                                             <ui-select ng-disabled="is_view" ng-model="detail.dokter" theme="bootstrap">
                                                 <ui-select-match placeholder="Cari nama atau nip Dokter">{{$select.selected.nama}}</ui-select-match>
                                                 <ui-select-choices group-by="'group'" repeat="dokter in list_dokter | filter: $select.search">
@@ -274,7 +274,7 @@
                                     <div class="input-group " style="width:135px; margin-bottom: 1px;margin-top: 2px;">
                                         <span class="input-group-addon">Rp</span>
                                         <input type="text" ng-disabled="is_view" class="form-control angka" ng-maxlength="15" ng-pattern="/^[0-9]+$/"  ng-model="detail.fee_terapis">
-                                    </div> 
+                                    </div>
                                 </td>
                                 </tr>
                             </table>
@@ -300,14 +300,14 @@
                             <td style="width:200px;">
                                 <table>
                                     <tr>
-                                        <td width="40%">     
+                                        <td width="40%">
                                             <div class="input-group " style="margin:0px;">
                                                 <input type="text" class="form-control angka" ng-maxlength="2" ng-pattern="/^[0-9]+$/" ng-change="calcDiskonHarga(detail);
                                                                     total();"  ng-model="detail.diskonpersen"   ng-readonly="is_view">
                                                 <span class="input-group-addon">%</span>
                                             </div>
                                         </td>
-                                        <td width="60%">     
+                                        <td width="60%">
                                             <div class="input-group " style="margin:0px;">
                                                 <span class="input-group-addon">Rp</span>
                                                 <input type="text" class="form-control angka" ng-maxlength="15" ng-pattern="/^[0-9]+$/" ng-change="calcDiskonPersen(detail);
@@ -355,7 +355,7 @@
                                     <div class="input-group">
                                         <span class="input-group-addon">Rp</span>
                                         <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" ng-model="form.atm" ng-disabled="is_view" required>
-                                    </div>  
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -364,7 +364,7 @@
                                     <div class="input-group">
                                         <span class="input-group-addon">Rp</span>
                                         <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" ng-model="form.cash" ng-disabled="is_view" required>
-                                    </div>  
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -373,7 +373,7 @@
                                     <div class="input-group" >
                                         <span class="input-group-addon">Rp</span>
                                         <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" ng-model="form.credit" ng-disabled="is_view" required>
-                                    </div> 
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -382,7 +382,7 @@
                                     <div class="input-group">
                                         <span class="input-group-addon">Rp</span>
                                         <input type="text" class="form-control angka" ng-readonly="true" ng-disabled="is_view" value="{{((form.cash * 1 + form.credit * 1 + form.atm * 1) - form.total) | number}}">
-                                    </div> 
+                                    </div>
                                 </td>
                             </tr>
                             </table>
@@ -392,7 +392,7 @@
                     <div align="center">
                         <button type="submit" class="btn btn-default fa fa-arrow-circle-o-left" ng-click="cancel()">&nbsp;Back</button>
                         <button type="submit" class="btn btn-primary fa fa-save" ng-hide="is_view" ng-disabled="landaform.$invalid" ng-click="save(form, detPenjualan)">&nbsp;Simpan Perubahan</button>
-                    </div>	
+                    </div>
                 </div>
             </div>
         </form>
@@ -451,7 +451,7 @@
             <tbody ng-repeat="detail in detPenjualan">
                 <tr>
                     <td colspan="3" id="print" stlye="line-height: 22px;">
-                        {{detail.produk.nama| uppercase}} 
+                        {{detail.produk.nama| uppercase}}
                         <div ng-if="detail.type == 'Jasa'" id="print" style="line-height: 9px;">
                             <p id="print" style="line-height: 22px;margin:0px;padding: 0px;" ng-if="detail.terapis.nama != ''">- Terapis : {{detail.terapis.nama}}</p>
                             <p id="print" style="line-height: 22px;margin:0px;padding: 0px;" ng-if="detail.dokter.nama != ''">- Dokter : {{detail.dokter.nama}}</p>

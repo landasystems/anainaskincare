@@ -12,7 +12,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
         $event.stopPropagation();
         $scope.opened1 = true;
     };
-    
+
     $scope.cariProduk = function ($query, cabang) {
         if ($query.length >= 3) {
             Data.post('barang/carilagi', {nama: $query, cabang: cabang}).then(function (data) {
@@ -20,7 +20,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
             });
         }
     };
-    
+
     $scope.detskeluar = [
         {
             stok_keluar_id: '',
@@ -53,7 +53,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
             jumlah: '',
             harga: '',
             sub_total: 0
-        }
+        };
 
         $scope.detskeluar.unshift(newDet);
     };
@@ -70,7 +70,7 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
             alert("Something gone wrong");
         }
     };
-    
+
     Data.get('site/session').then(function (data) {
         $scope.listcabang = data.data.user.cabang;
     });
@@ -126,17 +126,17 @@ app.controller('t_keluarCtrl', function ($scope, Data, toaster) {
     };
 
     $scope.update = function (form) {
-            $scope.is_edit = true;
-            $scope.is_view = false;
-            $scope.formtitle = "Edit Persediaan Keluar ";
-            $scope.selected(form.id);
+        $scope.is_edit = true;
+        $scope.is_view = false;
+        $scope.formtitle = "Edit Persediaan Keluar ";
+        $scope.selected(form.id);
     };
-    
+
     $scope.view = function (form) {
-            $scope.is_edit = true;
-            $scope.is_view = true;
-            $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode;
-             $scope.selected(form.id);
+        $scope.is_edit = true;
+        $scope.is_view = true;
+        $scope.formtitle = "Edit Persediaan Keluar : " + $scope.form.kode;
+        $scope.selected(form.id);
     };
     $scope.save = function (form, detail) {
         var data = {

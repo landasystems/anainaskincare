@@ -9,7 +9,7 @@
                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                     <button type="button" class="btn btn-default fa fa-file-excel-o" ng-show="!isCollapsed" ng-click="excel();">&nbsp;Export Excel</button>
                     <button type="button" class="btn btn-primary fa fa-plus-square-o" ng-click="create();">&nbsp;Tambah Data</button>
-                </div> 
+                </div>
             </div>
             <div collapse="isCollapsed" class="panel-body collapse" style="height: 0px;">
                 <div class="form-horizontal">
@@ -75,10 +75,10 @@
                             <td>{{row.petugas}}</td>
                             <td>{{row.created_at * 1000| date:'medium'}}</td>
                             <td>
-                                <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
+                                <div class="btn-group pull-right" role="group" style="margin-top: -3px;" ng-show="user.roles_id == 27 || user.id == row.created_by">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)"></button>
                                     <button type="button" class="btn btn-danger fa fa-minus-circle" ng-click="delete(row);"></button>
-                                </div> 
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -92,7 +92,7 @@
                             <td colspan="9" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html">
                             </td>
                         </tr>
-                </table>		
+                </table>
             </div>
         </div>
     </div>
@@ -106,7 +106,7 @@
                     {{formtitle}}
                     <div class="btn-group pull-right" role="group" style="margin-top: -3px;" ng-hide="is_view == false">
                         <button type="button" class="btn btn-primary fa fa-print" ng-print print-element-id="printArea" ng-show="is_view">&nbsp;Print</button>
-                    </div> 
+                    </div>
                 </div>
                 <div class="panel-body">
                     <div class="form-group">
@@ -149,7 +149,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-12">
-                            <h5 class="font-bold">- Data Pembelian</h5> 
+                            <h5 class="font-bold">- Data Pembelian</h5>
                         </div>
                     </div>
                     <div class="form-group">
@@ -328,7 +328,7 @@
             <img ng-src="img/logo.png" align="left" style="margin-right: 8px"/>
             {{form.cabang.alamat| uppercase}}<br/>
             Telp. {{form.no_tlp| uppercase}}<br/>
-            
+
             No. Nota Pembelian : {{form.kode}}
         </div>
         <div class="kanan" style="width: 30%">
@@ -351,7 +351,7 @@
             <tbody>
                 <tr ng-repeat="detail in pembeliandet">
                     <td>
-                        {{detail.barang.nama| uppercase}} 
+                        {{detail.barang.nama| uppercase}}
                         <div ng-if="detail.type == 'Jasa'">
                             <p style="margin:0px;padding: 0px;">-Terapis : {{detail.terapis.nama}}</p>
                             <p style="margin:0px;padding: 0px;">-Dokter : {{detail.dokter.nama}}</p>
@@ -373,7 +373,7 @@
             </tbody>
             <tfoot style="font-style: normal;">
                 <tr>
-                    <td colspan="3" rowspan="4"> 
+                    <td colspan="3" rowspan="4">
                         <b>Ket:</b> {{form.keterangan}}
                         <p>Dicetak Oleh: {{user.nama}} </p>
                     </td>

@@ -37,9 +37,30 @@ class PenjualanController extends Controller {
                     'terapis' => ['post'],
                     'saveprint' => ['post'],
                     'getpaket' => ['post'],
+                    'getdiskon' => ['get'],
                 ],
             ]
         ];
+    }
+
+    public function actionGetdiskon() {
+        $query = new query;
+        $query->select("*")
+                ->from("m_produk")
+                ->where("id = 1494");
+        $command = $query->createCommand();
+        $model = $command->query()->read();
+
+        if (empty($model)) {
+            echo json_encode(array("s" => 0));
+        } else {
+            $model['produk'] = array('id' => $model['id'], 'nama' => $model['nama']);
+            $model['harga'] = (int) 0;
+            $model['jumlah'] = (int) 1;
+            $model['diskon'] = (int) 0;
+            $model['diskonpersen'] = (int) 0;
+            echo json_encode(array("s" => 1, "diskon" => $model));
+        }
     }
 
     public function actionGetpaket() {

@@ -9,7 +9,7 @@
                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                     <button type="button" class="btn btn-default fa fa-file-excel-o" ng-show="!isCollapsed" ng-click="excel();">&nbsp;Export Excel</button>
                     <button type="button" class="btn btn-primary fa fa-plus-square-o" ng-click="create();">&nbsp;Tambah Data</button>
-                </div> 
+                </div>
             </div>
             <div collapse="isCollapsed" class="panel-body collapse" style="height: 0px;">
                 <div class="form-horizontal">
@@ -72,10 +72,10 @@
                             <td>{{row.petugas}}</td>
                             <td>{{row.created_at * 1000| date:'medium'}}</td>
                             <td>
-                                <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
+                                <div class="btn-group pull-right" role="group" style="margin-top: -3px;" ng-show="user.roles_id == 27 || user.id == row.created_by">
                                     <button type="button" class="btn btn-info fa fa-edit" ng-click="update(row)" ></button>
                                     <button type="button" class="btn btn-danger fa fa-trash-o" ng-click="delete(row);"></button>
-                                </div> 
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -90,7 +90,7 @@
                             </td>
                         </tr>
                     </tfoot>
-                </table>		
+                </table>
             </div>
         </div>
     </div>
@@ -105,7 +105,7 @@
                         {{formtitle}}
                         <div class="btn-group pull-right" role="group" style="margin-top: -3px;" ng-hide="is_view == false">
                             <button type="button" class="btn btn-primary fa fa-print" ng-print print-element-id="printArea">&nbsp;Print</button>
-                        </div> 
+                        </div>
                     </div>
                     <div class="panel-body">
                         <div class="form-group">
@@ -125,7 +125,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-12">
-                                <h5 class="font-bold">- Data Penjualan</h5> 
+                                <h5 class="font-bold">- Data Penjualan</h5>
                             </div>
                         </div>
                         <div class="form-group">
@@ -180,26 +180,26 @@
                                 <div class="input-group">
                                     <span class="input-group-addon">Rp</span>
                                     <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" value="{{penjualan.total| number}}" ng-disabled="true" >
-                                </div>  
+                                </div>
                             </div>
                             <label class="col-md-1 col-sm-3 control-label">Cash</label>
                             <div class="col-md-3 col-sm-9">
                                 <div class="input-group">
                                     <span class="input-group-addon">Rp</span>
                                     <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" value="{{penjualan.cash| number}}" ng-disabled="true" >
-                                </div>  
+                                </div>
                             </div>
                             <label class="col-md-1 col-sm-3 control-label">Credit</label>
                             <div class="col-md-3 col-sm-9">
                                 <div class="input-group">
                                     <span class="input-group-addon">Rp</span>
                                     <input type="text" class="form-control angka" ng-pattern="/^[0-9]+$/" value="{{penjualan.credit| number}}" ng-disabled="true" >
-                                </div>  
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-12">
-                                <h5 class="font-bold">- Detail Retur Penjualan</h5> 
+                                <h5 class="font-bold">- Detail Retur Penjualan</h5>
                             </div>
                         </div>
                         <table class="table table-bordered det-trans">
@@ -259,7 +259,7 @@
                                     <div class="input-group">
                                         <span class="input-group-addon">Rp</span>
                                         <input type="text" class="form-control angka" ng-disabled="is_view" ng-pattern="/^[0-9]+$/" ng-keyup="total()" ng-model="form.biaya_lain" ng-disabled="is_view" >
-                                    </div> 
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -276,7 +276,7 @@
                             <button type="submit" class="btn btn-default fa fa-arrow-circle-o-left" ng-click="cancel()">&nbsp;Back</button>
                             <button type="submit" class="btn btn-primary fa fa-save" ng-hide="is_view"  ng-click="save(form, detPenjualan)">&nbsp;Simpan Perubahan</button>
                         </div>
-                    </div>	
+                    </div>
                 </div>
             </div>
         </form>
@@ -312,7 +312,7 @@
                 <tbody>
                     <tr ng-repeat="detail in detPenjualan">
                         <td>
-                            {{detail.nama| uppercase}} 
+                            {{detail.nama| uppercase}}
 
                         </td>
                         <td style="text-align: right; vertical-align: 0px;">
@@ -337,8 +337,8 @@
                 </tbody>
                 <tfoot style="font-style: normal;">
                     <tr>
-                        <td colspan="5" rowspan="2"> 
-                            <b>Ket:</b> Barang - barang yang sudah di beli tidak dapat ditukar / dikembalikan kecuali ada perjanjian, 
+                        <td colspan="5" rowspan="2">
+                            <b>Ket:</b> Barang - barang yang sudah di beli tidak dapat ditukar / dikembalikan kecuali ada perjanjian,
                             <p>Hormat kami, </p>
                             <p>Dicetak Oleh: {{user.nama}} </p>
                         </td>

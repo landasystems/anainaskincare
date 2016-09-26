@@ -9,7 +9,7 @@
                 <div class="btn-group pull-right" role="group" style="margin-top: -3px;">
                     <button type="button" class="btn btn-default fa fa-file-excel-o" ng-show="!isCollapsed" ng-click="excel();">&nbsp;Export Excel</button>
                     <button type="button" class="btn btn-primary fa fa-plus-square-o" ng-click="create();">&nbsp;Tambah Data</button>
-                </div> 
+                </div>
             </div>
             <div collapse="isCollapsed" class="panel-body collapse" style="height: 0px;">
                 <div class="form-horizontal">
@@ -63,7 +63,7 @@
                                     <button type="button" class="btn btn-danger fa fa-trash-o" ng-click="trash(row);" ng-show="row.is_deleted == 0"></button>
                                     <button type="button" class="btn btn-info fa fa-recycle" ng-click="restore(row);" ng-show="row.is_deleted == 1"></button>
                                     <button type="button" class="btn btn-danger fa fa-minus-circle" ng-click="delete(row);" ng-show="row.is_deleted == 1"></button>
-                                </div> 
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -76,7 +76,7 @@
                         <tr>
                             <td colspan="5" class="text-center" st-pagination="" st-items-by-page="10" st-template="tpl/blocks/pagination.custom.html"></td>
                         </tr>
-                </table>		
+                </table>
             </div>
         </div>
     </div>
@@ -86,7 +86,7 @@
     <div class="wrapper-md" ng-show="is_edit">
         <div class="panel panel-default">
             <div class="panel-heading">
-                {{formtitle}} 
+                {{formtitle}}
             </div>
             <div class="panel-body">
                 <form name="landaform" class="form-horizontal form-validation ">
@@ -145,7 +145,7 @@
                                 <button type="submit" class="btn btn-primary fa fa-save" ng-hide="is_view" ng-click="save(form)">&nbsp;Simpan Perubahan</button>
                             </div>
                         </div>
-                    </center>	
+                    </center>
                 </form>
             </div>
         </div>
