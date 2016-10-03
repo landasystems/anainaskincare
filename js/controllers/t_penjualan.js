@@ -268,9 +268,15 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         var diskon = 0;
         var total_diskon = 0;
         var total_harga = 0;
+        var syarat_diskon = 0;
+
         angular.forEach($scope.detPenjualan, function (detail) {
             diskon += parseInt(detail.jumlah) * parseInt(detail.diskon);
             total += parseInt(detail.jumlah) * parseInt(detail.harga);
+
+            if (detail.type == "Barang") {
+                syarat_diskon += (parseInt(detail.jumlah) * parseInt(detail.harga)) - (parseInt(detail.jumlah) * parseInt(detail.diskon));
+            }
         });
         $scope.form.total = (total - diskon);
         $scope.form.belanja = (total - diskon);
@@ -278,7 +284,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         $scope.form.total_harga = total;
         $scope.detail.sub_total = (total - diskon);
 
-        if ($scope.form.total >= 300000) {
+        if (syarat_diskon >= 300000) {
             Data.get('penjualan/getdiskon').then(function (data) {
                 if (data.s == 1 && is_diskon == false) {
                     brg_diskon = data.diskon;
@@ -304,7 +310,7 @@ app.controller('penjualanCtrl', function ($scope, Data, toaster) {
         $scope.total();
 
         var pilih = $scope.detPenjualan[paramindex];
-        if (typeof brg_diskon.produk.id != "undefined" && brg_diskon.produk.id == pilih.produk.id) {
+        if (typeof brg_diskon.produk != "undefined" && brg_diskon.produk.id == pilih.produk.id) {
             brg_diskon = '';
             is_diskon = false;
         }

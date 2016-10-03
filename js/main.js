@@ -3,8 +3,25 @@
 /* Controllers */
 
 angular.module('app')
-        .controller('AppCtrl', ['$scope', '$window', 'Data', '$state',
-            function ($scope, $window, Data, $state) {
+        .controller('AppCtrl', ['$scope', '$window', 'Data', '$state', '$timeout',
+            function ($scope, $window, Data, $state, $timeout) {
+                var loginTimeout = 3600;
+                var seconds = loginTimeout;
+
+                var countDown = function () {
+                    if (seconds == 0) {
+                        $scope.logout();
+                    }
+                    seconds--;
+                    $timeout(countDown, 1000);
+                };
+
+                countDown();
+
+                $scope.resetCounter = function () {
+                    seconds = loginTimeout;
+                };
+
                 // add 'ie' classes to html
                 var isIE = !!navigator.userAgent.match(/MSIE/i);
                 isIE && angular.element($window.document.body).addClass('ie');
@@ -18,7 +35,7 @@ angular.module('app')
 
                 //cek warna di session
                 Data.get('site/session').then(function (data) {
-                    if (typeof data.data.user != "undefined" && data.data.user.settings!=null) {
+                    if (typeof data.data.user != "undefined" && data.data.user.settings != null) {
                         $scope.app.settings = data.data.user.settings;
                     } else { //default warna jika tidak ada setingan
                         $scope.app.settings = {
@@ -56,9 +73,9 @@ angular.module('app')
                 }
 
             }]);
-        
+
 $(document).ready(function () {
-    
+
     $("body").on("keypress", ".angka", function (s) {
         var i = s.which ? s.which : event.keyCode;
         return i > 31 && (48 > i || i > 57) && 45 != i && 46 != i ? !1 : !0
@@ -72,4 +89,3 @@ $(document).ready(function () {
 });
 
 
-        

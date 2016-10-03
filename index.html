@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="css/select.min.css" type="text/css" />
         <link rel="stylesheet" href="css/loading-bar.css" type="text/css" />
     </head>
-    <body ng-controller="AppCtrl">
+    <body ng-controller="AppCtrl" ng-mouseover="resetCounter()" ng-keypress="resetCounter()">
     <toaster-container toaster-options="{'body-output-type': 'trustedHtml'}"></toaster-container>
     <div class="app ng-scope app-header-fixed app-aside-dock" id="app" ng-class="" ui-view></div>
 
@@ -23,7 +23,7 @@
     <script src="vendor/angular/angular-sanitize/angular-sanitize.js"></script>
 
     <!-- Vendor -->
-    <script src="vendor/angular/angular-ui-router/angular-ui-router.js"></script> 
+    <script src="vendor/angular/angular-ui-router/angular-ui-router.js"></script>
     <script src="vendor/libs/moment.min.js"></script>
     <script src="vendor/libs/screenfull.min.js"></script>
     <script src="vendor/angular/angular-bootstrap/ui-bootstrap-tpls.js"></script>

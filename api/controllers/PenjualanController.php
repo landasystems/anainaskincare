@@ -47,7 +47,7 @@ class PenjualanController extends Controller {
         $query = new query;
         $query->select("*")
                 ->from("m_produk")
-                ->where("id = 1494");
+                ->where("id = 1512");
         $command = $query->createCommand();
         $model = $command->query()->read();
 
@@ -162,7 +162,7 @@ class PenjualanController extends Controller {
                 ->join('LEFT JOIN', 'm_cabang', 'penjualan.cabang_id = m_cabang.id')
                 ->join('LEFT JOIN', 'm_customer', 'penjualan.customer_id = m_customer.id')
                 ->join('LEFT JOIN', 'm_user', 'm_user.id = penjualan.created_by')
-                ->select('m_user.nama as petugas, penjualan.created_at, m_cabang.nama as cabang, m_customer.nama as customer, penjualan.print, penjualan.kode as kode, penjualan.tanggal as tanggal,
+                ->select('m_user.nama as petugas, penjualan.created_at, penjualan.created_by, m_cabang.nama as cabang, m_customer.nama as customer, penjualan.print, penjualan.kode as kode, penjualan.tanggal as tanggal,
                     penjualan.keterangan as keterangan, penjualan.total as total, penjualan.cash as cash, penjualan.credit as credit, penjualan.status as status,
                     penjualan.kode as kode, penjualan.id as id,  penjualan.customer_id as customer_id, penjualan.cabang_id as cabang_id,penjualan.atm,
                     m_customer.no_tlp as no_tlp, m_customer.email as email, m_customer.alamat as alamat')
