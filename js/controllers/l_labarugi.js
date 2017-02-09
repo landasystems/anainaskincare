@@ -1,9 +1,9 @@
 app.controller('l_labarugiCtrl', function($scope, Data, toaster) {
     $scope.exportData = function() {
-        var blob = new Blob([document.getElementById('omset').innerHTML], {
+        var blob = new Blob([document.getElementById('laporan').innerHTML], {
             type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
         });
-        saveAs(blob, "Report-Omset.xls");
+        saveAs(blob, "Laporan-Kas.xls");
     };
 
     $scope.detail_laporan = false;

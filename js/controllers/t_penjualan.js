@@ -6,6 +6,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
     var brg_diskon = '';
     $scope.form = {};
     $scope.displayed = [];
+    $scope.check_diskon = false;
     $scope.is_edit = false;
     $scope.is_view = false;
     $scope.is_create = false;
@@ -55,6 +56,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         $scope.isLoading = false;
     };
     $scope.create = function(form) {
+        $scope.check_diskon = true;
         $scope.is_create = true;
         $scope.is_edit = true;
         $scope.is_view = false;
@@ -76,6 +78,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         $scope.form.is_deleted = 0;
     };
     $scope.update = function(row) {
+        $scope.check_diskon = true;
         $scope.is_edit = true;
         $scope.is_view = false;
         $scope.is_create = false;
@@ -117,6 +120,7 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         }
         $scope.is_edit = false;
         $scope.is_view = false;
+        $scope.check_diskon = false;
     };
     $scope.delete = function(row) {
         if (confirm("Apa anda yakin akan MENGHAPUS PERMANENT item ini ?")) {
@@ -262,15 +266,23 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
         $scope.form.total_diskon = diskon;
         $scope.form.total_harga = total;
         $scope.detail.sub_total = (total - diskon);
+        var is_diskon = false;
+        angular.forEach($scope.detPenjualan, function(detail, key) {
+            if (detail.produk.id == 1512) {
+                is_diskon = true;
+            }
+        });
         if (syarat_diskon >= 300000) {
-            Data.get('penjualan/getdiskon').then(function(data) {
-                if (data.s == 1 && is_diskon == false) {
-                    brg_diskon = data.diskon;
-                    is_diskon = true;
-                    $scope.detPenjualan.unshift(data.diskon);
-                }
-            });
-            toaster.pop('success', "Selamat", "Pelanggan mendapat bonus TAS");
+            if (!is_diskon) {
+                Data.get('penjualan/getdiskon').then(function(data) {
+                    if (data.s == 1 && is_diskon == false) {
+                        brg_diskon = data.diskon;
+                        is_diskon = true;
+                        $scope.detPenjualan.unshift(data.diskon);
+                    }
+                });
+                toaster.pop('success', "Selamat", "Pelanggan mendapat bonus TAS");
+            }
         } else {
             var k = -1;
             angular.forEach($scope.detPenjualan, function(detail, key) {
@@ -279,7 +291,6 @@ app.controller('penjualanCtrl', function($scope, Data, toaster) {
                 }
             });
             if (k > -1) {
-                console.log('a');
                 $scope.detPenjualan.splice(k, 1);
                 brg_diskon = '';
                 is_diskon = false;
